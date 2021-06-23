@@ -1,9 +1,9 @@
 import {Injectable} from '@angular/core';
-import {Observable, of} from 'rxjs';
+import {Observable} from 'rxjs';
 
 import {HttpService} from '@core/http.service';
-import {ArticleSizeFamily} from '../shared/services/models/article-size-family.model';
 import {EndPoints} from '@shared/end-points';
+import {Article} from '../shared/services/models/article.model';
 
 @Injectable({
   providedIn: 'root',
@@ -15,8 +15,8 @@ export class ArticlesSizeFamilyCreationService {
   constructor(private httpService: HttpService) {
   }
 
-  create(articleSizeFamily: ArticleSizeFamily): Observable<void> {
+  create(article: Article): Observable<Article> {
     return this.httpService
-      .post(EndPoints.ARTICLES_SIZE_FAMILY, articleSizeFamily);
+      .post(EndPoints.ARTICLES, article);
   }
 }
