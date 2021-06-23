@@ -1,9 +1,9 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { Observable, of } from 'rxjs';
-import { ArticleSizeFamily } from '../shared/services/models/article-size-family.model';
 import { Tax } from '../shared/services/models/Tax';
 import { ArticlesSizeFamilyCreationService } from './articles-size-family-creation.service';
+import {Article} from '../shared/services/models/article.model';
 
 @Component({
   selector: 'app-articles-size-family-creation',
@@ -12,21 +12,36 @@ import { ArticlesSizeFamilyCreationService } from './articles-size-family-creati
 })
 export class ArticlesSizeFamilyCreationDialogComponent implements OnInit {
   taxValues = Object.keys(Tax).filter((key) => isNaN(Number(key)));
-  articleSizeFamily: ArticleSizeFamily;
+  article: Article;
+  // articleSizeFamily: ArticleSizeFamily;
   companies: Observable<string[]> = of([]);
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) data: ArticleSizeFamily,
+    @Inject(MAT_DIALOG_DATA) data: Article,
     private articleSizeFamilyCreationService: ArticlesSizeFamilyCreationService,
     private dialog: MatDialog) {
-    this.articleSizeFamily = data ? data : {
+    this.article = data ? data : {
+      barcode: undefined,
       description: undefined,
-      retailPrice: undefined,
+      retailPrice: null,
       providerCompany: undefined,
-      size: undefined,
+      discontinued: false,
       tax: Tax.GENERAL,
+      stock: 0
     };
   }
+  // constructor(
+  //   @Inject(MAT_DIALOG_DATA) data: ArticleSizeFamily,
+  //   private articleSizeFamilyCreationService: ArticlesSizeFamilyCreationService,
+  //   private dialog: MatDialog) {
+  //   this.articleSizeFamily = data ? data : {
+  //     description: undefined,
+  //     retailPrice: undefined,
+  //     providerCompany: undefined,
+  //     size: undefined,
+  //     tax: Tax.GENERAL,
+  //   };
+  // }
 
   form = {
     addNumber: 1,
@@ -50,7 +65,15 @@ export class ArticlesSizeFamilyCreationDialogComponent implements OnInit {
 
   create(): void {
     this.articleSizeFamilyCreationService
-      .create(this.articleSizeFamily)
+      .create(this.article)
       .subscribe(() => this.dialog.closeAll());
+  }
+
+  invalid(): boolean {
+    return this.check(this.article.barcode) || this.check(this.article.description) || this.check(this.article.providerCompany)
+      || (this.article.retailPrice === undefined || null);
+  }
+  check(attr: string): boolean {
+    return attr === undefined || null || attr === '';
   }
 }

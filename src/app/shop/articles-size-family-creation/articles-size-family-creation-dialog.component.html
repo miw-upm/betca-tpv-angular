@@ -1,17 +1,21 @@
 <h2 mat-dialog-title>Size Family Creation</h2>
 <mat-dialog-content>
   <mat-form-field style="width: 100%">
-    <mat-label>Description</mat-label>
-    <input [(ngModel)]="articleSizeFamily.description" matInput required type="text" />
+    <mat-label>Barcode</mat-label>
+    <input [(ngModel)]="article.barcode"  matInput required type="text"/>
   </mat-form-field>
-  <app-search-by-company [(company)]="articleSizeFamily.providerCompany"></app-search-by-company>
+  <mat-form-field style="width: 100%">
+    <mat-label>Description</mat-label>
+    <input [(ngModel)]="article.description" matInput required type="text" />
+  </mat-form-field>
+  <app-search-by-company [(company)]="article.providerCompany"></app-search-by-company>
   <mat-form-field style="width: 25%; margin-right: 10px">
     <mat-label>Price</mat-label>
-    <input [(ngModel)]="articleSizeFamily.retailPrice" matInput required type="number">
+    <input [(ngModel)]="article.retailPrice" matInput required type="number">
   </mat-form-field>
   <mat-form-field style="width: 25%; margin-right: 10px">
     <mat-label>IVA</mat-label>
-    <mat-select [(ngModel)]="articleSizeFamily.tax">
+    <mat-select [(ngModel)]="article.tax">
       <mat-option *ngFor="let tax of taxValues" [value]="tax">
         {{tax}}
       </mat-option>
@@ -54,7 +58,7 @@
 </mat-radio-group>
 <div mat-dialog-actions>
   <button mat-dialog-close mat-raised-button>Close</button>
-  <button (click)="create()" color="primary" mat-raised-button>Create
+  <button (click)="create()"  [disabled]=invalid() color="primary" mat-raised-button>Create
   </button>
 </div>
 
