@@ -2,11 +2,9 @@
   "name": "betca-tpv-angular",
   "version": "4.3.0-SNAPSHOT",
   "scripts": {
-    "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build",
-    "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "heroku-postbuild": "ng build --prod",
+    "build-prod": "ng build --prod",
+    "start": "node server.js"
   },
   "private": true,
   "dependencies": {
