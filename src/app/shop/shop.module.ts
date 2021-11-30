@@ -17,7 +17,9 @@ import {SearchByBarcodeComponent} from './shared/search-by-barcode.component';
 import {SearchByCompanyComponent} from './shared/search-by-company.component';
 import {ShoppingCartComponent} from './cashier-opened/shopping-cart/shopping-cart.component';
 import {ArticleCreationUpdatingDialogComponent} from './articles/article-creation-updating-dialog.component';
-import {ArticleQuickCreationDialogComponent} from './cashier-opened/shopping-cart/article-quick-creation-dialog.component';
+import {
+  ArticleQuickCreationDialogComponent
+} from './cashier-opened/shopping-cart/article-quick-creation-dialog.component';
 import {CashierDialogComponent} from './cashier-opened/cashier-closure/cashier-dialog.component';
 import {CheckOutDialogComponent} from './cashier-opened/shopping-cart/check-out-dialog.component';
 import {ProviderCreationUpdatingDialogComponent} from './providers/provider-creation-updating-dialog.component';

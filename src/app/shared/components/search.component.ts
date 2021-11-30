@@ -10,7 +10,7 @@ export class SearchComponent {
   @Input() title = 'Search';
   @Input() key: string;
   @Input() keys = of([]);
-  @Input() obligatory = false;
+  @Input() obligatory = "false";
 
   @Output() keyChange = new EventEmitter<string>();
   @Output() renew = new EventEmitter<any>();

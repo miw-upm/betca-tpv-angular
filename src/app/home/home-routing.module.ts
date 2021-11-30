@@ -13,7 +13,12 @@ const routes: Routes = [
     component: HomeComponent,
     children: [
       {path: 'adviser', component: AdviserComponent}, // public
-      {path: 'complaints', component: ComplaintsComponent, canActivate: [RoleGuardService], data: {roles: [Role.CUSTOMER]}}
+      {
+        path: 'complaints',
+        component: ComplaintsComponent,
+        canActivate: [RoleGuardService],
+        data: {roles: [Role.CUSTOMER]}
+      }
     ]
   }
 ];
