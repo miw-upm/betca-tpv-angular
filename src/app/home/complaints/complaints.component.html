@@ -1,0 +1,10 @@
+<mat-card>
+  <mat-card-content>
+    <button (click)="searchAll()" mat-icon-button>
+      <span>Search All</span>
+      <mat-icon>search</mat-icon>
+    </button>
+  </mat-card-content>
+</mat-card>
+<app-crud (create)="create()" (read)="read($event)" (delete)="delete($event)"
+          [data]="complaints" [title]="title" [updateAction]="false"></app-crud>

@@ -3,6 +3,7 @@
   "compileOnSave": false,
   "compilerOptions": {
     "resolveJsonModule": true,
+    "esModuleInterop": true,
     "baseUrl": "src",
     "paths": {
       "@env": ["environments/environment"],
@@ -11,7 +12,6 @@
     },
     "outDir": "./dist/out-tsc",
     "forceConsistentCasingInFileNames": true,
-    "strict": true,
     "noImplicitOverride": true,
     "noPropertyAccessFromIndexSignature": true,
     "noImplicitReturns": true,
@@ -23,7 +23,7 @@
     "moduleResolution": "node",
     "importHelpers": true,
     "target": "es2017",
-    "module": "es2020",
+    "module": "commonjs",
     "lib": [
       "es2020",
       "dom"

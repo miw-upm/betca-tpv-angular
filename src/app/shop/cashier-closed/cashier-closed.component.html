@@ -1,0 +1,11 @@
+<mat-card>
+  <mat-card-title>
+    <mat-icon>account_balance</mat-icon>
+    <mat-icon>lock_outline</mat-icon>
+    Closed Cashier
+  </mat-card-title>
+  <mat-card-content>
+    <h3> Final Cash: {{(cashierLast | async)?.finalCash | number:'1.0-2'}} €</h3>
+    <h3> Closure date: {{(cashierLast | async)?.closureDate | date: 'medium'}} </h3>
+  </mat-card-content>
+</mat-card>

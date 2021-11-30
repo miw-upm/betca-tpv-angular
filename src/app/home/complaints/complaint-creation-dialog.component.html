@@ -1,0 +1,16 @@
+<h2 mat-dialog-title>Create Complaint</h2>
+<mat-dialog-content>
+  <mat-form-field class="full-width">
+    <mat-label>Barcode</mat-label>
+    <input [(ngModel)]="complaint.barcode" matInput required type="text"/>
+  </mat-form-field>
+  <mat-form-field class="full-width">
+    <mat-label>Description</mat-label>
+    <input [(ngModel)]="complaint.description" matInput required type="text"/>
+  </mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button cdkFocusInitial mat-dialog-close mat-raised-button>Close</button>
+  <button (click)="create()" [disabled]=invalid() color="primary" mat-raised-button>Create
+  </button>
+</mat-dialog-actions>

@@ -15,13 +15,13 @@ jobs:
       - run: npm run-script build-prod  # package.json -> "scripts"
     # - run: npm run-script test  # "ng test --no-watch --no-progress --browsers=ChromeHeadlessCI"
       - name: Slack WebHook
-          if: failure()
-          uses: 8398a7/action-slack@v3
-          with:
-            status: ${{ job.status }}
-            fields: repo,author,commit,author,workflow,
-          env:
-            SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        if: failure()
+        uses: 8398a7/action-slack@v3
+        with:
+          status: ${{ job.status }}
+          fields: repo,author,commit,author,workflow,
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
       - name: SonarCloud Scan
         if: success()
         uses: SonarSource/sonarcloud-github-action@master # file: sonar-project.properties

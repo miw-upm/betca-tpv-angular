@@ -1,0 +1,13 @@
+.mat-toolbar {
+  justify-content: space-between;
+  /*  z-index: 998;
+    position: fixed;*/
+}
+
+.center {
+  justify-content: center;
+}
+
+.mat-grid-tile {
+  font-size: xx-large;
+}

@@ -1,0 +1,116 @@
+<mat-card>
+  <mat-card-content>
+    <div class="container">
+      <form>
+        <mat-form-field>
+          <input #code cdkFocusInitial matInput placeholder="Barcode" type="text">
+        </mat-form-field>
+        <button (click)="addBarcode(code.value); code.value=''" [disabled]="code.value === ''" color="primary"
+                mat-icon-button type="submit">
+          <mat-icon>add_circle</mat-icon>
+        </button>
+      </form>
+      <app-search-by-barcode (add)="addBarcode($event)"></app-search-by-barcode>
+      <button color="primary" disabled="disabled" mat-icon-button>
+        <mat-icon>category</mat-icon>
+      </button>
+      <form>
+        <mat-form-field>
+          <input #budge matInput placeholder="Budge" type="text">
+        </mat-form-field>
+        <button [disabled]="budge.value === ''" color="primary" mat-icon-button type="submit">
+          <mat-icon>description</mat-icon>
+        </button>
+      </form>
+      <form>
+        <mat-form-field>
+          <input #mobile matInput placeholder="Customer Discount" type="text">
+        </mat-form-field>
+        <button (click)="addDiscount(mobile.value)" [disabled]="mobile.value === ''" color="primary" mat-icon-button
+                type="submit">
+          <mat-icon>money_off</mat-icon>
+        </button>
+      </form>
+      <form>
+        <mat-form-field>
+          <input #offer matInput placeholder="Offers" type="text">
+        </mat-form-field>
+        <button (click)="addOffer(offer.value)" [disabled]="offer.value === ''" color="primary" mat-icon-button
+                type="submit">
+          <mat-icon>local_atm</mat-icon>
+        </button>
+      </form>
+    </div>
+  </mat-card-content>
+</mat-card>
+<!-------------------------------->
+<mat-card>
+  <mat-card-title>
+    <mat-icon color="primary">shopping_cart</mat-icon>
+    Shopping Cart {{totalShoppingCart| currency:'EUR':'symbol'}}
+  </mat-card-title>
+  <mat-card-content>
+    <mat-table [dataSource]="shoppingCart" class="mat-elevation-z8">
+      <ng-container matColumnDef="id">
+        <mat-header-cell *matHeaderCellDef fxFlex="5%">{{indexShoppingCart + 1}} #</mat-header-cell>
+        <mat-cell *matCellDef="let i = index" fxFlex="5%"> {{i + 1}}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="description">
+        <mat-header-cell *matHeaderCellDef fxFlex="28%"> Description</mat-header-cell>
+        <mat-cell *matCellDef="let item" [matTooltip]="item.barcode" fxFlex="28%"> {{item.description}}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="retailPrice">
+        <mat-header-cell *matHeaderCellDef fxFlex="11%"> Retail Price</mat-header-cell>
+        <mat-cell *matCellDef="let item" fxFlex="11%">{{item.retailPrice}}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="amount">
+        <mat-header-cell *matHeaderCellDef fxFlex="20%"> Nº</mat-header-cell>
+        <mat-cell *matCellDef="let item" fxFlex="20%">
+          <button (click)="decreaseAmount(item)" color="accent" mat-icon-button>
+            <mat-icon>remove_circle_outline</mat-icon>
+          </button>
+          {{item.amount}}
+          <button (click)="incrementAmount(item)" color="accent" mat-icon-button>
+            <mat-icon>add_circle_outline</mat-icon>
+          </button>
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="discount">
+        <mat-header-cell *matHeaderCellDef fxFlex="12%"> %</mat-header-cell>
+        <mat-cell (click)="updateDiscount(item)" *matCellDef="let item" fxFlex="12%">{{item.discount}}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="total">
+        <mat-header-cell *matHeaderCellDef fxFlex="12%"> Total</mat-header-cell>
+        <mat-cell (click)="updateTotal(item)" *matCellDef="let item" fxFlex="12%">{{item.total}}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="actions">
+        <mat-header-cell *matHeaderCellDef fxFlex="15%">
+          <button (click)="exchangeShoppingCart()" mat-button mat-icon-button matSuffix>
+            <mat-icon color="primary">autorenew</mat-icon>
+          </button>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let item" fxFlex="15%">
+          <mat-checkbox (change)="changeCommitted(item)" [checked]="checkboxState(item.state)"
+                        [disabled]="item.amount<0"></mat-checkbox>
+          <button (click)="delete(item)" mat-button mat-icon-button matSuffix>
+            <mat-icon color="warn">close</mat-icon>
+          </button>
+        </mat-cell>
+      </ng-container>
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+  </mat-card-content>
+  <mat-card-content>
+    <button (click)="checkOut()" [disabled]="isEmpty()" color="accent" mat-raised-button>
+      <mat-icon>credit_card</mat-icon>
+      Checkout
+      <mat-icon>euro_symbol</mat-icon>
+    </button>
+    <button (click)="createBudget()" color="primary" disabled="disabled" mat-raised-button>
+      <mat-icon>description</mat-icon>
+      Budget
+    </button>
+  </mat-card-content>
+</mat-card>
+

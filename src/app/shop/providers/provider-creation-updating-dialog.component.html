@@ -1,0 +1,36 @@
+<h2 mat-dialog-title>{{title}}</h2>
+<mat-dialog-content>
+  <mat-form-field class="full-width">
+    <mat-label>Company</mat-label>
+    <input [(ngModel)]="provider.company" id="company" matInput required type="text"/>
+  </mat-form-field>
+  <mat-form-field class="full-width">
+    <mat-label>NIF</mat-label>
+    <input [(ngModel)]="provider.nif" matInput required type="text"/>
+  </mat-form-field>
+  <mat-form-field class="full-width">
+    <mat-label>Phone</mat-label>
+    <input [(ngModel)]="provider.phone" matInput required type="number">
+    <mat-hint align="start">9 digits</mat-hint>
+  </mat-form-field>
+  <mat-form-field class="full-width">
+    <mat-label>E-mail</mat-label>
+    <input [(ngModel)]="provider.email" matInput type="email">
+  </mat-form-field>
+  <mat-form-field class="full-width">
+    <mat-label>Address</mat-label>
+    <input [(ngModel)]="provider.address" matInput type="text"/>
+  </mat-form-field>
+  <mat-form-field class="full-width">
+    <mat-label>Note</mat-label>
+    <input [(ngModel)]="provider.note" matInput type="text"/>
+  </mat-form-field>
+  <mat-slide-toggle [(ngModel)]="provider.active">Active</mat-slide-toggle>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button cdkFocusInitial mat-dialog-close mat-raised-button>Close</button>
+  <button (click)="create()" *ngIf="isCreate()" [disabled]=invalid() color="primary" mat-raised-button>Create
+  </button>
+  <button (click)="update()" *ngIf="!isCreate()" [disabled]=invalid() color="primary" mat-raised-button>Update
+  </button>
+</mat-dialog-actions>
