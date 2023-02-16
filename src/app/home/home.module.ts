@@ -15,9 +15,6 @@ import {AdviserComponent} from './adviser/adviser.component';
     ComplaintCreationDialogComponent,
     HomeComponent,
   ],
-  entryComponents: [
-    ComplaintCreationDialogComponent,
-  ],
   imports: [
     HomeRoutingModule,
     SharedModule,

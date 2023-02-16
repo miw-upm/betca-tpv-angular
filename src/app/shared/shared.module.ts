@@ -51,12 +51,6 @@ import {SearchComponent} from '@shared/components/search.component';
     ReadDetailDialogComponent,
     SearchComponent,
     UppercaseWords,
-  ],
-  entryComponents: [
-    CancelYesDialogComponent,
-    LoginDialogComponent,
-    NumberDialogComponent,
-    ReadDetailDialogComponent,
   ]
 })
 export class SharedModule {

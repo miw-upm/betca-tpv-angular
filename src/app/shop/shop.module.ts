@@ -44,13 +44,6 @@ import {TicketsComponent} from './cashier-opened/tickets/tickets.component';
     ShoppingCartComponent,
     TicketsComponent,
   ],
-  entryComponents: [
-    ArticleCreationUpdatingDialogComponent,
-    ArticleQuickCreationDialogComponent,
-    CashierDialogComponent,
-    CheckOutDialogComponent,
-    ProviderCreationUpdatingDialogComponent,
-  ],
   imports: [
     SharedModule,
     ShopRoutingModule,
