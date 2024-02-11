@@ -54,5 +54,8 @@ export class CrudComponent {
   onDelete(item): void {
     this.delete.emit(item);
   }
+  isArray(obj : any ) {
+    return Array.isArray(obj)
+  }
 
 }
