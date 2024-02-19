@@ -26,6 +26,7 @@ import {ProviderCreationUpdatingDialogComponent} from './providers/provider-crea
 import {ArticleService} from './articles/article.service';
 import {ShopRoutingModule} from './shop-routing.module';
 import {TicketsComponent} from './cashier-opened/tickets/tickets.component';
+import {CustomerPointsService} from "./cashier-opened/shopping-cart/customer-points.service";
 
 @NgModule({
   declarations: [
@@ -56,6 +57,7 @@ import {TicketsComponent} from './cashier-opened/tickets/tickets.component';
     SharedCashierService,
     SharedProviderService,
     ShoppingCartService,
+    CustomerPointsService,
   ],
 })
 export class ShopModule {

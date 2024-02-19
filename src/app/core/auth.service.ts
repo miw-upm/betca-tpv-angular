@@ -75,4 +75,7 @@ export class AuthService {
     return this.user ? this.user.token : undefined;
   }
 
+  getUser(): User {
+    return this.user;
+  }
 }
