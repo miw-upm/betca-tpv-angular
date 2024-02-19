@@ -26,6 +26,8 @@ import {ProviderCreationUpdatingDialogComponent} from './providers/provider-crea
 import {ArticleService} from './articles/article.service';
 import {ShopRoutingModule} from './shop-routing.module';
 import {TicketsComponent} from './cashier-opened/tickets/tickets.component';
+import { MessengerComponent } from './messenger/messenger.component';
+import { MessengerService } from './messenger/messenger.service';
 import {CustomerPointsService} from "./cashier-opened/shopping-cart/customer-points.service";
 
 @NgModule({
@@ -44,6 +46,7 @@ import {CustomerPointsService} from "./cashier-opened/shopping-cart/customer-poi
     ShopComponent,
     ShoppingCartComponent,
     TicketsComponent,
+    MessengerComponent
   ],
   imports: [
     SharedModule,
@@ -57,6 +60,7 @@ import {CustomerPointsService} from "./cashier-opened/shopping-cart/customer-poi
     SharedCashierService,
     SharedProviderService,
     ShoppingCartService,
+    MessengerService,
     CustomerPointsService,
   ],
 })
