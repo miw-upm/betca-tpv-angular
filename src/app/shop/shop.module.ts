@@ -27,6 +27,7 @@ import {ArticleService} from './articles/article.service';
 import {ShopRoutingModule} from './shop-routing.module';
 import {TicketsComponent} from './cashier-opened/tickets/tickets.component';
 import { MessengerComponent } from './messenger/messenger.component';
+import { MessengerService } from './messenger/messenger.service';
 
 @NgModule({
   declarations: [
@@ -58,6 +59,7 @@ import { MessengerComponent } from './messenger/messenger.component';
     SharedCashierService,
     SharedProviderService,
     ShoppingCartService,
+    MessengerService
   ],
 })
 export class ShopModule {

@@ -1,1 +1,39 @@
-<h1>This is MESSENGER ANGULAR COMPONENT</h1>
+<mat-tab-group>
+    <mat-tab label="Received messages">
+        <app-crud [data]="getReceivedMessages()" [readAction]="false" [deleteAction]="false" [createAction]="false"
+            [updateAction]="false" [title]="receiveditle"></app-crud>
+    </mat-tab>
+
+    <mat-tab label="Sent messages">
+        <app-crud [data]="getSentMessages()" [readAction]="false" [deleteAction]="false" [createAction]="false"
+            [updateAction]="false" [title]="sentTitle"></app-crud>
+    </mat-tab>
+
+    <mat-tab label="New Message">
+        <div class="container message-container">
+            <form>
+                <div fxLayout="row" fxLayoutAlign="space-around center" class="message-header">
+                    <mat-form-field appearance="fill" class="width:30%;">
+                        <mat-label>Recipient telephone</mat-label>
+                        <input type="tel" matInput [(ngModel)]="newMessage.toUserMobile" name="toUser" maxLength="9">
+                    </mat-form-field>
+
+                    <mat-form-field appearance="fill" class="width:70%;">
+                        <mat-label>Subject</mat-label>
+                        <input type="text" matInput [(ngModel)]="newMessage.subject" name="subject" maxLength="50">
+                    </mat-form-field>
+                </div>
+
+                <mat-form-field appearance="fill" class="width:100%;">
+                    <mat-label>Message</mat-label>
+                    <textarea matInput rows="6" [(ngModel)]="newMessage.text" name="text"></textarea>
+
+                    <button mat-mini-fab matSuffix color="primary" aria-label="Send message" (click)="sendMessage()"
+                        [disabled]="newMessage.isAllCompleted()">
+                        <mat-icon>send</mat-icon>
+                    </button>
+                </mat-form-field>
+            </form>
+        </div>
+    </mat-tab>
+</mat-tab-group>
