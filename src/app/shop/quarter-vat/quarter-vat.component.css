@@ -1,0 +1,11 @@
+.form-field-spacing {
+  margin-right: 20px;
+}
+
+.title-container {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+

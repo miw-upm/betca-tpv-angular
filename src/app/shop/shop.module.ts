@@ -26,6 +26,8 @@ import {ProviderCreationUpdatingDialogComponent} from './providers/provider-crea
 import {ArticleService} from './articles/article.service';
 import {ShopRoutingModule} from './shop-routing.module';
 import {TicketsComponent} from './cashier-opened/tickets/tickets.component';
+import {QuarterVatComponent} from "./quarter-vat/quarter-vat.component";
+
 
 @NgModule({
   declarations: [
@@ -43,6 +45,7 @@ import {TicketsComponent} from './cashier-opened/tickets/tickets.component';
     ShopComponent,
     ShoppingCartComponent,
     TicketsComponent,
+    QuarterVatComponent
   ],
   imports: [
     SharedModule,
