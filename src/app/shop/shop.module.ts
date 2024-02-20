@@ -32,6 +32,9 @@ import {QuarterVatService} from "./quarter-vat/quarter-vat.service";
 import { MessengerComponent } from './messenger/messenger.component';
 import { MessengerService } from './messenger/messenger.service';
 import {CustomerPointsService} from "./cashier-opened/shopping-cart/customer-points.service";
+import {TagsComponent} from "./tags/tags.component";
+import { TagService} from "./tags/tag.service";
+import { TagCreationReadingUpdatingDialogComponent} from "./tags/tag-creation-reading-updating-dialog.component";
 
 @NgModule({
   declarations: [
@@ -50,7 +53,9 @@ import {CustomerPointsService} from "./cashier-opened/shopping-cart/customer-poi
     ShoppingCartComponent,
     TicketsComponent,
     QuarterVatComponent,
-    MessengerComponent
+    MessengerComponent,
+    TagsComponent,
+    TagCreationReadingUpdatingDialogComponent
   ],
   imports: [
     SharedModule,
@@ -66,7 +71,9 @@ import {CustomerPointsService} from "./cashier-opened/shopping-cart/customer-poi
     ShoppingCartService,
     MessengerService,
     CustomerPointsService,
-    QuarterVatService
+    QuarterVatService,
+    MessengerService,
+    TagService
   ],
 })
 export class ShopModule {
