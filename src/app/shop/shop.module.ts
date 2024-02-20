@@ -30,6 +30,7 @@ import { MessengerComponent } from './messenger/messenger.component';
 import { MessengerService } from './messenger/messenger.service';
 import {TagsComponent} from "./tags/tags.component";
 import { TagService} from "./tags/tag.service";
+import { TagCreationReadingUpdatingDialogComponent} from "./tags/tag-creation-reading-updating-dialog.component";
 
 @NgModule({
   declarations: [
@@ -48,7 +49,8 @@ import { TagService} from "./tags/tag.service";
     ShoppingCartComponent,
     TicketsComponent,
     MessengerComponent,
-    TagsComponent
+    TagsComponent,
+    TagCreationReadingUpdatingDialogComponent
   ],
   imports: [
     SharedModule,

@@ -25,20 +25,26 @@ export class TagService {
     return of(tag);
   }
 
-  update(name: string, tag: Tag): Observable<Tag> {
-    const index = this.mockTags.findIndex(t => t.name === name);
+  update(originalName: string, updatedTag: Tag): Observable<Tag> {
+    const index = this.mockTags.findIndex(t => t.name === originalName);
     if (index > -1) {
-      this.mockTags[index] = tag;
+      this.mockTags[index] = updatedTag;
+    } else {
+      console.error('Tag not found for update:', originalName);
     }
-    return of(tag);
+    return of(this.mockTags[index]);
   }
+
 
   delete(name: string): Observable<void> {
     this.mockTags = this.mockTags.filter(t => t.name !== name);
     return of(undefined);
   }
 
-  search(): Observable<Tag[]> {
-    return of(this.mockTags);
+  search(term: string = ''): Observable<Tag[]> {
+    if (!term.trim()) {
+      return of(this.mockTags);
+    }
+    return of(this.mockTags.filter(tag => tag.name.toLowerCase().includes(term.toLowerCase())));
   }
 }
