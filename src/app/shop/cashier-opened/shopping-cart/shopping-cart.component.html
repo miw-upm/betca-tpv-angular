@@ -40,6 +40,16 @@
           <mat-icon>local_atm</mat-icon>
         </button>
       </form>
+      <form *ngIf="userIsLogged()" class="flex-center-items pb-dot-4">
+        <mat-checkbox
+          [(ngModel)]="usePoints"
+          [disabled]="!(canUsePoints()|async)"
+          (change) = "usePointsChanged()"
+          name = "usePoints"
+          color="primary">
+          Use points
+        </mat-checkbox>
+      </form>
     </div>
   </mat-card-content>
 </mat-card>
@@ -66,11 +76,11 @@
       <ng-container matColumnDef="amount">
         <mat-header-cell *matHeaderCellDef fxFlex="20%"> Nº</mat-header-cell>
         <mat-cell *matCellDef="let item" fxFlex="20%">
-          <button (click)="decreaseAmount(item)" color="accent" mat-icon-button>
+          <button (click)="decreaseAmount(item)" color="accent" mat-icon-button *ngIf="!isDiscountPointsItem(item)">
             <mat-icon>remove_circle_outline</mat-icon>
           </button>
           {{item.amount}}
-          <button (click)="incrementAmount(item)" color="accent" mat-icon-button>
+          <button (click)="incrementAmount(item)" color="accent" mat-icon-button *ngIf="!isDiscountPointsItem(item)">
             <mat-icon>add_circle_outline</mat-icon>
           </button>
         </mat-cell>
@@ -84,15 +94,15 @@
         <mat-cell (click)="updateTotal(item)" *matCellDef="let item" fxFlex="12%">{{item.total}}</mat-cell>
       </ng-container>
       <ng-container matColumnDef="actions">
-        <mat-header-cell *matHeaderCellDef fxFlex="15%">
+        <mat-header-cell *matHeaderCellDef fxFlex="15%" >
           <button (click)="exchangeShoppingCart()" mat-button mat-icon-button matSuffix>
             <mat-icon color="primary">autorenew</mat-icon>
           </button>
         </mat-header-cell>
-        <mat-cell *matCellDef="let item" fxFlex="15%">
+        <mat-cell *matCellDef="let item" fxFlex="15%" >
           <mat-checkbox (change)="changeCommitted(item)" [checked]="checkboxState(item.state)"
-                        [disabled]="item.amount<0"></mat-checkbox>
-          <button (click)="delete(item)" mat-button mat-icon-button matSuffix>
+                        [disabled]="item.amount<0" *ngIf="!isDiscountPointsItem(item)"></mat-checkbox>
+          <button (click)="delete(item)" mat-button mat-icon-button matSuffix *ngIf="!isDiscountPointsItem(item)">
             <mat-icon color="warn">close</mat-icon>
           </button>
         </mat-cell>
