@@ -10,6 +10,7 @@ import {ProvidersComponent} from './providers/providers.component';
 import {ShopComponent} from './shop.component';
 import {TicketsComponent} from './cashier-opened/tickets/tickets.component';
 import { MessengerComponent } from './messenger/messenger.component';
+import {TagsComponent} from "./tags/tags.component";
 
 const routes: Routes = [
   {
@@ -24,6 +25,7 @@ const routes: Routes = [
       {path: 'providers', component: ProvidersComponent},
       {path: 'tickets', component: TicketsComponent},
       {path: 'messenger', component: MessengerComponent},
+      {path: 'tags', component: TagsComponent}
     ]
   }
 ];

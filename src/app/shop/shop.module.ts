@@ -28,6 +28,8 @@ import {ShopRoutingModule} from './shop-routing.module';
 import {TicketsComponent} from './cashier-opened/tickets/tickets.component';
 import { MessengerComponent } from './messenger/messenger.component';
 import { MessengerService } from './messenger/messenger.service';
+import {TagsComponent} from "./tags/tags.component";
+import { TagService} from "./tags/tag.service";
 
 @NgModule({
   declarations: [
@@ -45,7 +47,8 @@ import { MessengerService } from './messenger/messenger.service';
     ShopComponent,
     ShoppingCartComponent,
     TicketsComponent,
-    MessengerComponent
+    MessengerComponent,
+    TagsComponent
   ],
   imports: [
     SharedModule,
@@ -59,7 +62,8 @@ import { MessengerService } from './messenger/messenger.service';
     SharedCashierService,
     SharedProviderService,
     ShoppingCartService,
-    MessengerService
+    MessengerService,
+    TagService
   ],
 })
 export class ShopModule {
