@@ -26,6 +26,9 @@ import {ProviderCreationUpdatingDialogComponent} from './providers/provider-crea
 import {ArticleService} from './articles/article.service';
 import {ShopRoutingModule} from './shop-routing.module';
 import {TicketsComponent} from './cashier-opened/tickets/tickets.component';
+import {QuarterVatComponent} from "./quarter-vat/quarter-vat.component";
+import {QuarterVatService} from "./quarter-vat/quarter-vat.service";
+
 import { MessengerComponent } from './messenger/messenger.component';
 import { MessengerService } from './messenger/messenger.service';
 import {CustomerPointsService} from "./cashier-opened/shopping-cart/customer-points.service";
@@ -46,6 +49,7 @@ import {CustomerPointsService} from "./cashier-opened/shopping-cart/customer-poi
     ShopComponent,
     ShoppingCartComponent,
     TicketsComponent,
+    QuarterVatComponent,
     MessengerComponent
   ],
   imports: [
@@ -62,6 +66,7 @@ import {CustomerPointsService} from "./cashier-opened/shopping-cart/customer-poi
     ShoppingCartService,
     MessengerService,
     CustomerPointsService,
+    QuarterVatService
   ],
 })
 export class ShopModule {
