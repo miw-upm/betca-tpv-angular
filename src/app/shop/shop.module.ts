@@ -27,6 +27,7 @@ import {ArticleService} from './articles/article.service';
 import {ShopRoutingModule} from './shop-routing.module';
 import {TicketsComponent} from './cashier-opened/tickets/tickets.component';
 import {QuarterVatComponent} from "./quarter-vat/quarter-vat.component";
+import {QuarterVatService} from "./quarter-vat/quarter-vat.service";
 
 
 @NgModule({
@@ -59,6 +60,7 @@ import {QuarterVatComponent} from "./quarter-vat/quarter-vat.component";
     SharedCashierService,
     SharedProviderService,
     ShoppingCartService,
+    QuarterVatService
   ],
 })
 export class ShopModule {

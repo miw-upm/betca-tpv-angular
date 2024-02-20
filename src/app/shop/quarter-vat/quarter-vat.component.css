@@ -8,4 +8,11 @@
   gap: 5px;
 }
 
+.mat-column-taxRate,
+.mat-column-baseTax,
+.mat-column-valueTax {
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
 
