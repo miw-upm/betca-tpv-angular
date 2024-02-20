@@ -3,6 +3,7 @@ import {Component, Inject} from '@angular/core';
 import {TicketCreation} from './ticket-creation.model';
 import {ShoppingCartService} from './shopping-cart.service';
 import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import { GiftTicketCreation } from './gift-ticket-creation.model';
 
 @Component({
   templateUrl: 'check-out-dialog.component.html',
@@ -10,6 +11,7 @@ import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
 })
 export class CheckOutDialogComponent {
   ticketCreation: TicketCreation;
+  ticketGiftCreation: GiftTicketCreation;
   totalPurchase: number;
   requestedInvoice = false;
   requestedGiftTicket = false;
@@ -18,6 +20,7 @@ export class CheckOutDialogComponent {
   constructor(@Inject(MAT_DIALOG_DATA) data, private dialogRef: MatDialogRef<CheckOutDialogComponent>,
               private shoppingCartService: ShoppingCartService) {
     this.ticketCreation = {cash: 0, card: 0, voucher: 0, shoppingList: data, note: ''};
+    this.ticketGiftCreation = {message: ''};
     this.total();
   }
 
@@ -151,7 +154,7 @@ export class CheckOutDialogComponent {
     if (returned > 0) {
       this.ticketCreation.note += ' Return: ' + this.round(returned) + '.';
     }
-    this.shoppingCartService.createTicketAndPrintReceipts(this.ticketCreation, voucher,
+    this.shoppingCartService.createTicketAndPrintReceipts(this.ticketCreation, this.ticketGiftCreation, voucher,
       this.requestedInvoice, this.requestedGiftTicket, this.requestedDataProtectionAct)
       .subscribe(() => this.dialogRef.close(true));
   }

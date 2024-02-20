@@ -29,6 +29,9 @@ import {TicketsComponent} from './cashier-opened/tickets/tickets.component';
 import {QuarterVatComponent} from "./quarter-vat/quarter-vat.component";
 import {QuarterVatService} from "./quarter-vat/quarter-vat.service";
 
+import { MessengerComponent } from './messenger/messenger.component';
+import { MessengerService } from './messenger/messenger.service';
+import {CustomerPointsService} from "./cashier-opened/shopping-cart/customer-points.service";
 
 @NgModule({
   declarations: [
@@ -46,7 +49,8 @@ import {QuarterVatService} from "./quarter-vat/quarter-vat.service";
     ShopComponent,
     ShoppingCartComponent,
     TicketsComponent,
-    QuarterVatComponent
+    QuarterVatComponent,
+    MessengerComponent
   ],
   imports: [
     SharedModule,
@@ -60,6 +64,8 @@ import {QuarterVatService} from "./quarter-vat/quarter-vat.service";
     SharedCashierService,
     SharedProviderService,
     ShoppingCartService,
+    MessengerService,
+    CustomerPointsService,
     QuarterVatService
   ],
 })
