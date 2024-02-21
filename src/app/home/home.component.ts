@@ -11,7 +11,7 @@ import {AuthService} from '@core/auth.service';
 export class HomeComponent {
   title = 'TPV';
   username = undefined;
-
+  Adviser = 'New';
   constructor(private dialog: MatDialog, private authService: AuthService) {
   }
 

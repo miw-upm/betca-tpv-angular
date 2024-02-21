@@ -7,6 +7,7 @@ import {ShoppingBasketService} from './shopping-basket/shopping-basket.service';
 import {ComplaintCreationDialogComponent} from './complaints/complaint-creation-dialog.component';
 import {ComplaintsComponent} from './complaints/complaints.component';
 import {AdviserComponent} from './adviser/adviser.component';
+import {CarouselModule} from "@shared/components/carousel/carousel.module";
 
 @NgModule({
   declarations: [
@@ -15,10 +16,11 @@ import {AdviserComponent} from './adviser/adviser.component';
     ComplaintCreationDialogComponent,
     HomeComponent,
   ],
-  imports: [
-    HomeRoutingModule,
-    SharedModule,
-  ],
+    imports: [
+        HomeRoutingModule,
+        SharedModule,
+        CarouselModule,
+    ],
   providers: [
     ShoppingBasketService,
   ]
