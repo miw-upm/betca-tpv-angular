@@ -16,7 +16,6 @@ import {CrudComponent} from '@shared/components/crud.component';
 import {DateComponent} from '@shared/components/date.component';
 import {FooterComponent} from '@shared/components/footer.component';
 import {SearchComponent} from '@shared/components/search.component';
-import {SearchByBarcodeComponent} from "../shop/shared/search-by-barcode.component";
 import {CustomerPointsMenuItemComponent} from "@shared/components/customer-points-menu-item.component";
 import {CustomerPointsService} from "@shared/services/customer-points.service";
 
@@ -38,7 +37,6 @@ import {CustomerPointsService} from "@shared/services/customer-points.service";
     NumberDialogComponent,
     ReadDetailDialogComponent,
     SearchComponent,
-    SearchByBarcodeComponent,
     UppercaseWords,
   ],
   exports: [
@@ -56,7 +54,6 @@ import {CustomerPointsService} from "@shared/services/customer-points.service";
     NumberDialogComponent,
     ReadDetailDialogComponent,
     SearchComponent,
-    SearchByBarcodeComponent,
     UppercaseWords,
   ],
   providers: [

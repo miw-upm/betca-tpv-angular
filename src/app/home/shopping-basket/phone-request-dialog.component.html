@@ -1,0 +1,14 @@
+<h3 mat-dialog-title>Enter a phone number</h3>
+<mat-dialog-content>
+  <mat-form-field>
+    <input [(ngModel)]="mobile" matInput placeholder="Mobile" type="text"/>
+    <button (click)="mobile=undefined" *ngIf="mobile" aria-label="Clear" cdkFocusInitial mat-button mat-icon-button
+            matSuffix>
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button (click)="sendPhone()" mat-button>Submit</button>
+</mat-dialog-actions>

@@ -34,6 +34,7 @@ import {TagsComponent} from "./tags/tags.component";
 import { TagService} from "./tags/tag.service";
 import { TagCreationReadingUpdatingDialogComponent} from "./tags/tag-creation-reading-updating-dialog.component";
 import {CustomerPointsService} from "@shared/services/customer-points.service";
+import {SearchByBarcodeComponent} from "./shared/search-by-barcode.component";
 import { BudgetsComponent } from './budgets/budgets.component';
 import {BudgetsService} from './budgets/budgets.service';
 
@@ -48,6 +49,7 @@ import {BudgetsService} from './budgets/budgets.service';
     CheckOutDialogComponent,
     ProviderCreationUpdatingDialogComponent,
     ProvidersComponent,
+    SearchByBarcodeComponent,
     SearchByCompanyComponent,
     ShopComponent,
     ShoppingCartComponent,

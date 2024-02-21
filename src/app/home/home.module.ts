@@ -12,12 +12,18 @@ import {CarouselModule} from "@shared/components/carousel/carousel.module";
 import { AdviserNewComponent } from './adviser/adviser-new/adviser-new.component';
 import { AdviserPopularComponent } from './adviser/adviser-popular/adviser-popular.component';
 import { Top5Component } from './adviser/top5/top5.component';
+import {SearchByDescriptionComponent} from "./shared/search-by-description.component";
+import {PhoneRequestDialogComponent} from "./shopping-basket/phone-request-dialog.component";
+import {OnlineOrdersComponent} from "./online-orders/online-orders.component";
 
 @NgModule({
   declarations: [
+    SearchByDescriptionComponent,
     ComplaintsComponent,
+    PhoneRequestDialogComponent,
     ComplaintCreationDialogComponent,
     HomeComponent,
+    OnlineOrdersComponent,
     ShoppingBasketComponent,
     AdviserNewComponent,
     AdviserPopularComponent,
