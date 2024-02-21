@@ -78,12 +78,11 @@ export class TagCreationReadingUpdatingDialogComponent implements OnInit {
 
   fetchInitialArticles(): void {
     this.articleService.search({}).subscribe(articles => {
-      this.articles = articles.slice(0, 5); // Get only the first 5 articles
+      this.articles = articles.slice(0, 5);
     });
   }
 
   searchArticles(): void {
-    // If search fields are empty, fetch initial articles instead of performing a search
     if (!this.articleSearch.barcode && !this.articleSearch.description) {
       this.fetchInitialArticles();
       return;
@@ -102,4 +101,23 @@ export class TagCreationReadingUpdatingDialogComponent implements OnInit {
     return JSON.parse(JSON.stringify(tag));
   }
 
+  hasArticles(): boolean {
+    return this.tag.articles && this.tag.articles.length > 0;
+  }
+
+  isFormValid(): boolean {
+    return this.tag.name.trim() !== '' && this.tag.group.trim() !== '';
+  }
+
+  onSubmit(): void {
+    if (this.isCreate()) {
+      this.create();
+    } else {
+      this.update();
+    }
+  }
+
+  showCreateUpdateButton(): string {
+    return this.isCreate() ? 'Create' : 'Update';
+  }
 }
