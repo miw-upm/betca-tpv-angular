@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 
 import {ShoppingBasketService} from './shopping-basket.service';
 import {AuthService} from "@core/auth.service";
@@ -11,7 +11,7 @@ import {PhoneRequestDialogComponent} from "./phone-request-dialog.component";
   styleUrls: ['shopping-basket.component.css'],
   templateUrl: 'shopping-basket.component.html'
 })
-export class ShoppingBasketComponent implements OnInit {
+export class ShoppingBasketComponent implements AfterViewInit {
   barcode: string;
   displayedColumns = ['id', 'description', 'retailPrice', 'amount', 'actions'];
   shoppingBasket: Shopping[] = [];
@@ -32,7 +32,7 @@ export class ShoppingBasketComponent implements OnInit {
     this.synchronizeShoppingBasket();
   }
 
-  ngOnInit(): void {
+  ngAfterViewInit(): void {
     this.elementRef.nativeElement.focus();
     this.shoppingBasket = [];
     this.synchronizeShoppingBasket();
