@@ -14,6 +14,7 @@ import { AdviserPopularComponent } from './adviser/adviser-popular/adviser-popul
 import { Top5Component } from './adviser/top5/top5.component';
 import {SearchByDescriptionComponent} from "./shared/search-by-description.component";
 import {PhoneRequestDialogComponent} from "./shopping-basket/phone-request-dialog.component";
+import {OnlineOrdersComponent} from "./online-orders/online-orders.component";
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import {PhoneRequestDialogComponent} from "./shopping-basket/phone-request-dialo
     PhoneRequestDialogComponent,
     ComplaintCreationDialogComponent,
     HomeComponent,
+    OnlineOrdersComponent,
     ShoppingBasketComponent,
     AdviserNewComponent,
     AdviserPopularComponent,
