@@ -32,4 +32,7 @@ export class HomeComponent {
     return this.authService.isAuthenticated();
   }
 
+  search(value): void {
+  }
+
 }
