@@ -14,10 +14,11 @@ export class BudgetsService {
   private budgetList: Budget[] = [
     { reference: '123456', creationDate: new Date('2024-02-21'), shoppings: [] },
     { reference: '234567', creationDate: new Date('2024-02-22'), shoppings: [] },
-    { reference: '345678', creationDate: new Date('2024-02-23'), shoppings: [] },
+    { reference: '345678', creationDate: new Date('2024-02-23'), shoppings: [] }
   ];
 
-  constructor(private httpService: HttpService) {  }
+  constructor(private httpService: HttpService) {
+  }
 
   read(reference: string): Observable<Budget> {
     const budget = this.budgetList.find(b => b.reference === reference);
