@@ -9,6 +9,7 @@ import {ComplaintsComponent} from './complaints/complaints.component';
 import {AdviserComponent} from './adviser/adviser.component';
 import {ShoppingBasketComponent} from "./shopping-basket/shopping-basket.component";
 import {ShopModule} from "../shop/shop.module";
+import {CarouselModule} from "@shared/components/carousel/carousel.module";
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import {ShopModule} from "../shop/shop.module";
     HomeRoutingModule,
     SharedModule,
     ShopModule,
+    CarouselModule,
   ],
   providers: [
     ShoppingBasketService,
