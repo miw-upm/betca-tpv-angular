@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { TagService} from "../../shop/tags/tag.service";
 import { Article} from "../shared/article.model";
+import {SlideInterface} from "@shared/components/carousel/slide.interface";
 
 @Component({
   selector: 'app-adviser',
@@ -10,6 +11,7 @@ import { Article} from "../shared/article.model";
 })
 export class AdviserComponent implements OnInit {
   articles: Article[] = [];
+  slides: SlideInterface[] = [];
   selectedTag: string = '';
 
   constructor(private tagService: TagService, private route: ActivatedRoute) {}
@@ -27,6 +29,7 @@ export class AdviserComponent implements OnInit {
     this.tagService.read(tagName).subscribe(tag => {
       if (tag) {
         this.articles = tag.articles;
+        this.prepareSlides();
       } else {
         this.articles = [];
         console.error('Tag not found:', tagName);
@@ -34,7 +37,11 @@ export class AdviserComponent implements OnInit {
     });
   }
 
-  addToBasket(article: Article): void {
-    // TODO: implement
+  prepareSlides(): void {
+    this.slides = this.articles.map(article => ({
+      description: article.description,
+      strip: this.selectedTag ? this.selectedTag : '',
+      url: null
+    }));
   }
 }
