@@ -64,10 +64,10 @@
   <button [matMenuTriggerFor]="adviser" mat-button>Adviser</button>
   <mat-menu #adviser="matMenu">
     <button mat-menu-item>Sale</button>
-    <button mat-menu-item>Popular</button>
-    <button mat-menu-item>New</button>
+    <button mat-menu-item><a class="noLinkStyle" routerLink="/home/adviser/popular">Popular</a></button>
+    <button mat-menu-item><a class="noLinkStyle" routerLink="/home/adviser/new">New</a></button>
   </mat-menu>
-  <button mat-button>Top 5</button>
+  <button mat-button><a class="noLinkStyle" routerLink="/home/top5">Top5</a></button>
 </mat-toolbar>
 
 <router-outlet></router-outlet>
