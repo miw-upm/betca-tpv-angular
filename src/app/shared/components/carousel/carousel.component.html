@@ -1,0 +1,33 @@
+<div class="slider">
+  <div>
+    <div (click)="goToPrevious()" class="leftArrow">❰</div>
+    <div (click)="goToNext()" class="rightArrow">❱</div>
+  </div>
+  <div
+    class="slide"
+    [ngStyle]="{ 'background-image': getCurrentSlideImageUrl() }"
+    [ngClass] = "class"
+  >
+    <div *ngIf = "getCurrentSlideStrip()">
+      <img src="http://www.savoy-sharm.com/media-room/images/hi-res/king-bed-room-accommodation-savoy-luxury-5-stars-accommodation-sharm-el-sheikh.jpg" alt="" />
+      <a class="strip" href="https://abc.com/">{{ getCurrentSlideStrip() }}</a>
+    </div>
+    <div class="description">
+      <div>
+        {{ getCurrentSlideDescription() }}
+      </div>
+      <div *ngIf="getCurrentSlideUrl()" style="margin-left: 5px" >
+        <a href="{{getCurrentSlideUrl()}}" style="color: #fff">(Añadir al Carrito)</a>
+      </div>
+    </div>
+  </div>
+  <div class="dotsContainer">
+    <div
+      *ngFor="let slide of slides; let slideIndex = index"
+      class="dot"
+      (click)="goToSlide(slideIndex)"
+    >
+      ●
+    </div>
+  </div>
+</div>
