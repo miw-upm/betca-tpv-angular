@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { TagService} from "../../shop/tags/tag.service";
-import { Article} from "../shared/article.model";
-import {SlideInterface} from "@shared/components/carousel/slide.interface";
+import { ActivatedRoute, Router } from '@angular/router';
+import { TagService } from "../../shop/tags/tag.service";
+import { Article } from "../shared/article.model";
+import { SlideInterface } from "@shared/components/carousel/slide.interface";
 
 @Component({
   selector: 'app-adviser',
@@ -14,16 +14,23 @@ export class AdviserComponent implements OnInit {
   slides: SlideInterface[] = [];
   selectedTag: string = '';
 
-  constructor(private tagService: TagService, private route: ActivatedRoute) {}
+  constructor(
+    private tagService: TagService,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {}
 
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
-      this.selectedTag = params['tag'];
-      if (this.selectedTag) {
+      this.selectedTag = params['tag'] || 'New';
+      if (!params['tag']) {
+        this.redirectToNewTagView();
+      } else {
         this.loadArticles(this.selectedTag);
       }
     });
   }
+
 
   loadArticles(tagName: string): void {
     this.tagService.read(tagName).subscribe(tag => {
@@ -32,7 +39,7 @@ export class AdviserComponent implements OnInit {
         this.prepareSlides();
       } else {
         this.articles = [];
-        console.error('Tag not found:', tagName);
+        this.redirectToNewTagView();
       }
     });
   }
@@ -40,8 +47,22 @@ export class AdviserComponent implements OnInit {
   prepareSlides(): void {
     this.slides = this.articles.map(article => ({
       description: article.description,
-      strip: this.selectedTag ? this.selectedTag : '',
+      strip: this.selectedTag,
       url: null
     }));
+  }
+
+  private redirectToNewTagView(): void {
+    this.router.navigate(['/home/adviser'], { queryParams: { tag: 'New' } })
+      .then(success => {
+        if (success) {
+          console.log('Redirected to /adviser with tag=New');
+        } else {
+          console.error('Failed to redirect to /adviser with tag=New');
+        }
+      })
+      .catch(error => {
+        console.error('Error during navigation:', error);
+      });
   }
 }
