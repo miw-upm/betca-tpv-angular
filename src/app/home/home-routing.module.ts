@@ -6,6 +6,7 @@ import {RoleGuardService} from '@core/role-guard.service';
 import {AdviserComponent} from './adviser/adviser.component';
 import {ComplaintsComponent} from './complaints/complaints.component';
 import {HomeComponent} from './home.component';
+import {ShoppingBasketComponent} from "./shopping-basket/shopping-basket.component";
 
 const routes: Routes = [
   {
@@ -18,7 +19,8 @@ const routes: Routes = [
         component: ComplaintsComponent,
         canActivate: [RoleGuardService],
         data: {roles: [Role.CUSTOMER]}
-      }
+      },
+      {path: 'shopping-basket', component: ShoppingBasketComponent}
     ]
   }
 ];

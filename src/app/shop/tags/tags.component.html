@@ -1,0 +1,11 @@
+<!-- tags.component.html -->
+<div class="tags-container">
+  <div class="search-container">
+    <span class="search-label">Search Tags:</span>
+    <mat-form-field appearance="outline" class="search-field">
+      <mat-icon matPrefix>search</mat-icon>
+      <input matInput placeholder="Enter tag name" #searchTerm (keyup)="search(searchTerm.value)">
+    </mat-form-field>
+  </div>
+  <app-crud (create)="create()" (read)="read($event)" (update)="update($event)" (delete)="delete($event)" [data]="tags" [title]="title"></app-crud>
+</div>
