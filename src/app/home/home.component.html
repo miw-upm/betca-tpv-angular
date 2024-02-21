@@ -67,7 +67,7 @@
     <button mat-menu-item [routerLink]="['/home/adviser']" [queryParams]="{ tag: 'Popular' }">Popular</button>
     <button mat-menu-item [routerLink]="['/home/adviser']" [queryParams]="{ tag: 'New' }">New</button>
   </mat-menu>
-  <button mat-button>Top 5</button>
+  <button mat-button><a class="noLinkStyle" routerLink="/home/top5">Top5</a></button>
 </mat-toolbar>
 
 <router-outlet></router-outlet>
