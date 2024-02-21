@@ -18,6 +18,7 @@ import {FooterComponent} from '@shared/components/footer.component';
 import {SearchComponent} from '@shared/components/search.component';
 import {SearchByBarcodeComponent} from "../shop/shared/search-by-barcode.component";
 import {CustomerPointsMenuItemComponent} from "@shared/components/customer-points-menu-item.component";
+import {CustomerPointsService} from "@shared/services/customer-points.service";
 
 @NgModule({
   imports: [
@@ -57,6 +58,9 @@ import {CustomerPointsMenuItemComponent} from "@shared/components/customer-point
     SearchComponent,
     SearchByBarcodeComponent,
     UppercaseWords,
+  ],
+  providers: [
+    CustomerPointsService
   ]
 })
 export class SharedModule {
