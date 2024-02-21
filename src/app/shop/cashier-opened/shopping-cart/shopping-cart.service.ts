@@ -11,6 +11,7 @@ import {ArticleQuickCreationDialogComponent} from './article-quick-creation-dial
 
 import {ShoppingState} from './shopping-state.model';
 import {EndPoints} from '@shared/end-points';
+import { GiftTicketCreation } from './gift-ticket-creation.model';
 
 @Injectable({
   providedIn: 'root',
@@ -54,7 +55,7 @@ export class ShoppingCartService {
       );
   }
 
-  createTicketAndPrintReceipts(ticketCreation: TicketCreation, voucher: number, requestedInvoice: boolean, requestedGiftTicket: boolean,
+  createTicketAndPrintReceipts(ticketCreation: TicketCreation, giftTicketCreation: GiftTicketCreation, voucher: number, requestedInvoice: boolean, requestedGiftTicket: boolean,
                                requestDataProtectionAct: boolean): Observable<void> {
     return this.httpService
       .post(EndPoints.TICKETS, ticketCreation)
@@ -63,7 +64,7 @@ export class ShoppingCartService {
           let receipts = this.printTicket(ticket.id);
           receipts = iif(() => voucher > 0, merge(receipts, this.createVoucherAndPrint(voucher)), receipts);
           receipts = iif(() => requestedInvoice, merge(receipts, this.createInvoiceAndPrint(ticket.id)), receipts);
-          receipts = iif(() => requestedGiftTicket, merge(receipts, this.createGiftTicketAndPrint(ticket.id)), receipts);
+          receipts = iif(() => requestedGiftTicket, merge(receipts, this.createGiftTicketAndPrint(ticket.id, giftTicketCreation)), receipts);
           receipts = iif(() => requestDataProtectionAct, merge(receipts, this.createDataProtectionActAndPrint(ticket)), receipts);
           return receipts;
         })// ,switchMap(() => EMPTY)
@@ -82,11 +83,18 @@ export class ShoppingCartService {
     return EMPTY; // TODO change EMPTY
   }
 
-  createGiftTicketAndPrint(ticketId: string): Observable<void> {
+  createGiftTicketAndPrint(ticketId: string, giftTicketCreation: GiftTicketCreation): Observable<void> {
+    alert('Gift ticket creation not implemented yet. You wrote: ' + giftTicketCreation.message);
     return EMPTY; // TODO change EMPTY
   }
 
   createDataProtectionActAndPrint(ticket): Observable<void> {
     return EMPTY; // TODO change EMPTY
+  }
+  getPointsDiscountShopping(): Observable<Shopping> {
+    return this.articleService.getPointsDiscountArticle()
+      .pipe(
+        map(article=>new Shopping(article.barcode,article.description,article.retailPrice))
+      );
   }
 }

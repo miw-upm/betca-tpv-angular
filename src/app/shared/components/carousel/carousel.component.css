@@ -113,7 +113,6 @@
   text-shadow: 0 0 0.75em #444;
   box-shadow: 0 0 0.5em rgba(0,0,0,0.5);
   font: bold 16px/1.2em Arial, Sans-Serif;
-  -webkit-text-shadow: 0 0 0.75em #444;
   -webkit-box-shadow: 0 0 0.5em rgba(0,0,0,0.5);
   -webkit-transform: rotate(-45deg) scale(0.75,1);
   z-index:10;
@@ -127,6 +126,5 @@
   position: absolute;
   margin: -0.3em -5em;
   transform: scale(0.7);
-  -webkit-transform: scale(0.7);
   border: 2px rgba(255,255,255,0.7) dashed;
 }

@@ -38,9 +38,13 @@
   <mat-checkbox [(ngModel)]="requestedInvoice" [disabled]="invalidInvoice()">
     <span> Create Invoice</span>
   </mat-checkbox>
-  <mat-checkbox [(ngModel)]="requestedGiftTicket" [disabled]="true">
+  <mat-checkbox [(ngModel)]="requestedGiftTicket">
     <span>Create Gift Ticket</span>
   </mat-checkbox>
+  <mat-form-field *ngIf="requestedGiftTicket">
+    <mat-label>Leave a message</mat-label>
+    <textarea [(ngModel)]="ticketGiftCreation.message" matInput placeholder="Because you deserve it sweety!"></textarea>
+  </mat-form-field>
   <mat-checkbox [(ngModel)]="requestedDataProtectionAct" [disabled]="true">
     <span>Data Protection Act</span>
   </mat-checkbox>

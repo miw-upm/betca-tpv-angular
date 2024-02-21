@@ -13,7 +13,6 @@ import {CashierClosedComponent} from './cashier-closed/cashier-closed.component'
 import {CashierOpenedComponent} from './cashier-opened/cashier-opened.component';
 import {ShopComponent} from './shop.component';
 import {ProvidersComponent} from './providers/providers.component';
-import {SearchByBarcodeComponent} from './shared/search-by-barcode.component';
 import {SearchByCompanyComponent} from './shared/search-by-company.component';
 import {ShoppingCartComponent} from './cashier-opened/shopping-cart/shopping-cart.component';
 import {ArticleCreationUpdatingDialogComponent} from './articles/article-creation-updating-dialog.component';
@@ -26,6 +25,15 @@ import {ProviderCreationUpdatingDialogComponent} from './providers/provider-crea
 import {ArticleService} from './articles/article.service';
 import {ShopRoutingModule} from './shop-routing.module';
 import {TicketsComponent} from './cashier-opened/tickets/tickets.component';
+import {QuarterVatComponent} from "./quarter-vat/quarter-vat.component";
+import {QuarterVatService} from "./quarter-vat/quarter-vat.service";
+
+import { MessengerComponent } from './messenger/messenger.component';
+import { MessengerService } from './messenger/messenger.service';
+import {TagsComponent} from "./tags/tags.component";
+import { TagService} from "./tags/tag.service";
+import { TagCreationReadingUpdatingDialogComponent} from "./tags/tag-creation-reading-updating-dialog.component";
+import {CustomerPointsService} from "@shared/services/customer-points.service";
 
 @NgModule({
   declarations: [
@@ -38,11 +46,14 @@ import {TicketsComponent} from './cashier-opened/tickets/tickets.component';
     CheckOutDialogComponent,
     ProviderCreationUpdatingDialogComponent,
     ProvidersComponent,
-    SearchByBarcodeComponent,
     SearchByCompanyComponent,
     ShopComponent,
     ShoppingCartComponent,
     TicketsComponent,
+    QuarterVatComponent,
+    MessengerComponent,
+    TagsComponent,
+    TagCreationReadingUpdatingDialogComponent
   ],
   imports: [
     SharedModule,
@@ -56,6 +67,11 @@ import {TicketsComponent} from './cashier-opened/tickets/tickets.component';
     SharedCashierService,
     SharedProviderService,
     ShoppingCartService,
+    MessengerService,
+    CustomerPointsService,
+    QuarterVatService,
+    MessengerService,
+    TagService
   ],
 })
 export class ShopModule {

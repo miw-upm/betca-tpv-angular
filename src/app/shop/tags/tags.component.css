@@ -1,0 +1,33 @@
+.tags-container {
+  display: flex;
+  flex-direction: column;
+  margin: 20px;
+}
+
+.search-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.search-label {
+  font-size: 18px;
+  margin-right: 10px;
+  font-weight: 500;
+}
+
+.search-field {
+  flex-grow: 1;
+  max-width: 500px;
+}
+
+mat-form-field {
+  width: 100%;
+  border-radius: 4px;
+  background: #fff;
+  box-shadow: 0 3px 6px #00000029;
+}
+
+mat-icon {
+  color: rgba(0, 0, 0, 0.54);
+}
