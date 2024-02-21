@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { of } from 'rxjs';
 
-import { Tag } from '../shared/services/models/tag.model';
+import { Tag } from '@shared/models/tag.model';
 import { TagService } from './tag.service';
 import { TagCreationReadingUpdatingDialogComponent} from "./tag-creation-reading-updating-dialog.component";
 
