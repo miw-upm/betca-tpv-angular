@@ -34,6 +34,7 @@ import {TagsComponent} from "./tags/tags.component";
 import { TagService} from "./tags/tag.service";
 import { TagCreationReadingUpdatingDialogComponent} from "./tags/tag-creation-reading-updating-dialog.component";
 import {CustomerPointsService} from "@shared/services/customer-points.service";
+import {SearchByBarcodeComponent} from "./shared/search-by-barcode.component";
 
 @NgModule({
   declarations: [
@@ -46,6 +47,7 @@ import {CustomerPointsService} from "@shared/services/customer-points.service";
     CheckOutDialogComponent,
     ProviderCreationUpdatingDialogComponent,
     ProvidersComponent,
+    SearchByBarcodeComponent,
     SearchByCompanyComponent,
     ShopComponent,
     ShoppingCartComponent,

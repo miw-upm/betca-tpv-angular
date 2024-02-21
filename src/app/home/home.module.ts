@@ -10,11 +10,15 @@ import {AdviserComponent} from './adviser/adviser.component';
 import {ShoppingBasketComponent} from "./shopping-basket/shopping-basket.component";
 import {ShopModule} from "../shop/shop.module";
 import {CarouselModule} from "@shared/components/carousel/carousel.module";
+import {SearchByDescriptionComponent} from "./shared/search-by-description.component";
+import {PhoneRequestDialogComponent} from "./shopping-basket/phone-request-dialog.component";
 
 @NgModule({
   declarations: [
+    SearchByDescriptionComponent,
     AdviserComponent,
     ComplaintsComponent,
+    PhoneRequestDialogComponent,
     ComplaintCreationDialogComponent,
     HomeComponent,
     ShoppingBasketComponent
