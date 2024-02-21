@@ -47,7 +47,7 @@
 
   <div *ngIf="readOnly">
     <h3>Articles</h3>
-    <mat-list *ngIf="tag.articles.length; else noArticles">
+    <mat-list *ngIf="hasArticles(); else noArticles">
       <mat-list-item *ngFor="let article of tag.articles">
         {{ article.description }} ({{ article.barcode }})
       </mat-list-item>
@@ -57,7 +57,7 @@
     </ng-template>
   </div>
 </mat-dialog-content>
-<mat-dialog-actions class="dialog-actions-end" *ngIf="!readOnly">
+<mat-dialog-actions class="dialog-actions-end" *ngIf="!readOnly && isFormValid()">
   <button mat-button [mat-dialog-close]="true">Cancel</button>
-  <button mat-raised-button color="primary" (click)="isCreate() ? create() : update()">{{isCreate() ? 'Create' : 'Update'}}</button>
+  <button mat-raised-button color="primary" (click)="onSubmit()">{{showCreateUpdateButton()}}</button>
 </mat-dialog-actions>
