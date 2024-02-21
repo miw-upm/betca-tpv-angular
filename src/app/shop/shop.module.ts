@@ -13,7 +13,6 @@ import {CashierClosedComponent} from './cashier-closed/cashier-closed.component'
 import {CashierOpenedComponent} from './cashier-opened/cashier-opened.component';
 import {ShopComponent} from './shop.component';
 import {ProvidersComponent} from './providers/providers.component';
-import {SearchByBarcodeComponent} from './shared/search-by-barcode.component';
 import {SearchByCompanyComponent} from './shared/search-by-company.component';
 import {ShoppingCartComponent} from './cashier-opened/shopping-cart/shopping-cart.component';
 import {ArticleCreationUpdatingDialogComponent} from './articles/article-creation-updating-dialog.component';
@@ -47,7 +46,6 @@ import { TagCreationReadingUpdatingDialogComponent} from "./tags/tag-creation-re
     CheckOutDialogComponent,
     ProviderCreationUpdatingDialogComponent,
     ProvidersComponent,
-    SearchByBarcodeComponent,
     SearchByCompanyComponent,
     ShopComponent,
     ShoppingCartComponent,
