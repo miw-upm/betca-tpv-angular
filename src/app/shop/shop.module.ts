@@ -13,7 +13,6 @@ import {CashierClosedComponent} from './cashier-closed/cashier-closed.component'
 import {CashierOpenedComponent} from './cashier-opened/cashier-opened.component';
 import {ShopComponent} from './shop.component';
 import {ProvidersComponent} from './providers/providers.component';
-import {SearchByBarcodeComponent} from './shared/search-by-barcode.component';
 import {SearchByCompanyComponent} from './shared/search-by-company.component';
 import {ShoppingCartComponent} from './cashier-opened/shopping-cart/shopping-cart.component';
 import {ArticleCreationUpdatingDialogComponent} from './articles/article-creation-updating-dialog.component';
@@ -31,10 +30,10 @@ import {QuarterVatService} from "./quarter-vat/quarter-vat.service";
 
 import { MessengerComponent } from './messenger/messenger.component';
 import { MessengerService } from './messenger/messenger.service';
-import {CustomerPointsService} from "./cashier-opened/shopping-cart/customer-points.service";
 import {TagsComponent} from "./tags/tags.component";
 import { TagService} from "./tags/tag.service";
 import { TagCreationReadingUpdatingDialogComponent} from "./tags/tag-creation-reading-updating-dialog.component";
+import {CustomerPointsService} from "@shared/services/customer-points.service";
 
 @NgModule({
   declarations: [
@@ -47,7 +46,6 @@ import { TagCreationReadingUpdatingDialogComponent} from "./tags/tag-creation-re
     CheckOutDialogComponent,
     ProviderCreationUpdatingDialogComponent,
     ProvidersComponent,
-    SearchByBarcodeComponent,
     SearchByCompanyComponent,
     ShopComponent,
     ShoppingCartComponent,
