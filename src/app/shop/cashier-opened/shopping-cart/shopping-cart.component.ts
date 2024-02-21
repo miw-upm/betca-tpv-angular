@@ -8,9 +8,9 @@ import {MatDialog} from '@angular/material/dialog';
 import {ShoppingState} from './shopping-state.model';
 import {NumberDialogComponent} from '@shared/dialogs/number-dialog.component';
 import {AuthService} from "@core/auth.service";
-import {CustomerPointsService} from "./customer-points.service";
+import {CustomerPointsService} from "@shared/services/customer-points.service";
 import {map} from "rxjs/operators";
-import {CustomerPointsConstants} from "./customer-points.model";
+import {CustomerPointsConstants} from "@shared/models/customer-points.model";
 
 @Component({
   selector: 'app-shopping-cart',
@@ -43,7 +43,6 @@ export class ShoppingCartComponent implements OnInit {
     this.elementRef.nativeElement.focus();
     this.shoppingCart = [];
     this.synchronizeShoppingCart();
-    this.customerPointsService.refreshCustomerPoints();
   }
 
   synchronizeShoppingCart(): void {
@@ -156,7 +155,6 @@ export class ShoppingCartComponent implements OnInit {
     this.shoppingCartList[this.indexShoppingCart++] = this.shoppingCart;
     this.indexShoppingCart %= ShoppingCartComponent.SHOPPING_CART_NUM;
     this.shoppingCart = this.shoppingCartList[this.indexShoppingCart];
-    this.usePoints = false;
     this.synchronizeShoppingCart();
   }
 
@@ -193,7 +191,7 @@ export class ShoppingCartComponent implements OnInit {
   usePointsChanged(): void {
     this.removePointDiscountArticle();
     if(this.usePoints){
-      this.customerPointsService.getPointDiscountShopping()
+      this.shoppingCartService.getPointsDiscountShopping()
         .subscribe(
           shopping => {
             this.shoppingCart.push(shopping);

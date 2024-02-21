@@ -91,4 +91,10 @@ export class ShoppingCartService {
   createDataProtectionActAndPrint(ticket): Observable<void> {
     return EMPTY; // TODO change EMPTY
   }
+  getPointsDiscountShopping(): Observable<Shopping> {
+    return this.articleService.getPointsDiscountArticle()
+      .pipe(
+        map(article=>new Shopping(article.barcode,article.description,article.retailPrice))
+      );
+  }
 }

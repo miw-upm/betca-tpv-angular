@@ -1,10 +1,11 @@
 import {Injectable} from '@angular/core';
-import {Observable} from 'rxjs';
+import {Observable, of} from 'rxjs';
 import {map} from 'rxjs/operators';
 
 import {HttpService} from '@core/http.service';
 import {EndPoints} from '@shared/end-points';
 import {Article} from './models/article.model';
+import {CustomerPointsConstants} from "@shared/models/customer-points.model";
 
 @Injectable({
   providedIn: 'root',
@@ -33,5 +34,11 @@ export class SharedArticleService {
         map(response => response.barcodes)
       );
   }
-
+  getPointsDiscountArticle(): Observable<Article> {
+    return of(<Article> {
+      barcode: CustomerPointsConstants.BARCODE,
+      description: "POINTS DISCOUNT",
+      retailPrice: -12
+    });
+  }
 }

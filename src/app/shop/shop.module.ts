@@ -31,7 +31,7 @@ import {QuarterVatService} from "./quarter-vat/quarter-vat.service";
 
 import { MessengerComponent } from './messenger/messenger.component';
 import { MessengerService } from './messenger/messenger.service';
-import {CustomerPointsService} from "./cashier-opened/shopping-cart/customer-points.service";
+import {CustomerPointsService} from "@shared/services/customer-points.service";
 
 @NgModule({
   declarations: [
