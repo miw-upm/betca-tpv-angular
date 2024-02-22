@@ -169,7 +169,11 @@ export class ShoppingCartComponent implements OnInit {
   }
 
   createBudget(): void {
-    // TODO create budget
+    alert("Creating budget...");
+  }
+
+  addBudget(reference: string): void {
+    alert("Adding articles to shopping cart from budget " + reference + "...");
   }
 
   addDiscount(mobile): void {
