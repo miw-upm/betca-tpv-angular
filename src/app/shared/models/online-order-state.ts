@@ -1,1 +1,1 @@
-export enum OnlineOrderState{PREPARING, SENT, DELIVERED}
+export enum OnlineOrderState{PREPARING, SENT, DELIVERED, REFUND_REQUESTED, REFUNDED}
