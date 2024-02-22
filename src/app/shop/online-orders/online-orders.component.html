@@ -1,0 +1,55 @@
+<mat-card>
+  <mat-card-title>
+    {{title}}
+  </mat-card-title>
+  <mat-card-content>
+    <mat-table [dataSource]="onlineOrders" class="mat-elevation-z8">
+      <ng-container matColumnDef="id">
+        <mat-header-cell *matHeaderCellDef fxFlex="5%">#</mat-header-cell>
+        <mat-cell *matCellDef="let i = index" fxFlex="5%"> {{i + 1}}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="reference">
+        <mat-header-cell *matHeaderCellDef fxFlex="28%"> Order reference</mat-header-cell>
+        <mat-cell *matCellDef="let item" fxFlex="28%"> {{item.reference}}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="state">
+        <mat-header-cell *matHeaderCellDef fxFlex="20%"> State</mat-header-cell>
+        <ng-container *matCellDef="let item">
+          <mat-select [(ngModel)]="item.state" fxFlex="20%">
+            <mat-option *ngFor="let state of enumKeys" [value]="state.value">
+              {{ state.name }}
+            </mat-option>
+          </mat-select>
+        </ng-container>
+      </ng-container>
+      <ng-container matColumnDef="deliveryDate">
+        <mat-header-cell *matHeaderCellDef fxFlex="20%"> Delivery Date</mat-header-cell>
+        <mat-cell *matCellDef="let item" fxFlex="20%">
+          {{item.deliveryDate | date: 'dd/MM/yyyy'}}
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="ticketReference">
+        <mat-header-cell *matHeaderCellDef fxFlex="20%"> Ticket reference</mat-header-cell>
+        <mat-cell *matCellDef="let item" fxFlex="20%">
+          {{item.ticketReference}}
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="actions">
+        <mat-header-cell *matHeaderCellDef fxFlex="15%" >
+        </mat-header-cell>
+        <mat-cell *matCellDef="let item" fxFlex="15%" >
+          <button (click)="update(item)" color="accent" mat-raised-button>
+            Update
+          </button>
+        </mat-cell>
+      </ng-container>
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+  </mat-card-content>
+</mat-card>
+
+
+
+
+

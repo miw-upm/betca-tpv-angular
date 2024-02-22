@@ -13,6 +13,10 @@ import {QuarterVatComponent} from "./quarter-vat/quarter-vat.component";
 import { MessengerComponent } from './messenger/messenger.component';
 import {TagsComponent} from "./tags/tags.component";
 import {VouchersComponent} from './vouchers/vouchers.component';
+import {BudgetsComponent} from "./budgets/budgets.component";
+import {CreditLineComponent} from "./credit-line/credit-line.component";
+import {OnlineOrdersComponent} from "./online-orders/online-orders.component";
+import {StockAuditComponent} from './stock-audit/stock-audit.component';
 
 const routes: Routes = [
   {
@@ -30,6 +34,11 @@ const routes: Routes = [
       {path: 'quarter-vat', component: QuarterVatComponent},
       {path: 'tags', component: TagsComponent},
       {path: 'vouchers', component: VouchersComponent},
+      {path: 'budgets', component: BudgetsComponent},
+      {path: 'credit-line', component: CreditLineComponent},
+      {path: 'budgets', component: BudgetsComponent},
+      {path: 'online-orders', component: OnlineOrdersComponent},
+      {path: 'stock-audit', component: StockAuditComponent}
     ]
   }
 ];

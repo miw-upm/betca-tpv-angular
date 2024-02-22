@@ -38,6 +38,13 @@ import {SearchByBarcodeComponent} from "./shared/search-by-barcode.component";
 import {VouchersComponent} from './vouchers/vouchers.component';
 import {VoucherReadDetailDialogComponent} from './vouchers/voucher-read-detail.dialog.component';
 import {VoucherCreationDialogComponent} from './vouchers/voucher-creation-dialog.component';
+import { BudgetsComponent } from './budgets/budgets.component';
+import {BudgetsService} from './budgets/budgets.service';
+import {CreditLineComponent} from "./credit-line/credit-line.component";
+import {CreditLineService} from "./credit-line/credit-line.service";
+import {OnlineOrdersComponent} from "./online-orders/online-orders.component";
+import {StockAuditComponent} from "./stock-audit/stock-audit.component";
+import {StockAuditService} from "./stock-audit/stock-audit.service";
 
 @NgModule({
   declarations: [
@@ -61,7 +68,12 @@ import {VoucherCreationDialogComponent} from './vouchers/voucher-creation-dialog
     TagCreationReadingUpdatingDialogComponent,
     VouchersComponent,
     VoucherReadDetailDialogComponent,
-    VoucherCreationDialogComponent
+    VoucherCreationDialogComponent,
+    OnlineOrdersComponent,
+    BudgetsComponent,
+    StockAuditComponent,
+    BudgetsComponent,
+    CreditLineComponent
   ],
   imports: [
     SharedModule,
@@ -79,7 +91,11 @@ import {VoucherCreationDialogComponent} from './vouchers/voucher-creation-dialog
     CustomerPointsService,
     QuarterVatService,
     MessengerService,
-    TagService
+    TagService,
+    BudgetsService,
+    CreditLineService,
+    BudgetsService,
+    StockAuditService
   ],
 })
 export class ShopModule {
