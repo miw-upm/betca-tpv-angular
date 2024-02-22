@@ -48,7 +48,8 @@ export class AdviserComponent implements OnInit {
     this.slides = this.articles.map(article => ({
       description: article.description,
       strip: this.selectedTag,
-      url: null
+      url: null,
+      article: article
     }));
   }
 
