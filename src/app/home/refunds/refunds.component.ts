@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {OnlineOrder} from "../shared/online-order.model";
-import {OnlineOrderState} from "../shared/online-order-state";
+import {OnlineOrder} from "@shared/models/online-order.model";
+import {OnlineOrderState} from "@shared/models/online-order-state";
 
 @Component({
   selector: 'app-refunds',
