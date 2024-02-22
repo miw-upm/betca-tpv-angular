@@ -37,6 +37,8 @@ import {CustomerPointsService} from "@shared/services/customer-points.service";
 import {SearchByBarcodeComponent} from "./shared/search-by-barcode.component";
 import { BudgetsComponent } from './budgets/budgets.component';
 import {BudgetsService} from './budgets/budgets.service';
+import {CreditLineComponent} from "./credit-line/credit-line.component";
+import {CreditLineService} from "./credit-line/credit-line.service";
 
 @NgModule({
   declarations: [
@@ -58,7 +60,8 @@ import {BudgetsService} from './budgets/budgets.service';
     MessengerComponent,
     TagsComponent,
     TagCreationReadingUpdatingDialogComponent,
-    BudgetsComponent
+    BudgetsComponent,
+    CreditLineComponent
   ],
   imports: [
     SharedModule,
@@ -77,7 +80,8 @@ import {BudgetsService} from './budgets/budgets.service';
     QuarterVatService,
     MessengerService,
     TagService,
-    BudgetsService
+    BudgetsService,
+    CreditLineService
   ],
 })
 export class ShopModule {

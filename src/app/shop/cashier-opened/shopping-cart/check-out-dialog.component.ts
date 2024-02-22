@@ -16,6 +16,7 @@ export class CheckOutDialogComponent {
   requestedInvoice = false;
   requestedGiftTicket = false;
   requestedDataProtectionAct = false;
+  requestedCreditLine = false;
 
   constructor(@Inject(MAT_DIALOG_DATA) data, private dialogRef: MatDialogRef<CheckOutDialogComponent>,
               private shoppingCartService: ShoppingCartService) {
@@ -164,4 +165,8 @@ export class CheckOutDialogComponent {
     return true;
   }
 
+  invalidICreditLine(): boolean {
+    // TODO pendiente de calcular. Hace falta el usuario
+    return true;
+  }
 }
