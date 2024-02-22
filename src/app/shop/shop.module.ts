@@ -37,6 +37,8 @@ import {CustomerPointsService} from "@shared/services/customer-points.service";
 import {SearchByBarcodeComponent} from "./shared/search-by-barcode.component";
 import { BudgetsComponent } from './budgets/budgets.component';
 import {BudgetsService} from './budgets/budgets.service';
+import {CreditLineComponent} from "./credit-line/credit-line.component";
+import {CreditLineService} from "./credit-line/credit-line.service";
 import {OnlineOrdersComponent} from "./online-orders/online-orders.component";
 import {StockAuditComponent} from "./stock-audit/stock-audit.component";
 import {StockAuditService} from "./stock-audit/stock-audit.service";
@@ -63,7 +65,9 @@ import {StockAuditService} from "./stock-audit/stock-audit.service";
     OnlineOrdersComponent,
     TagCreationReadingUpdatingDialogComponent,
     BudgetsComponent,
-    StockAuditComponent
+    StockAuditComponent,
+    BudgetsComponent,
+    CreditLineComponent
   ],
   imports: [
     SharedModule,
@@ -82,6 +86,8 @@ import {StockAuditService} from "./stock-audit/stock-audit.service";
     QuarterVatService,
     MessengerService,
     TagService,
+    BudgetsService,
+    CreditLineService,
     BudgetsService,
     StockAuditService
   ],
