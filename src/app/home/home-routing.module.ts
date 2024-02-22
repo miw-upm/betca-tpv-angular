@@ -9,6 +9,7 @@ import {HomeComponent} from './home.component';
 import {ShoppingBasketComponent} from "./shopping-basket/shopping-basket.component";
 import {Top5Component} from "./adviser/top5/top5.component";
 import {OnlineOrdersComponent} from "./online-orders/online-orders.component";
+import {RefundsComponent} from "./refunds/refunds.component";
 
 const routes: Routes = [
   {
@@ -30,6 +31,12 @@ const routes: Routes = [
       {
         path: 'online-orders',
         component: OnlineOrdersComponent,
+        canActivate: [RoleGuardService],
+        data: {roles: [Role.CUSTOMER]}
+      },
+      {
+        path: 'refunds',
+        component: RefundsComponent,
         canActivate: [RoleGuardService],
         data: {roles: [Role.CUSTOMER]}
       }

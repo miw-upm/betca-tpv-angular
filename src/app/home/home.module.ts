@@ -14,6 +14,7 @@ import { Top5Component } from './adviser/top5/top5.component';
 import {SearchByDescriptionComponent} from "./shared/search-by-description.component";
 import {PhoneRequestDialogComponent} from "./shopping-basket/phone-request-dialog.component";
 import {OnlineOrdersComponent} from "./online-orders/online-orders.component";
+import { RefundsComponent } from './refunds/refunds.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import {OnlineOrdersComponent} from "./online-orders/online-orders.component";
     OnlineOrdersComponent,
     ShoppingBasketComponent,
     Top5Component,
+    RefundsComponent,
   ],
   imports: [
     HomeRoutingModule,
