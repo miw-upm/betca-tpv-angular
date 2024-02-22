@@ -39,6 +39,9 @@ import { BudgetsComponent } from './budgets/budgets.component';
 import {BudgetsService} from './budgets/budgets.service';
 import {CreditLineComponent} from "./credit-line/credit-line.component";
 import {CreditLineService} from "./credit-line/credit-line.service";
+import {OnlineOrdersComponent} from "./online-orders/online-orders.component";
+import {StockAuditComponent} from "./stock-audit/stock-audit.component";
+import {StockAuditService} from "./stock-audit/stock-audit.service";
 
 @NgModule({
   declarations: [
@@ -59,7 +62,10 @@ import {CreditLineService} from "./credit-line/credit-line.service";
     QuarterVatComponent,
     MessengerComponent,
     TagsComponent,
+    OnlineOrdersComponent,
     TagCreationReadingUpdatingDialogComponent,
+    BudgetsComponent,
+    StockAuditComponent,
     BudgetsComponent,
     CreditLineComponent
   ],
@@ -81,7 +87,9 @@ import {CreditLineService} from "./credit-line/credit-line.service";
     MessengerService,
     TagService,
     BudgetsService,
-    CreditLineService
+    CreditLineService,
+    BudgetsService,
+    StockAuditService
   ],
 })
 export class ShopModule {

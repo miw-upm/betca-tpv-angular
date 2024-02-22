@@ -1,5 +1,6 @@
 <mat-card>
   <mat-card-title>
+    <mat-icon color="primary">shopping_cart</mat-icon>
     {{title}}
   </mat-card-title>
   <mat-card-content>
@@ -28,6 +29,15 @@
         <mat-header-cell *matHeaderCellDef fxFlex="20%"> Ticket reference</mat-header-cell>
         <mat-cell *matCellDef="let item" fxFlex="20%">
           {{item.ticketReference}}
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="actions">
+        <mat-header-cell *matHeaderCellDef fxFlex="10%">Actions</mat-header-cell>
+        <mat-cell *matCellDef="let item" fxFlex="10%">
+          <button mat-raised-button color="accent" (click)="refundOnlineOrder(item)">
+<!--            <mat-icon>play_arrow</mat-icon>-->
+            Refund
+          </button>
         </mat-cell>
       </ng-container>
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
