@@ -4,8 +4,8 @@
     <mat-label *ngFor="let def of labels(data)"><strong>{{def | uppercaseWords}}: </strong>{{data[def]}}</mat-label>
   </ng-container>
 </mat-dialog-content>
-<mat-dialog-actions>
+<mat-dialog-actions *ngIf="(object | async) as data">
     <button mat-dialog-close mat-raised-button>Close</button>
     <button mat-raised-button>Print</button>
-    <button mat-raised-button>Consume</button>
+    <button mat-raised-button *ngIf="!labels(data).includes('dateOfUse')">Consume</button>
 </mat-dialog-actions>

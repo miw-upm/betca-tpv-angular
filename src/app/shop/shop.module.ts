@@ -37,6 +37,7 @@ import {CustomerPointsService} from "@shared/services/customer-points.service";
 import {SearchByBarcodeComponent} from "./shared/search-by-barcode.component";
 import {VouchersComponent} from './vouchers/vouchers.component';
 import {VoucherReadDetailDialogComponent} from './vouchers/voucher-read-detail.dialog.component';
+import {VoucherCreationDialogComponent} from './vouchers/voucher-creation-dialog.component';
 
 @NgModule({
   declarations: [
@@ -59,7 +60,8 @@ import {VoucherReadDetailDialogComponent} from './vouchers/voucher-read-detail.d
     TagsComponent,
     TagCreationReadingUpdatingDialogComponent,
     VouchersComponent,
-    VoucherReadDetailDialogComponent
+    VoucherReadDetailDialogComponent,
+    VoucherCreationDialogComponent
   ],
   imports: [
     SharedModule,

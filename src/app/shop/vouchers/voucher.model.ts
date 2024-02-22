@@ -1,4 +1,4 @@
-import { User } from "@core/user.model";
+import {User} from "@core/user.model";
 
 export interface Voucher {
     reference: string;

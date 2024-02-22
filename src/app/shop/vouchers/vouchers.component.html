@@ -23,5 +23,5 @@
       </button>
     </mat-card-content>
   </mat-card>
-  <app-crud (read)="read($event)"
+  <app-crud (read)="read($event)" (create)="create()"
             [data]="vouchers" [deleteAction]="false" [updateAction]="false" [title]="title"></app-crud>

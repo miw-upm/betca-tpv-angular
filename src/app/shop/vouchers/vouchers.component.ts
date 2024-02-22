@@ -6,7 +6,7 @@ import {Voucher} from './voucher.model';
 import {VouchersService} from './vouchers.service';
 import {VouchersSearch} from './vouchers-search.model';
 import {VoucherReadDetailDialogComponent} from './voucher-read-detail.dialog.component';
-//import {VoucherCreationDialogComponent} from './voucher-creation-dialog.component';
+import {VoucherCreationDialogComponent} from './voucher-creation-dialog.component';
 
 @Component({
   templateUrl: 'vouchers.component.html'
@@ -28,12 +28,12 @@ export class VouchersComponent {
     this.vouchersSearch = {};
   }
 
-  // create(): void {
-  //   this.dialog
-  //     .open(VoucherCreationUpdatingDialogComponent)
-  //     .afterClosed()
-  //     .subscribe(() => this.search());
-  // }
+  create(): void {
+    this.dialog
+      .open(VoucherCreationDialogComponent)
+      .afterClosed()
+      .subscribe(() => this.search());
+  }
 
   read(voucher: Voucher): void {
     this.dialog.open(VoucherReadDetailDialogComponent, {
