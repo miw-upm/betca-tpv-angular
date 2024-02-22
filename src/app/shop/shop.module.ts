@@ -37,6 +37,7 @@ import {CustomerPointsService} from "@shared/services/customer-points.service";
 import {SearchByBarcodeComponent} from "./shared/search-by-barcode.component";
 import { BudgetsComponent } from './budgets/budgets.component';
 import {BudgetsService} from './budgets/budgets.service';
+import {OnlineOrdersComponent} from "./online-orders/online-orders.component";
 
 @NgModule({
   declarations: [
@@ -57,6 +58,7 @@ import {BudgetsService} from './budgets/budgets.service';
     QuarterVatComponent,
     MessengerComponent,
     TagsComponent,
+    OnlineOrdersComponent,
     TagCreationReadingUpdatingDialogComponent,
     BudgetsComponent
   ],

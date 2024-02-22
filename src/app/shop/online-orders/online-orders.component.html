@@ -13,10 +13,14 @@
         <mat-cell *matCellDef="let item" fxFlex="28%"> {{item.reference}}</mat-cell>
       </ng-container>
       <ng-container matColumnDef="state">
-        <mat-header-cell *matHeaderCellDef fxFlex="11%"> State</mat-header-cell>
-        <mat-cell *matCellDef="let item" fxFlex="11%">
-          {{onlineOrderStateKeys[item.state]}}
-        </mat-cell>
+        <mat-header-cell *matHeaderCellDef fxFlex="20%"> State</mat-header-cell>
+        <ng-container *matCellDef="let item">
+          <mat-select [(ngModel)]="item.state" fxFlex="20%">
+            <mat-option *ngFor="let state of enumKeys" [value]="state.value">
+              {{ state.name }}
+            </mat-option>
+          </mat-select>
+        </ng-container>
       </ng-container>
       <ng-container matColumnDef="deliveryDate">
         <mat-header-cell *matHeaderCellDef fxFlex="20%"> Delivery Date</mat-header-cell>
@@ -28,6 +32,15 @@
         <mat-header-cell *matHeaderCellDef fxFlex="20%"> Ticket reference</mat-header-cell>
         <mat-cell *matCellDef="let item" fxFlex="20%">
           {{item.ticketReference}}
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="actions">
+        <mat-header-cell *matHeaderCellDef fxFlex="15%" >
+        </mat-header-cell>
+        <mat-cell *matCellDef="let item" fxFlex="15%" >
+          <button (click)="update(item)" color="accent" mat-raised-button>
+            Update
+          </button>
         </mat-cell>
       </ng-container>
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
