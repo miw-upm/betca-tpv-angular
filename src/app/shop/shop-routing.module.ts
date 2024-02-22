@@ -14,6 +14,7 @@ import { MessengerComponent } from './messenger/messenger.component';
 import {TagsComponent} from "./tags/tags.component";
 import {BudgetsComponent} from "./budgets/budgets.component";
 import {OnlineOrdersComponent} from "./online-orders/online-orders.component";
+import {StockAuditComponent} from './stock-audit/stock-audit.component';
 
 const routes: Routes = [
   {
@@ -31,7 +32,8 @@ const routes: Routes = [
       {path: 'quarter-vat', component: QuarterVatComponent},
       {path: 'tags', component: TagsComponent},
       {path: 'budgets', component: BudgetsComponent},
-      {path: 'online-orders', component: OnlineOrdersComponent}
+      {path: 'online-orders', component: OnlineOrdersComponent},
+      {path: 'stock-audit', component: StockAuditComponent}
     ]
   }
 ];

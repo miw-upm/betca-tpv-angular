@@ -38,6 +38,8 @@ import {SearchByBarcodeComponent} from "./shared/search-by-barcode.component";
 import { BudgetsComponent } from './budgets/budgets.component';
 import {BudgetsService} from './budgets/budgets.service';
 import {OnlineOrdersComponent} from "./online-orders/online-orders.component";
+import {StockAuditComponent} from "./stock-audit/stock-audit.component";
+import {StockAuditService} from "./stock-audit/stock-audit.service";
 
 @NgModule({
   declarations: [
@@ -60,7 +62,8 @@ import {OnlineOrdersComponent} from "./online-orders/online-orders.component";
     TagsComponent,
     OnlineOrdersComponent,
     TagCreationReadingUpdatingDialogComponent,
-    BudgetsComponent
+    BudgetsComponent,
+    StockAuditComponent
   ],
   imports: [
     SharedModule,
@@ -79,7 +82,8 @@ import {OnlineOrdersComponent} from "./online-orders/online-orders.component";
     QuarterVatService,
     MessengerService,
     TagService,
-    BudgetsService
+    BudgetsService,
+    StockAuditService
   ],
 })
 export class ShopModule {
