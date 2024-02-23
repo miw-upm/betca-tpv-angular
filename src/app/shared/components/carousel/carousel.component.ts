@@ -1,6 +1,6 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-
 import { SlideInterface } from './slide.interface';
+import { ShoppingBasketService} from "../../../home/shopping-basket/shopping-basket.service";
 
 @Component({
   selector: 'carousel',
@@ -14,6 +14,8 @@ export class CarouselComponent implements OnInit, OnDestroy {
   timeoutId?: number;
   class: string;
   static time: number = 3000;
+
+  constructor(private shoppingBasketService: ShoppingBasketService) {} // Inject ShoppingBasketService
 
   ngOnInit(): void {
     this.resetTimer();
@@ -67,5 +69,16 @@ export class CarouselComponent implements OnInit, OnDestroy {
 
   getCurrentSlideDescription() {
     return this.slides[this.currentIndex].description;
+  }
+
+  getCurrentArticle() {
+    return this.slides[this.currentIndex].article;
+  }
+
+  addToShoppingCart() {
+    const currentArticle = this.getCurrentArticle();
+    if (currentArticle) {
+      this.shoppingBasketService.addArticle(currentArticle);
+    }
   }
 }

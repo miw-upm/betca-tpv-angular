@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { Tag } from '../shared/services/models/tag.model';
+import { Tag } from '@shared/models/tag.model';
 
 @Injectable({
   providedIn: 'root',
@@ -8,9 +8,33 @@ import { Tag } from '../shared/services/models/tag.model';
 export class TagService {
 
   private mockTags: Tag[] = [
-    { name: 'Tag1', group: 'Group1', description: 'Description1', articles: [] },
-    { name: 'Tag2', group: 'Group2', description: 'Description2', articles: [] },
-    { name: 'Tag3', group: 'Group3', description: 'Description3', articles: [] }
+    {
+      name: 'Sale',
+      group: 'Promotions',
+      description: 'Discounted Items',
+      articles: [
+        { barcode: '123', description: 'Article 1 - Sale', retailPrice: 10 },
+        { barcode: '456', description: 'Article 2 - Sale', retailPrice: 20 },
+      ],
+    },
+    {
+      name: 'Popular',
+      group: 'Trends',
+      description: 'Top Selling Items',
+      articles: [
+        { barcode: '789', description: 'Article 1 - Popular', retailPrice: 30 },
+        { barcode: '012', description: 'Article 2 - Popular', retailPrice: 40 },
+      ],
+    },
+    {
+      name: 'New',
+      group: 'Arrivals',
+      description: 'Latest Items',
+      articles: [
+        { barcode: '345', description: 'Article 1 - New', retailPrice: 50 },
+        { barcode: '678', description: 'Article 2 - New', retailPrice: 60 },
+      ],
+    },
   ];
 
   constructor() {}

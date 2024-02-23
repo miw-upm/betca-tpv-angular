@@ -25,6 +25,8 @@ import {ProviderCreationUpdatingDialogComponent} from './providers/provider-crea
 import {ArticleService} from './articles/article.service';
 import {ShopRoutingModule} from './shop-routing.module';
 import {TicketsComponent} from './cashier-opened/tickets/tickets.component';
+import { SalesPeopleComponent } from './sales-people/sales-people.component';
+import { SalesPeopleService } from './sales-people/sales-people.service';
 import {QuarterVatComponent} from "./quarter-vat/quarter-vat.component";
 import {QuarterVatService} from "./quarter-vat/quarter-vat.service";
 
@@ -62,6 +64,7 @@ import {StockAuditService} from "./stock-audit/stock-audit.service";
     ShopComponent,
     ShoppingCartComponent,
     TicketsComponent,
+    SalesPeopleComponent,
     QuarterVatComponent,
     MessengerComponent,
     TagsComponent,
@@ -87,6 +90,7 @@ import {StockAuditService} from "./stock-audit/stock-audit.service";
     SharedCashierService,
     SharedProviderService,
     ShoppingCartService,
+    SalesPeopleService,
     MessengerService,
     CustomerPointsService,
     QuarterVatService,
