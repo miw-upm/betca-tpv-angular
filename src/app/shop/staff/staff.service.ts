@@ -4,6 +4,7 @@ import { Observable, of } from 'rxjs';
 import {StaffRecord} from "./staff-record.model";
 import {Role} from "@core/role.model";
 import {StaffHoursPerDate} from "./staff-hours-per-date.model";
+import {MonthlyReport} from "./monthly-report.model";
 
 @Injectable({
   providedIn: 'root'
@@ -50,6 +51,16 @@ export class StaffService {
     staffHoursPerDates.push(staffHoursPerDate);
 
     return of(staffHoursPerDates);
+  }
+
+  mockMonthlyReport(): Observable<MonthlyReport> {
+    return of({
+      month: 'January',
+      hoursPerDay: [{
+        day: new Date('2024-02-25T09:00:00'),
+        hours:1032,
+      }],
+    });
   }
 }
 
