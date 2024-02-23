@@ -1,6 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {OnlineOrder} from "@shared/models/online-order.model";
 import {OnlineOrderState} from "@shared/models/online-order-state";
+import {OnlineOrdersService} from "@shared/services/online-orders.service";
+import {of} from "rxjs";
+import {map} from "rxjs/operators";
 
 @Component({
   selector: 'app-refunds',
@@ -11,21 +14,15 @@ export class RefundsComponent implements OnInit {
 
   displayedColumns = ['id', 'reference', 'state', 'deliveryDate', 'ticketReference', 'actions'];
   title = 'Refunds of online orders';
-  onlineOrders : OnlineOrder[] = [];
+  onlineOrders = of([]);
   onlineOrderStateKeys = Object.values(OnlineOrderState);
 
-  private mockOnlineOrders: OnlineOrder[] = [
-    { reference: "112233ascd", state: OnlineOrderState.PREPARING, deliveryDate: null, ticketReference: "445566grtq"},
-    { reference: "cgfdf45fsf", state: OnlineOrderState.SENT, deliveryDate: null, ticketReference: "w3434dgbbg"},
-    { reference: "2effbfhdgd", state: OnlineOrderState.DELIVERED, deliveryDate: new Date(), ticketReference: "eere4tfgb5"},
-    { reference: "435bknsdff", state: OnlineOrderState.REFUND_REQUESTED, deliveryDate: new Date(), ticketReference: "w3434tfgb5"},
-    { reference: "458dsfdsfs", state: OnlineOrderState.REFUNDED, deliveryDate: new Date(), ticketReference: "eere4w3434"}
-  ];
-
-  constructor() { }
+  constructor(private onlineOrderService: OnlineOrdersService) { }
 
   ngOnInit(): void {
-    this.onlineOrders = [...this.mockOnlineOrders].filter(row => this.showOnlineOrder(row.state));
+    this.onlineOrders = this.onlineOrderService.search().pipe(
+        map(onlineOrder => onlineOrder.filter(row => this.showOnlineOrder(row.state)))
+    );
   }
 
   showOnlineOrder(state: OnlineOrderState): boolean {
@@ -34,8 +31,13 @@ export class RefundsComponent implements OnInit {
             state == OnlineOrderState.REFUNDED;
   }
 
-  refundOnlineOrder(order: OnlineOrder){
+  showRefundButton(state: OnlineOrderState): boolean {
+    return state == OnlineOrderState.DELIVERED;
+  }
 
+  refundOnlineOrder(order: OnlineOrder){
+    order.state = OnlineOrderState.REFUND_REQUESTED;
+    this.onlineOrderService.update(order.reference, order);
   }
 
 }
