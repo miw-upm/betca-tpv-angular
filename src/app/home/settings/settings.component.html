@@ -1,0 +1,31 @@
+
+<div class="settings-general-container">
+
+    <form class="settings-form">
+      <mat-form-field class="settings-full-width">
+        <mat-label>Name</mat-label>
+        <input matInput [(ngModel)]="currentUser.name" name="nameInput" (input)="onChange()">
+      </mat-form-field>
+
+      <mat-form-field class="settings-full-width">
+        <mat-label>Mobile</mat-label>
+        <input matInput type="number" [(ngModel)]="currentUser.mobile" name="mobileInput" (input)="onChange()">
+      </mat-form-field>
+
+      <mat-form-field class="settings-full-width">
+        <mat-label>Rol</mat-label>
+        <mat-select [(value)]=currentUser.role disabled>
+          <mat-option [value]="currentUser.role">
+            {{ currentUser.role }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-card-content class="settings-general-container">
+        <button (click)="saveProfileInfo()" *ngIf="userhasChanged" color="accent" mat-raised-button>
+          Save changes
+        </button>
+      </mat-card-content>
+    </form>
+</div>
+
