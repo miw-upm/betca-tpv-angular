@@ -15,6 +15,8 @@ import {SearchByDescriptionComponent} from "./shared/search-by-description.compo
 import {PhoneRequestDialogComponent} from "./shopping-basket/phone-request-dialog.component";
 import {OnlineOrdersComponent} from "./online-orders/online-orders.component";
 import { RefundsComponent } from './refunds/refunds.component';
+import { SettingsComponent } from './settings/settings.component';
+import { SettingsSavedInfoDialogComponent } from './settings/settings-saved-info-dialog/settings-saved-info-dialog.component';
 
 @NgModule({
   declarations: [
@@ -28,6 +30,8 @@ import { RefundsComponent } from './refunds/refunds.component';
     ShoppingBasketComponent,
     Top5Component,
     RefundsComponent,
+    SettingsComponent,
+    SettingsSavedInfoDialogComponent,
   ],
   imports: [
     HomeRoutingModule,

@@ -10,6 +10,7 @@ import {ShoppingBasketComponent} from "./shopping-basket/shopping-basket.compone
 import {Top5Component} from "./adviser/top5/top5.component";
 import {OnlineOrdersComponent} from "./online-orders/online-orders.component";
 import {RefundsComponent} from "./refunds/refunds.component";
+import {SettingsComponent} from "./settings/settings.component";
 
 const routes: Routes = [
   {
@@ -18,6 +19,12 @@ const routes: Routes = [
     children: [
       {path: 'adviser', component: AdviserComponent},
       {path: 'top5', component: Top5Component},
+      {
+        path: 'settings',
+        component: SettingsComponent,
+        canActivate: [RoleGuardService],
+        data: {roles: [Role.CUSTOMER]}
+      },
       {
         path: 'complaints',
         component: ComplaintsComponent,
