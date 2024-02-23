@@ -9,7 +9,7 @@
       <mat-icon>person</mat-icon>
       <span>Logout</span>
     </button>
-    <button mat-button>
+    <button mat-button [matMenuTriggerFor]="profile">
       <mat-icon>account_box</mat-icon>
       <span>Profile</span>
     </button>
@@ -48,6 +48,9 @@
     <span>VAT Management</span>
   </button>
 </mat-menu>
+<mat-menu #profile="matMenu">
+  <customer-points-menu-item></customer-points-menu-item>
+</mat-menu>
 <!--   Menus  -->
 <mat-menu #cashiers="matMenu">
   <button (click)="closeCashier()" *ngIf="!cashierClosed" mat-menu-item>
@@ -72,7 +75,7 @@
     <mat-icon>toc</mat-icon>
     <span>Tickets</span>
   </button>
-  <button disabled="disabled" mat-menu-item routerLink="">
+  <button mat-menu-item routerLink="/shop/online-orders">
     <mat-icon>shopping_basket</mat-icon>
     <span>Online Orders</span>
   </button>
@@ -84,11 +87,11 @@
     <mat-icon>receipt</mat-icon>
     <span>Invoices</span>
   </button>
-  <button disabled="disabled" mat-menu-item routerLink="">
+  <button mat-menu-item routerLink="/shop/budgets">
     <mat-icon>description</mat-icon>
     <span>Budgets</span>
   </button>
-  <button disabled="disabled" mat-menu-item routerLink="">
+  <button mat-menu-item routerLink="/shop/vouchers">
     <mat-icon>local_offer</mat-icon>
     <span>Vouchers</span>
   </button>
@@ -114,7 +117,7 @@
     <mat-icon>storage</mat-icon>
     <span>Orders</span>
   </button>
-  <button disabled="disabled" mat-menu-item routerLink="">
+  <button mat-menu-item routerLink="/shop/tags">
     <mat-icon>view_comfy</mat-icon>
     <span>Tags</span>
   </button>
@@ -132,7 +135,7 @@
     <mat-icon>equalizer</mat-icon>
     <span>Stock Management</span>
   </button>
-  <button disabled="disabled" mat-menu-item routerLink="/home/stock-management">
+  <button mat-menu-item routerLink="/shop/stock-audit">
     <mat-icon>assessment</mat-icon>
     <span>Stock Audit</span>
   </button>
@@ -154,17 +157,17 @@
     <mat-icon>money_off</mat-icon>
     <span>Customer Discount</span>
   </button>
-  <button disabled="disabled" mat-menu-item routerLink="">
+  <button  mat-menu-item routerLink="messenger">
     <mat-icon>message</mat-icon>
     <span>Messengers</span>
   </button>
-  <button disabled="disabled" mat-menu-item routerLink="">
+  <button  mat-menu-item routerLink="credit-line">
     <mat-icon>card_membership</mat-icon>
     <span>Credit</span>
   </button>
 </mat-menu>
 <mat-menu #vat="matMenu">
-  <button disabled="disabled" mat-menu-item routerLink="/home/stock-management">
+  <button mat-menu-item routerLink="/shop/quarter-vat">
     <mat-icon>money</mat-icon>
     <span>Quarter VAT</span>
   </button>

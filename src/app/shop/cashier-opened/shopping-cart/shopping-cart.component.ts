@@ -7,6 +7,10 @@ import {CheckOutDialogComponent} from './check-out-dialog.component';
 import {MatDialog} from '@angular/material/dialog';
 import {ShoppingState} from './shopping-state.model';
 import {NumberDialogComponent} from '@shared/dialogs/number-dialog.component';
+import {AuthService} from "@core/auth.service";
+import {CustomerPointsService} from "@shared/services/customer-points.service";
+import {map} from "rxjs/operators";
+import {CustomerPointsConstants} from "@shared/models/customer-points.model";
 
 @Component({
   selector: 'app-shopping-cart',
@@ -23,10 +27,12 @@ export class ShoppingCartComponent implements OnInit {
   shoppingCart: Shopping[] = [];
   indexShoppingCart = 0;
   totalShoppingCart = 0;
+  usePoints: boolean = false;
   private shoppingCartList: Array<Array<Shopping>> = [];
   @ViewChild('code', {static: true}) private elementRef: ElementRef;
 
-  constructor(private dialog: MatDialog, private shoppingCartService: ShoppingCartService) {
+  constructor(private dialog: MatDialog, private shoppingCartService: ShoppingCartService,
+              private authService: AuthService, private customerPointsService: CustomerPointsService) {
     for (let i = 0; i < ShoppingCartComponent.SHOPPING_CART_NUM; i++) {
       this.shoppingCartList.push([]);
     }
@@ -78,45 +84,52 @@ export class ShoppingCartComponent implements OnInit {
   }
 
   updateDiscount(shopping: Shopping): void {
-    this.dialog.open(NumberDialogComponent, {data: shopping.discount})
-      .afterClosed()
-      .subscribe(result => {
-        if (result) {
-          shopping.discount = result;
-          if (shopping.discount < 0) {
-            shopping.discount = 0;
+    if(!this.isDiscountPointsItem(shopping)){
+      this.dialog.open(NumberDialogComponent, {data: shopping.discount})
+        .afterClosed()
+        .subscribe(result => {
+          if (result) {
+            shopping.discount = result;
+            if (shopping.discount < 0) {
+              shopping.discount = 0;
+            }
+            if (shopping.discount > 100) {
+              shopping.discount = 100;
+            }
+            shopping.updateTotal();
+            this.synchronizeShoppingCart();
           }
-          if (shopping.discount > 100) {
-            shopping.discount = 100;
-          }
-          shopping.updateTotal();
-          this.synchronizeShoppingCart();
-        }
-      });
+        });
+    }
   }
 
   updateTotal(shopping: Shopping): void {
-    this.dialog.open(NumberDialogComponent, {data: shopping.total})
-      .afterClosed()
-      .subscribe(result => {
-        if (result) {
-          shopping.total = result;
-          if (shopping.total > (shopping.retailPrice * shopping.amount)) {
-            shopping.total = shopping.retailPrice * shopping.amount;
+    if(!this.isDiscountPointsItem(shopping)) {
+      this.dialog.open(NumberDialogComponent, {data: shopping.total})
+        .afterClosed()
+        .subscribe(result => {
+          if (result) {
+            shopping.total = result;
+            if (shopping.total > (shopping.retailPrice * shopping.amount)) {
+              shopping.total = shopping.retailPrice * shopping.amount;
+            }
+            if (shopping.total < 0) {
+              shopping.total = 0;
+            }
+            shopping.updateDiscount();
+            this.synchronizeShoppingCart();
           }
-          if (shopping.total < 0) {
-            shopping.total = 0;
-          }
-          shopping.updateDiscount();
-          this.synchronizeShoppingCart();
-        }
-      });
+        });
+    }
   }
 
   delete(shopping: Shopping): void {
     const index = this.shoppingCart.indexOf(shopping);
     if (index > -1) {
       this.shoppingCart.splice(index, 1);
+    }
+    if(this.isOnlyDiscountPointShoppingInCart()){
+      this.clearCurrentShoppingCart();
     }
     this.synchronizeShoppingCart();
   }
@@ -156,7 +169,11 @@ export class ShoppingCartComponent implements OnInit {
   }
 
   createBudget(): void {
-    // TODO create budget
+    alert("Creating budget...");
+  }
+
+  addBudget(reference: string): void {
+    alert("Adding articles to shopping cart from budget " + reference + "...");
   }
 
   addDiscount(mobile): void {
@@ -166,5 +183,42 @@ export class ShoppingCartComponent implements OnInit {
   addOffer(offer): void {
     // TODO add offer
   }
+  userIsLogged(): boolean {
+    return this.authService.isAuthenticated();
+  }
+  canUsePoints(): Observable<boolean> {
+    return this.customerPointsService.customerHasPoints()
+      .pipe(
+        map(hasPoints => hasPoints && !this.isEmpty())
+      );
+  }
+  usePointsChanged(): void {
+    this.removePointDiscountArticle();
+    if(this.usePoints){
+      this.shoppingCartService.getPointsDiscountShopping()
+        .subscribe(
+          shopping => {
+            this.shoppingCart.push(shopping);
+            this.synchronizeShoppingCart();
+          }
+        )
+    }
+  }
+  private removePointDiscountArticle(): void {
+    this.shoppingCart = this.shoppingCart.filter(x=>x.barcode != CustomerPointsConstants.BARCODE);
+    this.shoppingCartList = this.shoppingCartList.map(shoppingCart=> shoppingCart.filter(x=>x.barcode != CustomerPointsConstants.BARCODE));
+    this.synchronizeShoppingCart();
+  }
+  isDiscountPointsItem(item: Shopping): boolean{
+    return item.barcode == CustomerPointsConstants.BARCODE;
+  }
 
+  private isOnlyDiscountPointShoppingInCart() {
+    return this.shoppingCart.length == 1 && this.shoppingCart[0].barcode == CustomerPointsConstants.BARCODE;
+  }
+
+  private clearCurrentShoppingCart() {
+    this.shoppingCart = [];
+    this.usePoints = false;
+  }
 }

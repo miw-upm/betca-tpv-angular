@@ -13,7 +13,6 @@ import {CashierClosedComponent} from './cashier-closed/cashier-closed.component'
 import {CashierOpenedComponent} from './cashier-opened/cashier-opened.component';
 import {ShopComponent} from './shop.component';
 import {ProvidersComponent} from './providers/providers.component';
-import {SearchByBarcodeComponent} from './shared/search-by-barcode.component';
 import {SearchByCompanyComponent} from './shared/search-by-company.component';
 import {ShoppingCartComponent} from './cashier-opened/shopping-cart/shopping-cart.component';
 import {ArticleCreationUpdatingDialogComponent} from './articles/article-creation-updating-dialog.component';
@@ -28,6 +27,26 @@ import {ShopRoutingModule} from './shop-routing.module';
 import {TicketsComponent} from './cashier-opened/tickets/tickets.component';
 import { SalesPeopleComponent } from './sales-people/sales-people.component';
 import { SalesPeopleService } from './sales-people/sales-people.service';
+import {QuarterVatComponent} from "./quarter-vat/quarter-vat.component";
+import {QuarterVatService} from "./quarter-vat/quarter-vat.service";
+
+import { MessengerComponent } from './messenger/messenger.component';
+import { MessengerService } from './messenger/messenger.service';
+import {TagsComponent} from "./tags/tags.component";
+import { TagService} from "./tags/tag.service";
+import { TagCreationReadingUpdatingDialogComponent} from "./tags/tag-creation-reading-updating-dialog.component";
+import {CustomerPointsService} from "@shared/services/customer-points.service";
+import {SearchByBarcodeComponent} from "./shared/search-by-barcode.component";
+import {VouchersComponent} from './vouchers/vouchers.component';
+import {VoucherReadDetailDialogComponent} from './vouchers/voucher-read-detail.dialog.component';
+import {VoucherCreationDialogComponent} from './vouchers/voucher-creation-dialog.component';
+import { BudgetsComponent } from './budgets/budgets.component';
+import {BudgetsService} from './budgets/budgets.service';
+import {CreditLineComponent} from "./credit-line/credit-line.component";
+import {CreditLineService} from "./credit-line/credit-line.service";
+import {OnlineOrdersComponent} from "./online-orders/online-orders.component";
+import {StockAuditComponent} from "./stock-audit/stock-audit.component";
+import {StockAuditService} from "./stock-audit/stock-audit.service";
 
 @NgModule({
   declarations: [
@@ -46,6 +65,18 @@ import { SalesPeopleService } from './sales-people/sales-people.service';
     ShoppingCartComponent,
     TicketsComponent,
     SalesPeopleComponent,
+    QuarterVatComponent,
+    MessengerComponent,
+    TagsComponent,
+    TagCreationReadingUpdatingDialogComponent,
+    VouchersComponent,
+    VoucherReadDetailDialogComponent,
+    VoucherCreationDialogComponent,
+    OnlineOrdersComponent,
+    BudgetsComponent,
+    StockAuditComponent,
+    BudgetsComponent,
+    CreditLineComponent
   ],
   imports: [
     SharedModule,
@@ -60,6 +91,15 @@ import { SalesPeopleService } from './sales-people/sales-people.service';
     SharedProviderService,
     ShoppingCartService,
     SalesPeopleService,
+    MessengerService,
+    CustomerPointsService,
+    QuarterVatService,
+    MessengerService,
+    TagService,
+    BudgetsService,
+    CreditLineService,
+    BudgetsService,
+    StockAuditService
   ],
 })
 export class ShopModule {
