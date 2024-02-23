@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
-import { MatSelectModule } from '@angular/material/select';
-import {Role} from "@core/role.model";
+
 import {User} from "@core/user.model";
 import {AuthService} from "@core/auth.service";
 import {MatDialog, MatDialogRef} from "@angular/material/dialog";
@@ -12,7 +11,7 @@ import {SettingsSavedInfoDialogComponent} from "./settings-saved-info-dialog/set
   styleUrls: ['./settings.component.css']
 })
 export class SettingsComponent {
-  userhasChanged:boolean=false;
+  userHasChanged:boolean=false;
   initialUser:User;
   currentUser:User;
   constructor(private authService: AuthService,public dialog: MatDialog) {
@@ -20,7 +19,7 @@ export class SettingsComponent {
   }
 
   getCurrentUser(){
-    this.userhasChanged=false;
+    this.userHasChanged=false;
 
     this.currentUser=this.authService.getUser();
     this.initialUser={ ...this.authService.getUser() };
@@ -29,10 +28,10 @@ export class SettingsComponent {
   onChange(){
     if(this.currentUser.name!=this.initialUser.name
       || this.currentUser.mobile!=this.initialUser.mobile){
-      this.userhasChanged=true;
+      this.userHasChanged=true;
     }
     else{
-      this.userhasChanged=false;
+      this.userHasChanged=false;
     }
   }
 
