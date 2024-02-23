@@ -1,6 +1,7 @@
 import {environment} from '@env';
 
 export class EndPoints {
+  static VOUCHERS = environment.REST_CORE + '/vouchers';
   static PROVIDERS = environment.REST_CORE + '/providers';
   static ARTICLES = environment.REST_CORE + '/articles';
   static CASHIERS = environment.REST_CORE + '/cashiers';
@@ -8,4 +9,5 @@ export class EndPoints {
   static TICKETS = environment.REST_CORE + '/tickets';
   static COMPLAINTS = environment.REST_CUSTOMER_SUPPORT + '/complaints';
   static BUDGETS = environment.REST_CORE + '/budgets';
+  static CREDIT = environment.REST_CORE + '/credit';
 }
