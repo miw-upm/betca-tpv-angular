@@ -55,7 +55,7 @@ export class StaffService {
 
   mockMonthlyReport(): Observable<MonthlyReport> {
     return of({
-      month: 'January',
+      month: 'February',
       hoursPerDay: [{
         day: new Date('2024-02-25T09:00:00'),
         hours:1032,

@@ -1,39 +1,78 @@
-<div>
-    <div class="hours-per-day-container">
+<div class="staff-container">
+  <h1>Staff management</h1>
+    <div class="functionality-container">
+      <div class="hours-per-day-container">
+        <h2>Hours per day</h2>
+        <mat-form-field>
+          <mat-label>Start date</mat-label>
+          <input matInput [matDatepicker]="startPickerForDay">
+          <mat-hint>MM/DD/YYYY</mat-hint>
+          <mat-datepicker-toggle matIconSuffix [for]="startPickerForDay"></mat-datepicker-toggle>
+          <mat-datepicker #startPickerForDay></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>End date</mat-label>
+          <input matInput [matDatepicker]="endPickerForDay">
+          <mat-hint>MM/DD/YYYY</mat-hint>
+          <mat-datepicker-toggle matIconSuffix [for]="endPickerForDay"></mat-datepicker-toggle>
+          <mat-datepicker #endPickerForDay></mat-datepicker>
+        </mat-form-field>
         <table mat-table [dataSource]="staffHoursPerDay">
-            <ng-container matColumnDef="day">
-                <th mat-header-cell *matHeaderCellDef> Day </th>
-                <td mat-cell *matCellDef="let element"> {{ formatDate(element['hoursPerDate'][0]['startDate']) }} </td>
-            </ng-container>
-            <ng-container matColumnDef="hours">
-              <th mat-header-cell *matHeaderCellDef> Hours </th>
-              <td mat-cell *matCellDef="let element"> {{ element['hours'] }} </td>
-            </ng-container>
+          <ng-container matColumnDef="day">
+            <th mat-header-cell *matHeaderCellDef> Day </th>
+            <td mat-cell *matCellDef="let element"> {{ formatDate(element['hoursPerDate'][0]['startDate']) }} </td>
+          </ng-container>
+          <ng-container matColumnDef="hours">
+            <th mat-header-cell *matHeaderCellDef> Hours </th>
+            <td mat-cell *matCellDef="let element"> {{ element['hoursPerDate'][0]['hours'] }} </td>
+          </ng-container>
+          <tr mat-header-row *matHeaderRowDef="displayedColumnsForTableDay"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumnsForTableDay;"></tr>
         </table>
-    </div>
-    <div class="hours-per-month-container">
-      <table mat-table [dataSource]="staffHoursPerMonth">
-        <ng-container matColumnDef="day">
-          <th mat-header-cell *matHeaderCellDef> Month </th>
-          <td mat-cell *matCellDef="let element"> {{ formatDate(element['hoursPerDate'][0]['startDate']) }} </td>
-        </ng-container>
-        <ng-container matColumnDef="hours">
-          <th mat-header-cell *matHeaderCellDef> Hours </th>
-          <td mat-cell *matCellDef="let element"> {{ element['hours'] }} </td>
-        </ng-container>
-      </table>
-    </div>
-    <div class="monthly-report-container">
-      <h2>Hours per day in {{monthlyReport['month']}}</h2>
-      <table mat-table [dataSource]="monthlyReport['hoursPerDay']">
-        <ng-container matColumnDef="day">
-          <th mat-header-cell *matHeaderCellDef> Month </th>
-          <td mat-cell *matCellDef="let element"> {{ formatDate(element['date']) }} </td>
-        </ng-container>
-        <ng-container matColumnDef="hours">
-          <th mat-header-cell *matHeaderCellDef> Hours </th>
-          <td mat-cell *matCellDef="let element"> {{ element['hours'] }} </td>
-        </ng-container>
-      </table>
+      </div>
+      <div class="hours-per-month-container">
+        <h2>Hours per month</h2>
+        <mat-form-field>
+          <mat-label>Start date</mat-label>
+          <input matInput [matDatepicker]="startPickerForMonth">
+          <mat-hint>MM/DD/YYYY</mat-hint>
+          <mat-datepicker-toggle matIconSuffix [for]="startPickerForMonth"></mat-datepicker-toggle>
+          <mat-datepicker #startPickerForMonth></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>End date</mat-label>
+          <input matInput [matDatepicker]="endPickerForMonth">
+          <mat-hint>MM/DD/YYYY</mat-hint>
+          <mat-datepicker-toggle matIconSuffix [for]="endPickerForMonth"></mat-datepicker-toggle>
+          <mat-datepicker #endPickerForMonth></mat-datepicker>
+        </mat-form-field>
+        <table mat-table [dataSource]="staffHoursPerMonth">
+          <ng-container matColumnDef="month">
+            <th mat-header-cell *matHeaderCellDef> Month </th>
+            <td mat-cell *matCellDef="let element"> {{ formatDate(element['hoursPerDate'][0]['startDate']) }} </td>
+          </ng-container>
+          <ng-container matColumnDef="hours">
+            <th mat-header-cell *matHeaderCellDef> Hours </th>
+            <td mat-cell *matCellDef="let element"> {{ element['hoursPerDate'][0]['hours'] }} </td>
+          </ng-container>
+          <tr mat-header-row *matHeaderRowDef="displayedColumnsForTableMonth"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumnsForTableMonth;"></tr>
+        </table>
+      </div>
+      <div class="monthly-report-container">
+        <h2>Hours per day in {{monthlyReport['month']}}</h2>
+        <table mat-table [dataSource]="monthlyReport['hoursPerDay']">
+          <ng-container matColumnDef="day">
+            <th mat-header-cell *matHeaderCellDef> Day </th>
+            <td mat-cell *matCellDef="let element"> {{ formatDate(element['day']) }} </td>
+          </ng-container>
+          <ng-container matColumnDef="hours">
+            <th mat-header-cell *matHeaderCellDef> Hours </th>
+            <td mat-cell *matCellDef="let element"> {{ element['hours'] }} </td>
+          </ng-container>
+          <tr mat-header-row *matHeaderRowDef="displayedColumnsForTableDay"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumnsForTableDay;"></tr>
+        </table>
+      </div>
     </div>
 </div>
