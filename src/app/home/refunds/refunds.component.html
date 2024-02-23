@@ -1,6 +1,5 @@
 <mat-card>
   <mat-card-title>
-    <mat-icon color="primary">shopping_cart</mat-icon>
     {{title}}
   </mat-card-title>
   <mat-card-content>
@@ -34,10 +33,11 @@
       <ng-container matColumnDef="actions">
         <mat-header-cell *matHeaderCellDef fxFlex="10%">Actions</mat-header-cell>
         <mat-cell *matCellDef="let item" fxFlex="10%">
-          <button mat-raised-button color="accent" (click)="refundOnlineOrder(item)">
-<!--            <mat-icon>play_arrow</mat-icon>-->
-            Refund
-          </button>
+          <ng-container *ngIf="showRefundButton(item.state)">
+            <button mat-raised-button color="accent" (click)="refundOnlineOrder(item)">
+              Refund
+            </button>
+          </ng-container>
         </mat-cell>
       </ng-container>
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
