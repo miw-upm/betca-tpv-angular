@@ -16,8 +16,8 @@
       <div>
         {{ getCurrentSlideDescription() }}
       </div>
-      <div *ngIf="getCurrentSlideUrl()" style="margin-left: 5px" >
-        <a href="{{getCurrentSlideUrl()}}" style="color: #fff">(Añadir al Carrito)</a>
+      <div *ngIf="getCurrentArticle()" style="margin-left: 5px" >
+        <button (click)="addToShoppingCart()">Add to Cart</button>
       </div>
     </div>
   </div>

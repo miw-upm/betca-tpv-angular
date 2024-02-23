@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Tag } from '../shared/services/models/tag.model';
-import { Article } from '../shared/services/models/article.model';
+import { Tag } from '@shared/models/tag.model';
+import { Article} from "../../home/shared/article.model";
 import { TagService } from './tag.service';
 import { ArticleService } from '../articles/article.service';
 import {ArticleSearch} from "../articles/article-search.model";
