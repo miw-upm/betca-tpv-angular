@@ -12,7 +12,16 @@
         </table>
     </div>
     <div class="hours-per-month-container">
-
+      <table mat-table [dataSource]="staffHoursPerMonth">
+        <ng-container matColumnDef="day">
+          <th mat-header-cell *matHeaderCellDef> Month </th>
+          <td mat-cell *matCellDef="let element"> {{ formatDate(element['hoursPerDate'][0]['startDate']) }} </td>
+        </ng-container>
+        <ng-container matColumnDef="hours">
+          <th mat-header-cell *matHeaderCellDef> Hours </th>
+          <td mat-cell *matCellDef="let element"> {{ element['hours'] }} </td>
+        </ng-container>
+      </table>
     </div>
     <div class="monthly-report-container">
 
