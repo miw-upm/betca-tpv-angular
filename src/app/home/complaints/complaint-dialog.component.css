@@ -17,7 +17,6 @@ button {
 button[color="primary"] {
   background-color: #4caf50;
 }
-
 button[mat-dialog-close] {
   background-color: #f44336;
 }
