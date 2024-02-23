@@ -47,6 +47,8 @@ import {CreditLineService} from "./credit-line/credit-line.service";
 import {OnlineOrdersComponent} from "./online-orders/online-orders.component";
 import {StockAuditComponent} from "./stock-audit/stock-audit.component";
 import {StockAuditService} from "./stock-audit/stock-audit.service";
+import {StaffComponent} from "./staff/staff.component";
+import {StaffService} from "./staff/staff.service";
 
 @NgModule({
   declarations: [
@@ -74,6 +76,7 @@ import {StockAuditService} from "./stock-audit/stock-audit.service";
     VoucherCreationDialogComponent,
     OnlineOrdersComponent,
     BudgetsComponent,
+    StaffComponent,
     StockAuditComponent,
     BudgetsComponent,
     CreditLineComponent
@@ -99,6 +102,7 @@ import {StockAuditService} from "./stock-audit/stock-audit.service";
     BudgetsService,
     CreditLineService,
     BudgetsService,
+    StaffService,
     StockAuditService
   ],
 })
