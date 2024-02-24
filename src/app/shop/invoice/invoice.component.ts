@@ -4,8 +4,8 @@ import {of} from "rxjs";
 import {MatDialog} from "@angular/material/dialog";
 import {ReadDetailDialogComponent} from "@shared/dialogs/read-detail.dialog.component";
 import {Invoice} from "../cashier-opened/shopping-cart/invoice.model";
-import {InvoiceSearch} from "./invoice-search";
-import {InvoiceCreationUpdatingDialogComponent} from "./invoice-creation-updating-dialog.component";
+import {InvoiceCreationDialogComponent} from "./invoice-creation-dialog.component";
+import {InvoiceSearch} from "./invoice-search.model";
 
 @Component({
   selector: 'app-invoice',
@@ -14,6 +14,7 @@ import {InvoiceCreationUpdatingDialogComponent} from "./invoice-creation-updatin
 })
 export class InvoiceComponent implements OnInit {
   title = 'Invoice management';
+  invoiceSearch : InvoiceSearch = {mobile : undefined, ticket: undefined};
   invoice = of([]);
 
   ngOnInit(): void {
@@ -21,15 +22,23 @@ export class InvoiceComponent implements OnInit {
   }
 
   constructor(private dialog: MatDialog, private invoiceService: InvoiceService) {
-    this.loadInvoice();
   }
 
   loadInvoice(): void {
     this.invoice = this.invoiceService.searchAll();
   }
 
-  search(search: InvoiceSearch): void {
-    this.invoice = this.invoiceService.search(search);
+  searchByMobile(): void {
+    this.invoice = this.invoiceService.searchByMobile(this.invoiceSearch);
+  }
+
+  searchByTicket(): void {
+    this.invoice = this.invoiceService.searchByTicket(this.invoiceSearch);
+  }
+
+  resetSearch(): void {
+    this.invoiceSearch = {};
+    this.loadInvoice();
   }
 
   read(invoice: Invoice): void {
@@ -42,12 +51,12 @@ export class InvoiceComponent implements OnInit {
   }
 
   create(): void {
-    this.dialog.open(InvoiceCreationUpdatingDialogComponent);
+    this.dialog.open(InvoiceCreationDialogComponent);
   }
 
   update(invoice: Invoice): void {
     this.invoiceService.read(invoice.identity)
-      .subscribe(fullArticle => this.dialog.open(InvoiceCreationUpdatingDialogComponent, { data: invoice }));
+      .subscribe(fullArticle => this.dialog.open(InvoiceCreationDialogComponent, { data: invoice }));
   }
 
 }

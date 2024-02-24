@@ -1,1 +1,27 @@
+<mat-card>
+  <mat-card-content>
+    <mat-label><strong>Filters: </strong></mat-label>
+    <mat-form-field>
+      <mat-label>Reference</mat-label>
+      <input [(ngModel)]="invoiceSearch.mobile" matInput>
+    </mat-form-field>
+    <button (click)="searchByMobile()" mat-icon-button>
+      <mat-icon>search</mat-icon>
+    </button>
+    <button (click)="resetSearch()" mat-icon-button>
+      <mat-icon>close</mat-icon>
+    </button>
+
+    <mat-form-field>
+      <mat-label>Reference</mat-label>
+      <input [(ngModel)]="invoiceSearch.ticket" matInput>
+    </mat-form-field>
+    <button (click)="searchByTicket()" mat-icon-button>
+      <mat-icon>search</mat-icon>
+    </button>
+    <button (click)="resetSearch()" mat-icon-button>
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-card-content>
+</mat-card>
 <app-crud (create)="create()" (read)="read($event)" (update)="update($event)" [deleteAction]="false" [data]="invoice" [title]="title"></app-crud>
