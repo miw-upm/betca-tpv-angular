@@ -33,9 +33,15 @@ export class ComplaintService {
     };
     return of(mockResponse);
   }
+
+  /*
+   searchAll(): Observable<Complaint[]> {
+        return this.httpService
+       .get(EndPoints.COMPLAINTS + ComplaintService.SEARCH);
+   }
+   */
   searchAll(): Observable<Complaint[]> {
-       return this.httpService
-      .get(EndPoints.COMPLAINTS + ComplaintService.SEARCH);
+    return of(this.mockComplaints);
   }
 
   /*
