@@ -9,7 +9,7 @@
       <mat-icon>person</mat-icon>
       <span>Logout</span>
     </button>
-    <button mat-button [matMenuTriggerFor]="profile">
+    <button mat-button>
       <mat-icon>account_box</mat-icon>
       <span>Profile</span>
     </button>
@@ -47,9 +47,6 @@
     <mat-icon>local_atm</mat-icon>
     <span>VAT Management</span>
   </button>
-</mat-menu>
-<mat-menu #profile="matMenu">
-  <customer-points-menu-item></customer-points-menu-item>
 </mat-menu>
 <!--   Menus  -->
 <mat-menu #cashiers="matMenu">

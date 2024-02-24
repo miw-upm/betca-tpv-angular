@@ -17,6 +17,7 @@ import {OnlineOrdersComponent} from "./online-orders/online-orders.component";
 import { RefundsComponent } from './refunds/refunds.component';
 import { SettingsComponent } from './settings/settings.component';
 import { SettingsSavedInfoDialogComponent } from './settings/settings-saved-info-dialog/settings-saved-info-dialog.component';
+import {CustomerPointsService} from "./customer-points/customer-points.service";
 
 @NgModule({
   declarations: [
@@ -41,6 +42,7 @@ import { SettingsSavedInfoDialogComponent } from './settings/settings-saved-info
   ],
   providers: [
     ShoppingBasketService,
+    CustomerPointsService
   ]
 })
 export class HomeModule {
