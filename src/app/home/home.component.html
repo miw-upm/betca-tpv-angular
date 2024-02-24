@@ -58,7 +58,11 @@
     <mat-icon>build</mat-icon>
     <span>Technical Support</span>
   </button>
-  <customer-points-menu-item></customer-points-menu-item>
+  <span mat-menu-item [disabled]="true">
+    <mat-icon>monetization_on</mat-icon>
+    <span>You have {{(customerPoints | async)?.value}} points</span>
+  </span>
+
 </mat-menu>
 <mat-toolbar class="center">
   <button [matMenuTriggerFor]="adviser" mat-button>Adviser</button>

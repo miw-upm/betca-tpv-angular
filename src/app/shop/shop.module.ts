@@ -35,7 +35,6 @@ import { MessengerService } from './messenger/messenger.service';
 import {TagsComponent} from "./tags/tags.component";
 import { TagService} from "./tags/tag.service";
 import { TagCreationReadingUpdatingDialogComponent} from "./tags/tag-creation-reading-updating-dialog.component";
-import {CustomerPointsService} from "@shared/services/customer-points.service";
 import {SearchByBarcodeComponent} from "./shared/search-by-barcode.component";
 import {VouchersComponent} from './vouchers/vouchers.component';
 import {VoucherReadDetailDialogComponent} from './vouchers/voucher-read-detail.dialog.component';
@@ -92,7 +91,6 @@ import {StockAuditService} from "./stock-audit/stock-audit.service";
     ShoppingCartService,
     SalesPeopleService,
     MessengerService,
-    CustomerPointsService,
     QuarterVatService,
     MessengerService,
     TagService,
