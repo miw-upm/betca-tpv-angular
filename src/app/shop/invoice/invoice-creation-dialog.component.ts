@@ -4,8 +4,8 @@ import {MAT_DIALOG_DATA, MatDialog} from '@angular/material/dialog';
 import {Invoice} from "../cashier-opened/shopping-cart/invoice.model";
 import {InvoiceService} from "./invoice.service";
 import {TicketCreation} from "../cashier-opened/shopping-cart/ticket-creation.model";
-import {AuthService} from "@core/auth.service";
 import {User} from "@core/user.model";
+import {InvoiceSearch} from "./invoice-search.model";
 
 @Component({
   templateUrl: 'invoice-creation-dialog.component.html',
@@ -16,24 +16,26 @@ export class InvoiceCreationDialogComponent {
   title: string;
   invoice : Invoice;
   ticket : TicketCreation;
-  ticketList : TicketCreation[]
+  ticketList : string[]
   user : User
-  ticketSelected : boolean;
+  ticketSelected : string;
+  search : InvoiceSearch;
 
-  constructor(@Inject(MAT_DIALOG_DATA) data: Invoice, private invoiceService: InvoiceService, private dialog: MatDialog, private auth: AuthService) {
-    this.title = data ? 'Update Invoice' : 'Create Invoice';
+  constructor(@Inject(MAT_DIALOG_DATA) data: Invoice, private invoiceService: InvoiceService, private dialog: MatDialog) {
+    this.title = 'Create Invoice';
     this.invoice = data ? data : {
       identity: undefined,
       creationDate: new Date(),
       baseTax: undefined,
       taxValue: undefined,
       user: undefined,
-      ticket: this.ticket
+      ticket: undefined
     };
-    this.ticketSelected = false;
+
     this.invoice.ticket = data ? data.ticket: undefined;
-    this.ticket = {cash: 0, card: 0, voucher: 0, shoppingList: [], note: 'ticket'}
-    this.ticketList = [{cash: 0, card: 0, voucher: 0, shoppingList: [], note: 'lista ticket'}];
+
+    //para probar ui
+    this.ticketList = [ 'prueba1' , 'prueba2' , 'prueba3'];
   }
 
   isCreate(): boolean {
@@ -46,19 +48,12 @@ export class InvoiceCreationDialogComponent {
       .subscribe(() => this.dialog.closeAll());
   }
 
-  update(): void {
-    this.invoiceService
-      .update(this.invoice, this.user)
-      .subscribe(() => this.dialog.closeAll());
+  searchByMobile(): void {
+    this.invoiceService.searchByMobile(this.search);
   }
 
-  search(): void {
-    // TODO: search ticket
-  }
-
-  toggleInvoiceSelection(): boolean {
-    this.ticketSelected = !this.ticketSelected;
-    return this.ticketSelected;
+  searchByTicket(): void {
+    this.invoiceService.searchByTicket(this.search);
   }
 
   invalid(): boolean {

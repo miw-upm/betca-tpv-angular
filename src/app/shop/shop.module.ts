@@ -42,6 +42,9 @@ import {InvoiceService} from "./invoice/invoice.service";
 import {
   InvoiceCreationDialogComponent
 } from "./invoice/invoice-creation-dialog.component";
+import {
+  InvoiceUpdatingDialogComponent
+} from "./invoice/invoice-updating-dialog.component";
 
 @NgModule({
   declarations: [
@@ -65,7 +68,8 @@ import {
     TagCreationReadingUpdatingDialogComponent,
     BudgetsComponent,
     InvoiceComponent,
-    InvoiceCreationDialogComponent
+    InvoiceCreationDialogComponent,
+    InvoiceUpdatingDialogComponent,
   ],
   imports: [
     SharedModule,

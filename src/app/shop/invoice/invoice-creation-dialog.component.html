@@ -7,22 +7,25 @@
       <mat-card-content>
         <mat-form-field>
           <mat-label>Ticket reference</mat-label>
-          <input matInput [(ngModel)]="ticket.note" (keyup)="search()">
+          <input matInput [(ngModel)]="search.ticketReference" (keyup)="searchByTicket()">
         </mat-form-field>
         <mat-form-field>
           <mat-label>User mobile</mat-label>
-          <input matInput [(ngModel)]="ticket.note" (keyup)="search()">
+          <input matInput [(ngModel)]="search.mobile" (keyup)="searchByMobile()">
         </mat-form-field>
       </mat-card-content>
     </mat-card>
   </div>
 
   <mat-list>
-    <mat-list-item *ngFor="let ticket of ticketList">
-      <mat-checkbox (change)="toggleInvoiceSelection()">
-        {{ticket.note}}
-      </mat-checkbox>
-    </mat-list-item>
+    <mat-radio-group [(ngModel)]="ticketSelected">
+      <mat-list-item *ngFor="let ticket of ticketList">
+        <mat-radio-button [value]="ticket">
+          {{ticket}}
+        </mat-radio-button>
+      </mat-list-item>
+    </mat-radio-group>
+
   </mat-list>
 </div>
 </mat-dialog-content>

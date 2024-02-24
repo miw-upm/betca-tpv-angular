@@ -6,6 +6,7 @@ import {ReadDetailDialogComponent} from "@shared/dialogs/read-detail.dialog.comp
 import {Invoice} from "../cashier-opened/shopping-cart/invoice.model";
 import {InvoiceCreationDialogComponent} from "./invoice-creation-dialog.component";
 import {InvoiceSearch} from "./invoice-search.model";
+import {InvoiceUpdatingDialogComponent} from "./invoice-updating-dialog.component";
 
 @Component({
   selector: 'app-invoice',
@@ -14,7 +15,7 @@ import {InvoiceSearch} from "./invoice-search.model";
 })
 export class InvoiceComponent implements OnInit {
   title = 'Invoice management';
-  invoiceSearch : InvoiceSearch = {mobile : undefined, ticket: undefined};
+  invoiceSearch : InvoiceSearch = {mobile : undefined, ticketReference: undefined};
   invoice = of([]);
 
   ngOnInit(): void {
@@ -56,7 +57,7 @@ export class InvoiceComponent implements OnInit {
 
   update(invoice: Invoice): void {
     this.invoiceService.read(invoice.identity)
-      .subscribe(fullArticle => this.dialog.open(InvoiceCreationDialogComponent, { data: invoice }));
+      .subscribe(fullArticle => this.dialog.open(InvoiceUpdatingDialogComponent, { data: invoice }));
   }
 
 }
