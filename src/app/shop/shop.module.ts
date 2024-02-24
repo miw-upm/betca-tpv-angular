@@ -68,6 +68,7 @@ import {StockAuditService} from "./stock-audit/stock-audit.service";
     ProvidersComponent,
     SearchByBarcodeComponent,
     SearchByCompanyComponent,
+
     ShopComponent,
     ShoppingCartComponent,
     TicketsComponent,
@@ -79,6 +80,7 @@ import {StockAuditService} from "./stock-audit/stock-audit.service";
     InvoiceComponent,
     InvoiceCreationDialogComponent,
     InvoiceUpdatingDialogComponent,
+    SalesPeopleComponent,
     VouchersComponent,
     VoucherReadDetailDialogComponent,
     VoucherCreationDialogComponent,
