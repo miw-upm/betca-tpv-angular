@@ -50,14 +50,19 @@ export class ComplaintService {
       .get(EndPoints.COMPLAINTS + '/' + id);
   }
   */
-
   read(id: string): Observable<Complaint> {
     const complaint = this.mockComplaints.find(c => c.id === id);
     return of(complaint || {} as Complaint);
   }
 
+  /*
   delete(id: string): Observable<void> {
     return this.httpService
       .delete(EndPoints.COMPLAINTS + '/' + id);
+  }
+  */
+  delete(id: string): Observable<void> {
+    this.mockComplaints = this.mockComplaints.filter(c => c.id !== id);
+    return of(undefined);
   }
 }
