@@ -80,6 +80,7 @@ export class ShoppingCartService {
   }
 
   createInvoiceAndPrint(ticketId: string): Observable<void> {
+    alert('invoice creation not implemented');
     return EMPTY; // TODO change EMPTY
   }
 
