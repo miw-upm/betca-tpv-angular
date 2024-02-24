@@ -3,31 +3,28 @@ import {RouterModule, Routes} from '@angular/router';
 
 import {Role} from '@core/role.model';
 import {RoleGuardService} from '@core/role-guard.service';
+import {AdviserComponent} from './adviser/adviser.component';
 import {ComplaintsComponent} from './complaints/complaints.component';
 import {HomeComponent} from './home.component';
 import {ShoppingBasketComponent} from "./shopping-basket/shopping-basket.component";
-import {AdviserNewComponent} from "./adviser/adviser-new/adviser-new.component";
-import {AdviserPopularComponent} from "./adviser/adviser-popular/adviser-popular.component";
 import {Top5Component} from "./adviser/top5/top5.component";
 import {OnlineOrdersComponent} from "./online-orders/online-orders.component";
+import {RefundsComponent} from "./refunds/refunds.component";
+import {SettingsComponent} from "./settings/settings.component";
 
 const routes: Routes = [
   {
     path: '',
     component: HomeComponent,
     children: [
+      {path: 'adviser', component: AdviserComponent},
+      {path: 'top5', component: Top5Component},
       {
-        path: 'adviser/new',
-        component: AdviserNewComponent,
+        path: 'settings',
+        component: SettingsComponent,
+        canActivate: [RoleGuardService],
+        data: {roles: [Role.CUSTOMER]}
       },
-      {
-        path: 'adviser/popular',
-        component: AdviserPopularComponent,
-      },
-      {
-        path: 'top5',
-        component: Top5Component,
-      }, // public
       {
         path: 'complaints',
         component: ComplaintsComponent,
@@ -41,6 +38,12 @@ const routes: Routes = [
       {
         path: 'online-orders',
         component: OnlineOrdersComponent,
+        canActivate: [RoleGuardService],
+        data: {roles: [Role.CUSTOMER]}
+      },
+      {
+        path: 'refunds',
+        component: RefundsComponent,
         canActivate: [RoleGuardService],
         data: {roles: [Role.CUSTOMER]}
       }

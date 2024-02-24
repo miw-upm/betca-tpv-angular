@@ -38,12 +38,15 @@
   <mat-checkbox [(ngModel)]="requestedInvoice">
     <span> Create Invoice</span>
   </mat-checkbox>
+  <mat-checkbox [(ngModel)]="requestedCreditLine" [disabled]="invalidICreditLine()">
+    <span>Use credit line</span>
+  </mat-checkbox>
   <mat-checkbox [(ngModel)]="requestedGiftTicket">
     <span>Create Gift Ticket</span>
   </mat-checkbox>
   <mat-form-field *ngIf="requestedGiftTicket">
     <mat-label>Leave a message</mat-label>
-    <textarea [(ngModel)]="ticketGiftCreation.message" matInput placeholder="Because you deserve it sweety!"></textarea>
+    <textarea [(ngModel)]="ticketGiftCreation.message" matInput placeholder="Because you deserve it sweety!"></textarea>ç
   </mat-form-field>
   <mat-checkbox [(ngModel)]="requestedDataProtectionAct" [disabled]="true">
     <span>Data Protection Act</span>

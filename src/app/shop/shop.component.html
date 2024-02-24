@@ -9,7 +9,7 @@
       <mat-icon>person</mat-icon>
       <span>Logout</span>
     </button>
-    <button mat-button [matMenuTriggerFor]="profile">
+    <button mat-button>
       <mat-icon>account_box</mat-icon>
       <span>Profile</span>
     </button>
@@ -48,9 +48,6 @@
     <span>VAT Management</span>
   </button>
 </mat-menu>
-<mat-menu #profile="matMenu">
-  <customer-points-menu-item></customer-points-menu-item>
-</mat-menu>
 <!--   Menus  -->
 <mat-menu #cashiers="matMenu">
   <button (click)="closeCashier()" *ngIf="!cashierClosed" mat-menu-item>
@@ -75,7 +72,7 @@
     <mat-icon>toc</mat-icon>
     <span>Tickets</span>
   </button>
-  <button disabled="disabled" mat-menu-item routerLink="">
+  <button mat-menu-item routerLink="/shop/online-orders">
     <mat-icon>shopping_basket</mat-icon>
     <span>Online Orders</span>
   </button>
@@ -91,7 +88,7 @@
     <mat-icon>description</mat-icon>
     <span>Budgets</span>
   </button>
-  <button disabled="disabled" mat-menu-item routerLink="">
+  <button mat-menu-item routerLink="/shop/vouchers">
     <mat-icon>local_offer</mat-icon>
     <span>Vouchers</span>
   </button>
@@ -135,7 +132,7 @@
     <mat-icon>equalizer</mat-icon>
     <span>Stock Management</span>
   </button>
-  <button disabled="disabled" mat-menu-item routerLink="/home/stock-management">
+  <button mat-menu-item routerLink="/shop/stock-audit">
     <mat-icon>assessment</mat-icon>
     <span>Stock Audit</span>
   </button>
@@ -145,7 +142,7 @@
     <mat-icon>account_circle</mat-icon>
     <span>Users</span>
   </button>
-  <button disabled="disabled" mat-menu-item routerLink="/shop/users">
+  <button mat-menu-item routerLink="/shop/salesPeople">
     <mat-icon>assignment_ind</mat-icon>
     <span>Salespeople</span>
   </button>
@@ -161,7 +158,7 @@
     <mat-icon>message</mat-icon>
     <span>Messengers</span>
   </button>
-  <button disabled="disabled" mat-menu-item routerLink="">
+  <button  mat-menu-item routerLink="credit-line">
     <mat-icon>card_membership</mat-icon>
     <span>Credit</span>
   </button>
