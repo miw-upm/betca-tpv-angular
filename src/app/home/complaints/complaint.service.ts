@@ -65,4 +65,11 @@ export class ComplaintService {
     this.mockComplaints = this.mockComplaints.filter(c => c.id !== id);
     return of(undefined);
   }
+  update(complaint: Complaint): Observable<Complaint> {
+    const index = this.mockComplaints.findIndex(c => c.id === complaint.id);
+    if (index !== -1) {
+      this.mockComplaints[index] = complaint;
+    }
+    return of(complaint);
+  }
 }
