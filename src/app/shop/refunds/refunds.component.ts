@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {of} from "rxjs";
 import {OnlineOrderState} from "@shared/models/online-order-state";
 import {OnlineOrdersService} from "@shared/services/online-orders.service";
@@ -14,9 +14,7 @@ export class RefundsComponent implements OnInit {
   displayedColumns = ['id', 'reference', 'state', 'deliveryDate', 'ticketReference', 'actions'];
   title = 'Manage refunds';
   onlineOrders = of([]);
-  enumKeys= Object.entries(OnlineOrderState)
-    .map(([key, value]) => ({ name:key,value:value }))
-    .filter(pair => !isNaN(Number(pair.value)) && this.onlineOrderStateOptions(pair.name));
+  onlineOrderStateKeys = Object.keys(OnlineOrderState).filter(key => isNaN(Number(key)));
 
   constructor(private onlineOrderService: OnlineOrdersService) { }
 
@@ -32,12 +30,22 @@ export class RefundsComponent implements OnInit {
 
   showOnlineOrder(state: OnlineOrderState): boolean {
     return state == OnlineOrderState.REFUND_REQUESTED ||
-      state == OnlineOrderState.REFUNDED;
+      state == OnlineOrderState.REFUNDED ||
+      state == OnlineOrderState.REFUND_DECLINED;
   }
 
-  onlineOrderStateOptions(value: string): boolean {
-    return value == OnlineOrderState[OnlineOrderState.REFUND_REQUESTED.valueOf()] ||
-      value == OnlineOrderState[OnlineOrderState.REFUNDED.valueOf()];
+  showActionButtons(state: OnlineOrderState): boolean {
+    return state == OnlineOrderState.REFUND_REQUESTED;
+  }
+
+  acceptRefund(onlineOrder: OnlineOrder) {
+    onlineOrder.state = OnlineOrderState.REFUNDED;
+    this.update(onlineOrder);
+  }
+
+  declineRefund(onlineOrder: OnlineOrder) {
+    onlineOrder.state = OnlineOrderState.REFUND_DECLINED;
+    this.update(onlineOrder);
   }
 
   update(onlineOrder: OnlineOrder) {
