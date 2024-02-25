@@ -40,15 +40,17 @@
           <mat-icon>local_atm</mat-icon>
         </button>
       </form>
-      <form *ngIf="userIsLogged()" class="flex-center-items pb-dot-4">
-        <mat-checkbox
-          [(ngModel)]="usePoints"
-          [disabled]="!(canUsePoints()|async)"
-          (change) = "usePointsChanged()"
-          name = "usePoints"
-          color="primary">
-          Use points
-        </mat-checkbox>
+      <form>
+        <mat-form-field>
+          <input #customerPointsMobile matInput placeholder="Mobile Number" type="number">
+        </mat-form-field>
+        <button (click)="addCustomerPointsDiscount(customerPointsMobile.value)"
+                [disabled]="customerPointsMobile.value === ''"
+                color="primary"
+                mat-icon-button
+                type="submit">
+          <mat-icon>smartphone</mat-icon>
+        </button>
       </form>
     </div>
   </mat-card-content>
@@ -102,7 +104,7 @@
         <mat-cell *matCellDef="let item" fxFlex="15%" >
           <mat-checkbox (change)="changeCommitted(item)" [checked]="checkboxState(item.state)"
                         [disabled]="item.amount<0" *ngIf="!isDiscountPointsItem(item)"></mat-checkbox>
-          <button (click)="delete(item)" mat-button mat-icon-button matSuffix *ngIf="!isDiscountPointsItem(item)">
+          <button (click)="delete(item)" mat-button mat-icon-button matSuffix>
             <mat-icon color="warn">close</mat-icon>
           </button>
         </mat-cell>
