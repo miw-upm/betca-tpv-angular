@@ -11,21 +11,9 @@ import { EndPoints } from '@shared/end-points';
 export class MessengerService {
 
   private static SENT_ENDPOINT = '/sent';
-  private listReceived: Message[] = [];
+  private static RECIEVED_ENPOINT = '/received';
 
   constructor(private httpService: HttpService) {
-    let newMessage: Message;
-    
-
-    // Mock de mensajes recibidos
-    for (let index = 0; index < 3; index++) {
-      newMessage = new Message();
-      newMessage.fromUserMobile = '987654321';
-      newMessage.toUserMobile = '123456789';
-      newMessage.subject = 'Received ' + index;
-      newMessage.text = 'Received Message text ' + index;
-      this.listReceived.push(newMessage);
-    }
   }
 
   sendNewMessage(message: Message): Observable<void> {
@@ -39,11 +27,17 @@ export class MessengerService {
         delete message.isRead;
         return message;
       }))
-    );;
+    );
   }
 
   getReceivedMessages(): Observable<Message[]> {
-    return of(this.listReceived);
+    return this.httpService.get(EndPoints.MESSENGER + MessengerService.RECIEVED_ENPOINT).pipe(
+      map(messages => messages.map(message => {
+        delete message.id;
+        delete message.isRead;
+        return message;
+      }))
+    );
   }
 
 }
