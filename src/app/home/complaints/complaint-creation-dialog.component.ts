@@ -1,5 +1,5 @@
-import {Component} from '@angular/core';
-import {MatDialog} from '@angular/material/dialog';
+import {Component, Inject} from '@angular/core';
+import {MAT_DIALOG_DATA, MatDialog} from '@angular/material/dialog';
 
 import {Complaint} from './complaint.model';
 import {ComplaintService} from './complaint.service';
@@ -14,8 +14,12 @@ import {MatSnackBar} from "@angular/material/snack-bar";
 export class ComplaintCreationDialogComponent {
   complaint: Complaint;
 
-  constructor(private complaintService: ComplaintService, private dialog: MatDialog, private authService: AuthService, private snackBar: MatSnackBar) {
-    this.complaint = {barcode: undefined, description: undefined};
+  constructor(private complaintService: ComplaintService, private dialog: MatDialog, private authService: AuthService, private snackBar: MatSnackBar, @Inject(MAT_DIALOG_DATA) public data: any ) {
+    if (data && data.complaint) {
+      this.complaint = data.complaint;
+    } else {
+      this.complaint = {barcode: undefined, description: undefined};
+    }
   }
 
   create(): void {
