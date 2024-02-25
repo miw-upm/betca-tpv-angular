@@ -21,6 +21,7 @@ import {
 } from './cashier-opened/shopping-cart/article-quick-creation-dialog.component';
 import {CashierDialogComponent} from './cashier-opened/cashier-closure/cashier-dialog.component';
 import {CheckOutDialogComponent} from './cashier-opened/shopping-cart/check-out-dialog.component';
+import {VoucherApplyDialogComponent} from './cashier-opened/shopping-cart/voucher-apply-dialog.component';
 import {ProviderCreationUpdatingDialogComponent} from './providers/provider-creation-updating-dialog.component';
 import {ArticleService} from './articles/article.service';
 import {ShopRoutingModule} from './shop-routing.module';
@@ -69,7 +70,6 @@ import { RefundsComponent } from './refunds/refunds.component';
     ProvidersComponent,
     SearchByBarcodeComponent,
     SearchByCompanyComponent,
-
     ShopComponent,
     ShoppingCartComponent,
     TicketsComponent,
@@ -85,12 +85,13 @@ import { RefundsComponent } from './refunds/refunds.component';
     VouchersComponent,
     VoucherReadDetailDialogComponent,
     VoucherCreationDialogComponent,
+    VoucherApplyDialogComponent,
     OnlineOrdersComponent,
     BudgetsComponent,
     StockAuditComponent,
     BudgetsComponent,
     CreditLineComponent,
-    RefundsComponent
+    RefundsComponent,
   ],
   imports: [
     SharedModule,

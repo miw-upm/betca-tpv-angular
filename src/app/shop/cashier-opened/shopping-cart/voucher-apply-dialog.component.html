@@ -1,0 +1,12 @@
+<h2 mat-dialog-title>{{title}}</h2>
+<mat-dialog-content>
+  <mat-form-field class="full-width">
+    <mat-label>Reference</mat-label>
+    <input [(ngModel)]="voucher.reference" matInput required type="text"/>
+  </mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button cdkFocusInitial mat-dialog-close mat-raised-button>Close</button>
+  <button (click)="apply()" color="primary" mat-raised-button>Apply
+  </button>
+</mat-dialog-actions>
