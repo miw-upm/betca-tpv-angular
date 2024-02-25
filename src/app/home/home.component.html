@@ -34,7 +34,7 @@
   </div>
 </mat-toolbar>
 <mat-menu #profile="matMenu" xPosition="before">
-  <button mat-menu-item>
+  <button mat-menu-item routerLink="/home/settings">
     <mat-icon>settings</mat-icon>
     <span>Settings</span>
   </button>
@@ -58,14 +58,18 @@
     <mat-icon>build</mat-icon>
     <span>Technical Support</span>
   </button>
-  <customer-points-menu-item></customer-points-menu-item>
+  <span mat-menu-item [disabled]="true">
+    <mat-icon>monetization_on</mat-icon>
+    <span>You have {{(customerPoints | async)?.value}} points</span>
+  </span>
+
 </mat-menu>
 <mat-toolbar class="center">
   <button [matMenuTriggerFor]="adviser" mat-button>Adviser</button>
   <mat-menu #adviser="matMenu">
-    <button mat-menu-item>Sale</button>
-    <button mat-menu-item><a class="noLinkStyle" routerLink="/home/adviser/popular">Popular</a></button>
-    <button mat-menu-item><a class="noLinkStyle" routerLink="/home/adviser/new">New</a></button>
+    <button mat-menu-item [routerLink]="['/home/adviser']" [queryParams]="{ tag: 'Sale' }">Sale</button>
+    <button mat-menu-item [routerLink]="['/home/adviser']" [queryParams]="{ tag: 'Popular' }">Popular</button>
+    <button mat-menu-item [routerLink]="['/home/adviser']" [queryParams]="{ tag: 'New' }">New</button>
   </mat-menu>
   <button mat-button><a class="noLinkStyle" routerLink="/home/top5">Top5</a></button>
 </mat-toolbar>

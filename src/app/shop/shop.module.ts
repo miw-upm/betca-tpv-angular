@@ -25,6 +25,8 @@ import {ProviderCreationUpdatingDialogComponent} from './providers/provider-crea
 import {ArticleService} from './articles/article.service';
 import {ShopRoutingModule} from './shop-routing.module';
 import {TicketsComponent} from './cashier-opened/tickets/tickets.component';
+import { SalesPeopleComponent } from './sales-people/sales-people.component';
+import { SalesPeopleService } from './sales-people/sales-people.service';
 import {QuarterVatComponent} from "./quarter-vat/quarter-vat.component";
 import {QuarterVatService} from "./quarter-vat/quarter-vat.service";
 
@@ -33,13 +35,20 @@ import { MessengerService } from './messenger/messenger.service';
 import {TagsComponent} from "./tags/tags.component";
 import { TagService} from "./tags/tag.service";
 import { TagCreationReadingUpdatingDialogComponent} from "./tags/tag-creation-reading-updating-dialog.component";
-import {CustomerPointsService} from "@shared/services/customer-points.service";
 import {SearchByBarcodeComponent} from "./shared/search-by-barcode.component";
 import {VouchersComponent} from './vouchers/vouchers.component';
 import {VoucherReadDetailDialogComponent} from './vouchers/voucher-read-detail.dialog.component';
 import {VoucherCreationDialogComponent} from './vouchers/voucher-creation-dialog.component';
 import { BudgetsComponent } from './budgets/budgets.component';
 import {BudgetsService} from './budgets/budgets.service';
+import { InvoiceComponent } from './invoice/invoice.component';
+import {InvoiceService} from "./invoice/invoice.service";
+import {
+  InvoiceCreationDialogComponent
+} from "./invoice/invoice-creation-dialog.component";
+import {
+  InvoiceUpdatingDialogComponent
+} from "./invoice/invoice-updating-dialog.component";
 import {CreditLineComponent} from "./credit-line/credit-line.component";
 import {CreditLineService} from "./credit-line/credit-line.service";
 import {OnlineOrdersComponent} from "./online-orders/online-orders.component";
@@ -60,6 +69,7 @@ import { RefundsComponent } from './refunds/refunds.component';
     ProvidersComponent,
     SearchByBarcodeComponent,
     SearchByCompanyComponent,
+
     ShopComponent,
     ShoppingCartComponent,
     TicketsComponent,
@@ -67,6 +77,11 @@ import { RefundsComponent } from './refunds/refunds.component';
     MessengerComponent,
     TagsComponent,
     TagCreationReadingUpdatingDialogComponent,
+    BudgetsComponent,
+    InvoiceComponent,
+    InvoiceCreationDialogComponent,
+    InvoiceUpdatingDialogComponent,
+    SalesPeopleComponent,
     VouchersComponent,
     VoucherReadDetailDialogComponent,
     VoucherCreationDialogComponent,
@@ -89,11 +104,13 @@ import { RefundsComponent } from './refunds/refunds.component';
     SharedCashierService,
     SharedProviderService,
     ShoppingCartService,
+    SalesPeopleService,
     MessengerService,
-    CustomerPointsService,
     QuarterVatService,
     MessengerService,
     TagService,
+    BudgetsService,
+    InvoiceService,
     BudgetsService,
     CreditLineService,
     BudgetsService,

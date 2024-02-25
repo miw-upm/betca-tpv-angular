@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
+import {BehaviorSubject, Observable} from "rxjs";
+import {CustomerPoints} from "@shared/models/customer-points.model";
 import {AuthService} from "@core/auth.service";
-import {CustomerPoints} from "../models/customer-points.model";
-import {BehaviorSubject, Observable, of} from "rxjs";
 import {map} from "rxjs/operators";
 
 @Injectable({
@@ -19,18 +19,7 @@ export class CustomerPointsService {
       user: this.auth.getUser()
     });
   }
-  private checkAndSetCustomerPoints(): void {
-    if(this.customerPoints == undefined) {
-      this.setCurrentCustomerPoints();
-    }
-  }
-  customerHasPoints(): Observable<boolean> {
-    this.checkAndSetCustomerPoints();
-    return this.customerPoints.pipe(
-      map(customerPoints=>customerPoints.value > 0)
-    );
-  }
-  getCustomerPoints(): Observable<CustomerPoints> {
+  getCurrentCustomerPoints(): Observable<CustomerPoints> {
     this.setCurrentCustomerPoints();
     return this.customerPoints;
   }

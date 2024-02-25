@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Observable} from 'rxjs';
+import {Observable, of} from 'rxjs';
 
 import {HttpService} from '@core/http.service';
 import {EndPoints} from '@shared/end-points';
@@ -14,9 +14,19 @@ export class ComplaintService {
   constructor(private httpService: HttpService) {
   }
 
-  create(complaint: Complaint): Observable<Complaint> {
+  /*create(complaint: Complaint): Observable<Complaint> {
     return this.httpService
       .post(EndPoints.COMPLAINTS, complaint);
+  }*/
+
+  create(complaint: Complaint): Observable<Complaint> {
+    const mockResponse: Complaint = {
+      id: 'mockId',
+      barcode: complaint.barcode,
+      description: complaint.description,
+      registrationDate: new Date(),
+    };
+    return of(mockResponse);
   }
 
   searchAll(): Observable<Complaint[]> {

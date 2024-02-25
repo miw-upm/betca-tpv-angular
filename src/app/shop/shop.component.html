@@ -9,7 +9,7 @@
       <mat-icon>person</mat-icon>
       <span>Logout</span>
     </button>
-    <button mat-button [matMenuTriggerFor]="profile">
+    <button mat-button>
       <mat-icon>account_box</mat-icon>
       <span>Profile</span>
     </button>
@@ -48,9 +48,6 @@
     <span>VAT Management</span>
   </button>
 </mat-menu>
-<mat-menu #profile="matMenu">
-  <customer-points-menu-item></customer-points-menu-item>
-</mat-menu>
 <!--   Menus  -->
 <mat-menu #cashiers="matMenu">
   <button (click)="closeCashier()" *ngIf="!cashierClosed" mat-menu-item>
@@ -87,7 +84,7 @@
     <mat-icon>playlist_add_check</mat-icon>
     <span>Ticket tracking</span>
   </button>
-  <button disabled="disabled" mat-menu-item routerLink="">
+  <button mat-menu-item routerLink="/shop/invoice">
     <mat-icon>receipt</mat-icon>
     <span>Invoices</span>
   </button>
@@ -149,7 +146,7 @@
     <mat-icon>account_circle</mat-icon>
     <span>Users</span>
   </button>
-  <button disabled="disabled" mat-menu-item routerLink="/shop/users">
+  <button mat-menu-item routerLink="/shop/salesPeople">
     <mat-icon>assignment_ind</mat-icon>
     <span>Salespeople</span>
   </button>

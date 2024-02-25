@@ -9,16 +9,19 @@ import {ComplaintsComponent} from './complaints/complaints.component';
 import {ShoppingBasketComponent} from "./shopping-basket/shopping-basket.component";
 import {ShopModule} from "../shop/shop.module";
 import {CarouselModule} from "@shared/components/carousel/carousel.module";
-import { AdviserNewComponent } from './adviser/adviser-new/adviser-new.component';
-import { AdviserPopularComponent } from './adviser/adviser-popular/adviser-popular.component';
+import {AdviserComponent} from "./adviser/adviser.component";
 import { Top5Component } from './adviser/top5/top5.component';
 import {SearchByDescriptionComponent} from "./shared/search-by-description.component";
 import {PhoneRequestDialogComponent} from "./shopping-basket/phone-request-dialog.component";
 import {OnlineOrdersComponent} from "./online-orders/online-orders.component";
 import { RefundsComponent } from './refunds/refunds.component';
+import { SettingsComponent } from './settings/settings.component';
+import { SettingsSavedInfoDialogComponent } from './settings/settings-saved-info-dialog/settings-saved-info-dialog.component';
+import {CustomerPointsService} from "./customer-points/customer-points.service";
 
 @NgModule({
   declarations: [
+    AdviserComponent,
     SearchByDescriptionComponent,
     ComplaintsComponent,
     PhoneRequestDialogComponent,
@@ -26,10 +29,10 @@ import { RefundsComponent } from './refunds/refunds.component';
     HomeComponent,
     OnlineOrdersComponent,
     ShoppingBasketComponent,
-    AdviserNewComponent,
-    AdviserPopularComponent,
     Top5Component,
     RefundsComponent,
+    SettingsComponent,
+    SettingsSavedInfoDialogComponent,
   ],
   imports: [
     HomeRoutingModule,
@@ -39,6 +42,7 @@ import { RefundsComponent } from './refunds/refunds.component';
   ],
   providers: [
     ShoppingBasketService,
+    CustomerPointsService
   ]
 })
 export class HomeModule {
