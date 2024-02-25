@@ -10,4 +10,5 @@ export class EndPoints {
   static COMPLAINTS = environment.REST_CUSTOMER_SUPPORT + '/complaints';
   static BUDGETS = environment.REST_CORE + '/budgets';
   static CREDIT = environment.REST_CORE + '/credit';
+  static MESSENGER = environment.REST_CORE + '/messenger';
 }

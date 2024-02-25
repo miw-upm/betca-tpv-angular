@@ -1,28 +1,21 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable, map, of } from 'rxjs';
 
 import { HttpService } from '@core/http.service';
 import { Message } from '../shared/services/models/message.model';
+import { EndPoints } from '@shared/end-points';
 
 @Injectable({
   providedIn: 'root',
 })
 export class MessengerService {
 
-  private listSent: Message[] = [];
+  private static SENT_ENDPOINT = '/sent';
   private listReceived: Message[] = [];
 
-  constructor() {
+  constructor(private httpService: HttpService) {
     let newMessage: Message;
-    // Mock de mensajes enviados
-    for (let index = 0; index < 3; index++) {
-      newMessage = new Message();
-      newMessage.fromUserMobile = '123456789';
-      newMessage.toUserMobile = '987654321';
-      newMessage.subject = 'Sent ' + index;
-      newMessage.text = 'Sent Message text ' + index;
-      this.listSent.push(newMessage);
-    }
+    
 
     // Mock de mensajes recibidos
     for (let index = 0; index < 3; index++) {
@@ -40,7 +33,13 @@ export class MessengerService {
   }
 
   getSentMessages(): Observable<Message[]> {
-    return of(this.listSent);
+    return this.httpService.get(EndPoints.MESSENGER + MessengerService.SENT_ENDPOINT).pipe(
+      map(messages => messages.map(message => {
+        delete message.id;
+        delete message.isRead;
+        return message;
+      }))
+    );;
   }
 
   getReceivedMessages(): Observable<Message[]> {
