@@ -21,6 +21,7 @@ import {OnlineOrdersComponent} from "./online-orders/online-orders.component";
 import {StockAuditComponent} from './stock-audit/stock-audit.component';
 import {RefundsComponent} from "./refunds/refunds.component";
 import { OrdersComponent } from "./orders/orders.component";
+import { OrderDetailsComponent } from "./orders/order-details/order-details.component";
 
 const routes: Routes = [
   {
@@ -48,6 +49,8 @@ const routes: Routes = [
       {path: 'stock-audit', component: StockAuditComponent},
       {path: 'refunds', component: RefundsComponent},
       {path: 'orders', component: OrdersComponent},
+      {path: 'orders/new', component: OrderDetailsComponent},
+      {path: 'orders/:id', component: OrderDetailsComponent},
     ]
   }
 ];

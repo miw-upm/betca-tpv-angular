@@ -28,11 +28,11 @@ export class OrdersComponent {
     this.search();
   }
 
-  public create(): void {
-    // TODO To be implemented
+  public async create(): Promise<void> {
+    await this.router.navigateByUrl("/shop/orders/new");
   }
 
-  public details(order: Order): void {
-    // TODO To be implemented
+  public async details(order: Order): Promise<void> {
+    await this.router.navigateByUrl("/shop/orders/" + order.reference);
   }
 }

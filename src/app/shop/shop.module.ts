@@ -57,6 +57,7 @@ import {StockAuditComponent} from "./stock-audit/stock-audit.component";
 import {StockAuditService} from "./stock-audit/stock-audit.service";
 import { RefundsComponent } from './refunds/refunds.component';
 import { OrdersComponent } from './orders/orders.component';
+import { OrderDetailsComponent } from './orders/order-details/order-details.component';
 
 @NgModule({
   declarations: [
@@ -94,6 +95,7 @@ import { OrdersComponent } from './orders/orders.component';
     CreditLineComponent,
     RefundsComponent,
     OrdersComponent,
+    OrderDetailsComponent,
   ],
   imports: [
     SharedModule,
