@@ -1,1 +1,16 @@
-<p>ticket works!</p>
+<mat-card>
+  <mat-card-content>
+    <mat-form-field>
+      <mat-label>Search</mat-label>
+      <input [(ngModel)]="searchQuery" matInput>
+      <button mat-icon-button matSuffix (click)="search()">
+        <mat-icon>search</mat-icon>
+      </button>
+    </mat-form-field>
+    <button (click)="resetSearch()" mat-icon-button>
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-card-content>
+</mat-card>
+<app-crud (create)="false" (read)="read($event)" (update)="update($event)"
+          [data]="tickets" [deleteAction]="false" [title]="title"></app-crud>
