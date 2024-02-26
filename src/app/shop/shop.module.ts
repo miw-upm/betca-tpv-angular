@@ -56,6 +56,7 @@ import {OnlineOrdersComponent} from "./online-orders/online-orders.component";
 import {StockAuditComponent} from "./stock-audit/stock-audit.component";
 import {StockAuditService} from "./stock-audit/stock-audit.service";
 import { RefundsComponent } from './refunds/refunds.component';
+import { OrdersComponent } from './orders/orders.component';
 
 @NgModule({
   declarations: [
@@ -92,6 +93,7 @@ import { RefundsComponent } from './refunds/refunds.component';
     BudgetsComponent,
     CreditLineComponent,
     RefundsComponent,
+    OrdersComponent,
   ],
   imports: [
     SharedModule,
