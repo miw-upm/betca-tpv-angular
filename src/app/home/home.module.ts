@@ -19,6 +19,7 @@ import { SettingsComponent } from './settings/settings.component';
 import { SettingsSavedInfoDialogComponent } from './settings/settings-saved-info-dialog/settings-saved-info-dialog.component';
 import {CustomerPointsService} from "./customer-points/customer-points.service";
 import { TicketTrackingComponent } from './ticket-tracking/ticket-tracking.component';
+import { ProductComponent } from './ticket-tracking/product/product.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { TicketTrackingComponent } from './ticket-tracking/ticket-tracking.compo
     SettingsComponent,
     SettingsSavedInfoDialogComponent,
     TicketTrackingComponent,
+    ProductComponent,
   ],
   imports: [
     HomeRoutingModule,

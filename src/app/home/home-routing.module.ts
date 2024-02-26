@@ -49,7 +49,7 @@ const routes: Routes = [
         data: {roles: [Role.CUSTOMER]}
       },
       {
-        path: 'ticket-tracking',
+        path: 'ticket-tracking/:id',
         component: TicketTrackingComponent
       }
     ]
