@@ -5,6 +5,7 @@ import {Role} from '@core/role.model';
 import {RoleGuardService} from '@core/role-guard.service';
 import {AdviserComponent} from './adviser/adviser.component';
 import {ComplaintsComponent} from './complaints/complaints.component';
+import {ReviewsComponent} from "./reviews/reviews.component";
 import {HomeComponent} from './home.component';
 import {ShoppingBasketComponent} from "./shopping-basket/shopping-basket.component";
 
@@ -20,7 +21,8 @@ const routes: Routes = [
         canActivate: [RoleGuardService],
         data: {roles: [Role.CUSTOMER]}
       },
-      {path: 'shopping-basket', component: ShoppingBasketComponent}
+      {path: 'shopping-basket', component: ShoppingBasketComponent},
+      {path: 'reviews', component: ReviewsComponent}
     ]
   }
 ];

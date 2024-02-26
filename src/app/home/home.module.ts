@@ -9,20 +9,26 @@ import {ComplaintsComponent} from './complaints/complaints.component';
 import {AdviserComponent} from './adviser/adviser.component';
 import {ShoppingBasketComponent} from "./shopping-basket/shopping-basket.component";
 import {ShopModule} from "../shop/shop.module";
+import {ReviewsComponent} from "./reviews/reviews.component";
+import {ReviewDialogComponent} from "./reviews/review-dialog.component";
+import {ReactiveFormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
     AdviserComponent,
     ComplaintsComponent,
     ComplaintCreationDialogComponent,
+    ReviewsComponent,
+    ReviewDialogComponent,
     HomeComponent,
     ShoppingBasketComponent
   ],
-  imports: [
-    HomeRoutingModule,
-    SharedModule,
-    ShopModule,
-  ],
+    imports: [
+        HomeRoutingModule,
+        SharedModule,
+        ShopModule,
+        ReactiveFormsModule,
+    ],
   providers: [
     ShoppingBasketService,
   ]
