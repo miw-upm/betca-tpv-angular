@@ -17,7 +17,7 @@ export class MessengerService {
   }
 
   sendNewMessage(message: Message): Observable<void> {
-    return of();
+    return this.httpService.post(EndPoints.MESSENGER, message);
   }
 
   getSentMessages(): Observable<Message[]> {
