@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Tag } from '../shared/services/models/tag.model';
-import { Article } from '../shared/services/models/article.model';
+import { Tag } from '@shared/models/tag.model';
+import { Article} from "../../home/shared/article.model";
 import { TagService } from './tag.service';
 import { ArticleService } from '../articles/article.service';
 import {ArticleSearch} from "../articles/article-search.model";
@@ -78,12 +78,11 @@ export class TagCreationReadingUpdatingDialogComponent implements OnInit {
 
   fetchInitialArticles(): void {
     this.articleService.search({}).subscribe(articles => {
-      this.articles = articles.slice(0, 5); // Get only the first 5 articles
+      this.articles = articles.slice(0, 5);
     });
   }
 
   searchArticles(): void {
-    // If search fields are empty, fetch initial articles instead of performing a search
     if (!this.articleSearch.barcode && !this.articleSearch.description) {
       this.fetchInitialArticles();
       return;
@@ -102,4 +101,23 @@ export class TagCreationReadingUpdatingDialogComponent implements OnInit {
     return JSON.parse(JSON.stringify(tag));
   }
 
+  hasArticles(): boolean {
+    return this.tag.articles && this.tag.articles.length > 0;
+  }
+
+  isFormValid(): boolean {
+    return this.tag.name.trim() !== '' && this.tag.group.trim() !== '';
+  }
+
+  onSubmit(): void {
+    if (this.isCreate()) {
+      this.create();
+    } else {
+      this.update();
+    }
+  }
+
+  showCreateUpdateButton(): string {
+    return this.isCreate() ? 'Create' : 'Update';
+  }
 }

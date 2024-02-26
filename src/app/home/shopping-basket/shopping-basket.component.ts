@@ -1,20 +1,23 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 
 import {ShoppingBasketService} from './shopping-basket.service';
 import {AuthService} from "@core/auth.service";
 import {Shopping} from "./shopping.model";
-import {Article} from "../shared/article.model";
+import {MatDialog} from "@angular/material/dialog";
+import {PhoneRequestDialogComponent} from "./phone-request-dialog.component";
+import {SharedArticleService} from "../shared/services/shared.article.service";
 
 @Component({
   selector: 'app-shopping-basket',
   styleUrls: ['shopping-basket.component.css'],
   templateUrl: 'shopping-basket.component.html'
 })
-export class ShoppingBasketComponent implements OnInit {
+export class ShoppingBasketComponent implements AfterViewInit {
   barcode: string;
   displayedColumns = ['id', 'description', 'retailPrice', 'amount', 'actions'];
   shoppingBasket: Shopping[] = [];
   totalShoppingBasket = 0;
+  phone = 0;
   @ViewChild('code', {static: true}) private elementRef: ElementRef;
 
   private mockShopping: Shopping[] = [
@@ -23,14 +26,14 @@ export class ShoppingBasketComponent implements OnInit {
     { amount: 5, article: {barcode: "333333", description: "Tercer producto", retailPrice: 30}}
   ];
 
-  constructor(private shoppingBasketService: ShoppingBasketService,
-              private authService: AuthService) {
+  constructor(private shoppingBasketService: ShoppingBasketService, private sharedArticleService : SharedArticleService,
+              private authService: AuthService, private dialog: MatDialog) {
     this.shoppingBasket = [];
     this.shoppingBasket = [...this.shoppingBasket, ...this.mockShopping];
     this.synchronizeShoppingBasket();
   }
 
-  ngOnInit(): void {
+  ngAfterViewInit(): void {
     this.elementRef.nativeElement.focus();
     this.shoppingBasket = [];
     this.synchronizeShoppingBasket();
@@ -45,9 +48,9 @@ export class ShoppingBasketComponent implements OnInit {
     this.totalShoppingBasket = Math.round(total * 100) / 100;
   }
 
-  addBarcode(barcode): void {
-    this.shoppingBasketService
-      .read(barcode)
+  addDescription(description): void {
+    this.sharedArticleService
+      .read(description)
       .subscribe(newShopping => {
         this.shoppingBasket.push(newShopping);
         this.synchronizeShoppingBasket();
@@ -80,8 +83,15 @@ export class ShoppingBasketComponent implements OnInit {
     return (!this.shoppingBasket || this.shoppingBasket.length === 0);
   }
 
-  doOrder(): void {
-    // TODO
+  order(): void {
+    if(this.userIsLogged()) {
+      // TODO crear una orden y demás proceso
+    }
+    else {
+      this.dialog.open(PhoneRequestDialogComponent)
+        .afterClosed()
+        .subscribe(response => console.log(response)); // TODO trabajar con el telefono
+    }
   }
 
   userIsLogged(): boolean {

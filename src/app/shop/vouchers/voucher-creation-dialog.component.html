@@ -1,0 +1,16 @@
+<h2 mat-dialog-title>{{title}}</h2>
+<mat-dialog-content>
+  <mat-form-field class="full-width">
+    <mat-label>Value</mat-label>
+    <input [(ngModel)]="voucher.value" matInput required type="number"/>
+  </mat-form-field>
+  <mat-form-field class="full-width">
+    <mat-label>User Mobile</mat-label>
+    <input [(ngModel)]="voucher.userMobile" matInput required type="text"/>
+  </mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button cdkFocusInitial mat-dialog-close mat-raised-button>Close</button>
+  <button (click)="create()" [disabled]=invalid() color="primary" mat-raised-button>Create
+  </button>
+</mat-dialog-actions>

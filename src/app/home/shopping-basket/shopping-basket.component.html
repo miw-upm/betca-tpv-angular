@@ -1,7 +1,7 @@
 <mat-card>
   <mat-card-content>
     <div class="container">
-      <app-search-by-barcode (add)="addBarcode($event)"></app-search-by-barcode>
+      <app-search-by-description (add)="addDescription($event)"></app-search-by-description>
     </div>
   </mat-card-content>
 </mat-card>
@@ -51,8 +51,8 @@
     </mat-table>
   </mat-card-content>
   <mat-card-content>
-    <button (click)="doOrder()" [disabled]="isEmpty()" color="accent" mat-raised-button>
-      Do Order
+    <button (click)="order()" [disabled]="isEmpty()" color="accent" mat-raised-button>
+      Order
     </button>
   </mat-card-content>
 </mat-card>

@@ -1,7 +1,27 @@
 mat-dialog-content {
-  width: 250px;
+  width: 500px;
+  max-width: 100%;
+  padding: 20px;
+  background-color: transparent;
 }
 
 .full-width {
   width: 100%;
 }
+
+button {
+  margin-right: 10px;
+  color: white;
+}
+
+button[color="primary"] {
+  background-color: #4caf50;
+}
+button[mat-dialog-close] {
+  background-color: #f44336;
+}
+
+mat-form-field {
+  margin-bottom: 20px;
+}
+

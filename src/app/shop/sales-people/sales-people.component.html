@@ -1,0 +1,99 @@
+<mat-card>
+  <mat-card-content>
+    <mat-label><strong>Filters: </strong></mat-label>
+    <mat-form-field>
+      <mat-label>Name</mat-label>
+      <input [(ngModel)]="salesPeopleSearch1.nameSalesPeople" matInput>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Start date</mat-label>
+      <input [(ngModel)]="salesPeopleSearch1.startDate" matInput type="date">
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>End Date</mat-label>
+      <input [(ngModel)]="salesPeopleSearch1.endDate" matInput type="date">
+    </mat-form-field>
+    <button (click)="searchSalesPeople1()" mat-icon-button>
+      <mat-icon>search</mat-icon>
+    </button>
+    <button (click)="resetSearch1()" mat-icon-button>
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-card-content>
+
+  <mat-card-content>
+    <mat-label><strong>Filters: </strong></mat-label>
+    <mat-form-field>
+      <mat-label>Month</mat-label>
+      <input [(ngModel)]="salesPeopleSearch2.month" matInput>
+    </mat-form-field>
+    <button (click)="searchSalesPeople2()" mat-icon-button>
+      <mat-icon>search</mat-icon>
+    </button>
+    <button (click)="resetSearch2()" mat-icon-button>
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-card-content>
+
+
+  <mat-card *ngIf="salesPeople.length > 0">
+    <mat-card-content>
+      <table>
+        <thead>
+        <tr>
+          <th>Mobile</th>
+          <th>Tickets</th>
+          <th>Articles</th>
+          <th>Final Value</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let salesPerson of salesPeople">
+          <td>{{ salesPerson.salesperson.mobile }}</td>
+          <td>
+            <table>
+              <thead>
+              <tr>
+                <th>Cash</th>
+                <th>Card</th>
+                <th>Voucher</th>
+                <th>Note</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr>
+                <td>{{ salesPerson.ticket.cash }}</td>
+                <td>{{ salesPerson.ticket.card }}</td>
+                <td>{{ salesPerson.ticket.voucher }}</td>
+                <td>{{ salesPerson.ticket.note }}</td>
+              </tr>
+              </tbody>
+            </table>
+          </td>
+          <td>
+            <table>
+              <thead>
+              <tr>
+                <th>Barcode</th>
+                <th>Description</th>
+                <th>Retail Price</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let shopping of salesPerson.ticket.shoppingList">
+                <td>{{ shopping.barcode }}</td>
+                <td>{{ shopping.description }}</td>
+                <td>{{ shopping.retailPrice }}</td>
+              </tr>
+              </tbody>
+            </table>
+          </td>
+          <td></td>
+        </tr>
+        </tbody>
+      </table>
+    </mat-card-content>
+  </mat-card>
+</mat-card>
+
+
