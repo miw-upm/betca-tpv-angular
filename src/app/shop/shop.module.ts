@@ -29,10 +29,14 @@ import {TicketsComponent} from './cashier-opened/tickets/tickets.component';
 import { MessengerComponent } from './messenger/messenger.component';
 import { MessengerService } from './messenger/messenger.service';
 import {CustomerPointsService} from "./cashier-opened/shopping-cart/customer-points.service";
+import {
+  TicketCreationUpdatingDialogComponent
+} from "./cashier-opened/tickets/ticket-creation-updating-dialog.component";
 
 @NgModule({
   declarations: [
     ArticleCreationUpdatingDialogComponent,
+    TicketCreationUpdatingDialogComponent,
     ArticleQuickCreationDialogComponent,
     ArticlesComponent,
     CashierClosedComponent,
