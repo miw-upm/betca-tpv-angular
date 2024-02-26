@@ -9,7 +9,21 @@ import {CashierOpenedComponent} from './cashier-opened/cashier-opened.component'
 import {ProvidersComponent} from './providers/providers.component';
 import {ShopComponent} from './shop.component';
 import {TicketsComponent} from './cashier-opened/tickets/tickets.component';
+import {SalesPeopleComponent} from './sales-people/sales-people.component';
+import {QuarterVatComponent} from "./quarter-vat/quarter-vat.component";
 import { MessengerComponent } from './messenger/messenger.component';
+import {TagsComponent} from "./tags/tags.component";
+import {VouchersComponent} from './vouchers/vouchers.component';
+import {BudgetsComponent} from "./budgets/budgets.component";
+import {InvoiceComponent} from "./invoice/invoice.component";
+import {CreditLineComponent} from "./credit-line/credit-line.component";
+import {OnlineOrdersComponent} from "./online-orders/online-orders.component";
+import {StockAuditComponent} from './stock-audit/stock-audit.component';
+import {RefundsComponent} from "./refunds/refunds.component";
+import { OrdersComponent } from "./orders/orders.component";
+import { OrderDetailsComponent } from "./orders/order-details/order-details.component";
+import {StockAlarmComponent} from "./stock-alarm/stock-alarm.component";
+import {CashierClosureComponent} from "./cashier-closure/cashier-closure.component";
 
 const routes: Routes = [
   {
@@ -21,9 +35,26 @@ const routes: Routes = [
       {path: 'articles', component: ArticlesComponent},
       {path: 'cashier-closed', component: CashierClosedComponent},
       {path: 'cashier-opened', component: CashierOpenedComponent},
+      {path: 'cashier-closure', component: CashierClosureComponent},
       {path: 'providers', component: ProvidersComponent},
       {path: 'tickets', component: TicketsComponent},
+      {path: 'salesPeople', component: SalesPeopleComponent},
       {path: 'messenger', component: MessengerComponent},
+      {path: 'quarter-vat', component: QuarterVatComponent},
+      {path: 'tags', component: TagsComponent},
+      {path: 'budgets', component: BudgetsComponent},
+      {path: 'invoice', component: InvoiceComponent},
+      {path: 'vouchers', component: VouchersComponent},
+      {path: 'budgets', component: BudgetsComponent},
+      {path: 'credit-line', component: CreditLineComponent},
+      {path: 'budgets', component: BudgetsComponent},
+      {path: 'online-orders', component: OnlineOrdersComponent},
+      {path: 'stock-audit', component: StockAuditComponent},
+      {path: 'stock-alarm', component: StockAlarmComponent},
+      {path: 'refunds', component: RefundsComponent},
+      {path: 'orders', component: OrdersComponent},
+      {path: 'orders/new', component: OrderDetailsComponent},
+      {path: 'orders/:id', component: OrderDetailsComponent},
     ]
   }
 ];

@@ -1,0 +1,59 @@
+<mat-card>
+  <mat-card-content>
+    <div class="container">
+      <app-search-by-description (add)="addDescription($event)"></app-search-by-description>
+    </div>
+  </mat-card-content>
+</mat-card>
+<!-------------------------------->
+<mat-card>
+  <mat-card-title>
+    <mat-icon color="primary">shopping_cart</mat-icon>
+    Shopping Cart {{totalShoppingBasket| currency:'EUR':'symbol'}}
+  </mat-card-title>
+  <mat-card-content>
+    <mat-table [dataSource]="shoppingBasket" class="mat-elevation-z8">
+      <ng-container matColumnDef="id">
+        <mat-header-cell *matHeaderCellDef fxFlex="5%">#</mat-header-cell>
+        <mat-cell *matCellDef="let i = index" fxFlex="5%"> {{i + 1}}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="description">
+        <mat-header-cell *matHeaderCellDef fxFlex="28%"> Description</mat-header-cell>
+        <mat-cell *matCellDef="let item" [matTooltip]="item.article.barcode" fxFlex="28%"> {{item.article.description}}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="retailPrice">
+        <mat-header-cell *matHeaderCellDef fxFlex="11%"> Retail Price</mat-header-cell>
+        <mat-cell *matCellDef="let item" fxFlex="11%">{{item.article.retailPrice}}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="amount">
+        <mat-header-cell *matHeaderCellDef fxFlex="20%"> Nº</mat-header-cell>
+        <mat-cell *matCellDef="let item" fxFlex="20%">
+          <button (click)="decreaseAmount(item)" color="accent" mat-icon-button>
+            <mat-icon>remove_circle_outline</mat-icon>
+          </button>
+          {{item.amount}}
+          <button (click)="incrementAmount(item)" color="accent" mat-icon-button>
+            <mat-icon>add_circle_outline</mat-icon>
+          </button>
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="actions">
+        <mat-header-cell *matHeaderCellDef fxFlex="15%" >
+        </mat-header-cell>
+        <mat-cell *matCellDef="let item" fxFlex="15%" >
+          <button (click)="delete(item)" mat-button mat-icon-button matSuffix>
+            <mat-icon color="warn">close</mat-icon>
+          </button>
+        </mat-cell>
+      </ng-container>
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+  </mat-card-content>
+  <mat-card-content>
+    <button (click)="order()" [disabled]="isEmpty()" color="accent" mat-raised-button>
+      Order
+    </button>
+  </mat-card-content>
+</mat-card>
+

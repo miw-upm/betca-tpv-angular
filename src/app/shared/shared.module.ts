@@ -16,6 +16,7 @@ import {CrudComponent} from '@shared/components/crud.component';
 import {DateComponent} from '@shared/components/date.component';
 import {FooterComponent} from '@shared/components/footer.component';
 import {SearchComponent} from '@shared/components/search.component';
+import {OnlineOrdersService} from "@shared/services/online-orders.service";
 
 @NgModule({
   imports: [
@@ -51,6 +52,9 @@ import {SearchComponent} from '@shared/components/search.component';
     ReadDetailDialogComponent,
     SearchComponent,
     UppercaseWords,
+  ],
+  providers: [
+    OnlineOrdersService
   ]
 })
 export class SharedModule {

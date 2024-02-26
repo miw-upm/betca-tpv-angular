@@ -80,6 +80,7 @@ export class ShoppingCartService {
   }
 
   createInvoiceAndPrint(ticketId: string): Observable<void> {
+    alert('invoice creation not implemented');
     return EMPTY; // TODO change EMPTY
   }
 
@@ -90,5 +91,11 @@ export class ShoppingCartService {
 
   createDataProtectionActAndPrint(ticket): Observable<void> {
     return EMPTY; // TODO change EMPTY
+  }
+  getPointsDiscountShoppingForUser(mobileNumber: string, totalShoppingCart: number): Observable<Shopping> {
+    return this.articleService.getPointsDiscountArticleForUser(mobileNumber, totalShoppingCart)
+      .pipe(
+        map(article=>new Shopping(article.barcode,article.description,article.retailPrice))
+      );
   }
 }

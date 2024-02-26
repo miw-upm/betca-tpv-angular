@@ -1,3 +1,2 @@
-<app-search (renew)="searchByBarcode()" (selected)="onSelect($event)" [(key)]="barcode" [keys]="barcodes"
-            title="Barcode">
+<app-search (renew)="searchByBarcode()" (selected)="onSelect($event)" [(key)]="barcode" [keys]="barcodes" [title]="showText ? 'Barcode' : undefined">
 </app-search>
