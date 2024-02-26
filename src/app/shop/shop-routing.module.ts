@@ -18,6 +18,7 @@ import {BudgetsComponent} from "./budgets/budgets.component";
 import {CreditLineComponent} from "./credit-line/credit-line.component";
 import {OnlineOrdersComponent} from "./online-orders/online-orders.component";
 import {StockAuditComponent} from './stock-audit/stock-audit.component';
+import {StockAlarmComponent} from "./stock-alarm/stock-alarm.component";
 
 const routes: Routes = [
   {
@@ -40,7 +41,8 @@ const routes: Routes = [
       {path: 'credit-line', component: CreditLineComponent},
       {path: 'budgets', component: BudgetsComponent},
       {path: 'online-orders', component: OnlineOrdersComponent},
-      {path: 'stock-audit', component: StockAuditComponent}
+      {path: 'stock-audit', component: StockAuditComponent},
+      {path: 'stock-alarm', component: StockAlarmComponent},
     ]
   }
 ];
