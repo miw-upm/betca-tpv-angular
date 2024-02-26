@@ -11,6 +11,7 @@ import {Top5Component} from "./adviser/top5/top5.component";
 import {OnlineOrdersComponent} from "./online-orders/online-orders.component";
 import {RefundsComponent} from "./refunds/refunds.component";
 import {SettingsComponent} from "./settings/settings.component";
+import {TicketTrackingComponent} from "./ticket-tracking/ticket-tracking.component";
 
 const routes: Routes = [
   {
@@ -46,6 +47,10 @@ const routes: Routes = [
         component: RefundsComponent,
         canActivate: [RoleGuardService],
         data: {roles: [Role.CUSTOMER]}
+      },
+      {
+        path: 'ticket-tracking',
+        component: TicketTrackingComponent
       }
     ]
   }
