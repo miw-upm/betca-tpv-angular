@@ -63,6 +63,7 @@ import {StockAlarmService} from "./stock-alarm/stock-alarm.service";
 import {StockAlarmLineService} from "./stock-alarm/stock-alarm-line.service";
 import {StockAlarmLineDialogComponent} from "./stock-alarm/stock-alarm-line-dialog/stock-alarm-line-dialog.component";
 import {StockAlarmDialogComponent} from "./stock-alarm/stock-alarm-dialog/stock-alarm-dialog.component";
+import { CashierClosureComponent } from './cashier-closure/cashier-closure.component';
 
 @NgModule({
   declarations: [
@@ -104,6 +105,7 @@ import {StockAlarmDialogComponent} from "./stock-alarm/stock-alarm-dialog/stock-
     StockAlarmComponent,
     StockAlarmDialogComponent,
     StockAlarmLineDialogComponent,
+    CashierClosureComponent,
   ],
   imports: [
     SharedModule,
