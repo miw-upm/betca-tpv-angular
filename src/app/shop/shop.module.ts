@@ -66,6 +66,7 @@ import {StockAlarmLineService} from "./stock-alarm/stock-alarm-line.service";
 import {StockAlarmLineDialogComponent} from "./stock-alarm/stock-alarm-line-dialog/stock-alarm-line-dialog.component";
 import {StockAlarmDialogComponent} from "./stock-alarm/stock-alarm-dialog/stock-alarm-dialog.component";
 import { CashierClosureComponent } from './cashier-closure/cashier-closure.component';
+import { StockAuditDialogComponent } from "./stock-audit/stock-audit-dialog/stock-audit-dialog/stock-audit-dialog.component";
 
 @NgModule({
   declarations: [
@@ -100,6 +101,7 @@ import { CashierClosureComponent } from './cashier-closure/cashier-closure.compo
     OnlineOrdersComponent,
     BudgetsComponent,
     StockAuditComponent,
+    StockAuditDialogComponent,
     BudgetsComponent,
     CreditLineComponent,
     RefundsComponent,
