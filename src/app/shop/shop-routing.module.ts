@@ -23,6 +23,7 @@ import {RefundsComponent} from "./refunds/refunds.component";
 import { OrdersComponent } from "./orders/orders.component";
 import { OrderDetailsComponent } from "./orders/order-details/order-details.component";
 import {StockAlarmComponent} from "./stock-alarm/stock-alarm.component";
+import {CashierClosureComponent} from "./cashier-closure/cashier-closure.component";
 
 const routes: Routes = [
   {
@@ -34,6 +35,7 @@ const routes: Routes = [
       {path: 'articles', component: ArticlesComponent},
       {path: 'cashier-closed', component: CashierClosedComponent},
       {path: 'cashier-opened', component: CashierOpenedComponent},
+      {path: 'cashier-closure', component: CashierClosureComponent},
       {path: 'providers', component: ProvidersComponent},
       {path: 'tickets', component: TicketsComponent},
       {path: 'salesPeople', component: SalesPeopleComponent},
