@@ -2,8 +2,9 @@ import {Component, Inject} from '@angular/core';
 
 import {TicketCreation} from './ticket-creation.model';
 import {ShoppingCartService} from './shopping-cart.service';
-import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
 import { GiftTicketCreation } from './gift-ticket-creation.model';
+import {VoucherApplyDialogComponent} from './voucher-apply-dialog.component';
 
 @Component({
   templateUrl: 'check-out-dialog.component.html',
@@ -19,7 +20,7 @@ export class CheckOutDialogComponent {
   requestedCreditLine = false;
 
   constructor(@Inject(MAT_DIALOG_DATA) data, private dialogRef: MatDialogRef<CheckOutDialogComponent>,
-              private shoppingCartService: ShoppingCartService) {
+              private dialog: MatDialog, private shoppingCartService: ShoppingCartService) {
     this.ticketCreation = {cash: 0, card: 0, voucher: 0, shoppingList: data, note: ''};
     this.ticketGiftCreation = {message: ''};
     this.total();
@@ -115,7 +116,12 @@ export class CheckOutDialogComponent {
   }
 
   consumeVoucher(): void {
-    // TODO consumir un vale que se entrega como parte del pago
+    this.dialog.open(VoucherApplyDialogComponent).afterClosed()
+      .subscribe((voucher) => {
+        if (voucher) {
+          this.ticketCreation.voucher = voucher.value;
+        }
+      });
   }
 
   invalidCheckOut(): boolean {

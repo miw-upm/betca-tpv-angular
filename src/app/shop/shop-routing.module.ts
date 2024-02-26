@@ -15,9 +15,13 @@ import { MessengerComponent } from './messenger/messenger.component';
 import {TagsComponent} from "./tags/tags.component";
 import {VouchersComponent} from './vouchers/vouchers.component';
 import {BudgetsComponent} from "./budgets/budgets.component";
+import {InvoiceComponent} from "./invoice/invoice.component";
 import {CreditLineComponent} from "./credit-line/credit-line.component";
 import {OnlineOrdersComponent} from "./online-orders/online-orders.component";
 import {StockAuditComponent} from './stock-audit/stock-audit.component';
+import {RefundsComponent} from "./refunds/refunds.component";
+import { OrdersComponent } from "./orders/orders.component";
+import { OrderDetailsComponent } from "./orders/order-details/order-details.component";
 import {StockAlarmComponent} from "./stock-alarm/stock-alarm.component";
 
 const routes: Routes = [
@@ -36,6 +40,8 @@ const routes: Routes = [
       {path: 'messenger', component: MessengerComponent},
       {path: 'quarter-vat', component: QuarterVatComponent},
       {path: 'tags', component: TagsComponent},
+      {path: 'budgets', component: BudgetsComponent},
+      {path: 'invoice', component: InvoiceComponent},
       {path: 'vouchers', component: VouchersComponent},
       {path: 'budgets', component: BudgetsComponent},
       {path: 'credit-line', component: CreditLineComponent},
@@ -43,6 +49,10 @@ const routes: Routes = [
       {path: 'online-orders', component: OnlineOrdersComponent},
       {path: 'stock-audit', component: StockAuditComponent},
       {path: 'stock-alarm', component: StockAlarmComponent},
+      {path: 'refunds', component: RefundsComponent},
+      {path: 'orders', component: OrdersComponent},
+      {path: 'orders/new', component: OrderDetailsComponent},
+      {path: 'orders/:id', component: OrderDetailsComponent},
     ]
   }
 ];
