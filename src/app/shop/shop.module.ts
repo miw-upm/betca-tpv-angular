@@ -1,7 +1,5 @@
 import {NgModule} from '@angular/core';
-
 import {SharedModule} from '@shared/shared.module';
-
 import {CashierClosureService} from './cashier-opened/cashier-closure/cashier-closure.service';
 import {ProviderService} from './providers/provider.service';
 import {SharedArticleService} from './shared/services/shared.article.service';
@@ -16,9 +14,7 @@ import {ProvidersComponent} from './providers/providers.component';
 import {SearchByCompanyComponent} from './shared/search-by-company.component';
 import {ShoppingCartComponent} from './cashier-opened/shopping-cart/shopping-cart.component';
 import {ArticleCreationUpdatingDialogComponent} from './articles/article-creation-updating-dialog.component';
-import {
-  ArticleQuickCreationDialogComponent
-} from './cashier-opened/shopping-cart/article-quick-creation-dialog.component';
+import {ArticleQuickCreationDialogComponent} from './cashier-opened/shopping-cart/article-quick-creation-dialog.component';
 import {CashierDialogComponent} from './cashier-opened/cashier-closure/cashier-dialog.component';
 import {CheckOutDialogComponent} from './cashier-opened/shopping-cart/check-out-dialog.component';
 import {VoucherApplyDialogComponent} from './cashier-opened/shopping-cart/voucher-apply-dialog.component';
@@ -32,13 +28,13 @@ import {QuarterVatComponent} from "./quarter-vat/quarter-vat.component";
 import {QuarterVatService} from "./quarter-vat/quarter-vat.service";
 import { MessengerComponent } from './messenger/messenger.component';
 import { MessengerService } from './messenger/messenger.service';
-import {
-  TicketCreationUpdatingDialogComponent
-} from "./cashier-opened/tickets/ticket-creation-updating-dialog.component";
+import {TicketCreationUpdatingDialogComponent} from "./cashier-opened/tickets/ticket-creation-updating-dialog.component";
 import {TagsComponent} from "./tags/tags.component";
 import { TagService} from "./tags/tag.service";
 import { TagCreationReadingUpdatingDialogComponent} from "./tags/tag-creation-reading-updating-dialog.component";
 import {SearchByBarcodeComponent} from "./shared/search-by-barcode.component";
+import {AdvertisingComponent} from "./Advertising/advertising.component";
+import {AdvertisingService} from "./Advertising/advertising.service";
 import {VouchersComponent} from './vouchers/vouchers.component';
 import {VoucherReadDetailDialogComponent} from './vouchers/voucher-read-detail.dialog.component';
 import {VoucherCreationDialogComponent} from './vouchers/voucher-creation-dialog.component';
@@ -46,12 +42,8 @@ import { BudgetsComponent } from './budgets/budgets.component';
 import {BudgetsService} from './budgets/budgets.service';
 import { InvoiceComponent } from './invoice/invoice.component';
 import {InvoiceService} from "./invoice/invoice.service";
-import {
-  InvoiceCreationDialogComponent
-} from "./invoice/invoice-creation-dialog.component";
-import {
-  InvoiceUpdatingDialogComponent
-} from "./invoice/invoice-updating-dialog.component";
+import {InvoiceCreationDialogComponent} from "./invoice/invoice-creation-dialog.component";
+import {InvoiceUpdatingDialogComponent} from "./invoice/invoice-updating-dialog.component";
 import {CreditLineComponent} from "./credit-line/credit-line.component";
 import {CreditLineService} from "./credit-line/credit-line.service";
 import {OnlineOrdersComponent} from "./online-orders/online-orders.component";
@@ -89,6 +81,7 @@ import { StockAuditDialogComponent } from "./stock-audit/stock-audit-dialog/stoc
     MessengerComponent,
     TagsComponent,
     TagCreationReadingUpdatingDialogComponent,
+    AdvertisingComponent,
     BudgetsComponent,
     InvoiceComponent,
     InvoiceCreationDialogComponent,
@@ -129,6 +122,7 @@ import { StockAuditDialogComponent } from "./stock-audit/stock-audit-dialog/stoc
     QuarterVatService,
     MessengerService,
     TagService,
+    AdvertisingService,
     BudgetsService,
     InvoiceService,
     BudgetsService,
