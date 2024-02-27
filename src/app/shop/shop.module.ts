@@ -63,6 +63,8 @@ import {StaffComponent} from "./staff/staff.component";
 import {StaffService} from "./staff/staff.service";
 import { OffersComponent } from './offers/offers.component';
 import { AuditArticleDialogComponent } from "./stock-audit/audit-article-dialog/audit-article-dialog/audit-article-dialog.component";
+import { SlackSentMessageDialogComponent } from './slack-messages/slack-sent-message-dialog/slack-sent-message-dialog.component';
+
 
 @NgModule({
   declarations: [
@@ -111,6 +113,7 @@ import { AuditArticleDialogComponent } from "./stock-audit/audit-article-dialog/
     StockAlarmLineDialogComponent,
     CashierClosureComponent,
     OffersComponent,
+    SlackSentMessageDialogComponent,
   ],
   imports: [
     SharedModule,
