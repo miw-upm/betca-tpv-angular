@@ -61,6 +61,7 @@ import { CashierClosureComponent } from './cashier-closure/cashier-closure.compo
 import { StockAuditDialogComponent } from "./stock-audit/stock-audit-dialog/stock-audit-dialog/stock-audit-dialog.component";
 import {StaffComponent} from "./staff/staff.component";
 import {StaffService} from "./staff/staff.service";
+import { OffersComponent } from './offers/offers.component';
 
 @NgModule({
   declarations: [
@@ -107,6 +108,7 @@ import {StaffService} from "./staff/staff.service";
     StockAlarmDialogComponent,
     StockAlarmLineDialogComponent,
     CashierClosureComponent,
+    OffersComponent,
   ],
   imports: [
     SharedModule,
