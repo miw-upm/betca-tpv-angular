@@ -11,4 +11,5 @@ export class EndPoints {
   static BUDGETS = environment.REST_CORE + '/budgets';
   static CREDIT = environment.REST_CORE + '/credit';
   static MESSENGER = environment.REST_CORE + '/messenger';
+  static TAGS = environment.REST_CORE + '/tags';
 }

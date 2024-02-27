@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { TagService } from "../../shop/tags/tag.service";
+import { TagService} from "@shared/services/tag.service";
 import { Article } from "../shared/article.model";
 import { SlideInterface } from "@shared/components/carousel/slide.interface";
 
@@ -31,11 +31,10 @@ export class AdviserComponent implements OnInit {
     });
   }
 
-
   loadArticles(tagName: string): void {
-    this.tagService.read(tagName).subscribe(tag => {
-      if (tag) {
-        this.articles = tag.articles;
+    this.tagService.findArticlesByTagName(tagName).subscribe(articles => {
+      if (articles && articles.length) {
+        this.articles = articles;
         this.prepareSlides();
       } else {
         this.articles = [];
