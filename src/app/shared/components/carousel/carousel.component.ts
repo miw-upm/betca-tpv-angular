@@ -1,6 +1,6 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { SlideInterface } from './slide.interface';
-import { ShoppingBasketService} from "../../../home/shopping-basket/shopping-basket.service";
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {SlideInterface} from './slide.interface';
+import {ShoppingBasketService} from "../../../home/shopping-basket/shopping-basket.service";
 
 @Component({
   selector: 'carousel',
@@ -15,14 +15,17 @@ export class CarouselComponent implements OnInit, OnDestroy {
   class: string;
   static time: number = 3000;
 
-  constructor(private shoppingBasketService: ShoppingBasketService) {} // Inject ShoppingBasketService
+  constructor(private shoppingBasketService: ShoppingBasketService) {
+  } // Inject ShoppingBasketService
 
   ngOnInit(): void {
     this.resetTimer();
   }
+
   ngOnDestroy() {
     window.clearTimeout(this.timeoutId);
   }
+
   resetTimer() {
     if (this.timeoutId) {
       window.clearTimeout(this.timeoutId);
@@ -52,6 +55,10 @@ export class CarouselComponent implements OnInit, OnDestroy {
   goToSlide(slideIndex: number): void {
     this.resetTimer();
     this.currentIndex = slideIndex;
+  }
+
+  dotSelected(slideIndex: number): string {
+    return slideIndex == this.currentIndex ? "dot-selected" : null;
   }
 
   getCurrentSlideImageUrl() {
