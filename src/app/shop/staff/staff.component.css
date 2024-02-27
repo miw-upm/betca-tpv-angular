@@ -1,5 +1,5 @@
 .staff-container {
-  padding: 10px 30px;
+  padding: 10px 60px;
 }
 
 table.mat-table {
@@ -14,4 +14,18 @@ table.mat-table th.mat-header-cell {
 .functionality-container {
   display: flex;
   justify-content: space-between;
+}
+
+.d-flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.mat-form-field {
+  width: 100%;
+}
+
+.mat-datepicker-toggle {
+  margin-left: auto;
 }

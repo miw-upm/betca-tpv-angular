@@ -41,7 +41,7 @@ const routes: Routes = [
       {path: 'credit-line', component: CreditLineComponent},
       {path: 'budgets', component: BudgetsComponent},
       {path: 'online-orders', component: OnlineOrdersComponent},
-      {path: 'staff', component: StaffComponent},
+      {path: 'users', component: StaffComponent},
       {path: 'stock-audit', component: StockAuditComponent}
     ]
   }

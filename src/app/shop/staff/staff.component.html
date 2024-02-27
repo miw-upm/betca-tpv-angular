@@ -3,20 +3,19 @@
     <div class="functionality-container">
       <div class="hours-per-day-container">
         <h2>Hours per day</h2>
-        <mat-form-field>
-          <mat-label>Start date</mat-label>
-          <input matInput [matDatepicker]="startPickerForDay">
-          <mat-hint>MM/DD/YYYY</mat-hint>
-          <mat-datepicker-toggle matIconSuffix [for]="startPickerForDay"></mat-datepicker-toggle>
-          <mat-datepicker #startPickerForDay></mat-datepicker>
-        </mat-form-field>
-        <mat-form-field>
-          <mat-label>End date</mat-label>
-          <input matInput [matDatepicker]="endPickerForDay">
-          <mat-hint>MM/DD/YYYY</mat-hint>
-          <mat-datepicker-toggle matIconSuffix [for]="endPickerForDay"></mat-datepicker-toggle>
-          <mat-datepicker #endPickerForDay></mat-datepicker>
-        </mat-form-field>
+        <form class="d-flex">
+          <mat-form-field class="d-flex">
+            <mat-label>Enter a date range</mat-label>
+            <mat-date-range-input [rangePicker]="picker">
+              <input matStartDate placeholder="Start date">
+              <input matEndDate placeholder="End date">
+            </mat-date-range-input>
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-date-range-picker #picker></mat-date-range-picker>
+            <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
+          </mat-form-field>
+          <mat-icon role="img" class="mat-icon notranslate material-icons mat-icon-no-color" aria-hidden="true" data-mat-icon-type="font">search</mat-icon>
+        </form>
         <table mat-table [dataSource]="staffHoursPerDay">
           <ng-container matColumnDef="day">
             <th mat-header-cell *matHeaderCellDef> Day </th>
@@ -32,20 +31,19 @@
       </div>
       <div class="hours-per-month-container">
         <h2>Hours per month</h2>
-        <mat-form-field>
-          <mat-label>Start date</mat-label>
-          <input matInput [matDatepicker]="startPickerForMonth">
-          <mat-hint>MM/DD/YYYY</mat-hint>
-          <mat-datepicker-toggle matIconSuffix [for]="startPickerForMonth"></mat-datepicker-toggle>
-          <mat-datepicker #startPickerForMonth></mat-datepicker>
-        </mat-form-field>
-        <mat-form-field>
-          <mat-label>End date</mat-label>
-          <input matInput [matDatepicker]="endPickerForMonth">
-          <mat-hint>MM/DD/YYYY</mat-hint>
-          <mat-datepicker-toggle matIconSuffix [for]="endPickerForMonth"></mat-datepicker-toggle>
-          <mat-datepicker #endPickerForMonth></mat-datepicker>
-        </mat-form-field>
+        <form class="d-flex">
+          <mat-form-field class="d-flex">
+            <mat-label>Enter a date range</mat-label>
+            <mat-date-range-input [rangePicker]="pickerMonth">
+              <input matStartDate placeholder="Start date">
+              <input matEndDate placeholder="End date">
+            </mat-date-range-input>
+            <mat-datepicker-toggle matSuffix [for]="pickerMonth"></mat-datepicker-toggle>
+            <mat-date-range-picker #pickerMonth></mat-date-range-picker>
+            <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
+          </mat-form-field>
+          <mat-icon role="img" class="mat-icon notranslate material-icons mat-icon-no-color" aria-hidden="true" data-mat-icon-type="font">search</mat-icon>
+        </form>
         <table mat-table [dataSource]="staffHoursPerMonth">
           <ng-container matColumnDef="month">
             <th mat-header-cell *matHeaderCellDef> Month </th>
