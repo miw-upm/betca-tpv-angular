@@ -58,10 +58,11 @@ import {StockAlarmLineService} from "./stock-alarm/stock-alarm-line.service";
 import {StockAlarmLineDialogComponent} from "./stock-alarm/stock-alarm-line-dialog/stock-alarm-line-dialog.component";
 import {StockAlarmDialogComponent} from "./stock-alarm/stock-alarm-dialog/stock-alarm-dialog.component";
 import { CashierClosureComponent } from './cashier-closure/cashier-closure.component';
-import { StockAuditDialogComponent } from "./stock-audit/stock-audit-dialog/stock-audit-dialog/stock-audit-dialog.component";
+import { StockAuditDialogComponent } from "./stock-audit/stock-audit-dialog/stock-audit-dialog.component";
 import {StaffComponent} from "./staff/staff.component";
 import {StaffService} from "./staff/staff.service";
 import { OffersComponent } from './offers/offers.component';
+import { AuditArticleDialogComponent } from "./stock-audit/audit-article-dialog/audit-article-dialog/audit-article-dialog.component";
 
 @NgModule({
   declarations: [
@@ -99,6 +100,7 @@ import { OffersComponent } from './offers/offers.component';
     StaffComponent,
     StockAuditComponent,
     StockAuditDialogComponent,
+    AuditArticleDialogComponent,
     BudgetsComponent,
     CreditLineComponent,
     RefundsComponent,
@@ -136,8 +138,7 @@ import { OffersComponent } from './offers/offers.component';
     StockAuditService,
     StockAlarmService,
     StockAlarmLineService,
-    StaffService,
-    StockAuditService
+    StaffService
   ],
 })
 export class ShopModule {
