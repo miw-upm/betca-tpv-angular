@@ -9,7 +9,7 @@
     <mat-label>Close date</mat-label>
     <input matInput required type="text" [value]="stockAudit.closeDate | date: 'dd/MM/yyyy HH:mm:ss'" disabled/>
   </mat-form-field>
-  <app-crud [data]="articlesWithoutAudit" [title]="titleNoAudit" [deleteAction]="false" [readAction]="false" [createAction]="false" [updateAction]="false"></app-crud>
+  <app-crud [data]="articlesWithoutAudit" [title]="titleNoAudit" (update)="auditArticle($event)" [deleteAction]="false" [readAction]="false" [createAction]="false"></app-crud>
   <app-crud [data]="articlesLosses" [title]="titleLosses" [deleteAction]="false" [readAction]="false" [createAction]="false" [updateAction]="false"></app-crud>
   <br>
   <mat-form-field >
@@ -18,9 +18,16 @@
   </mat-form-field>
 </mat-dialog-content>
 <mat-dialog-actions>
-  <button cdkFocusInitial mat-dialog-close mat-raised-button>Close</button>
-  <button (click)="create()" color="primary" mat-raised-button>
+  <button cdkFocusInitial mat-dialog-close mat-raised-button>
+    Close
+  </button>
+  <button (click)="create()" *ngIf="isCreated()" color="primary" mat-raised-button>
+    Create
+  </button>
+  <button (click)="save()" *ngIf="!isCreated()" color="primary" mat-raised-button>
     Save
   </button>
-  <button cdkFocusInitial color="accent" mat-raised-button>Close audit</button>
+  <button (click)="closeAudit()" color="accent" mat-raised-button>
+    Close audit
+  </button>
 </mat-dialog-actions>
