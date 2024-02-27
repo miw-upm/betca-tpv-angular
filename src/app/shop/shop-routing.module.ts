@@ -18,6 +18,7 @@ import {BudgetsComponent} from "./budgets/budgets.component";
 import {InvoiceComponent} from "./invoice/invoice.component";
 import {CreditLineComponent} from "./credit-line/credit-line.component";
 import {OnlineOrdersComponent} from "./online-orders/online-orders.component";
+import {StaffComponent} from './staff/staff.component';
 import {StockAuditComponent} from './stock-audit/stock-audit.component';
 import {RefundsComponent} from "./refunds/refunds.component";
 import { OrdersComponent } from "./orders/orders.component";
@@ -56,6 +57,7 @@ const routes: Routes = [
       {path: 'orders', component: OrdersComponent},
       {path: 'orders/new', component: OrderDetailsComponent},
       {path: 'orders/:id', component: OrderDetailsComponent},
+      {path: 'users', component: StaffComponent},
     ]
   }
 ];

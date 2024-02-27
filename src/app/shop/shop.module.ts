@@ -59,6 +59,8 @@ import {StockAlarmLineDialogComponent} from "./stock-alarm/stock-alarm-line-dial
 import {StockAlarmDialogComponent} from "./stock-alarm/stock-alarm-dialog/stock-alarm-dialog.component";
 import { CashierClosureComponent } from './cashier-closure/cashier-closure.component';
 import { StockAuditDialogComponent } from "./stock-audit/stock-audit-dialog/stock-audit-dialog/stock-audit-dialog.component";
+import {StaffComponent} from "./staff/staff.component";
+import {StaffService} from "./staff/staff.service";
 
 @NgModule({
   declarations: [
@@ -93,6 +95,7 @@ import { StockAuditDialogComponent } from "./stock-audit/stock-audit-dialog/stoc
     VoucherApplyDialogComponent,
     OnlineOrdersComponent,
     BudgetsComponent,
+    StaffComponent,
     StockAuditComponent,
     StockAuditDialogComponent,
     BudgetsComponent,
@@ -131,6 +134,8 @@ import { StockAuditDialogComponent } from "./stock-audit/stock-audit-dialog/stoc
     StockAuditService,
     StockAlarmService,
     StockAlarmLineService,
+    StaffService,
+    StockAuditService
   ],
 })
 export class ShopModule {
