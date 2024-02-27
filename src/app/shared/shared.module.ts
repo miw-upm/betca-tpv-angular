@@ -17,6 +17,7 @@ import {DateComponent} from '@shared/components/date.component';
 import {FooterComponent} from '@shared/components/footer.component';
 import {SearchComponent} from '@shared/components/search.component';
 import {OnlineOrdersService} from "@shared/services/online-orders.service";
+import {SignupDialogComponent} from './dialogs/signup-dialog.component';
 
 @NgModule({
   imports: [
@@ -36,6 +37,7 @@ import {OnlineOrdersService} from "@shared/services/online-orders.service";
     ReadDetailDialogComponent,
     SearchComponent,
     UppercaseWords,
+    SignupDialogComponent,
   ],
   exports: [
     CancelYesDialogComponent,
