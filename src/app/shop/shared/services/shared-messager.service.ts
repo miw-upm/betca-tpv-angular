@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { HttpService } from '@core/http.service';
+import { EndPoints } from '@shared/end-points';
+import { Observable,  } from 'rxjs';
 
 
 @Injectable({
@@ -7,13 +9,12 @@ import { Observable, of } from 'rxjs';
 })
 export class SharedMessengerService {
 
-  constructor() {
+  public static CHECK_NEW_MESSAGES = '/countNew';
+
+  constructor(private httpService: HttpService) {
   }
 
-  haveNewMessages(): Observable<any> {
-    return of(true);
-  }
-  countNewMessage(): Observable<any> {
-    return of(5);
+  countNewMessage(): Observable<Number> {
+    return this.httpService.get(EndPoints.MESSENGER + SharedMessengerService.CHECK_NEW_MESSAGES);
   }
 }

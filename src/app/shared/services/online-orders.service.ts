@@ -13,6 +13,7 @@ export class OnlineOrdersService {
     { reference: "cgfdf45fsf", state: OnlineOrderState.SENT, deliveryDate: null, ticketReference: "w3434dgbbg"},
     { reference: "2effbfhdgd", state: OnlineOrderState.DELIVERED, deliveryDate: new Date(), ticketReference: "eere4tfgb5"},
     { reference: "435bknsdff", state: OnlineOrderState.REFUND_REQUESTED, deliveryDate: new Date(), ticketReference: "w3434tfgb5"},
+    { reference: "458dsfdsfs", state: OnlineOrderState.REFUND_REQUESTED, deliveryDate: new Date(), ticketReference: "jyhg4w5164"},
     { reference: "458dsfdsfs", state: OnlineOrderState.REFUNDED, deliveryDate: new Date(), ticketReference: "eere4w3434"}
   ];
 

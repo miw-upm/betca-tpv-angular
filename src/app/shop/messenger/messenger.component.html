@@ -29,7 +29,7 @@
                     <textarea matInput rows="6" [(ngModel)]="newMessage.text" name="text"></textarea>
 
                     <button mat-mini-fab matSuffix color="primary" aria-label="Send message" (click)="sendMessage()"
-                        [disabled]="newMessage.isAllCompleted()">
+                        [disabled]="!newMessage.isAllCompleted()">
                         <mat-icon>send</mat-icon>
                     </button>
                 </mat-form-field>

@@ -5,15 +5,12 @@
     <input [(ngModel)]="voucher.value" matInput required type="number"/>
   </mat-form-field>
   <mat-form-field class="full-width">
-    <mat-label>User</mat-label>
-    <input [(ngModel)]="voucher.user" matInput required type="text"/>
-    <!-- TODO: Add search-by-user input -->
+    <mat-label>User Mobile</mat-label>
+    <input [(ngModel)]="voucher.userMobile" matInput required type="text"/>
   </mat-form-field>
 </mat-dialog-content>
 <mat-dialog-actions>
   <button cdkFocusInitial mat-dialog-close mat-raised-button>Close</button>
-  <!-- TODO: Add validation -->
-  <!-- <button (click)="create()" [disabled]=invalid() color="primary" mat-raised-button>Create -->
-  <button (click)="create()" color="primary" mat-raised-button>Create
+  <button (click)="create()" [disabled]=invalid() color="primary" mat-raised-button>Create
   </button>
 </mat-dialog-actions>

@@ -12,7 +12,8 @@
   font-size: xx-large;
 }
 
-carousel{
+carousel {
   display: block;
-  height: 300px;
+  height: 50%;
+  min-height: 250px;
 }

@@ -34,11 +34,11 @@
   </div>
 </mat-toolbar>
 <mat-menu #profile="matMenu" xPosition="before">
-  <button mat-menu-item>
+  <button mat-menu-item routerLink="/home/settings">
     <mat-icon>settings</mat-icon>
     <span>Settings</span>
   </button>
-  <button mat-menu-item>
+  <button mat-menu-item routerLink="/home/reviews">
     <mat-icon>grade</mat-icon>
     <span>Reviews</span>
   </button>
@@ -58,7 +58,11 @@
     <mat-icon>build</mat-icon>
     <span>Technical Support</span>
   </button>
-  <customer-points-menu-item></customer-points-menu-item>
+  <span mat-menu-item [disabled]="true">
+    <mat-icon>monetization_on</mat-icon>
+    <span>You have {{(customerPoints | async)?.value}} points</span>
+  </span>
+
 </mat-menu>
 <mat-toolbar class="center">
   <button [matMenuTriggerFor]="adviser" mat-button>Adviser</button>

@@ -8,6 +8,9 @@ import {ComplaintCreationDialogComponent} from './complaints/complaint-creation-
 import {ComplaintsComponent} from './complaints/complaints.component';
 import {ShoppingBasketComponent} from "./shopping-basket/shopping-basket.component";
 import {ShopModule} from "../shop/shop.module";
+import {ReviewsComponent} from "./reviews/reviews.component";
+import {ReviewDialogComponent} from "./reviews/review-dialog.component";
+import {ReactiveFormsModule} from "@angular/forms";
 import {CarouselModule} from "@shared/components/carousel/carousel.module";
 import {AdviserComponent} from "./adviser/adviser.component";
 import { Top5Component } from './adviser/top5/top5.component';
@@ -15,6 +18,10 @@ import {SearchByDescriptionComponent} from "./shared/search-by-description.compo
 import {PhoneRequestDialogComponent} from "./shopping-basket/phone-request-dialog.component";
 import {OnlineOrdersComponent} from "./online-orders/online-orders.component";
 import { RefundsComponent } from './refunds/refunds.component';
+import { SettingsComponent } from './settings/settings.component';
+import { SettingsSavedInfoDialogComponent } from './settings/settings-saved-info-dialog/settings-saved-info-dialog.component';
+import {CustomerPointsService} from "./customer-points/customer-points.service";
+
 
 @NgModule({
   declarations: [
@@ -23,20 +30,28 @@ import { RefundsComponent } from './refunds/refunds.component';
     ComplaintsComponent,
     PhoneRequestDialogComponent,
     ComplaintCreationDialogComponent,
+    ReviewsComponent,
+    ReviewDialogComponent,
     HomeComponent,
     OnlineOrdersComponent,
     ShoppingBasketComponent,
     Top5Component,
     RefundsComponent,
+    SettingsComponent,
+    SettingsSavedInfoDialogComponent,
   ],
+
   imports: [
-    HomeRoutingModule,
-    SharedModule,
-    ShopModule,
-    CarouselModule,
+      HomeRoutingModule,
+      SharedModule,
+      ShopModule,
+      ReactiveFormsModule,
+      CarouselModule,
   ],
+
   providers: [
     ShoppingBasketService,
+    CustomerPointsService
   ]
 })
 export class HomeModule {

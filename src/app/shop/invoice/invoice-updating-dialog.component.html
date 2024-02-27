@@ -1,0 +1,17 @@
+<h2 mat-dialog-title>{{title}}</h2>
+<mat-dialog-content>
+  <mat-form-field class="full-width">
+    <mat-label>User name</mat-label>
+    <input [(ngModel)]="invoice.user.name" id="company" matInput required type="text"/>
+  </mat-form-field>
+  <mat-form-field class="full-width">
+    <mat-label>User mobile</mat-label>
+    <input [(ngModel)]="invoice.user.mobile" matInput required type="text"/>
+  </mat-form-field>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button cdkFocusInitial mat-dialog-close mat-raised-button>Close</button>
+  <button (click)="update()" [disabled]=invalid() color="primary" mat-raised-button>Update
+  </button>
+</mat-dialog-actions>

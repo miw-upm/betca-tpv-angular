@@ -16,9 +16,8 @@ import {CrudComponent} from '@shared/components/crud.component';
 import {DateComponent} from '@shared/components/date.component';
 import {FooterComponent} from '@shared/components/footer.component';
 import {SearchComponent} from '@shared/components/search.component';
-import {CustomerPointsMenuItemComponent} from "@shared/components/customer-points-menu-item.component";
-import {CustomerPointsService} from "@shared/services/customer-points.service";
 import {OnlineOrdersService} from "@shared/services/online-orders.service";
+import {SignupDialogComponent} from './dialogs/signup-dialog.component';
 
 @NgModule({
   imports: [
@@ -31,7 +30,6 @@ import {OnlineOrdersService} from "@shared/services/online-orders.service";
   declarations: [
     CancelYesDialogComponent,
     CrudComponent,
-    CustomerPointsMenuItemComponent,
     DateComponent,
     FooterComponent,
     LoginDialogComponent,
@@ -39,12 +37,12 @@ import {OnlineOrdersService} from "@shared/services/online-orders.service";
     ReadDetailDialogComponent,
     SearchComponent,
     UppercaseWords,
+    SignupDialogComponent,
   ],
   exports: [
     CancelYesDialogComponent,
     CommonModule,
     CrudComponent,
-    CustomerPointsMenuItemComponent,
     DateComponent,
     FlexLayoutModule,
     FlexModule,
@@ -58,7 +56,6 @@ import {OnlineOrdersService} from "@shared/services/online-orders.service";
     UppercaseWords,
   ],
   providers: [
-    CustomerPointsService,
     OnlineOrdersService
   ]
 })
