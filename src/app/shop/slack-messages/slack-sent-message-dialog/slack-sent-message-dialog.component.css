@@ -1,0 +1,22 @@
+.search-zone {
+  width: 50%;
+}
+
+.bold-text{
+  font-weight: bold;
+}
+
+.mat-dialog-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.btn-slack{
+  margin-left: 3rem;
+  margin-right: 3rem;
+
+}
+
+.textarea-slack{
+  min-height: 3rem;
+}
