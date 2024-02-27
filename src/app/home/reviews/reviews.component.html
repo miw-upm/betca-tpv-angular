@@ -1,0 +1,62 @@
+<mat-card>
+  <mat-card-content>
+    <mat-form-field>
+      <mat-label>Search barcode</mat-label>
+      <input [(ngModel)]="barcode" matInput>
+      <div *ngIf="displayNoReviewMessage">
+        <p>Sorry, we couldn't find the product you purchased</p>
+      </div>
+      <button mat-icon-button matSuffix (click)="search()">
+        <mat-icon>search barcode</mat-icon>
+      </button>
+    </mat-form-field>
+  </mat-card-content>
+</mat-card>
+
+<mat-card>
+  <mat-card-title>
+    <mat-icon color="primary">rate_review</mat-icon>
+    Customer Reviews
+  </mat-card-title>
+  <mat-card-content>
+    <div *ngIf="reviews && reviews.length > 0">
+      <mat-table [dataSource]="reviews" class="mat-elevation-z8">
+        <ng-container matColumnDef="barcode">
+          <mat-header-cell *matHeaderCellDef fxFlex="28%">Barcode</mat-header-cell>
+          <mat-cell *matCellDef="let review" fxFlex="28%">{{review.article.barcode}}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="stars">
+          <mat-header-cell *matHeaderCellDef fxFlex="12%">Stars</mat-header-cell>
+          <mat-cell *matCellDef="let review" fxFlex="12%">{{review.stars}}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="opinion">
+          <mat-header-cell *matHeaderCellDef fxFlex="32%">Opinion</mat-header-cell>
+          <mat-cell *matCellDef="let review" fxFlex="32%">{{review.opinion}}</mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="actions">
+          <mat-header-cell *matHeaderCellDef fxFlex="28%">Actions</mat-header-cell>
+          <mat-cell *matCellDef="let review" fxFlex="28%">
+            <button mat-button class="edit-button" (click)="openEditReviewDialog(review)" *ngIf="review.opinion">
+              <mat-icon>edit</mat-icon>
+              Edit
+            </button>
+            <button mat-button (click)="deleteReview(review)" *ngIf="review.opinion">
+              <mat-icon>delete</mat-icon>
+              Delete
+            </button>
+            <button mat-button (click)="openReviewDialog(review.article)" *ngIf="!review.opinion">
+              <mat-icon>add</mat-icon>
+              Add Review
+            </button>
+          </mat-cell>
+        </ng-container>
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let review; columns: displayedColumns;"></mat-row>
+      </mat-table>
+
+    </div>
+    <div *ngIf="!reviews || reviews.length === 0">
+      <p>"Find your product and add your review please."</p>
+    </div>
+  </mat-card-content>
+</mat-card>

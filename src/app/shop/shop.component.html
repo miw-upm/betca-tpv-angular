@@ -126,6 +126,14 @@
     <mat-icon>local_atm</mat-icon>
     <span>Offers</span>
   </button>
+  <button mat-menu-item >
+    <mat-icon>label</mat-icon>
+    <span>Run Advertising</span>
+  </button>
+  <button mat-menu-item routerLink="/shop/advertising">
+    <mat-icon>list</mat-icon>
+    <span>Advertising</span>
+  </button>
 </mat-menu>
 <mat-menu #stock="matMenu">
   <button mat-menu-item routerLink="/shop/stock-alarm">
@@ -142,7 +150,7 @@
   </button>
 </mat-menu>
 <mat-menu #users="matMenu">
-  <button disabled="disabled" mat-menu-item routerLink="/shop/users">
+  <button mat-menu-item routerLink="/shop/users">
     <mat-icon>account_circle</mat-icon>
     <span>Users</span>
   </button>

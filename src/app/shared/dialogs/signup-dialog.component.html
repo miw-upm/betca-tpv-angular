@@ -1,4 +1,4 @@
-<h3 mat-dialog-title>Login</h3>
+<h3 mat-dialog-title>Register</h3>
 <mat-dialog-content>
   <mat-form-field>
     <input [(ngModel)]="mobile" matInput placeholder="Mobile" type="text"/>
@@ -10,10 +10,11 @@
   <mat-form-field>
     <input [(ngModel)]="password" matInput placeholder="Password" type="password"/>
   </mat-form-field>
+  <mat-form-field>
+    <input [(ngModel)]="confirmPassword" matInput placeholder="Confirm Password" type="password"/>
+  </mat-form-field>
 </mat-dialog-content>
 <mat-dialog-actions>
-  <button mat-button (click)="signUp()">Register</button>
-  <button mat-button (click)="forgotPassword()">Forgot Password?</button>
   <button mat-button mat-dialog-close>Cancel</button>
-  <button (click)="login()" mat-button>Submit</button>
+  <button (click)="register()" mat-button>Submit</button>
 </mat-dialog-actions>

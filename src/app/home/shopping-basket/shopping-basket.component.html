@@ -49,6 +49,11 @@
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
       <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
     </mat-table>
+    <div class="discount-code-container">
+      <span class="discount-code-label">Discount Code:</span>
+      <input type="text" class="discount-code-input"/>
+      <button mat-button class="discount-code-confirm">Confirm</button>
+    </div>
   </mat-card-content>
   <mat-card-content>
     <button (click)="order()" [disabled]="isEmpty()" color="accent" mat-raised-button>

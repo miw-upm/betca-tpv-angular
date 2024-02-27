@@ -8,6 +8,9 @@ import {ComplaintCreationDialogComponent} from './complaints/complaint-creation-
 import {ComplaintsComponent} from './complaints/complaints.component';
 import {ShoppingBasketComponent} from "./shopping-basket/shopping-basket.component";
 import {ShopModule} from "../shop/shop.module";
+import {ReviewsComponent} from "./reviews/reviews.component";
+import {ReviewDialogComponent} from "./reviews/review-dialog.component";
+import {ReactiveFormsModule} from "@angular/forms";
 import {CarouselModule} from "@shared/components/carousel/carousel.module";
 import {AdviserComponent} from "./adviser/adviser.component";
 import { Top5Component } from './adviser/top5/top5.component';
@@ -21,6 +24,7 @@ import {CustomerPointsService} from "./customer-points/customer-points.service";
 import { TicketTrackingComponent } from './ticket-tracking/ticket-tracking.component';
 import { ProductComponent } from './ticket-tracking/product/product.component';
 
+
 @NgModule({
   declarations: [
     AdviserComponent,
@@ -28,6 +32,8 @@ import { ProductComponent } from './ticket-tracking/product/product.component';
     ComplaintsComponent,
     PhoneRequestDialogComponent,
     ComplaintCreationDialogComponent,
+    ReviewsComponent,
+    ReviewDialogComponent,
     HomeComponent,
     OnlineOrdersComponent,
     ShoppingBasketComponent,
@@ -38,12 +44,15 @@ import { ProductComponent } from './ticket-tracking/product/product.component';
     TicketTrackingComponent,
     ProductComponent,
   ],
+
   imports: [
-    HomeRoutingModule,
-    SharedModule,
-    ShopModule,
-    CarouselModule,
+      HomeRoutingModule,
+      SharedModule,
+      ShopModule,
+      ReactiveFormsModule,
+      CarouselModule,
   ],
+
   providers: [
     ShoppingBasketService,
     CustomerPointsService
