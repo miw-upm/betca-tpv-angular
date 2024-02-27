@@ -10,6 +10,7 @@ export class SearchByBarcodeComponent {
   barcodes: Observable<number[]> = of([]);
 
   @Input() barcode: string;
+  @Input() showText: boolean = true;
   @Output() add = new EventEmitter<string>();
 
   constructor(private sharedArticleService: SharedArticleService) {

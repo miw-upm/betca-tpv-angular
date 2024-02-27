@@ -1,17 +1,18 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 
 import {ShoppingBasketService} from './shopping-basket.service';
 import {AuthService} from "@core/auth.service";
 import {Shopping} from "./shopping.model";
 import {MatDialog} from "@angular/material/dialog";
 import {PhoneRequestDialogComponent} from "./phone-request-dialog.component";
+import {SharedArticleService} from "../shared/services/shared.article.service";
 
 @Component({
   selector: 'app-shopping-basket',
   styleUrls: ['shopping-basket.component.css'],
   templateUrl: 'shopping-basket.component.html'
 })
-export class ShoppingBasketComponent implements OnInit {
+export class ShoppingBasketComponent implements AfterViewInit {
   barcode: string;
   displayedColumns = ['id', 'description', 'retailPrice', 'amount', 'actions'];
   shoppingBasket: Shopping[] = [];
@@ -25,14 +26,14 @@ export class ShoppingBasketComponent implements OnInit {
     { amount: 5, article: {barcode: "333333", description: "Tercer producto", retailPrice: 30}}
   ];
 
-  constructor(private shoppingBasketService: ShoppingBasketService,
+  constructor(private shoppingBasketService: ShoppingBasketService, private sharedArticleService : SharedArticleService,
               private authService: AuthService, private dialog: MatDialog) {
     this.shoppingBasket = [];
     this.shoppingBasket = [...this.shoppingBasket, ...this.mockShopping];
     this.synchronizeShoppingBasket();
   }
 
-  ngOnInit(): void {
+  ngAfterViewInit(): void {
     this.elementRef.nativeElement.focus();
     this.shoppingBasket = [];
     this.synchronizeShoppingBasket();
@@ -48,7 +49,7 @@ export class ShoppingBasketComponent implements OnInit {
   }
 
   addDescription(description): void {
-    this.shoppingBasketService
+    this.sharedArticleService
       .read(description)
       .subscribe(newShopping => {
         this.shoppingBasket.push(newShopping);

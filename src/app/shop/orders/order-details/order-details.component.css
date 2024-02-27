@@ -1,0 +1,28 @@
+#order-detail-fields {
+  display: flex;
+  flex-direction: row;
+}
+
+#order-detail-fields > *:not(:first-child) {
+  margin-left: 1rem;
+}
+
+mat-cell, mat-header-cell {
+  padding: .25rem 2rem;
+  justify-content: center;
+}
+
+mat-cell > *:not(button) {
+  width: 100%;
+}
+
+#actions {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+#actions > * {
+  margin: 0 .75rem;
+}

@@ -2,11 +2,11 @@
 <mat-dialog-content>
   <mat-form-field class="full-width">
     <mat-label>Barcode</mat-label>
-    <input [(ngModel)]="complaint.barcode" matInput required type="text"/>
+    <input [(ngModel)]="complaint.barcode" matInput required type="text" [disabled]="data?.complaint"/>
   </mat-form-field>
   <mat-form-field class="full-width">
     <mat-label>Description</mat-label>
-    <input [(ngModel)]="complaint.description" matInput required type="text"/>
+    <textarea [(ngModel)]="complaint.description" matInput required></textarea>
   </mat-form-field>
 </mat-dialog-content>
 <mat-dialog-actions>

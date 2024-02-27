@@ -1,0 +1,36 @@
+<mat-card>
+  <mat-card-content>
+    <mat-label><strong>Filters: </strong></mat-label>
+    <mat-form-field>
+      <mat-label>Reference</mat-label>
+      <input matInput [(ngModel)]="orderSearch.reference">
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Description</mat-label>
+      <input matInput [(ngModel)]="orderSearch.description">
+    </mat-form-field>
+    <app-search-by-company [(company)]="orderSearch.providerCompany" style="width: auto; display: inline-block"></app-search-by-company>
+    <mat-form-field (click)="openingDateDatepicker.open()">
+      <mat-label>Opening date</mat-label>
+      <input matInput [matDatepicker]="openingDateDatepicker" [(ngModel)]="orderSearch.openingDate" [max]="orderSearch.closingDate ?? null">
+      <mat-hint align="start">Later than</mat-hint>
+      <mat-datepicker-toggle matSuffix [for]="openingDateDatepicker"></mat-datepicker-toggle>
+      <mat-datepicker #openingDateDatepicker></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field (click)="closingDateDatepicker.open()">
+      <mat-label>Closing date</mat-label>
+      <input matInput [matDatepicker]="closingDateDatepicker" [(ngModel)]="orderSearch.closingDate" [min]="orderSearch.openingDate ?? null">
+      <mat-hint align="start">Earlier than</mat-hint>
+      <mat-datepicker-toggle matSuffix [for]="closingDateDatepicker"></mat-datepicker-toggle>
+      <mat-datepicker #closingDateDatepicker></mat-datepicker>
+    </mat-form-field>
+    <button (click)="search()" mat-icon-button>
+      <mat-icon>search</mat-icon>
+    </button>
+    <button (click)="resetSearch()" mat-icon-button>
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-card-content>
+</mat-card>
+
+<app-crud (create)="create()" (read)="details($event)" [updateAction]="false" [data]="orders" [deleteAction]="false" [title]="title"></app-crud>

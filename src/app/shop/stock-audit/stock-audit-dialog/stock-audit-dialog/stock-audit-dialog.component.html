@@ -1,0 +1,26 @@
+<h2 mat-dialog-title>{{title}}</h2>
+<mat-dialog-content>
+  <mat-form-field>
+    <mat-label>Creation date</mat-label>
+    <input matInput required type="text" [value]="stockAudit.creationDate | date: 'dd/MM/yyyy HH:mm:ss'" disabled/>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Close date</mat-label>
+    <input matInput required type="text" [value]="stockAudit.closeDate | date: 'dd/MM/yyyy HH:mm:ss'" disabled/>
+  </mat-form-field>
+  <app-crud [data]="articlesWithoutAudit" [title]="titleNoAudit" [deleteAction]="false" [readAction]="false" [createAction]="false" [updateAction]="false"></app-crud>
+  <app-crud [data]="articlesLosses" [title]="titleLosses" [deleteAction]="false" [readAction]="false" [createAction]="false" [updateAction]="false"></app-crud>
+  <br>
+  <mat-form-field >
+    <mat-label>Loss value</mat-label>
+    <input matInput required type="number" [value]="stockAudit.lossValue" disabled/>
+  </mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button cdkFocusInitial mat-dialog-close mat-raised-button>Close</button>
+  <button (click)="create()" color="primary" mat-raised-button>
+    Save
+  </button>
+  <button cdkFocusInitial color="accent" mat-raised-button>Close audit</button>
+</mat-dialog-actions>

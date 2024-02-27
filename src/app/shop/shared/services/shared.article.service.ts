@@ -34,11 +34,11 @@ export class SharedArticleService {
         map(response => response.barcodes)
       );
   }
-  getPointsDiscountArticle(): Observable<Article> {
+  getPointsDiscountArticleForUser(mobileNumber: string, totalShoppingCart: number): Observable<Article> {
     return of(<Article> {
       barcode: CustomerPointsConstants.BARCODE,
       description: "POINTS DISCOUNT",
-      retailPrice: -12
+      retailPrice: -1 * (0.5*totalShoppingCart),
     });
   }
 }

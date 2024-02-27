@@ -1,0 +1,33 @@
+/* review-dialog.component.css */
+
+.mat-dialog-content {
+  margin-bottom: 20px;
+}
+
+.mat-form-field {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.mat-form-field textarea {
+  min-height: 100px;
+}
+
+.mat-error {
+  color: red;
+  font-size: 14px;
+}
+
+button.mat-button {
+  margin-right: 10px;
+  padding: 1px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button.mat-button:hover {
+  background-color: #0056b3;
+}

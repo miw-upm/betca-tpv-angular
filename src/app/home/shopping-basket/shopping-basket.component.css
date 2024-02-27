@@ -32,3 +32,22 @@
 .pb-dot-4 {
   padding-bottom: 0.4rem;
 }
+.discount-code-container {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-top: 20px; /* Adjust as needed */
+}
+
+.discount-code-label {
+  margin-right: 10px;
+}
+
+.discount-code-input {
+  margin-right: 10px; /* Space between input and button */
+  /* Style your input as needed */
+}
+
+.discount-code-confirm {
+  /* Style your button as needed */
+}
