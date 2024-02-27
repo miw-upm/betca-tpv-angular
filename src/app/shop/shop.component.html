@@ -62,7 +62,7 @@
     <mat-icon>account_balance_wallet</mat-icon>
     <span>Cash Movement</span>
   </button>
-  <button disabled="disabled" mat-menu-item routerLink="">
+  <button mat-menu-item routerLink="/shop/cashier-closure">
     <mat-icon>account_balance</mat-icon>
     <span>Cashier Closure</span>
   </button>
@@ -122,13 +122,21 @@
     <mat-icon>view_comfy</mat-icon>
     <span>Tags</span>
   </button>
-  <button disabled="disabled" mat-menu-item routerLink="">
+  <button mat-menu-item routerLink="/shop/offers">
     <mat-icon>local_atm</mat-icon>
     <span>Offers</span>
   </button>
+  <button mat-menu-item >
+    <mat-icon>label</mat-icon>
+    <span>Run Advertising</span>
+  </button>
+  <button mat-menu-item routerLink="/shop/advertising">
+    <mat-icon>list</mat-icon>
+    <span>Advertising</span>
+  </button>
 </mat-menu>
 <mat-menu #stock="matMenu">
-  <button disabled="disabled" mat-menu-item routerLink="/home/stock-alarm">
+  <button mat-menu-item routerLink="/shop/stock-alarm">
     <mat-icon>alarm</mat-icon>
     <span>Stock Alarm</span>
   </button>
@@ -142,7 +150,7 @@
   </button>
 </mat-menu>
 <mat-menu #users="matMenu">
-  <button disabled="disabled" mat-menu-item routerLink="/shop/users">
+  <button mat-menu-item routerLink="/shop/users">
     <mat-icon>account_circle</mat-icon>
     <span>Users</span>
   </button>

@@ -46,4 +46,18 @@ export class StockAuditService {
   search(): Observable<StockAudit[]> {
     return of(this.mockStockAudits);
   }
+
+  create(stockAudit: StockAudit): Observable<StockAudit[]> {
+    this.mockStockAudits.push(stockAudit);
+    return of(this.mockStockAudits);
+  }
+
+  read(stockAudit: StockAudit): Observable<StockAudit> {
+    return of(stockAudit);
+  }
+
+  update(stockAudit: StockAudit): Observable<StockAudit> {
+    // TODO
+    return of(stockAudit);
+  }
 }

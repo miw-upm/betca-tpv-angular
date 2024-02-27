@@ -1,0 +1,31 @@
+.staff-container {
+  padding: 10px 60px;
+}
+
+table.mat-table {
+  margin-bottom: 40px;
+}
+
+table.mat-table td.mat-cell,
+table.mat-table th.mat-header-cell {
+  padding-right: 20px;
+}
+
+.functionality-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.d-flex {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.mat-form-field {
+  width: 100%;
+}
+
+.mat-datepicker-toggle {
+  margin-left: auto;
+}

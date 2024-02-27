@@ -1,1 +1,2 @@
-<app-crud [data]="stockAudits" [deleteAction]="false" [title]="title"></app-crud>
+<app-crud (create)="create()" (read)="read($event)" (update)="update($event)"
+          [data]="stockAudits" [deleteAction]="false" [title]="title"></app-crud>

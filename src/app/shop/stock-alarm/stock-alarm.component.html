@@ -1,0 +1,17 @@
+<mat-card>
+  <mat-card-content>
+    <mat-label><strong>Filters: </strong></mat-label>
+    <mat-slide-toggle [(ngModel)]="stockAlarmSearch.warning">Warning</mat-slide-toggle>
+    <mat-slide-toggle [(ngModel)]="stockAlarmSearch.critical">Critical</mat-slide-toggle>
+    <button (click)="search()" mat-icon-button>
+      <mat-icon>search</mat-icon>
+    </button>
+    <button (click)="resetSearch()" mat-icon-button>
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-card-content>
+</mat-card>
+
+<app-crud (create)="create()" (read)="read($event)" (update)="update($event)"
+          [data]="stockAlarms" [title]="title">
+</app-crud>
