@@ -4,7 +4,9 @@ import {Article} from "../shared/services/models/article.model";
 import {ReadDetailDialogComponent} from "@shared/dialogs/read-detail.dialog.component";
 import {CashierClosureService} from "../cashier-opened/cashier-closure/cashier-closure.service";
 import {CashierClosure} from "../cashier-opened/cashier-closure/cashier-closure.model";
-import {Observable, of} from "rxjs";
+import {Observable, of, toArray} from "rxjs";
+import {Cashier} from "./cashier.model";
+import {map} from "rxjs/operators";
 
 @Component({
   selector: 'app-cashier-closure',
@@ -13,17 +15,24 @@ import {Observable, of} from "rxjs";
 })
 export class CashierClosureComponent {
   title: string = "Cashier Closures"
-  cashierClosures: Observable<CashierClosure[]>;
+  cashiers: Observable<Cashier[]>;
+  month: number;
+  specificMonth: number;
+  year: number;
+  specificYear: number;
+  total: Observable<number>;
+
   constructor(private cashierClosureService: CashierClosureService) {
     this.search();
+    this.calculateTotalIncoming();
   }
 
   search(): void {
-    this.cashierClosures = this.cashierClosureService.readAllClosed();
+    this.cashiers = this.cashierClosureService.readAll();
   }
 
   resetSearch(): void {
-    this.cashierClosures = of([]);
+    this.cashiers = of([]);
   }
 /*
   read(article: Article): void {
@@ -34,4 +43,31 @@ export class CashierClosureComponent {
       }
     });
   }*/
+  searchCurrentMonth() {
+
+  }
+
+  searchByYear() {
+
+  }
+
+  searchBySpecificMonth() {
+
+  }
+
+  searchBySpecificYear() {
+
+  }
+
+  readAll() {
+    this.cashiers = this.cashierClosureService.readAll();
+  }
+
+  readClosed() {
+    this.cashiers = this.cashierClosureService.readClosed();
+  }
+
+  calculateTotalIncoming(): void {
+    this.total = of(100);
+  }
 }
