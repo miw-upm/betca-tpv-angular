@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Observable} from 'rxjs';
+import {Observable, of} from 'rxjs';
 
 import {HttpService} from '@core/http.service';
 import {CashierState} from './cashier-state.model';
@@ -22,6 +22,15 @@ export class CashierClosureService {
 
   readState(): Observable<CashierState> {
     return this.httpService.get(EndPoints.CASHIERS_LAST + CashierClosureService.STATE);
+  }
+
+  readAllClosed(): Observable<CashierClosure[]> {
+    const closures: CashierClosure[] = [
+      { finalCash: 1000, finalCard: 500, comment: 'Cierre de caja 1' },
+      { finalCash: 1500, finalCard: 700, comment: 'Cierre de caja 2' },
+      { finalCash: 800, finalCard: 400, comment: 'Cierre de caja 3' }
+    ];
+    return of(closures);
   }
 
 }
