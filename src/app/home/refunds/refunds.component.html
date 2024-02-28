@@ -1,0 +1,52 @@
+<mat-card>
+  <mat-card-title>
+    {{title}}
+  </mat-card-title>
+  <mat-card-content>
+    <mat-table [dataSource]="onlineOrders" class="mat-elevation-z8">
+      <ng-container matColumnDef="id">
+        <mat-header-cell *matHeaderCellDef fxFlex="5%">#</mat-header-cell>
+        <mat-cell *matCellDef="let i = index" fxFlex="5%"> {{i + 1}}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="reference">
+        <mat-header-cell *matHeaderCellDef fxFlex="28%"> Order reference</mat-header-cell>
+        <mat-cell *matCellDef="let item" fxFlex="28%"> {{item.reference}}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="state">
+        <mat-header-cell *matHeaderCellDef fxFlex="11%"> State</mat-header-cell>
+        <mat-cell *matCellDef="let item" fxFlex="11%">
+          {{onlineOrderStateKeys[item.state]}}
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="deliveryDate">
+        <mat-header-cell *matHeaderCellDef fxFlex="20%"> Delivery Date</mat-header-cell>
+        <mat-cell *matCellDef="let item" fxFlex="20%">
+          {{item.deliveryDate | date: 'dd/MM/yyyy'}}
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="ticketReference">
+        <mat-header-cell *matHeaderCellDef fxFlex="20%"> Ticket reference</mat-header-cell>
+        <mat-cell *matCellDef="let item" fxFlex="20%">
+          {{item.ticketReference}}
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="actions">
+        <mat-header-cell *matHeaderCellDef fxFlex="10%">Actions</mat-header-cell>
+        <mat-cell *matCellDef="let item" fxFlex="10%">
+          <ng-container *ngIf="showRefundButton(item.state)">
+            <button mat-raised-button color="accent" (click)="refundOnlineOrder(item)">
+              Refund
+            </button>
+          </ng-container>
+        </mat-cell>
+      </ng-container>
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+  </mat-card-content>
+</mat-card>
+
+
+
+
+

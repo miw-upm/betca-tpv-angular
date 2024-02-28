@@ -18,7 +18,7 @@
         <mat-form-field>
           <input #budge matInput placeholder="Budge" type="text">
         </mat-form-field>
-        <button [disabled]="budge.value === ''" color="primary" mat-icon-button type="submit">
+        <button (click)="addBudget(budge.value); budge.value=''" [disabled]="budge.value === ''" color="primary" mat-icon-button type="submit">
           <mat-icon>description</mat-icon>
         </button>
       </form>
@@ -38,6 +38,18 @@
         <button (click)="addOffer(offer.value)" [disabled]="offer.value === ''" color="primary" mat-icon-button
                 type="submit">
           <mat-icon>local_atm</mat-icon>
+        </button>
+      </form>
+      <form>
+        <mat-form-field>
+          <input #customerPointsMobile matInput placeholder="Mobile Number" type="number">
+        </mat-form-field>
+        <button (click)="addCustomerPointsDiscount(customerPointsMobile.value)"
+                [disabled]="customerPointsMobile.value === ''"
+                color="primary"
+                mat-icon-button
+                type="submit">
+          <mat-icon>smartphone</mat-icon>
         </button>
       </form>
     </div>
@@ -66,11 +78,11 @@
       <ng-container matColumnDef="amount">
         <mat-header-cell *matHeaderCellDef fxFlex="20%"> Nº</mat-header-cell>
         <mat-cell *matCellDef="let item" fxFlex="20%">
-          <button (click)="decreaseAmount(item)" color="accent" mat-icon-button>
+          <button (click)="decreaseAmount(item)" color="accent" mat-icon-button *ngIf="!isDiscountPointsItem(item)">
             <mat-icon>remove_circle_outline</mat-icon>
           </button>
           {{item.amount}}
-          <button (click)="incrementAmount(item)" color="accent" mat-icon-button>
+          <button (click)="incrementAmount(item)" color="accent" mat-icon-button *ngIf="!isDiscountPointsItem(item)">
             <mat-icon>add_circle_outline</mat-icon>
           </button>
         </mat-cell>
@@ -84,14 +96,14 @@
         <mat-cell (click)="updateTotal(item)" *matCellDef="let item" fxFlex="12%">{{item.total}}</mat-cell>
       </ng-container>
       <ng-container matColumnDef="actions">
-        <mat-header-cell *matHeaderCellDef fxFlex="15%">
+        <mat-header-cell *matHeaderCellDef fxFlex="15%" >
           <button (click)="exchangeShoppingCart()" mat-button mat-icon-button matSuffix>
             <mat-icon color="primary">autorenew</mat-icon>
           </button>
         </mat-header-cell>
-        <mat-cell *matCellDef="let item" fxFlex="15%">
+        <mat-cell *matCellDef="let item" fxFlex="15%" >
           <mat-checkbox (change)="changeCommitted(item)" [checked]="checkboxState(item.state)"
-                        [disabled]="item.amount<0"></mat-checkbox>
+                        [disabled]="item.amount<0" *ngIf="!isDiscountPointsItem(item)"></mat-checkbox>
           <button (click)="delete(item)" mat-button mat-icon-button matSuffix>
             <mat-icon color="warn">close</mat-icon>
           </button>
@@ -107,7 +119,7 @@
       Checkout
       <mat-icon>euro_symbol</mat-icon>
     </button>
-    <button (click)="createBudget()" color="primary" disabled="disabled" mat-raised-button>
+    <button (click)="createBudget()" [disabled]="isEmpty()" color="primary" mat-raised-button>
       <mat-icon>description</mat-icon>
       Budget
     </button>

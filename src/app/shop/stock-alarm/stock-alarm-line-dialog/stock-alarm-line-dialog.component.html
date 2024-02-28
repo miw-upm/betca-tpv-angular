@@ -1,0 +1,24 @@
+<h2 mat-dialog-title>{{title}}</h2>
+
+<mat-dialog-content>
+
+  <app-search-by-barcode (add)="addBarcode($event)"></app-search-by-barcode>
+
+  <mat-form-field>
+    <mat-label>Warning Value</mat-label>
+    <input [(ngModel)]="stockAlarmLine.warning" matInput required [min]="0" type="number"/>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Critical Value</mat-label>
+    <input [(ngModel)]="stockAlarmLine.critical" matInput required [min]="0" type="number"/>
+  </mat-form-field>
+
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button cdkFocusInitial mat-dialog-close mat-raised-button>Close</button>
+  <button (click)="create()" *ngIf="isCreate()" [disabled]="invalid()" color="primary" mat-raised-button>Create
+  </button>
+  <button (click)="update()" *ngIf="!isCreate()" [disabled]="invalid()" color="primary" mat-raised-button>Update
+  </button>
+</mat-dialog-actions>

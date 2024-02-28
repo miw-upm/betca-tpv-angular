@@ -1,0 +1,38 @@
+
+mat-card-content mat-form-field {
+  margin-right: 10px;
+}
+
+mat-card-content button {
+  margin-top: 10px;
+  margin-right: 15px;
+}
+
+mat-list-item {
+  margin-bottom: 20px;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+table th, table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+table table th, table table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+table table th {
+  background-color: #273172;
+}
+
+table tbody tr:nth-child(odd) {
+  background-color: #f9f9f9;
+}

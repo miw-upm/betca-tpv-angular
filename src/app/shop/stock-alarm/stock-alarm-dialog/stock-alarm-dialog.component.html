@@ -1,0 +1,32 @@
+<h2 mat-dialog-title>{{title}}</h2>
+<mat-dialog-content>
+  <mat-form-field>
+    <mat-label>Name</mat-label>
+    <input [(ngModel)]="stockAlarm.name" matInput required type="text"/>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Warning Value</mat-label>
+    <input [(ngModel)]="stockAlarm.warning" matInput required [min]="0" type="number"/>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Critical Value</mat-label>
+    <input [(ngModel)]="stockAlarm.critical" matInput required [min]="0" type="number"/>
+  </mat-form-field>
+
+  <mat-form-field class="full-width">
+    <mat-label>Description</mat-label>
+    <input [(ngModel)]="stockAlarm.description" matInput type="text"/>
+  </mat-form-field>
+
+  <app-crud (create)="createAlarmLine()" (read)="readAlarmLine($event)" (update)="updateAlarmLine($event)" [data]="stockAlarmLines" [title]="crudTitle"></app-crud>
+
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button cdkFocusInitial mat-dialog-close mat-raised-button>Close</button>
+  <button (click)="create()" *ngIf="isCreate()" [disabled]="invalid()" color="primary" mat-raised-button>Create
+  </button>
+  <button (click)="update()" *ngIf="!isCreate()" [disabled]=invalid() color="primary" mat-raised-button>Update
+  </button>
+</mat-dialog-actions>

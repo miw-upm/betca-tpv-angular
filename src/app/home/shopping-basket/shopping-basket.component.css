@@ -1,0 +1,53 @@
+.container {
+  display: flex;
+  flex-direction: row;
+  max-height: 500px;
+  min-width: 300px;
+}
+
+.mat-cell {
+  overflow: visible;
+}
+
+.mat-table {
+  overflow: auto;
+  max-height: 600px;
+}
+
+.mat-column- {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.mat-dialog-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.flex-center-items {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.pb-dot-4 {
+  padding-bottom: 0.4rem;
+}
+.discount-code-container {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-top: 20px; /* Adjust as needed */
+}
+
+.discount-code-label {
+  margin-right: 10px;
+}
+
+.discount-code-input {
+  margin-right: 10px; /* Space between input and button */
+  /* Style your input as needed */
+}
+
+.discount-code-confirm {
+  /* Style your button as needed */
+}

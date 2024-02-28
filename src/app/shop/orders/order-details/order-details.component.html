@@ -1,0 +1,101 @@
+
+<mat-card>
+  <mat-card-title *ngIf="isCreationMode">New order</mat-card-title>
+  <mat-card-title *ngIf="!isCreationMode">Edit order (reference: {{ currentActiveOrder.reference }})</mat-card-title>
+  <mat-card-content id="order-detail-fields">
+    <mat-form-field style="width: 35%">
+      <mat-label>Description</mat-label>
+      <input matInput [(ngModel)]="currentActiveOrder.description" required [disabled]="currentActiveOrderIsClosed">
+    </mat-form-field>
+    <app-search-by-company *ngIf="!currentActiveOrderIsClosed" [(company)]="currentActiveOrder.providerCompany" style="width: 35%; display: inline-block"></app-search-by-company>
+    <mat-form-field *ngIf="currentActiveOrderIsClosed" style="width: 35%">
+      <mat-label>Provider company</mat-label>
+      <input matInput [(ngModel)]="currentActiveOrder.providerCompany" required [disabled]="currentActiveOrderIsClosed">
+    </mat-form-field>
+    <mat-form-field (click)="openingDateDatepicker.open()" style="width: 15%">
+      <mat-label>Opening date</mat-label>
+      <input matInput [matDatepicker]="openingDateDatepicker" [(ngModel)]="currentActiveOrder.openingDate" required [disabled]="currentActiveOrderIsClosed">
+      <mat-datepicker-toggle matSuffix [for]="openingDateDatepicker"></mat-datepicker-toggle>
+      <mat-datepicker #openingDateDatepicker></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field *ngIf="currentActiveOrderIsClosed" style="width: 15%">
+      <mat-label>Closing date</mat-label>
+      <input matInput [matDatepicker]="closingDateDatepicker" [(ngModel)]="currentActiveOrder.closingDate" required [disabled]="currentActiveOrderIsClosed">
+      <mat-datepicker-toggle matSuffix [for]="closingDateDatepicker"></mat-datepicker-toggle>
+      <mat-datepicker #closingDateDatepicker></mat-datepicker>
+    </mat-form-field>
+  </mat-card-content>
+</mat-card>
+<mat-card class="mat-card mat-elevation-z">
+  <mat-card-title>
+    Articles
+  </mat-card-title>
+  <mat-card-content>
+    <mat-table [dataSource]="currentActiveOrderLinesDataSource" class="mat-elevation-z3">
+      <mat-header-row *matHeaderRowDef="['articleBarcode', 'requiredAmount', 'copyRequiredToFinal', 'finalAmount', 'actions']"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: ['articleBarcode', 'requiredAmount', 'copyRequiredToFinal', 'finalAmount', 'actions'];"></mat-row>
+      <ng-container matColumnDef="articleBarcode">
+        <mat-header-cell *matHeaderCellDef fxFlex="50%">Article barcode</mat-header-cell>
+        <mat-cell *matCellDef="let orderLine" fxFlex="50%">
+          <app-search-by-barcode *ngIf="!currentActiveOrderIsClosed" [barcode]="orderLine.articleBarcode" (add)="orderLine.articleBarcode = $event" [showText]="false"></app-search-by-barcode>
+          <mat-form-field *ngIf="currentActiveOrderIsClosed">
+            <input matInput type="text" [(ngModel)]="orderLine.articleBarcode" required disabled>
+          </mat-form-field>
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="requiredAmount">
+        <mat-header-cell *matHeaderCellDef fxFlex="17%">Required amount</mat-header-cell>
+        <mat-cell *matCellDef="let orderLine" fxFlex="17%">
+          <mat-form-field>
+            <input matInput type="number" [(ngModel)]="orderLine.requiredAmount" required [disabled]="currentActiveOrderIsClosed">
+          </mat-form-field>
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="copyRequiredToFinal">
+        <mat-header-cell *matHeaderCellDef fxFlex="8%"></mat-header-cell>
+        <mat-cell *matCellDef="let orderLine" fxFlex="8%">
+          <button mat-button [disabled]="isCreationMode || !currentActiveOrderIsClosed" (click)="orderLine.finalAmount = orderLine.requiredAmount">
+            <mat-icon color="primary">chevron_right</mat-icon>
+          </button>
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="finalAmount">
+        <mat-header-cell *matHeaderCellDef fxFlex="17%">Final amount</mat-header-cell>
+        <mat-cell *matCellDef="let orderLine" fxFlex="17%">
+          <mat-form-field>
+            <input matInput type="number" [(ngModel)]="orderLine.finalAmount" [disabled]="isCreationMode || !currentActiveOrderIsClosed">
+          </mat-form-field>
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="actions">
+        <mat-header-cell *matHeaderCellDef fxFlex="8%">
+          <button mat-button (click)="addNewOrderLine()" [disabled]="currentActiveOrderIsClosed">
+            <mat-icon color="primary">add</mat-icon>
+          </button>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let orderLine" fxFlex="8%">
+          <button mat-button (click)="removeOrderLine(orderLine)" [disabled]="currentActiveOrderIsClosed">
+            <mat-icon color="accent">close</mat-icon>
+          </button>
+        </mat-cell>
+      </ng-container>
+    </mat-table>
+  </mat-card-content>
+</mat-card>
+<div id="actions">
+  <button mat-raised-button (click)="saveOrder()" color="primary">
+    <mat-icon>done</mat-icon> Save
+  </button>
+  <button mat-raised-button (click)="cancelNewOrder()" *ngIf="isCreationMode" color="warn">
+    <mat-icon>close</mat-icon> Cancel
+  </button>
+  <button mat-raised-button (click)="deleteOrder()" *ngIf="isCreationMode || !currentActiveOrderIsClosed" color="warn">
+    <mat-icon>delete</mat-icon> Delete
+  </button>
+  <button mat-raised-button (click)="markAsClosed()" *ngIf="!isCreationMode && !currentActiveOrderIsClosed" color="primary">
+    <mat-icon>done_all</mat-icon> Mark as closed
+  </button>
+  <button mat-raised-button (click)="copyToNewOrder()" *ngIf="!isCreationMode" color="primary">
+    <mat-icon>copy_all</mat-icon> Copy order
+  </button>
+</div>

@@ -1,0 +1,69 @@
+<h2 mat-dialog-title>{{title}}</h2>
+<mat-dialog-content>
+  <mat-form-field class="full-width">
+    <mat-label>Id</mat-label>
+    <input [(ngModel)]="ticket.id" id="id" matInput readonly type="text"/>
+  </mat-form-field>
+  <mat-form-field class="full-width">
+    <mat-label>Reference</mat-label>
+    <input [(ngModel)]="ticket.reference" matInput readonly type="text"/>
+  </mat-form-field>
+  <mat-form-field class="full-width">
+    <mat-label>User mobile</mat-label>
+    <input [(ngModel)]="ticket.userMobile" matInput readonly type="text">
+  </mat-form-field>
+  <mat-form-field class="full-width">
+    <mat-label>Voucher</mat-label>
+    <input [(ngModel)]="ticket.voucher" matInput readonly type="text">
+  </mat-form-field>
+  <mat-card>
+    <mat-card-title>Shopping list</mat-card-title>
+    <mat-card-content>
+      <div *ngFor="let item of ticket.shoppingList; let i = index" class="shopping-item">
+        <mat-card>
+          <mat-card-header>
+            <mat-card-title>Item {{ i + 1 }}</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <mat-form-field class="full-width">
+              <mat-label>Amount</mat-label>
+              <input [(ngModel)]="item.amount" matInput readonly type="text"/>
+              <button (click)="decreaseAmount(item)" [disabled]="item.amount <= 0">Quitar uno</button>
+            </mat-form-field>
+            <mat-form-field class="full-width">
+                <mat-label>State</mat-label>
+                <input [value]="getStateDescription(item.state)" matInput type="text" readonly/>
+            </mat-form-field>
+          </mat-card-content>
+        </mat-card>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+
+  <mat-form-field class="full-width">
+    <mat-label>Cash</mat-label>
+    <input [(ngModel)]="ticket.cash" matInput readonly type="text"/>
+  </mat-form-field>
+  <mat-form-field class="full-width">
+    <mat-label>Card</mat-label>
+    <input [(ngModel)]="ticket.card" matInput readonly type="text"/>
+  </mat-form-field>
+  <mat-form-field class="full-width">
+    <mat-label>Creation date</mat-label>
+    <input [(ngModel)]="ticket.creationDate" matInput readonly type="text"/>
+  </mat-form-field>
+  <mat-form-field class="full-width">
+    <mat-label>Note</mat-label>
+    <input [(ngModel)]="ticket.note" matInput readonly type="text"/>
+  </mat-form-field>
+  <mat-form-field class="full-width">
+    <mat-label>Class</mat-label>
+    <input [(ngModel)]="ticket.class" matInput readonly type="text"/>
+  </mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button cdkFocusInitial mat-dialog-close mat-raised-button>Close</button>
+  <button (click)="update()" color="primary" mat-raised-button>Update
+  </button>
+</mat-dialog-actions>

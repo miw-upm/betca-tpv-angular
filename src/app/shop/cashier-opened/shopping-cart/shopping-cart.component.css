@@ -23,3 +23,12 @@
   display: flex;
   flex-direction: column;
 }
+
+.flex-center-items {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.pb-dot-4 {
+  padding-bottom: 0.4rem;
+}

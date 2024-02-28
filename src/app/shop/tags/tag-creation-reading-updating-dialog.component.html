@@ -1,0 +1,63 @@
+<h2 mat-dialog-title>{{title}}</h2>
+<mat-dialog-content class="mat-typography">
+  <mat-form-field class="full-width">
+    <mat-label>Name</mat-label>
+    <input matInput [(ngModel)]="tag.name" required [disabled]="readOnly">
+  </mat-form-field>
+
+  <mat-form-field class="full-width">
+    <mat-label>Group</mat-label>
+    <input matInput [(ngModel)]="tag.group" required [disabled]="readOnly">
+  </mat-form-field>
+
+  <mat-form-field class="full-width">
+    <mat-label>Description</mat-label>
+    <textarea matInput [(ngModel)]="tag.description" [disabled]="readOnly"></textarea>
+  </mat-form-field>
+
+  <div *ngIf="!readOnly">
+    <h3>Select Articles</h3>
+    <div>
+      <mat-card>
+        <mat-card-content>
+          <mat-form-field>
+            <mat-label>Barcode</mat-label>
+            <input matInput [(ngModel)]="articleSearch.barcode" (keyup)="searchArticles()">
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Description</mat-label>
+            <input matInput [(ngModel)]="articleSearch.description" (keyup)="searchArticles()">
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>Reference</mat-label>
+            <input matInput [(ngModel)]="articleSearch.reference" (keyup)="searchArticles()">
+          </mat-form-field>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+    <mat-list>
+      <mat-list-item *ngFor="let article of articles">
+        <mat-checkbox (change)="toggleArticleSelection(article)" [checked]="isArticleSelected(article)">
+          {{article.description}} ({{article.barcode}})
+        </mat-checkbox>
+      </mat-list-item>
+    </mat-list>
+  </div>
+
+  <div *ngIf="readOnly">
+    <h3>Articles</h3>
+    <mat-list *ngIf="hasArticles(); else noArticles">
+      <mat-list-item *ngFor="let article of tag.articles">
+        {{ article.description }} ({{ article.barcode }})
+      </mat-list-item>
+    </mat-list>
+    <ng-template #noArticles>
+      <p>No articles associated.</p>
+    </ng-template>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions class="dialog-actions-end" *ngIf="!readOnly && isFormValid()">
+  <button mat-button [mat-dialog-close]="true">Cancel</button>
+  <button mat-raised-button color="primary" (click)="onSubmit()">{{showCreateUpdateButton()}}</button>
+</mat-dialog-actions>

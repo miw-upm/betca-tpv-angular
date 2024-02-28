@@ -1,0 +1,32 @@
+.container {
+  padding: 20px;
+  background-color: #f5f5f5;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+  .message-header {
+    margin-bottom: 20px;
+
+    .mat-form-field {
+      width: 30%;
+
+      &:last-child {
+        width: 70%;
+      }
+    }
+  }
+
+  .mat-form-field {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+
+  textarea {
+    resize: vertical;
+  }
+
+  button {
+    margin-top: 10px;
+  }
+}

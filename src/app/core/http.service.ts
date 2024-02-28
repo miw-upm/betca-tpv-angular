@@ -167,10 +167,10 @@ export class HttpService {
       try {
         error = response.error; // with 'text': JSON.parse(response.error);
         this.showError(error.error + ' (' + response.status + '): ' + error.message);
-        return throwError(error);
+        return throwError(() => error);
       } catch (e) {
         this.showError('Not response');
-        return throwError(response.error);
+        return throwError(() => response.error);
       }
     }
   }
