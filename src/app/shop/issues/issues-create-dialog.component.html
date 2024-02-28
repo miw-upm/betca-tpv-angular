@@ -1,0 +1,20 @@
+<h3 mat-dialog-title>{{title}}</h3>
+<mat-dialog-content>
+  <mat-form-field>
+    <input  placeholder="Title" [(ngModel)]="newIssue.title" matInput required type="text">
+  </mat-form-field>
+  <mat-form-field>
+    <textarea placeholder="Body" [(ngModel)]="newIssue.body" matInput required></textarea>
+  </mat-form-field>
+<mat-form-field>
+  <mat-select  placeholder="Label" [(ngModel)]="newIssue.labels" name="labels" required>
+    <mat-option value="bug">bug</mat-option>
+    <mat-option value="enhancement">enhancement</mat-option>
+  </mat-select>
+</mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button cdkFocusInitial mat-dialog-close mat-raised-button>Close</button>
+  <button (click)="create()" *ngIf="isCreate()"  color="primary" mat-raised-button>Create
+  </button>
+</mat-dialog-actions>
