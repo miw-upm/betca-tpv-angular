@@ -1,9 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component} from '@angular/core';
 import {of} from "rxjs";
 import {MatDialog} from "@angular/material/dialog";
 import {OfferService} from "./offers.service";
 import {Offer} from "../shared/services/models/offer.model";
-import {OrderSearch} from "../orders/ordersearch.model";
 import {OfferSearch} from "./offers-search.model";
 
 @Component({
