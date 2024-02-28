@@ -64,7 +64,9 @@ import {StaffService} from "./staff/staff.service";
 import { OffersComponent } from './offers/offers.component';
 import { AuditArticleDialogComponent } from "./stock-audit/audit-article-dialog/audit-article-dialog/audit-article-dialog.component";
 import { SlackSentMessageDialogComponent } from './slack-messages/slack-sent-message-dialog/slack-sent-message-dialog.component';
-
+import { IssueComponent } from "./issues/issues.component";
+import {IssuesCreateDialogComponent} from "./issues/issues-create-dialog.component";
+import { IssueService } from "./issues/issues.service";
 
 @NgModule({
   declarations: [
@@ -114,6 +116,8 @@ import { SlackSentMessageDialogComponent } from './slack-messages/slack-sent-mes
     CashierClosureComponent,
     OffersComponent,
     SlackSentMessageDialogComponent,
+    IssueComponent,
+    IssuesCreateDialogComponent
   ],
   imports: [
     SharedModule,
@@ -141,7 +145,8 @@ import { SlackSentMessageDialogComponent } from './slack-messages/slack-sent-mes
     StockAuditService,
     StockAlarmService,
     StockAlarmLineService,
-    StaffService
+    StaffService,
+    IssueService
   ],
 })
 export class ShopModule {

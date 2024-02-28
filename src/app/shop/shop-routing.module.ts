@@ -26,6 +26,7 @@ import { OrderDetailsComponent } from "./orders/order-details/order-details.comp
 import {StockAlarmComponent} from "./stock-alarm/stock-alarm.component";
 import {CashierClosureComponent} from "./cashier-closure/cashier-closure.component";
 import {OffersComponent} from "./offers/offers.component";
+import {IssueComponent} from "./issues/issues.component";
 
 const routes: Routes = [
   {
@@ -59,7 +60,8 @@ const routes: Routes = [
       {path: 'orders/new', component: OrderDetailsComponent},
       {path: 'orders/:id', component: OrderDetailsComponent},
       {path: 'users', component: StaffComponent},
-      {path: 'offers', component: OffersComponent}
+      {path: 'offers', component: OffersComponent},
+      {path: 'issues', component: IssueComponent}
     ]
   }
 ];
