@@ -64,6 +64,7 @@ import {StaffService} from "./staff/staff.service";
 import { OffersComponent } from './offers/offers.component';
 import { AuditArticleDialogComponent } from "./stock-audit/audit-article-dialog/audit-article-dialog/audit-article-dialog.component";
 import { SlackSentMessageDialogComponent } from './slack-messages/slack-sent-message-dialog/slack-sent-message-dialog.component';
+import { CashMovementDialogComponent } from './cashier-opened/cashier-closure/cash-movement-dialog.component';
 import { IssueComponent } from "./issues/issues.component";
 import {IssuesCreateDialogComponent} from "./issues/issues-create-dialog.component";
 import { IssueService } from "./issues/issues.service";
@@ -116,6 +117,7 @@ import { IssueService } from "./issues/issues.service";
     CashierClosureComponent,
     OffersComponent,
     SlackSentMessageDialogComponent,
+    CashMovementDialogComponent,
     IssueComponent,
     IssuesCreateDialogComponent
   ],
