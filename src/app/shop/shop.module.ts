@@ -32,6 +32,9 @@ import {TicketCreationUpdatingDialogComponent} from "./cashier-opened/tickets/ti
 import {TagsComponent} from "./tags/tags.component";
 import { TagService} from "./tags/tag.service";
 import { TagCreationReadingUpdatingDialogComponent} from "./tags/tag-creation-reading-updating-dialog.component";
+import {CustomerDiscountService} from "./customer-discount/customer-discount.service";
+import {CustomerDiscountComponent} from "./customer-discount/customer-discount.component";
+import {CustomerDiscountCreationUpdatingDialogComponent} from "./customer-discount/customer-discount-creation-updating-dialog.component";
 import {SearchByBarcodeComponent} from "./shared/search-by-barcode.component";
 import {AdvertisingComponent} from "./Advertising/advertising.component";
 import {AdvertisingService} from "./Advertising/advertising.service";
@@ -90,6 +93,8 @@ import { IssueService } from "./issues/issues.service";
     MessengerComponent,
     TagsComponent,
     TagCreationReadingUpdatingDialogComponent,
+    CustomerDiscountCreationUpdatingDialogComponent,
+    CustomerDiscountComponent,
     AdvertisingComponent,
     BudgetsComponent,
     InvoiceComponent,
@@ -138,6 +143,7 @@ import { IssueService } from "./issues/issues.service";
     QuarterVatService,
     MessengerService,
     TagService,
+    CustomerDiscountService,
     AdvertisingService,
     BudgetsService,
     InvoiceService,

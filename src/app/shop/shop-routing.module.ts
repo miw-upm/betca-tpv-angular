@@ -12,6 +12,7 @@ import {SalesPeopleComponent} from './sales-people/sales-people.component';
 import {QuarterVatComponent} from "./quarter-vat/quarter-vat.component";
 import { MessengerComponent } from './messenger/messenger.component';
 import {TagsComponent} from "./tags/tags.component";
+import {CustomerDiscountComponent} from "./customer-discount/customer-discount.component";
 import {AdvertisingComponent} from "./Advertising/advertising.component";
 import {VouchersComponent} from './vouchers/vouchers.component';
 import {BudgetsComponent} from "./budgets/budgets.component";
@@ -44,6 +45,7 @@ const routes: Routes = [
       {path: 'messenger', component: MessengerComponent},
       {path: 'quarter-vat', component: QuarterVatComponent},
       {path: 'tags', component: TagsComponent},
+      {path: 'customer-discount', component: CustomerDiscountComponent},
       {path: 'advertising',component:AdvertisingComponent},
       {path: 'budgets', component: BudgetsComponent},
       {path: 'invoice', component: InvoiceComponent},
