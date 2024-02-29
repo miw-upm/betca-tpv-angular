@@ -26,7 +26,9 @@ export class StockAuditComponent {
   create(): void {
     this.dialog.open(StockAuditDialogComponent, {
       width: '80%'
-    });
+    })
+      .afterClosed()
+      .subscribe(() => this.loadAudits())
   }
 
   read(stockAudit: StockAudit): void {

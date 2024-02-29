@@ -9,12 +9,59 @@
     <mat-label>Close date</mat-label>
     <input matInput required type="text" [value]="stockAudit.closeDate | date: 'dd/MM/yyyy HH:mm:ss'" disabled/>
   </mat-form-field>
-  <app-crud [data]="articlesWithoutAudit" [title]="titleNoAudit" (update)="auditArticle($event)" [deleteAction]="false" [readAction]="false" [createAction]="false"></app-crud>
-  <app-crud [data]="articlesLosses" [title]="titleLosses" [deleteAction]="false" [readAction]="false" [createAction]="false" [updateAction]="false"></app-crud>
+
+  <mat-card>
+    <mat-card-title>Auditoría de Stock</mat-card-title>
+    <mat-card-content>
+      <mat-table #table [dataSource]="articlesWithoutAudit | async" class="mat-elevation-z8">
+        <!-- Barcode Column -->
+        <ng-container matColumnDef="barcode">
+          <mat-header-cell *matHeaderCellDef>
+            <ng-container *ngIf="(articlesWithoutAudit | async)?.length > 0"> Barcode </ng-container>
+          </mat-header-cell>
+          <mat-cell *matCellDef="let article"> {{article.barcode}} </mat-cell>
+        </ng-container>
+
+        <!-- Retail Price Column -->
+        <ng-container matColumnDef="retailPrice">
+          <mat-header-cell *matHeaderCellDef>
+            <ng-container *ngIf="(articlesWithoutAudit | async)?.length > 0"> Retail Price </ng-container>
+          </mat-header-cell>
+          <mat-cell *matCellDef="let article"> {{article.retailPrice}} </mat-cell>
+        </ng-container>
+
+        <!-- Stock Column -->
+        <ng-container matColumnDef="stock">
+          <mat-header-cell *matHeaderCellDef>
+            <ng-container *ngIf="(articlesWithoutAudit | async)?.length > 0"> Stock </ng-container>
+          </mat-header-cell>
+          <mat-cell *matCellDef="let article"> {{article.stock}} </mat-cell>
+        </ng-container>
+
+        <!-- Real Stock Column -->
+        <ng-container matColumnDef="realStock">
+          <mat-header-cell *matHeaderCellDef>
+            <ng-container *ngIf="(articlesWithoutAudit | async)?.length > 0"> Stock Real </ng-container>
+          </mat-header-cell>
+          <mat-cell *matCellDef="let article">
+            <mat-form-field>
+              <input #realStockInput matInput type="number" placeholder="Introduce el stock real">
+            </mat-form-field>
+            <button (click)="auditArticle(article, realStockInput.value)" mat-raised-button color="primary">Audit</button>
+          </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="['barcode', 'retailPrice', 'stock', 'realStock']"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: ['barcode', 'retailPrice', 'stock', 'realStock']"></mat-row>
+      </mat-table>
+    </mat-card-content>
+  </mat-card>
+
+  <app-crud [data]="losses" [title]="titleLosses" [deleteAction]="false" [readAction]="false" [createAction]="false" [updateAction]="false"></app-crud>
   <br>
   <mat-form-field >
     <mat-label>Loss value</mat-label>
-    <input matInput required type="number" [value]="stockAudit.lossValue" disabled/>
+    <input matInput required type="number" [value]="stockAuditEdited.lossValue" disabled/>
   </mat-form-field>
 </mat-dialog-content>
 <mat-dialog-actions>
@@ -27,7 +74,7 @@
   <button (click)="save()" *ngIf="!isCreated()" color="primary" mat-raised-button>
     Save
   </button>
-  <button (click)="closeAudit()" color="accent" mat-raised-button>
+  <button (click)="closeAudit()" *ngIf="!isCreated()" color="accent" mat-raised-button>
     Close audit
   </button>
 </mat-dialog-actions>

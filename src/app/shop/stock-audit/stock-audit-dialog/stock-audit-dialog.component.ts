@@ -5,19 +5,17 @@ import {StockAuditService} from "../stock-audit.service";
 import {ArticleLoss} from "../../shared/services/models/articleLoss.model";
 import {Observable, of} from "rxjs";
 import {Article} from "../../shared/services/models/article.model";
-import {AuditArticleDialogComponent} from "../audit-article-dialog/audit-article-dialog/audit-article-dialog.component";
 
 @Component({
   templateUrl: './stock-audit-dialog.component.html'
 })
 export class StockAuditDialogComponent {
   stockAudit: StockAudit;
+  stockAuditEdited: StockAudit;
   articlesWithoutAudit: Observable<Article[]>;
-  articlesLosses: Observable<ArticleLoss[]>;
+  losses: Observable<ArticleLoss[]>;
   title: string;
-  titleNoAudit: string = 'Articles without audit';
   titleLosses: string = 'Articles losses';
-  oldDate: Date;
 
   constructor(@Inject(MAT_DIALOG_DATA) data: StockAudit,
               private dialog: MatDialog,
@@ -27,13 +25,16 @@ export class StockAuditDialogComponent {
       creationDate: null,
       closeDate: null,
       articlesWithoutAudit: [],
-      lossValue: 0,
+      lossValue: undefined,
       losses: []
     };
-    this.oldDate = this.stockAudit.creationDate;
+    // Copia profunda del objeto por no instalar loadash
+    this.stockAuditEdited = JSON.parse(JSON.stringify(this.stockAudit));
+
     this.articlesWithoutAudit = of(this.stockAudit.articlesWithoutAudit);
-    this.articlesLosses = of(this.stockAudit.losses);
+    this.losses = of(this.stockAudit.losses);
   }
+
   create(): void {
     this.stockAuditService
       .create(this.stockAudit)
@@ -41,28 +42,48 @@ export class StockAuditDialogComponent {
   }
 
   save(): void {
+    this.updateStockAudit();
     this.stockAuditService
-      .update(this.stockAudit)
+      .update(this.stockAuditEdited)
       .subscribe(() => this.dialog.closeAll());
   }
 
   closeAudit(): void {
+    this.updateStockAudit();
     this.stockAuditService
       .closeAudit(this.stockAudit)
       .subscribe(() => this.dialog.closeAll());
   }
 
   isCreated(): boolean {
-    return this.oldDate === null;
+    return this.stockAudit.creationDate === null;
   }
 
-  auditArticle(article: Article): void {
-    console.log(article)
-    this.dialog.open(AuditArticleDialogComponent, {
-      width: '60%',
-      data: article
-    })
-      .afterClosed()
-      .subscribe()
+  auditArticle(article: Article, realStockString: string): void {
+    let articleAmountLosses: number = 0;
+    let realStock: number = parseInt(realStockString);
+
+
+    // Calcular la cantidad de perdida del articulo
+    articleAmountLosses = article.stock - realStock;
+
+    // Quitar el articulo de la lista de articulos sin auditar
+    this.stockAuditEdited.articlesWithoutAudit = this.stockAuditEdited.articlesWithoutAudit.filter(a => a.barcode !== article.barcode);
+    this.articlesWithoutAudit = of(this.stockAuditEdited.articlesWithoutAudit);
+
+    // Agregar el articulo a la lista de articulos con perdida
+    if(articleAmountLosses > 0){
+      this.stockAuditEdited.losses = this.stockAuditEdited.losses.concat({barcode: article.barcode, amount: articleAmountLosses});
+      this.losses = of(this.stockAuditEdited.losses);
+    }
+
+    // Calcular la perdida
+    this.stockAuditEdited.lossValue += articleAmountLosses * article.retailPrice;
+  }
+
+  updateStockAudit(): void {
+    this.stockAudit.articlesWithoutAudit = this.stockAuditEdited.articlesWithoutAudit;
+    this.stockAudit.losses = this.stockAuditEdited.losses;
+    this.stockAudit.lossValue = this.stockAuditEdited.lossValue;
   }
 }
