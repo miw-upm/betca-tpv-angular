@@ -34,6 +34,11 @@ import {TagsComponent} from "./tags/tags.component";
 import { TagService} from "./tags/tag.service";
 import { TagCreationReadingUpdatingDialogComponent} from "./tags/tag-creation-reading-updating-dialog.component";
 import {CustomerPointsService} from "@shared/services/customer-points.service";
+import {CustomerDiscountService} from "./customer-discount/customer-discount.service";
+import {CustomerDiscountComponent} from "./customer-discount/customer-discount.component";
+import {
+  CustomerDiscountCreationUpdatingDialogComponent
+} from "./customer-discount/customer-discount-creation-updating-dialog.component";
 
 @NgModule({
   declarations: [
@@ -53,7 +58,9 @@ import {CustomerPointsService} from "@shared/services/customer-points.service";
     QuarterVatComponent,
     MessengerComponent,
     TagsComponent,
-    TagCreationReadingUpdatingDialogComponent
+    TagCreationReadingUpdatingDialogComponent,
+    CustomerDiscountCreationUpdatingDialogComponent,
+    CustomerDiscountComponent
   ],
   imports: [
     SharedModule,
@@ -71,7 +78,8 @@ import {CustomerPointsService} from "@shared/services/customer-points.service";
     CustomerPointsService,
     QuarterVatService,
     MessengerService,
-    TagService
+    TagService,
+    CustomerDiscountService
   ],
 })
 export class ShopModule {
