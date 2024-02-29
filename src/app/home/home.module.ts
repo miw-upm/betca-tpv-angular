@@ -21,6 +21,8 @@ import { RefundsComponent } from './refunds/refunds.component';
 import { SettingsComponent } from './settings/settings.component';
 import { SettingsSavedInfoDialogComponent } from './settings/settings-saved-info-dialog/settings-saved-info-dialog.component';
 import {CustomerPointsService} from "./customer-points/customer-points.service";
+import { TicketTrackingComponent } from './ticket-tracking/ticket-tracking.component';
+import { ProductComponent } from './ticket-tracking/product/product.component';
 
 
 @NgModule({
@@ -39,6 +41,8 @@ import {CustomerPointsService} from "./customer-points/customer-points.service";
     RefundsComponent,
     SettingsComponent,
     SettingsSavedInfoDialogComponent,
+    TicketTrackingComponent,
+    ProductComponent,
   ],
 
   imports: [

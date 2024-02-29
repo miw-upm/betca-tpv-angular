@@ -58,7 +58,16 @@ import {StockAlarmLineService} from "./stock-alarm/stock-alarm-line.service";
 import {StockAlarmLineDialogComponent} from "./stock-alarm/stock-alarm-line-dialog/stock-alarm-line-dialog.component";
 import {StockAlarmDialogComponent} from "./stock-alarm/stock-alarm-dialog/stock-alarm-dialog.component";
 import { CashierClosureComponent } from './cashier-closure/cashier-closure.component';
-import { StockAuditDialogComponent } from "./stock-audit/stock-audit-dialog/stock-audit-dialog/stock-audit-dialog.component";
+import { StockAuditDialogComponent } from "./stock-audit/stock-audit-dialog/stock-audit-dialog.component";
+import {StaffComponent} from "./staff/staff.component";
+import {StaffService} from "./staff/staff.service";
+import { OffersComponent } from './offers/offers.component';
+import { AuditArticleDialogComponent } from "./stock-audit/audit-article-dialog/audit-article-dialog/audit-article-dialog.component";
+import { SlackSentMessageDialogComponent } from './slack-messages/slack-sent-message-dialog/slack-sent-message-dialog.component';
+import { CashMovementDialogComponent } from './cashier-opened/cashier-closure/cash-movement-dialog.component';
+import { IssueComponent } from "./issues/issues.component";
+import {IssuesCreateDialogComponent} from "./issues/issues-create-dialog.component";
+import { IssueService } from "./issues/issues.service";
 
 @NgModule({
   declarations: [
@@ -93,8 +102,10 @@ import { StockAuditDialogComponent } from "./stock-audit/stock-audit-dialog/stoc
     VoucherApplyDialogComponent,
     OnlineOrdersComponent,
     BudgetsComponent,
+    StaffComponent,
     StockAuditComponent,
     StockAuditDialogComponent,
+    AuditArticleDialogComponent,
     BudgetsComponent,
     CreditLineComponent,
     RefundsComponent,
@@ -104,6 +115,11 @@ import { StockAuditDialogComponent } from "./stock-audit/stock-audit-dialog/stoc
     StockAlarmDialogComponent,
     StockAlarmLineDialogComponent,
     CashierClosureComponent,
+    OffersComponent,
+    SlackSentMessageDialogComponent,
+    CashMovementDialogComponent,
+    IssueComponent,
+    IssuesCreateDialogComponent
   ],
   imports: [
     SharedModule,
@@ -131,6 +147,8 @@ import { StockAuditDialogComponent } from "./stock-audit/stock-audit-dialog/stoc
     StockAuditService,
     StockAlarmService,
     StockAlarmLineService,
+    StaffService,
+    IssueService
   ],
 })
 export class ShopModule {

@@ -47,6 +47,14 @@
     <mat-icon>local_atm</mat-icon>
     <span>VAT Management</span>
   </button>
+  <button (click)="showSlackDialog()" mat-menu-item>
+    <mat-icon>local_atm</mat-icon>
+    <span>Publish on Slack</span>
+  </button>
+  <button [matMenuTriggerFor]="issues" mat-menu-item>
+    <mat-icon>local_atm</mat-icon>
+    <span>Issues</span>
+  </button>
 </mat-menu>
 <!--   Menus  -->
 <mat-menu #cashiers="matMenu">
@@ -122,7 +130,7 @@
     <mat-icon>view_comfy</mat-icon>
     <span>Tags</span>
   </button>
-  <button disabled="disabled" mat-menu-item routerLink="">
+  <button mat-menu-item routerLink="/shop/offers">
     <mat-icon>local_atm</mat-icon>
     <span>Offers</span>
   </button>
@@ -150,7 +158,7 @@
   </button>
 </mat-menu>
 <mat-menu #users="matMenu">
-  <button disabled="disabled" mat-menu-item routerLink="/shop/users">
+  <button mat-menu-item routerLink="/shop/users">
     <mat-icon>account_circle</mat-icon>
     <span>Users</span>
   </button>
@@ -183,6 +191,12 @@
   <button disabled="disabled" mat-menu-item routerLink="/home/stock-management">
     <mat-icon>local_shipping</mat-icon>
     <span>Provider Invoice</span>
+  </button>
+</mat-menu>
+<mat-menu #issues="matMenu">
+  <button mat-menu-item routerLink="/shop/issues">
+    <mat-icon>money</mat-icon>
+    <span>Issues</span>
   </button>
 </mat-menu>
 
