@@ -12,6 +12,7 @@ import {SalesPeopleComponent} from './sales-people/sales-people.component';
 import {QuarterVatComponent} from "./quarter-vat/quarter-vat.component";
 import { MessengerComponent } from './messenger/messenger.component';
 import {TagsComponent} from "./tags/tags.component";
+import {CustomerDiscountComponent} from "./customer-discount/customer-discount.component";
 import {AdvertisingComponent} from "./Advertising/advertising.component";
 import {VouchersComponent} from './vouchers/vouchers.component';
 import {BudgetsComponent} from "./budgets/budgets.component";
@@ -21,8 +22,7 @@ import {OnlineOrdersComponent} from "./online-orders/online-orders.component";
 import {StaffComponent} from './staff/staff.component';
 import {StockAuditComponent} from './stock-audit/stock-audit.component';
 import {RefundsComponent} from "./refunds/refunds.component";
-import { OrdersComponent } from "./orders/orders.component";
-import { OrderDetailsComponent } from "./orders/order-details/order-details.component";
+import {OrdersComponent} from "./orders/orders.component";
 import {StockAlarmComponent} from "./stock-alarm/stock-alarm.component";
 import {CashierClosureComponent} from "./cashier-closure/cashier-closure.component";
 import {OffersComponent} from "./offers/offers.component";
@@ -47,6 +47,7 @@ const routes: Routes = [
       {path: 'messenger', component: MessengerComponent},
       {path: 'quarter-vat', component: QuarterVatComponent},
       {path: 'tags', component: TagsComponent},
+      {path: 'customer-discount', component: CustomerDiscountComponent},
       {path: 'advertising',component:AdvertisingComponent},
       {path: 'budgets', component: BudgetsComponent},
       {path: 'invoice', component: InvoiceComponent},
@@ -59,8 +60,6 @@ const routes: Routes = [
       {path: 'stock-alarm', component: StockAlarmComponent},
       {path: 'refunds', component: RefundsComponent},
       {path: 'orders', component: OrdersComponent},
-      {path: 'orders/new', component: OrderDetailsComponent},
-      {path: 'orders/:id', component: OrderDetailsComponent},
       {path: 'users', component: StaffComponent},
       {path: 'offers', component: OffersComponent},
       {path: 'issues', component: IssueComponent},

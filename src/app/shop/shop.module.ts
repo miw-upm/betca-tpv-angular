@@ -32,6 +32,9 @@ import {TicketCreationUpdatingDialogComponent} from "./cashier-opened/tickets/ti
 import {TagsComponent} from "./tags/tags.component";
 import { TagService} from "./tags/tag.service";
 import { TagCreationReadingUpdatingDialogComponent} from "./tags/tag-creation-reading-updating-dialog.component";
+import {CustomerDiscountService} from "./customer-discount/customer-discount.service";
+import {CustomerDiscountComponent} from "./customer-discount/customer-discount.component";
+import {CustomerDiscountCreationUpdatingDialogComponent} from "./customer-discount/customer-discount-creation-updating-dialog.component";
 import {SearchByBarcodeComponent} from "./shared/search-by-barcode.component";
 import {AdvertisingComponent} from "./Advertising/advertising.component";
 import {AdvertisingService} from "./Advertising/advertising.service";
@@ -62,7 +65,6 @@ import { StockAuditDialogComponent } from "./stock-audit/stock-audit-dialog/stoc
 import {StaffComponent} from "./staff/staff.component";
 import {StaffService} from "./staff/staff.service";
 import { OffersComponent } from './offers/offers.component';
-import { AuditArticleDialogComponent } from "./stock-audit/audit-article-dialog/audit-article-dialog/audit-article-dialog.component";
 import { SlackSentMessageDialogComponent } from './slack-messages/slack-sent-message-dialog/slack-sent-message-dialog.component';
 import { CashMovementDialogComponent } from './cashier-opened/cashier-closure/cash-movement-dialog.component';
 import { IssueComponent } from "./issues/issues.component";
@@ -90,6 +92,8 @@ import { IssueService } from "./issues/issues.service";
     MessengerComponent,
     TagsComponent,
     TagCreationReadingUpdatingDialogComponent,
+    CustomerDiscountCreationUpdatingDialogComponent,
+    CustomerDiscountComponent,
     AdvertisingComponent,
     BudgetsComponent,
     InvoiceComponent,
@@ -105,7 +109,6 @@ import { IssueService } from "./issues/issues.service";
     StaffComponent,
     StockAuditComponent,
     StockAuditDialogComponent,
-    AuditArticleDialogComponent,
     BudgetsComponent,
     CreditLineComponent,
     RefundsComponent,
@@ -138,6 +141,7 @@ import { IssueService } from "./issues/issues.service";
     QuarterVatService,
     MessengerService,
     TagService,
+    CustomerDiscountService,
     AdvertisingService,
     BudgetsService,
     InvoiceService,
