@@ -1,0 +1,179 @@
+/* GENERALES: */
+.chat-messages-container {
+  font-family: 'Roboto', 'Helvetica Neue', sans-serif;
+  background-color: #EDEDED;
+  padding: 20px 40px 20px 40px;
+  box-sizing: border-box;
+  border: 1px solid black;
+  border-radius: 8px;
+  height: 610px;
+  width: 80%;
+}
+
+.filters-container {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.filters {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.container-card {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0 20px 0;
+}
+
+.header-title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.cut-text {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  max-width: 80%;
+  display: block;
+}
+
+
+.new-message-indicator {
+  height: 10px;
+  width: 10px;
+  border-radius: 50%;
+  background-color: red;
+  position: relative;
+  bottom: 20px;
+  right: 6px;
+}
+
+
+h1 {
+  color: #3f51b5;
+  font-weight: 500;
+  margin: 20px 0 20px 0;
+  text-align: center;
+  font-size: 30px;
+}
+
+/* Iconos */
+mat-icon {
+  color: #6F6F6F;
+  vertical-align: bottom;
+  margin-right: 8px;
+}
+
+/* MAT TABLE:*/
+.mat-elevation-z8 {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border: 1px solid #E0E0E0;
+  flex: 1;
+  overflow: hidden;
+}
+
+mat-header-row {
+  background-color: #f5f5f5;
+}
+
+mat-row {
+  border-bottom: 1px solid #E0E0E0;
+}
+
+mat-row:hover {
+  background-color: #f5f5f5;
+  cursor: pointer;
+}
+
+mat-header-cell {
+  padding: 0;
+}
+
+mat-cell {
+  padding: 10px 0 10px 0;
+}
+
+mat-header-cell {
+  color: #6F6F6F;
+  font-size: 16px;
+}
+
+mat-cell {
+  font-size: 14px;
+  color: #4A4A4A;
+}
+
+img[matListAvatar] {
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  margin-right: 12px;
+}
+
+/* PAGINADOR */
+.mat-paginator {
+  background: transparent;
+  color: #5C5C5C;
+  padding-top: 10px;
+}
+
+.mat-paginator-range-label {
+  margin: 0 24px;
+}
+
+.mat-icon-button {
+  color: #5C5C5C;
+}
+
+.mat-paginator-navigation-first,
+.mat-paginator-navigation-last,
+.mat-paginator-navigation-next,
+.mat-paginator-navigation-previous {
+  border-radius: 50%;
+}
+
+/* ESTILOS PARA CADA COLUMNA */
+
+.avatar {
+  width: 10%;
+  min-width: 10%;
+  max-width: 10%;
+}
+
+.name {
+  width: 20%;
+  min-width: 20%;
+  max-width: 20%;
+}
+
+.lastMessage {
+  width: 40%;
+  min-width: 40%;
+  max-width: 40%;
+}
+
+.lastMessageDate {
+  width: 20%;
+  min-width: 20%;
+  max-width: 20%;
+}
+
+.delete {
+  width: 10%;
+  min-width: 10%;
+  max-width: 10%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+
