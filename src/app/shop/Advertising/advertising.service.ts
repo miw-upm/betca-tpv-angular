@@ -1,29 +1,42 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import {Advertising} from "@shared/models/advertising.model";
-import {Message} from "../shared/services/models/message.model";
+
 
 @Injectable({
   providedIn: 'root',
 })
 export class AdvertisingService{
-
-  private listAdvertisingHistory:Advertising[] = [];
-  constructor() {
-    let newAdvertising: Advertising;
-    //mock
-    for (let index = 0; index < 5; index++){
-      newAdvertising = new Advertising();
-      newAdvertising.reference = 'dog';
-      newAdvertising.articleBarcode ='123';
-      newAdvertising.userMobile = '123'
-      newAdvertising.discount = 10;
-      newAdvertising.expiryDate = new Date();
-      this.listAdvertisingHistory.push(newAdvertising);
-    }
+  getAll(): Observable<Advertising[]> {
+    return of(this.mockAdvertising);
   }
 
-  getAdvertisingHistory(): Observable<Advertising[]> {
-    return of(this.listAdvertisingHistory);
+  private mockAdvertising: Advertising[] = [
+    {
+      reference: 'dog',
+      articleBarcode: '123',
+      userMobile: '321',
+      discount : 10,
+      expiryDate : new Date()
+    },
+    {
+    reference: 'cat',
+  articleBarcode: 'xyz',
+  userMobile: 'zyx',
+  discount : 10,
+  expiryDate : new Date()
+}
+    ];
+
+  constructor() {
+  }
+
+  read(reference:string): Observable<Advertising> {
+    const advertising: Advertising = this.mockAdvertising.find((t: Advertising) => t.reference === reference);
+    return of(advertising);
+  }
+  delete(reference: string): Observable<void>{
+    this.mockAdvertising = this.mockAdvertising.filter((t :Advertising) => t.reference !== reference);
+    return of(undefined);
   }
 }
