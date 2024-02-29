@@ -17,9 +17,6 @@ export class ChatWindowComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.route.params.subscribe(params => {
-      const chatId = params['id'];
-    });
     this.messages = [
       {
         author: 'You',
