@@ -110,6 +110,7 @@ export class StockAuditService {
       stockAudit.losses.push({ barcode: article.barcode, amount: article.stock });
       stockAudit.lossValue += article.stock * article.retailPrice;
     }
+    stockAudit.articlesWithoutAudit = [];
     return of(stockAudit);
   }
 }
