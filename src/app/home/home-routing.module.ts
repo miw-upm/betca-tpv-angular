@@ -13,6 +13,8 @@ import {OnlineOrdersComponent} from "./online-orders/online-orders.component";
 import {RefundsComponent} from "./refunds/refunds.component";
 import {SettingsComponent} from "./settings/settings.component";
 import {TicketTrackingComponent} from "./ticket-tracking/ticket-tracking.component";
+import {TechnicalSupportComponent} from "./technical-support/technical-support.component";
+import {ChatWindowComponent} from "./technical-support/chat-window.component";
 
 const routes: Routes = [
   {
@@ -35,10 +37,12 @@ const routes: Routes = [
       },
       {
         path: 'shopping-basket',
-        component: ShoppingBasketComponent},
+        component: ShoppingBasketComponent
+      },
       {
         path: 'reviews',
-        component: ReviewsComponent},
+        component: ReviewsComponent
+      },
       {
         path: 'online-orders',
         component: OnlineOrdersComponent,
@@ -54,6 +58,15 @@ const routes: Routes = [
       {
         path: 'ticket-tracking/:id',
         component: TicketTrackingComponent
+      },
+      {
+        path: 'technical-support',
+        component: TechnicalSupportComponent,
+        data: {roles: [Role.CUSTOMER]}
+      },
+      {
+        path: 'chat/:id',
+        component: ChatWindowComponent
       }
     ]
   }
