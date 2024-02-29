@@ -5,6 +5,8 @@ import {MatSort} from '@angular/material/sort';
 import {ChatSearch} from "./chat-search.model";
 import {Router} from '@angular/router';
 import {ActivatedRoute} from '@angular/router';
+import {MatDialog} from "@angular/material/dialog";
+import {NumberDialogComponent} from "@shared/dialogs/number-dialog.component";
 
 
 @Component({
@@ -94,7 +96,7 @@ export class TechnicalSupportComponent implements AfterViewInit {
     this.dataSource.sort = this.sort;
   }
 
-  constructor(private router: Router, private route: ActivatedRoute) {
+  constructor(private router: Router, private route: ActivatedRoute, private dialog: MatDialog) {
     this.dataSource.data = this.chats;
   }
 
@@ -122,12 +124,32 @@ export class TechnicalSupportComponent implements AfterViewInit {
     //borrado
   }
 
-  openChat(chatId: string): void {
-    this.router.navigate(['/home', 'chat', chatId]);
+  openChat(chatId: number): void {
+    if (this.role === 'CUSTOMER') {
+      //Uso el componente de numberdialog para reutilizar ese componente e introducir
+      // el itemId PERO igual no es lo mas claro:
+      const dialogRef = this.dialog.open(NumberDialogComponent, {
+        width: '250px',
+      });
+
+      dialogRef.afterClosed().subscribe(itemId => {
+        if (itemId) {
+          console.log('El diálogo fue cerrado. Ítem ID:', itemId);
+          //genero numero random para el chat, posteriormente sera de base de datos:
+          chatId = Math.floor(Math.random() * (9999 - 1000 + 1) + 1000);
+          // Navegar a la ventana de chat con el itemId como extra de ruta:
+          this.router.navigate(['/home', 'chat', chatId], {state: {productId: itemId}});
+        }
+      });
+    } else {
+      this.router.navigate(['/shop', 'chat', chatId]);
+    }
   }
 
 
   resetSearch() {
     this.chatSearch = {};
   }
+
+
 }

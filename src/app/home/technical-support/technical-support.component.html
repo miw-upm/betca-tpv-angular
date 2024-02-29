@@ -39,6 +39,7 @@
         <button (click)="resetSearch()" mat-icon-button>
           <mat-icon>close</mat-icon>
         </button>
+        <button *ngIf="role === 'CUSTOMER'" mat-raised-button color="primary" (click)="openChat(-1)">Nuevo Chat</button>
       </mat-card-content>
     </mat-card>
     <mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
