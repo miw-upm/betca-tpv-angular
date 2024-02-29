@@ -124,18 +124,17 @@ export class TechnicalSupportComponent implements AfterViewInit {
     //borrado
   }
 
-  openChat(chatId: number): void {
+  openChat(chatId: any): void {
     if (this.role === 'CUSTOMER') {
-      //Uso el componente de numberdialog para reutilizar ese componente e introducir
-      // el itemId PERO igual no es lo mas claro:
-      const dialogRef = this.dialog.open(NumberDialogComponent, {
-        width: '250px',
-      });
 
-      if (chatId != -1) {
+      if (chatId === -1) {
+        //Uso el componente de numberdialog para reutilizar ese componente e introducir
+        // el itemId PERO igual no es lo mas claro:
+        const dialogRef = this.dialog.open(NumberDialogComponent, {
+          width: '250px',
+        });
         dialogRef.afterClosed().subscribe(itemId => {
           if (itemId) {
-            console.log('El diálogo fue cerrado. Ítem ID:', itemId);
             //genero numero random para el chat, posteriormente sera de base de datos:
             chatId = Math.floor(Math.random() * (9999 - 1000 + 1) + 1000);
             // Navegar a la ventana de chat con el itemId como extra de ruta:
