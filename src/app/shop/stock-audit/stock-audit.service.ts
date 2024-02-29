@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import {StockAudit} from "../shared/services/models/stock-audit.model";
+import {Article} from "../shared/services/models/article.model";
 
 @Injectable({
   providedIn: 'root',
@@ -26,6 +27,7 @@ export class StockAuditService {
         {
           barcode: "456789123",
           description: "Cepillo de dientes",
+          stock: 23,
           retailPrice: 5,
           providerCompany: "Oral-B",
         }
@@ -39,29 +41,46 @@ export class StockAuditService {
           barcode: "987654321",
           amount: 1,
         }
-      ] },
-    { creationDate: new Date('2020-01-05'), closeDate: new Date('2020-01-06'), articlesWithoutAudit: [], lossValue: 0, losses: [] }
+      ] }
   ];
 
-  private stockAudit: StockAudit = {
-    creationDate: new Date('2020-01-01'),
-    closeDate: null,
-    articlesWithoutAudit: [
-      {
-        barcode: "3542564",
-        description: "Colonia",
-        retailPrice: 34,
-        providerCompany: "Carolina Herrera",
-      }
-    ],
-    lossValue: 12,
-    losses: [
-      {
-        barcode: "4124124",
-        amount: 1,
-      }
-    ]
-  }
+  private mockArticles: Article[] = [
+    {
+      barcode: "123456789",
+      description: "Champoo",
+      retailPrice: 12,
+      stock: 10,
+      providerCompany: "Johnson & Johnson",
+    },
+    {
+      barcode: "987654321",
+      description: "Pasta de dientes",
+      retailPrice: 8,
+      stock: 5,
+      providerCompany: "Colgate",
+    },
+    {
+      barcode: "456789123",
+      description: "Cepillo de dientes",
+      retailPrice: 5,
+      stock: 5,
+      providerCompany: "Oral-B",
+    },
+    {
+      barcode: "3542564",
+      description: "Colonia",
+      retailPrice: 34,
+      stock: 2,
+      providerCompany: "Carolina Herrera",
+    },
+    {
+      barcode: "4124124",
+      description: "Desodorante",
+      retailPrice: 12,
+      stock: 20,
+      providerCompany: "Adidas",
+    },
+  ];
 
   constructor() {}
 
@@ -69,10 +88,12 @@ export class StockAuditService {
     return of(this.mockStockAudits);
   }
 
-  create(stockAudit: StockAudit): Observable<StockAudit[]> {
+  create(stockAudit: StockAudit): Observable<StockAudit> {
     stockAudit.creationDate = new Date();
+    stockAudit.articlesWithoutAudit = this.mockArticles;
+    stockAudit.lossValue = 0;
     this.mockStockAudits.push(stockAudit);
-    return of(this.mockStockAudits);
+    return of(stockAudit);
   }
 
   read(stockAudit: StockAudit): Observable<StockAudit> {
@@ -80,13 +101,15 @@ export class StockAuditService {
   }
 
   update(stockAudit: StockAudit): Observable<StockAudit> {
-    // TODO: Logica de pasar los auditados a perdidos en el caso de que los haya y calculo de perdida
-    return of(this.stockAudit);
+    return of(stockAudit);
   }
 
   closeAudit(stockAudit: StockAudit): Observable<StockAudit> {
     stockAudit.closeDate = new Date();
-    // TODO: Logica de pasar los no auditados y perdidos y calculo de perdida
+    for (let article of stockAudit.articlesWithoutAudit) {
+      stockAudit.losses.push({ barcode: article.barcode, amount: article.stock });
+      stockAudit.lossValue += article.stock * article.retailPrice;
+    }
     return of(stockAudit);
   }
 }
