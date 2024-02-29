@@ -23,6 +23,8 @@ import { SettingsSavedInfoDialogComponent } from './settings/settings-saved-info
 import {CustomerPointsService} from "./customer-points/customer-points.service";
 import { TicketTrackingComponent } from './ticket-tracking/ticket-tracking.component';
 import { ProductComponent } from './ticket-tracking/product/product.component';
+import {TechnicalSupportComponent} from "./technical-support/technical-support.component";
+import {ChatWindowComponent} from "./technical-support/chat-window.component";
 
 
 @NgModule({
@@ -43,6 +45,8 @@ import { ProductComponent } from './ticket-tracking/product/product.component';
     SettingsSavedInfoDialogComponent,
     TicketTrackingComponent,
     ProductComponent,
+    TechnicalSupportComponent,
+    ChatWindowComponent
   ],
 
   imports: [

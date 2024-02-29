@@ -1,0 +1,102 @@
+<h1 class="header-title">
+  <mat-icon style="color: #3f51b5;">
+    forum
+  </mat-icon>
+  Message Center
+</h1>
+<section class="container-card">
+  <div class="chat-messages-container">
+    <mat-card class="filters-container">
+      <mat-card-content class="filters">
+        <mat-label><strong>FILTERS: </strong></mat-label>
+        <mat-form-field>
+          <mat-label>Username</mat-label>
+          <input [(ngModel)]="chatSearch.username" matInput>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Has new message?</mat-label>
+          <mat-select [(ngModel)]="chatSearch.hasNewMessage">
+            <mat-option [value]="null">All</mat-option>
+            <mat-option [value]="true">Yes</mat-option>
+            <mat-option [value]="false">No</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>From</mat-label>
+          <input [(ngModel)]="chatSearch.fromDate" matInput [matDatepicker]="picker">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>To</mat-label>
+          <input [(ngModel)]="chatSearch.toDate" matInput [matDatepicker]="picker2">
+          <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+          <mat-datepicker #picker2></mat-datepicker>
+        </mat-form-field>
+        <button (click)="search()" mat-icon-button>
+          <mat-icon>search</mat-icon>
+        </button>
+        <button (click)="resetSearch()" mat-icon-button>
+          <mat-icon>close</mat-icon>
+        </button>
+        <button *ngIf="role === 'CUSTOMER'" mat-raised-button color="primary" (click)="openChat(-1)">Nuevo Chat</button>
+      </mat-card-content>
+    </mat-card>
+    <mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+      <ng-container matColumnDef="avatar">
+        <mat-header-cell *matHeaderCellDef class="avatar"></mat-header-cell>
+        <mat-cell *matCellDef="let element" class="avatar"><img matListAvatar [src]="element.avatar" alt="...">
+          <span *ngIf="element.hasNewMessage" class="new-message-indicator"></span>
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="productId">
+        <mat-header-cell *matHeaderCellDef mat-sort-header class="productId"> Product Id</mat-header-cell>
+        <mat-cell *matCellDef="let element" class="productId">
+          {{ element.productId }}
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="name">
+        <mat-header-cell *matHeaderCellDef mat-sort-header class="name"> Name</mat-header-cell>
+        <mat-cell *matCellDef="let element" class="name">
+          {{ element.name }}
+        </mat-cell>
+      </ng-container>
+
+
+      <ng-container matColumnDef="lastMessage">
+        <mat-header-cell *matHeaderCellDef class="lastMessage"> Last Message</mat-header-cell>
+        <mat-cell *matCellDef="let element" class="lastMessage">
+          <span *ngIf="element.lastMessage.author === 'You'" style="font-weight: bold; margin-right: 5px;">You: </span>
+          <span class="cut-text">{{ element.lastMessage.content }}</span>
+        </mat-cell>
+      </ng-container>
+
+
+      <ng-container matColumnDef="lastMessageDate">
+        <mat-header-cell *matHeaderCellDef mat-sort-header class="lastMessageDate"> Date</mat-header-cell>
+        <mat-cell *matCellDef="let element" class="lastMessageDate">
+          <div style="display: flex; align-content: center">
+            <mat-icon style="font-size: 18px"> watch_later</mat-icon>
+            {{ element.lastMessage.lastMessageDate | date: 'dd/MM/yyyy hh:mm:ss' }}
+          </div>
+        </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="delete">
+        <mat-header-cell *matHeaderCellDef class="delete"></mat-header-cell>
+        <mat-cell *matCellDef="let element" class="delete">
+          <button mat-icon-button (click)="delete(element)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="openChat(row.id)"></mat-row>
+    </mat-table>
+
+    <mat-paginator [pageSize]="5" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+  </div>
+</section>

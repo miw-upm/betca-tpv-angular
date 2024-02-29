@@ -27,6 +27,8 @@ import {StockAlarmComponent} from "./stock-alarm/stock-alarm.component";
 import {CashierClosureComponent} from "./cashier-closure/cashier-closure.component";
 import {OffersComponent} from "./offers/offers.component";
 import {IssueComponent} from "./issues/issues.component";
+import {TechnicalSupportComponent} from "../home/technical-support/technical-support.component";
+import {ChatWindowComponent} from "../home/technical-support/chat-window.component";
 
 const routes: Routes = [
   {
@@ -60,7 +62,16 @@ const routes: Routes = [
       {path: 'orders', component: OrdersComponent},
       {path: 'users', component: StaffComponent},
       {path: 'offers', component: OffersComponent},
-      {path: 'issues', component: IssueComponent}
+      {path: 'issues', component: IssueComponent},
+      {
+        path: 'technical-support',
+        component: TechnicalSupportComponent,
+        data: {roles: [Role.OPERATOR]}
+      },
+      {
+        path: 'chat/:id',
+        component: ChatWindowComponent
+      }
     ]
   }
 ];

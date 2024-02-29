@@ -1,0 +1,35 @@
+<section style="margin: 50px 0 50px 0">
+  <div class="chat-container">
+    <div class="chat-header">
+      <button (click)="goBack()"
+              style="background:none; border:none; cursor:pointer; color:white; font-size:24px; margin-right: 10px;">
+        <mat-icon>arrow_back</mat-icon>
+      </button>
+      <img src="assets/images/user.png" alt="User Icon"
+           style="width: 40px; height: 40px; border-radius: 50%; margin-right: 10px;">
+      <h3>{{ chatPartner.name }}</h3>
+    </div>
+    <div class="chat-messages">
+      <ng-container *ngFor="let message of messages">
+        <div *ngIf="message.showDate" class="date-label">
+          {{ message.time | date: 'longDate' }}
+        </div>
+        <div class="bubble" [ngClass]="{'mine': message.author === 'You', 'theirs': message.author !== 'You'}">
+          <p *ngIf="message.type === 'text'" class="text-style">{{ message.content }}</p>
+          <img *ngIf="message.type === 'image'" [src]="message.imageUrl" class="message-image"/>
+          <div class="message-time">{{ message.time | date: 'HH:mm' }}</div>
+        </div>
+      </ng-container>
+    </div>
+    <div class="chat-input">
+      <button (click)="fileInput.click()" style="margin-right: 10px;">
+        <mat-icon>attach_file</mat-icon>
+      </button>
+      <input [(ngModel)]="newMessage" (keyup.enter)="sendMessage()" type="text" placeholder="Type a message..."/>
+      <button (click)="sendMessage()">
+        <mat-icon>send</mat-icon>
+      </button>
+      <input #fileInput type="file" accept="image/*" (change)="handleFileInput($event)" style="display: none;"/>
+    </div>
+  </div>
+</section>
