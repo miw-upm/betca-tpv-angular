@@ -143,6 +143,9 @@ export class TechnicalSupportComponent implements AfterViewInit {
           }
         });
       }
+      else{
+        this.router.navigate(['/home', 'chat', chatId]);
+      }
     } else {
       this.router.navigate(['/shop', 'chat', chatId]);
     }
