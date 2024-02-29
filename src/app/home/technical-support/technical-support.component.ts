@@ -132,15 +132,17 @@ export class TechnicalSupportComponent implements AfterViewInit {
         width: '250px',
       });
 
-      dialogRef.afterClosed().subscribe(itemId => {
-        if (itemId) {
-          console.log('El diálogo fue cerrado. Ítem ID:', itemId);
-          //genero numero random para el chat, posteriormente sera de base de datos:
-          chatId = Math.floor(Math.random() * (9999 - 1000 + 1) + 1000);
-          // Navegar a la ventana de chat con el itemId como extra de ruta:
-          this.router.navigate(['/home', 'chat', chatId], {state: {productId: itemId}});
-        }
-      });
+      if (chatId != -1) {
+        dialogRef.afterClosed().subscribe(itemId => {
+          if (itemId) {
+            console.log('El diálogo fue cerrado. Ítem ID:', itemId);
+            //genero numero random para el chat, posteriormente sera de base de datos:
+            chatId = Math.floor(Math.random() * (9999 - 1000 + 1) + 1000);
+            // Navegar a la ventana de chat con el itemId como extra de ruta:
+            this.router.navigate(['/home', 'chat', chatId], {state: {productId: itemId}});
+          }
+        });
+      }
     } else {
       this.router.navigate(['/shop', 'chat', chatId]);
     }
