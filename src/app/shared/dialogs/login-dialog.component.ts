@@ -3,6 +3,7 @@ import {Router} from '@angular/router';
 
 import {AuthService} from '@core/auth.service';
 import {MatDialog} from '@angular/material/dialog';
+import {SignupDialogComponent} from "@shared/dialogs/signup-dialog.component";
 
 @Component({
   templateUrl: 'login-dialog.component.html',
@@ -25,5 +26,13 @@ export class LoginDialogComponent {
         }
       }
     );
+  }
+
+  signUp(): void {
+    this.dialog.open(SignupDialogComponent);
+  }
+
+  forgotPassword(): void {
+    //todo
   }
 }

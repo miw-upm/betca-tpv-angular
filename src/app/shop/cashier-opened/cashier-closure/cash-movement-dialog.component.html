@@ -1,0 +1,22 @@
+<h3 mat-dialog-title>Cash movement</h3>
+<mat-dialog-content>
+  <mat-form-field>
+    <input [(ngModel)]="cashMovement.cash" matInput
+           placeholder="Cash"
+           required
+           type="number"/>
+  </mat-form-field>
+  <br>
+  <mat-slide-toggle [(ngModel)]="cashMovement.extraction">Extraction?</mat-slide-toggle>
+  <br>
+  <mat-form-field>
+    <input [(ngModel)]="cashMovement.comment" matInput placeholder="Comment" required type="text"/>
+  </mat-form-field>
+</mat-dialog-content>
+<br>
+<mat-dialog-actions>
+  <button cdkFocusInitial mat-dialog-close mat-raised-button>Cancel</button>
+  <button (click)="save()" [disabled]="invalid()" color="accent" mat-raised-button>
+    Save
+  </button>
+</mat-dialog-actions>

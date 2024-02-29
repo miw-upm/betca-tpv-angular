@@ -1,7 +1,7 @@
 <mat-card>
   <mat-card-content>
     <div class="container">
-      <app-search-by-barcode (add)="addBarcode($event)"></app-search-by-barcode>
+      <app-search-by-description (add)="addDescription($event)"></app-search-by-description>
     </div>
   </mat-card-content>
 </mat-card>
@@ -49,10 +49,15 @@
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
       <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
     </mat-table>
+    <div class="discount-code-container">
+      <span class="discount-code-label">Discount Code:</span>
+      <input type="text" class="discount-code-input"/>
+      <button mat-button class="discount-code-confirm">Confirm</button>
+    </div>
   </mat-card-content>
   <mat-card-content>
-    <button (click)="doOrder()" [disabled]="isEmpty()" color="accent" mat-raised-button>
-      Do Order
+    <button (click)="order()" [disabled]="isEmpty()" color="accent" mat-raised-button>
+      Order
     </button>
   </mat-card-content>
 </mat-card>

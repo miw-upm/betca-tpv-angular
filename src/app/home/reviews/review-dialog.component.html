@@ -1,0 +1,18 @@
+<h1 mat-dialog-title>{{ data.review ? 'Edit Review' : 'Write Review' }}</h1>
+<div mat-dialog-content>
+  <mat-form-field>
+    <mat-label>Stars</mat-label>
+    <input matInput [formControl]="starsFormControl" type="number" min="1" max="5" required>
+    <mat-error *ngIf="starsFormControl.hasError('required')">Stars is required</mat-error>
+    <mat-error *ngIf="starsFormControl.value < 1 || starsFormControl.value > 5">Stars must be between 1 and 5</mat-error>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Opinion</mat-label>
+    <textarea matInput [formControl]="opinionFormControl" [maxlength]="200"></textarea>
+    <mat-error *ngIf="opinionFormControl.hasError('maxlength')">Opinion must be at most 200 characters long</mat-error>
+  </mat-form-field>
+</div>
+<mat-dialog-actions>
+  <button mat-button (click)="submitReview()">{{ data.review ? 'Update' : 'Save' }}</button>
+  <button mat-button (click)="onNoClick()">Cancel</button>
+</mat-dialog-actions>

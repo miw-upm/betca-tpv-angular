@@ -1,0 +1,19 @@
+.ticket-tracking-product {
+  margin: 5px;
+}
+
+.committed {
+  color: darkseagreen;
+}
+
+.not_committed {
+  color: cornflowerblue;
+}
+
+.require_provider {
+  color: indianred;
+}
+
+.in_stock {
+  color: yellow;
+}

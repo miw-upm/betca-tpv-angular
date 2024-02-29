@@ -24,6 +24,7 @@ export class MessengerComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.newMessage.fromUserMobile = this.authService.getMobile().toString();
   }
 
   getReceivedMessages(): Observable<Message[]> {
@@ -35,19 +36,20 @@ export class MessengerComponent implements OnInit {
   }
 
   sendMessage(): void {
-    this.newMessage.fromUserMobile = this.authService.getMobile().toString();
+
     this.messengerService.sendNewMessage(this.newMessage).subscribe(() => {
       // Limpia el formulario después de enviar el mensaje
       this.newMessage = new Message();
+      this.newMessage.fromUserMobile = this.authService.getMobile().toString();
+      this.refreshMessages();
     });
 
   }
-  receivedMessagesLength(): Observable<number> {
-    return this.receivedMessages.pipe(
-      map(messages => messages.length)
-    );
+  refreshMessages(): void {
+    this.receivedMessages = this.messengerService.getReceivedMessages();
+    this.sentMessages = this.messengerService.getSentMessages();
   }
-   
+
 
 
 

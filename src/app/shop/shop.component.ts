@@ -9,6 +9,9 @@ import { SharedCashierService } from './shared/services/shared.cashier.service';
 import { CashierDialogComponent } from './cashier-opened/cashier-closure/cashier-dialog.component';
 import { SharedMessengerService } from './shared/services/shared-messager.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import {
+  SlackSentMessageDialogComponent
+} from "./slack-messages/slack-sent-message-dialog/slack-sent-message-dialog.component";
 @Component({
   templateUrl: 'shop.component.html',
   styleUrls: ['shop.component.css'],
@@ -68,15 +71,17 @@ export class ShopComponent implements OnInit {
   }
 
   checkNewMessageDialog() {
-    this.shareMessegerService.haveNewMessages().subscribe((result: boolean) => {
-      if (result) {
-        this.shareMessegerService.countNewMessage().subscribe((countNewMessage: number) => {
-          this.matSnackBar.open("You have " + countNewMessage + " new messages", "Okey", {
+    this.shareMessegerService.countNewMessage().subscribe((result: number) => {
+      if (result>0) {
+          this.matSnackBar.open("You have " + result + " new messages", "Okey", {
             duration: 10000,
           });
-        });
       }
 
     });
+  }
+
+  showSlackDialog(){
+    this.dialog.open(SlackSentMessageDialogComponent);
   }
 }

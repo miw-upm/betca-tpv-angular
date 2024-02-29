@@ -1,0 +1,38 @@
+<h3 mat-dialog-title class="bold-text">{{title}}</h3>
+<mat-dialog-content class="mat-typography">
+  <mat-form-field>
+    <mat-label>Message Level</mat-label>
+    <mat-select [(ngModel)]="messageLevel">
+      <mat-option *ngFor="let level of levels" [value]="level">{{level}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Subject</mat-label>
+    <input matInput [(ngModel)]="subject"
+           required
+           type="text"/>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Description</mat-label>
+    <textarea matInput [(ngModel)]="description"
+              class="textarea-slack"
+              required></textarea>
+  </mat-form-field>
+
+  <mat-form-field>
+    <mat-label>Annotations</mat-label>
+    <textarea matInput [(ngModel)]="annotation"
+              class="textarea-slack"
+              required></textarea>
+  </mat-form-field>
+
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button cdkFocusInitial mat-dialog-close mat-raised-button class="btn-slack">Cancel</button>
+  <div ></div>
+  <button color="primary" mat-raised-button class="btn-slack" (click)="onSubmit()">
+    <span>Publish on Slack</span>
+  </button>
+</mat-dialog-actions>
