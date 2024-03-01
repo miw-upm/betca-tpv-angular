@@ -1,0 +1,28 @@
+<h2 mat-dialog-title>{{title}}</h2>
+<mat-dialog-content>
+  <mat-form-field class="full-width">
+    <input matInput placeholder="Mobile" [(ngModel)]="rgpd.user.mobile" type="text"/>
+    <button (click)="checkUser(rgpd.user.mobile)" mat-button mat-icon-button matSuffix>
+      <mat-icon color="warn">search</mat-icon>
+    </button>
+  </mat-form-field>
+  <mat-form-field class="full-width">
+    <mat-label>Type</mat-label>
+    <mat-select [(ngModel)]="rgpd.type">
+      <mat-option value="null">Please select a type</mat-option>
+      <mat-option *ngFor="let type of rgpdTypes" [value]="type">
+        {{type}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <div class="full-width">
+    <input type="file" (change)="onFileSelected($event)" id="agreement">
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button cdkFocusInitial mat-dialog-close mat-raised-button>Close</button>
+  <button (click)="create()" *ngIf="isCreate()" [disabled]=invalid() color="primary" mat-raised-button>Create
+  </button>
+  <button (click)="update()" *ngIf="!isCreate()" [disabled]=invalid() color="primary" mat-raised-button>Update
+  </button>
+</mat-dialog-actions>

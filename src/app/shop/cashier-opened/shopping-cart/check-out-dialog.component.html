@@ -48,7 +48,7 @@
     <mat-label>Leave a message</mat-label>
     <textarea [(ngModel)]="ticketGiftCreation.message" matInput placeholder="Because you deserve it sweety!"></textarea>ç
   </mat-form-field>
-  <mat-checkbox [(ngModel)]="requestedDataProtectionAct" [disabled]="true">
+  <mat-checkbox [(ngModel)]="requestedDataProtectionAct">
     <span>Data Protection Act</span>
   </mat-checkbox>
   <div *ngIf="!invalidCheckOut()&&returnedCash()>0" class="mat-raised-button mat-primary"> Cash Return:
