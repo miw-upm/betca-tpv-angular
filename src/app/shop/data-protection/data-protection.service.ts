@@ -77,13 +77,6 @@ export class DataProtectionService {
   }
 
   searchUserByMobile(userMobile: number): Observable<User> {
-    if(this.mockUser.find(u => u.mobile === userMobile))
-    {
-
-    }
-    if(this.mockRgpd.find(m => m.user.mobile=== userMobile)!= null){
-
-    }
     return of(this.mockUser.find(u => u.mobile === userMobile)||(this.mockRgpd.find(m => m.user.mobile=== userMobile)?.user));
   }
 

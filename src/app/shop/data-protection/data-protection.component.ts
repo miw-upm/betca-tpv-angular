@@ -49,7 +49,8 @@ export class DataProtectionComponent implements OnInit{
   }
 
   resetSearch(): void {
-    this.rgpdSearch = new DataProtectionSearch();
+    this.rgpdSearch = {};
+    this.updateList();
   }
 
   delete(rgpd : Rgpd): void {
