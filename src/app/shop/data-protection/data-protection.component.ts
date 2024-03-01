@@ -66,4 +66,9 @@ export class DataProtectionComponent implements OnInit{
   search():void{
     this.rgpds = this.dataProtectionService.search(this.rgpdSearch);
   }
+
+  downloadFile() {
+    //TODO
+  }
+
 }
