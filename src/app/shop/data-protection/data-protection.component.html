@@ -15,7 +15,11 @@
     <button (click)="resetSearch()" mat-icon-button>
       <mat-icon>close</mat-icon>
     </button>
+    <button (click)="downloadFile()" mat-button>
+      <mat-icon>file_download</mat-icon> Descargar Fichero
+    </button>
+
   </mat-card-content>
 </mat-card>
 <app-crud (create)="create()" (read)="read($event)" (update)="update($event)"
-          [data]="rgpds" [deleteAction]="true"  (delete)="delete($event)"  [title]="title"></app-crud>
+          [data]="rgpds" [deleteAction]="true" (delete)="delete($event)" [title]="title"></app-crud>
