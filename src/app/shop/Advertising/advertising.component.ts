@@ -24,13 +24,16 @@ export class AdvertisingComponent implements OnInit {
   loadAdvertisings(): void {
     this.Advertising = this.advertisingService.getAll();
   }
-  read(advertising: Advertising) {
-    this.dialog.open(AdvertisingComponent,{
-      data:{...advertising,readOnly: true}
+  read(advertising: Advertising):void{
+    this.dialog.open(ReadDetailDialogComponent,{
+      data:{
+        title:'Information',
+        object:this.advertisingService.read(advertising.reference)
+      }
     });
   }
   delete(advertising: Advertising):void{
-    this.advertisingService.delete(advertising.reference).subscribe(():void => {
+    this.advertisingService.delete(advertising.reference).subscribe(() => {
       this.loadAdvertisings();
     });
 
