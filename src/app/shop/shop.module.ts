@@ -70,6 +70,9 @@ import { CashMovementDialogComponent } from './cashier-opened/cashier-closure/ca
 import { IssueComponent } from "./issues/issues.component";
 import {IssuesCreateDialogComponent} from "./issues/issues-create-dialog.component";
 import { IssueService } from "./issues/issues.service";
+import {DataProtectionComponent} from "./data-protection/data-protection.component";
+import {DataProtectionService} from "./data-protection/data-protection.service";
+import {DataProtectionCreationUpdatingDialogComponent} from "./data-protection/data-protection-creation-updating-dialog.component";
 
 @NgModule({
   declarations: [
@@ -122,7 +125,9 @@ import { IssueService } from "./issues/issues.service";
     SlackSentMessageDialogComponent,
     CashMovementDialogComponent,
     IssueComponent,
-    IssuesCreateDialogComponent
+    IssuesCreateDialogComponent,
+    DataProtectionComponent,
+    DataProtectionCreationUpdatingDialogComponent
   ],
   imports: [
     SharedModule,
@@ -152,7 +157,8 @@ import { IssueService } from "./issues/issues.service";
     StockAlarmService,
     StockAlarmLineService,
     StaffService,
-    IssueService
+    IssueService,
+    DataProtectionService
   ],
 })
 export class ShopModule {

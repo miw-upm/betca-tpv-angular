@@ -29,6 +29,7 @@ import {OffersComponent} from "./offers/offers.component";
 import {IssueComponent} from "./issues/issues.component";
 import {TechnicalSupportComponent} from "../home/technical-support/technical-support.component";
 import {ChatWindowComponent} from "../home/technical-support/chat-window.component";
+import {DataProtectionComponent} from "./data-protection/data-protection.component";
 
 const routes: Routes = [
   {
@@ -71,7 +72,8 @@ const routes: Routes = [
       {
         path: 'chat/:id',
         component: ChatWindowComponent
-      }
+      },
+      {path: 'data-protection', component: DataProtectionComponent}
     ]
   }
 ];
