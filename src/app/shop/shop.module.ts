@@ -32,6 +32,9 @@ import {TicketCreationUpdatingDialogComponent} from "./cashier-opened/tickets/ti
 import {TagsComponent} from "./tags/tags.component";
 import { TagService} from "./tags/tag.service";
 import { TagCreationReadingUpdatingDialogComponent} from "./tags/tag-creation-reading-updating-dialog.component";
+import {CustomerDiscountService} from "./customer-discount/customer-discount.service";
+import {CustomerDiscountComponent} from "./customer-discount/customer-discount.component";
+import {CustomerDiscountCreationUpdatingDialogComponent} from "./customer-discount/customer-discount-creation-updating-dialog.component";
 import {SearchByBarcodeComponent} from "./shared/search-by-barcode.component";
 import {AdvertisingComponent} from "./Advertising/advertising.component";
 import {AdvertisingService} from "./Advertising/advertising.service";
@@ -58,7 +61,18 @@ import {StockAlarmLineService} from "./stock-alarm/stock-alarm-line.service";
 import {StockAlarmLineDialogComponent} from "./stock-alarm/stock-alarm-line-dialog/stock-alarm-line-dialog.component";
 import {StockAlarmDialogComponent} from "./stock-alarm/stock-alarm-dialog/stock-alarm-dialog.component";
 import { CashierClosureComponent } from './cashier-closure/cashier-closure.component';
-import { StockAuditDialogComponent } from "./stock-audit/stock-audit-dialog/stock-audit-dialog/stock-audit-dialog.component";
+import { StockAuditDialogComponent } from "./stock-audit/stock-audit-dialog/stock-audit-dialog.component";
+import {StaffComponent} from "./staff/staff.component";
+import {StaffService} from "./staff/staff.service";
+import { OffersComponent } from './offers/offers.component';
+import { SlackSentMessageDialogComponent } from './slack-messages/slack-sent-message-dialog/slack-sent-message-dialog.component';
+import { CashMovementDialogComponent } from './cashier-opened/cashier-closure/cash-movement-dialog.component';
+import { IssueComponent } from "./issues/issues.component";
+import {IssuesCreateDialogComponent} from "./issues/issues-create-dialog.component";
+import { IssueService } from "./issues/issues.service";
+import {DataProtectionComponent} from "./data-protection/data-protection.component";
+import {DataProtectionService} from "./data-protection/data-protection.service";
+import {DataProtectionCreationUpdatingDialogComponent} from "./data-protection/data-protection-creation-updating-dialog.component";
 
 @NgModule({
   declarations: [
@@ -81,6 +95,8 @@ import { StockAuditDialogComponent } from "./stock-audit/stock-audit-dialog/stoc
     MessengerComponent,
     TagsComponent,
     TagCreationReadingUpdatingDialogComponent,
+    CustomerDiscountCreationUpdatingDialogComponent,
+    CustomerDiscountComponent,
     AdvertisingComponent,
     BudgetsComponent,
     InvoiceComponent,
@@ -93,6 +109,7 @@ import { StockAuditDialogComponent } from "./stock-audit/stock-audit-dialog/stoc
     VoucherApplyDialogComponent,
     OnlineOrdersComponent,
     BudgetsComponent,
+    StaffComponent,
     StockAuditComponent,
     StockAuditDialogComponent,
     BudgetsComponent,
@@ -104,6 +121,13 @@ import { StockAuditDialogComponent } from "./stock-audit/stock-audit-dialog/stoc
     StockAlarmDialogComponent,
     StockAlarmLineDialogComponent,
     CashierClosureComponent,
+    OffersComponent,
+    SlackSentMessageDialogComponent,
+    CashMovementDialogComponent,
+    IssueComponent,
+    IssuesCreateDialogComponent,
+    DataProtectionComponent,
+    DataProtectionCreationUpdatingDialogComponent
   ],
   imports: [
     SharedModule,
@@ -122,6 +146,7 @@ import { StockAuditDialogComponent } from "./stock-audit/stock-audit-dialog/stoc
     QuarterVatService,
     MessengerService,
     TagService,
+    CustomerDiscountService,
     AdvertisingService,
     BudgetsService,
     InvoiceService,
@@ -131,6 +156,9 @@ import { StockAuditDialogComponent } from "./stock-audit/stock-audit-dialog/stoc
     StockAuditService,
     StockAlarmService,
     StockAlarmLineService,
+    StaffService,
+    IssueService,
+    DataProtectionService
   ],
 })
 export class ShopModule {

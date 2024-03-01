@@ -3,6 +3,8 @@ import { AuthService } from '@core/auth.service';
 import { Observable, map, of } from 'rxjs';
 import {Advertising} from "@shared/models/advertising.model";
 import {AdvertisingService} from "./advertising.service";
+import {MatDialog} from "@angular/material/dialog";
+import {ReadDetailDialogComponent} from "@shared/dialogs/read-detail.dialog.component";
 
 @Component({
   templateUrl: './advertising.component.html',
@@ -11,22 +13,30 @@ import {AdvertisingService} from "./advertising.service";
 export class AdvertisingComponent implements OnInit {
 
   AdvertisingTitle: string = "Advertising History";
+  Advertising : Observable<any> = of([]);
 
-  advertisingHistory: Observable<Advertising[]> = this.advertisingService.getAdvertisingHistory();
-  newAdvertising : Advertising = new Advertising();
-
-  constructor(private advertisingService:AdvertisingService,
-              private authService: AuthService) {
+  constructor(private dialog: MatDialog,private advertisingService: AdvertisingService) {
   }
 
   ngOnInit(): void {
+    this.loadAdvertisings();
+    }
+  loadAdvertisings(): void {
+    this.Advertising = this.advertisingService.getAll();
   }
-
-  getAdvertisingHistory(): Observable<Advertising[]> {
-    return this.advertisingHistory;
+  read(advertising: Advertising):void{
+    this.dialog.open(ReadDetailDialogComponent,{
+      data:{
+        title:'Information',
+        object:this.advertisingService.read(advertising.reference)
+      }
+    });
   }
+  delete(advertising: Advertising):void{
+    this.advertisingService.delete(advertising.reference).subscribe(() => {
+      this.loadAdvertisings();
+    });
 
-
-
+  }
 
 }
