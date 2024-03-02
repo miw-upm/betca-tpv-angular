@@ -13,4 +13,5 @@ export class EndPoints {
   static MESSENGER = environment.REST_CORE + '/messenger';
   static SLACK: string = environment.REST_CORE + '/slack';
   static ISSUE = environment.REST_CORE +'/issue';
+  static TAGS = environment.REST_CORE + '/tags';
 }

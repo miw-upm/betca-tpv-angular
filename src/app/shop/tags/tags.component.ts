@@ -1,57 +1,41 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { of } from 'rxjs';
-
+import { Observable } from 'rxjs';
 import { Tag } from '@shared/models/tag.model';
 import { TagService } from './tag.service';
-import { TagCreationReadingUpdatingDialogComponent} from "./tag-creation-reading-updating-dialog.component";
 
 @Component({
   templateUrl: 'tags.component.html',
 })
 export class TagsComponent {
   title = 'Tags Management';
-  tags = of([]);
+  tags: Observable<Tag[]>;
 
   constructor(private dialog: MatDialog, private tagService: TagService) {
     this.loadTags();
   }
 
   loadTags(): void {
-    this.tags = this.tagService.search();
+    this.tags = this.tagService.findAll();
   }
 
   create(): void {
-    const dialogRef = this.dialog.open(TagCreationReadingUpdatingDialogComponent, {
-      data: null
-    });
-
-    dialogRef.afterClosed().subscribe(() => {
-      this.loadTags();
-    });
+    // TODO: Implement create
   }
 
   read(tag: Tag): void {
-    this.dialog.open(TagCreationReadingUpdatingDialogComponent, {
-      data: { ...tag, readOnly: true }
-    });
+    // TODO: Implement read
   }
 
   update(tag: Tag): void {
-    this.dialog.open(TagCreationReadingUpdatingDialogComponent, {
-      data: tag
-    }).afterClosed().subscribe(() => {
-      this.loadTags();
-    });
+    // TODO: Implement update
   }
 
   delete(tag: Tag): void {
-    this.tagService.delete(tag.name).subscribe(() => {
-      this.loadTags();
-    });
+    // TODO: Implement delete
   }
 
   search(term: string): void {
-    this.tags = this.tagService.search(term);
+    // TODO: Implement search
   }
 }

@@ -1,10 +1,10 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialog, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Tag } from '@shared/models/tag.model';
-import { Article} from "../../home/shared/article.model";
+import { Article } from "../shared/services/models/article.model";
 import { TagService } from './tag.service';
 import { ArticleService } from '../articles/article.service';
-import {ArticleSearch} from "../articles/article-search.model";
+import { ArticleSearch } from "../articles/article-search.model";
 
 interface DialogData extends Tag {
   readOnly?: boolean;
@@ -23,6 +23,7 @@ export class TagCreationReadingUpdatingDialogComponent implements OnInit {
   articleSearch: ArticleSearch = {};
   readOnly: boolean = false;
   originalTagName: string;
+  originalTagGroup: string;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
@@ -35,14 +36,15 @@ export class TagCreationReadingUpdatingDialogComponent implements OnInit {
     this.readOnly = this.data?.readOnly ?? false;
     if (this.data) {
       this.originalTagName = this.data.name;
+      this.originalTagGroup = this.data.group;
     }
   }
 
   ngOnInit(): void {
-    this.articleService.search({}).subscribe(articles => {
-      this.articles = articles;
+    this.articleService.search({}).subscribe(articlesResponse => {
+      this.articles = articlesResponse;
       if (this.tag.articles) {
-        this.selectedArticles = this.tag.articles;
+        this.selectedArticles = this.tag.articles.map(article => article);
       }
     });
     this.fetchInitialArticles();
@@ -54,13 +56,11 @@ export class TagCreationReadingUpdatingDialogComponent implements OnInit {
   }
 
   create(): void {
-    this.tag.articles = this.selectedArticles;
-    this.tagService.create(this.tag).subscribe(() => this.dialog.closeAll());
+    // TODO: Implement create
   }
 
   update(): void {
-    this.tag.articles = this.selectedArticles;
-    this.tagService.update(this.originalTagName, this.tag).subscribe(() => this.dialog.closeAll());
+    // TODO: Implement update
   }
 
   toggleArticleSelection(article: Article): void {
@@ -77,20 +77,11 @@ export class TagCreationReadingUpdatingDialogComponent implements OnInit {
   }
 
   fetchInitialArticles(): void {
-    this.articleService.search({}).subscribe(articles => {
-      this.articles = articles.slice(0, 5);
-    });
+    // TODO: Implement fetchInitialArticles
   }
 
   searchArticles(): void {
-    if (!this.articleSearch.barcode && !this.articleSearch.description) {
-      this.fetchInitialArticles();
-      return;
-    }
-
-    this.articleService.search(this.articleSearch).subscribe(articles => {
-      this.articles = articles;
-    });
+    // TODO: Implement searchArticles
   }
 
   resetArticleSearch(): void {
@@ -110,6 +101,7 @@ export class TagCreationReadingUpdatingDialogComponent implements OnInit {
   }
 
   onSubmit(): void {
+    console.log('selectedArticles:', this.selectedArticles);
     if (this.isCreate()) {
       this.create();
     } else {

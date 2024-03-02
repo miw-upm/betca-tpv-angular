@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { TagService } from "../../shop/tags/tag.service";
-import { Article } from "../shared/article.model";
+import { TagService} from "@shared/services/tag.service";
+import { Article} from "../../shop/shared/services/models/article.model";
 import { SlideInterface } from "@shared/components/carousel/slide.interface";
+import { HttpErrorResponse } from '@angular/common/http'; // Import HttpErrorResponse
 
 @Component({
   selector: 'app-adviser',
@@ -31,15 +32,22 @@ export class AdviserComponent implements OnInit {
     });
   }
 
-
   loadArticles(tagName: string): void {
-    this.tagService.read(tagName).subscribe(tag => {
-      if (tag) {
-        this.articles = tag.articles;
-        this.prepareSlides();
-      } else {
-        this.articles = [];
-        this.redirectToNewTagView();
+    this.tagService.findArticlesByTagName(tagName).subscribe({
+      next: (articles) => {
+        if (articles && articles.length) {
+          this.articles = articles;
+          this.prepareSlides();
+        } else {
+          this.redirectToNewTagView();
+        }
+      },
+      error: (error: HttpErrorResponse) => {
+        if (error.status === 404) {
+          this.redirectToNewTagView();
+        } else {
+          console.error('An error occurred:', error.message);
+        }
       }
     });
   }
