@@ -10,8 +10,14 @@ import {HttpService} from "@core/http.service";
 export class TagService {
   constructor(private httpService: HttpService) {}
 
+  read(name: string, group: string): Observable<Tag> {
+    return this.httpService
+      .get(EndPoints.TAGS + '/' + name + '/' + group);
+  }
+
   findAll(): Observable<Tag[]> {
-    return this.httpService.get(EndPoints.TAGS);
+    return this.httpService
+      .get(EndPoints.TAGS);
   }
 
 }

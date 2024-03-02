@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
 import { Tag } from '@shared/models/tag.model';
 import { TagService } from './tag.service';
+import {TagCreationReadingUpdatingDialogComponent} from "./tag-creation-reading-updating-dialog.component";
 
 @Component({
   templateUrl: 'tags.component.html',
@@ -24,7 +25,9 @@ export class TagsComponent {
   }
 
   read(tag: Tag): void {
-    // TODO: Implement read
+    this.dialog.open(TagCreationReadingUpdatingDialogComponent, {
+      data: { ...tag, readOnly: true }
+    });
   }
 
   update(tag: Tag): void {
