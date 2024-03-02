@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TagService} from "@shared/services/tag.service";
-import { Article } from "../shared/article.model";
+import { Article} from "../../shop/shared/services/models/article.model";
 import { SlideInterface } from "@shared/components/carousel/slide.interface";
 import { HttpErrorResponse } from '@angular/common/http'; // Import HttpErrorResponse
 
