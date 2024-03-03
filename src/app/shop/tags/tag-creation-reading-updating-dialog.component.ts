@@ -56,7 +56,15 @@ export class TagCreationReadingUpdatingDialogComponent implements OnInit {
   }
 
   create(): void {
-    // TODO: Implement create
+    this.tag.articles = this.selectedArticles.map(article => article);
+    this.tagService.create(this.tag).subscribe({
+      next: () => {
+        this.dialog.closeAll();
+      },
+      error: (error) => {
+        console.error('Error creating tag:', error);
+      }
+    });
   }
 
   update(): void {
@@ -77,11 +85,20 @@ export class TagCreationReadingUpdatingDialogComponent implements OnInit {
   }
 
   fetchInitialArticles(): void {
-    // TODO: Implement fetchInitialArticles
+    this.articleService.search({}).subscribe(articles => {
+      this.articles = articles.slice(0, 5);
+    });
   }
 
   searchArticles(): void {
-    // TODO: Implement searchArticles
+    if (!this.articleSearch.barcode && !this.articleSearch.description) {
+      this.fetchInitialArticles();
+      return;
+    }
+
+    this.articleService.search(this.articleSearch).subscribe(articles => {
+      this.articles = articles;
+    });
   }
 
   resetArticleSearch(): void {

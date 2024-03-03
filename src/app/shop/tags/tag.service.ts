@@ -15,6 +15,11 @@ export class TagService {
       .get(EndPoints.TAGS + '/' + name + '/' + group);
   }
 
+  create(tag: Tag): Observable<Tag> {
+    return this.httpService
+      .post(EndPoints.TAGS, tag);
+  }
+
   findAll(): Observable<Tag[]> {
     return this.httpService
       .get(EndPoints.TAGS);

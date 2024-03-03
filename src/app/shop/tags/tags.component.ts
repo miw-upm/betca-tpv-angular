@@ -20,13 +20,19 @@ export class TagsComponent {
     this.tags = this.tagService.findAll();
   }
 
-  create(): void {
-    // TODO: Implement create
-  }
-
   read(tag: Tag): void {
     this.dialog.open(TagCreationReadingUpdatingDialogComponent, {
       data: { ...tag, readOnly: true }
+    });
+  }
+
+  create(): void {
+    const dialogRef = this.dialog.open(TagCreationReadingUpdatingDialogComponent, {
+      data: null
+    });
+
+    dialogRef.afterClosed().subscribe(() => {
+      this.loadTags();
     });
   }
 
