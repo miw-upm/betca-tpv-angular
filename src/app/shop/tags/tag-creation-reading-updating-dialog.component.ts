@@ -41,12 +41,9 @@ export class TagCreationReadingUpdatingDialogComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.articleService.search({}).subscribe(articlesResponse => {
-      this.articles = articlesResponse;
-      if (this.tag.articles) {
-        this.selectedArticles = this.tag.articles.map(article => article);
-      }
-    });
+    if (this.data && this.data.articles) {
+      this.selectedArticles = [...this.data.articles];
+    }
     this.fetchInitialArticles();
     this.resetArticleSearch();
   }
@@ -56,11 +53,27 @@ export class TagCreationReadingUpdatingDialogComponent implements OnInit {
   }
 
   create(): void {
-    // TODO: Implement create
+    this.tag.articles = this.selectedArticles.map(article => article);
+    this.tagService.create(this.tag).subscribe({
+      next: () => {
+        this.dialog.closeAll();
+      },
+      error: (error) => {
+        console.error('Error creating tag:', error);
+      }
+    });
   }
 
   update(): void {
-    // TODO: Implement update
+    this.tag.articles = this.selectedArticles.map(article => article);
+    this.tagService.update(this.originalTagName, this.originalTagGroup, this.tag).subscribe({
+      next: () => {
+        this.dialog.closeAll();
+      },
+      error: (error) => {
+        console.error('Error updating tag:', error);
+      }
+    });
   }
 
   toggleArticleSelection(article: Article): void {
@@ -77,11 +90,30 @@ export class TagCreationReadingUpdatingDialogComponent implements OnInit {
   }
 
   fetchInitialArticles(): void {
-    // TODO: Implement fetchInitialArticles
+    this.articleService.search({}).subscribe(articles => {
+      this.articles = articles.slice(0, 5);
+      this.selectedArticles.forEach(article => {
+        if (!this.articles.some(a => a.barcode === article.barcode)) {
+          this.articles.push(article);
+        }
+      });
+    });
   }
 
   searchArticles(): void {
-    // TODO: Implement searchArticles
+    if (!this.articleSearch.barcode && !this.articleSearch.description) {
+      this.fetchInitialArticles();
+      return;
+    }
+
+    this.articleService.search(this.articleSearch).subscribe(articles => {
+      this.articles = articles;
+      this.selectedArticles.forEach(article => {
+        if (!this.articles.some(a => a.barcode === article.barcode)) {
+          this.articles.unshift(article);
+        }
+      });
+    });
   }
 
   resetArticleSearch(): void {
@@ -101,7 +133,6 @@ export class TagCreationReadingUpdatingDialogComponent implements OnInit {
   }
 
   onSubmit(): void {
-    console.log('selectedArticles:', this.selectedArticles);
     if (this.isCreate()) {
       this.create();
     } else {
