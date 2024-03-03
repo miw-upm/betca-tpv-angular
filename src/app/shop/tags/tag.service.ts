@@ -20,6 +20,11 @@ export class TagService {
       .post(EndPoints.TAGS, tag);
   }
 
+  update(name: string, group: string, tag: Tag): Observable<Tag> {
+    return this.httpService
+      .put(EndPoints.TAGS + '/' + name + '/' + group, tag);
+  }
+
   findAll(): Observable<Tag[]> {
     return this.httpService
       .get(EndPoints.TAGS);

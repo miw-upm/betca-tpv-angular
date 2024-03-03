@@ -37,7 +37,11 @@ export class TagsComponent {
   }
 
   update(tag: Tag): void {
-    // TODO: Implement update
+    this.dialog.open(TagCreationReadingUpdatingDialogComponent, {
+      data: tag
+    }).afterClosed().subscribe(() => {
+      this.loadTags();
+    });
   }
 
   delete(tag: Tag): void {
