@@ -6,10 +6,16 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./password-recovery-dialog.component.css']
 })
 export class PasswordRecoveryDialogComponent implements OnInit {
+  email: string;
+  mobile: number;
 
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  sendEmail(){
+
   }
 
 }

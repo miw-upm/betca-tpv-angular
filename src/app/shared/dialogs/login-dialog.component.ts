@@ -4,6 +4,7 @@ import {Router} from '@angular/router';
 import {AuthService} from '@core/auth.service';
 import {MatDialog} from '@angular/material/dialog';
 import {SignupDialogComponent} from "@shared/dialogs/signup-dialog.component";
+import {PasswordRecoveryDialogComponent} from "@shared/dialogs/password-recovery-dialog.component";
 
 @Component({
   templateUrl: 'login-dialog.component.html',
@@ -33,6 +34,6 @@ export class LoginDialogComponent {
   }
 
   forgotPassword(): void {
-    //todo
+    this.dialog.open(PasswordRecoveryDialogComponent);
   }
 }
