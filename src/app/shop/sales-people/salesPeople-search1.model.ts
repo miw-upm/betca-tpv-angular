@@ -1,5 +1,5 @@
 export class SalesPeopleSearch1 {
-  nameSalesPeople: string;
+  mobile: string;
   startDate: Date;
   endDate: Date;
 }

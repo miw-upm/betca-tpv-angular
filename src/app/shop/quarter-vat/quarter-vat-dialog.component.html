@@ -1,0 +1,65 @@
+<h2 mat-dialog-title>Quarter VAT Management</h2>
+<mat-dialog-content>
+  <form #vatForm="ngForm">
+    <mat-form-field class="form-field-spacing">
+      <mat-label>Year</mat-label>
+      <mat-select [(ngModel)]="selectedYear" name="year" required>
+        <mat-option *ngFor="let year of yearRange" [value]="year">{{ year }}</mat-option>
+      </mat-select>
+      <mat-error *ngIf="isFieldRequiredAndTouched('year', vatForm)">
+        Year is required
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="form-field-spacing">
+      <mat-label>Quarter</mat-label>
+      <mat-select [(ngModel)]="selectedQuarter" name="quarter" required>
+        <mat-option value="1">Q1</mat-option>
+        <mat-option value="2">Q2</mat-option>
+        <mat-option value="3">Q3</mat-option>
+        <mat-option value="4">Q4</mat-option>
+      </mat-select>
+      <mat-error *ngIf="isFieldRequiredAndTouched('quarter', vatForm)">
+        Quarter is required
+      </mat-error>
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" [disabled]="vatForm.invalid" (click)="calculateVAT()"
+            class="form-field-spacing">Calculate Quarter VAT
+    </button>
+  </form>
+
+  <div *ngIf="vatResult" class="vat-result">
+    <h3>Results for {{ vatResult.year }} Q{{ vatResult.quarter }} {{ getQuarterDateRange() }}:</h3>
+
+    <div *ngIf="vatResult.totalBaseTax !== 0; else noResults">
+      <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+        <ng-container matColumnDef="taxRate" class="mat-column-taxRate">
+          <th mat-header-cell *matHeaderCellDef> Tax Rate</th>
+          <td mat-cell *matCellDef="let element"> {{ element.taxRate }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="baseTax" class="mat-column-taxRate">
+          <th mat-header-cell *matHeaderCellDef> Base Tax</th>
+          <td mat-cell *matCellDef="let element"> {{ element.baseTax | number }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="valueTax" class="mat-column-taxRate">
+          <th mat-header-cell *matHeaderCellDef> Value Tax</th>
+          <td mat-cell *matCellDef="let element"> {{ element.valueTax | number }}</td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </div>
+
+    <ng-template #noResults>
+      <p>There are no results that meet the requested criteria.</p>
+    </ng-template>
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions class="custom-close-button">
+  <button mat-button mat-dialog-close>Close</button>
+</mat-dialog-actions>

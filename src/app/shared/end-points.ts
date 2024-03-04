@@ -14,4 +14,6 @@ export class EndPoints {
   static SLACK: string = environment.REST_CORE + '/slack';
   static ISSUE = environment.REST_CORE +'/issue';
   static TAGS = environment.REST_CORE + '/tags';
+  static SALESPEOPLE = environment.REST_CORE + '/salespeople';
+  static VAT = environment.REST_CORE + '/vat';
 }
