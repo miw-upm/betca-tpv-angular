@@ -15,7 +15,6 @@
         </mat-error>
       </mat-form-field>
 
-
       <mat-form-field class="form-field-spacing">
         <mat-label>Quarter</mat-label>
         <mat-select [(ngModel)]="selectedQuarter" name="quarter" required>
@@ -29,37 +28,39 @@
         </mat-error>
       </mat-form-field>
 
-      <button mat-raised-button color="primary" [disabled]="vatForm.invalid" (click)="calculateVat()"
-              class="form-field-spacing">Calculate
-        Quarter VAT
+      <button mat-raised-button color="primary" [disabled]="vatForm.invalid" (click)="calculateVAT()"
+              class="form-field-spacing">Calculate Quarter VAT
       </button>
     </form>
 
     <div *ngIf="vatResult" class="vat-result">
       <h2>Results for {{ vatResult.year }} Q{{ vatResult.quarter }} {{ getQuarterDateRange() }}</h2>
 
-      <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+      <div *ngIf="vatResult.totalBaseTax !== 0; else noResults">
+        <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+          <ng-container matColumnDef="taxRate">
+            <th mat-header-cell *matHeaderCellDef> Tax Rate</th>
+            <td mat-cell *matCellDef="let element"> {{ element.taxRate }}</td>
+          </ng-container>
 
-        <ng-container matColumnDef="taxRate">
-          <th mat-header-cell *matHeaderCellDef> Tax Rate</th>
-          <td mat-cell *matCellDef="let element"> {{ element.taxRate }}</td>
-        </ng-container>
+          <ng-container matColumnDef="baseTax">
+            <th mat-header-cell *matHeaderCellDef> Base Tax</th>
+            <td mat-cell *matCellDef="let element"> {{ element.baseTax | number }}</td>
+          </ng-container>
 
-        <ng-container matColumnDef="baseTax">
-          <th mat-header-cell *matHeaderCellDef> Base Tax</th>
-          <td mat-cell *matCellDef="let element"> {{ element.baseTax }}</td>
-        </ng-container>
+          <ng-container matColumnDef="valueTax">
+            <th mat-header-cell *matHeaderCellDef> Value Tax</th>
+            <td mat-cell *matCellDef="let element"> {{ element.valueTax | number }}</td>
+          </ng-container>
 
-        <ng-container matColumnDef="valueTax">
-          <th mat-header-cell *matHeaderCellDef> Value Tax</th>
-          <td mat-cell *matCellDef="let element"> {{ element.valueTax }}</td>
-        </ng-container>
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+      </div>
 
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-      </table>
+      <ng-template #noResults>
+        <p>There are no results that meet the requested criteria.</p>
+      </ng-template>
     </div>
-
-
   </mat-card-content>
 </mat-card>
