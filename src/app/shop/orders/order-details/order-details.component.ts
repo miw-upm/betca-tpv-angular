@@ -40,11 +40,8 @@ export class OrderDetailsComponent implements OnInit {
 
 
   public loadOrderInfoById(orderId: string): void {
-    this.ordersService.read(orderId.toString())
-      .pipe(
-        take(1)
-      )
-      .subscribe(order => {
+    this.ordersService.readByReference(orderId.toString())
+      .subscribe((order: Order) => {
         this.currentActiveOrder = order;
         this.currentActiveOrderIsClosed = order.closingDate !== undefined;
         this.refreshTable();
