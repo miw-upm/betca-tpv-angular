@@ -4,4 +4,5 @@ export interface OrderSearch {
   providerCompany?: string;
   openingDate?: Date | number;
   closingDate?: Date | number;
+  onlyNonClosed?: boolean;
 }

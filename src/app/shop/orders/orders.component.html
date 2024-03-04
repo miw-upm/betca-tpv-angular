@@ -24,6 +24,7 @@
       <mat-datepicker-toggle matSuffix [for]="closingDateDatepicker"></mat-datepicker-toggle>
       <mat-datepicker #closingDateDatepicker></mat-datepicker>
     </mat-form-field>
+    <mat-slide-toggle [(ngModel)]="orderSearch.onlyNonClosed">Only non-closed orders</mat-slide-toggle>
     <button (click)="search()" mat-icon-button>
       <mat-icon>search</mat-icon>
     </button>
