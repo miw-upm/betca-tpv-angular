@@ -2,11 +2,14 @@ import { Injectable } from '@angular/core';
 import { Order } from "./order.model";
 import { Observable, of } from "rxjs";
 import { OrderSearch } from "./ordersearch.model";
+import { HttpService } from "@core/http.service";
+import { EndPoints } from "@shared/end-points";
 
 @Injectable({
   providedIn: 'root'
 })
 export class OrdersService {
+  private static SEARCH = '/search';
 
   private orderMock: Order[] = [
     {
@@ -35,7 +38,7 @@ export class OrdersService {
     }
   ];
 
-  constructor() {
+  constructor(private http: HttpService) {
   }
 
   public read(reference: string): Observable<Order> {
@@ -43,7 +46,12 @@ export class OrdersService {
   }
 
   public search(orderSearch: OrderSearch): Observable<Order[]> {
-    return of(this.orderMock.filter(order => !(orderSearch.reference && order.reference !== orderSearch.reference)));
+    orderSearch.openingDate = orderSearch.openingDate ? orderSearch.openingDate.valueOf() : undefined;
+    orderSearch.closingDate = orderSearch.closingDate ? orderSearch.closingDate.valueOf() : undefined;
+
+    return this.http
+      .paramsFrom(orderSearch)
+      .get(EndPoints.ORDERS + OrdersService.SEARCH);
   }
 
   public create(order: Order): Observable<Order> {
