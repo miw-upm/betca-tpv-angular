@@ -5,11 +5,11 @@ import {MatTableDataSource} from "@angular/material/table";
 
 @Component({
   selector: 'app-quarter-vat',
-  templateUrl: './quarter-vat.component.html',
-  styleUrls: ['./quarter-vat.component.css']
+  templateUrl: './quarter-vat-dialog.component.html',
+  styleUrls: ['./quarter-vat-dialog.component.css']
 })
 
-export class QuarterVatComponent implements OnInit {
+export class QuarterVatDialogComponent implements OnInit {
   selectedYear: number;
   selectedQuarter: number;
   yearRange: number[] = [];
