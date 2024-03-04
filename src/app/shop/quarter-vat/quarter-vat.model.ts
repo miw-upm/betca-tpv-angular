@@ -1,16 +1,13 @@
-import {Tax} from "../shared/services/models/Tax";
-
-export interface VatDetail {
-  baseTax: number;
-  valueTax: number;
-}
-
-export interface QuarterVatResult {
+export interface VATResult {
   year: number;
-  quarter: string;
-  taxes: {
-    [K in keyof typeof Tax]?: K extends 'FREE' ? never : VatDetail;
-  };
+  quarter: number;
+  baseTaxSuperReduced: number;
+  baseTaxReduced: number;
+  baseTaxGeneral: number;
+  valueTaxSuperReduced: number;
+  valueTaxReduced: number;
+  valueTaxGeneral: number;
   totalBaseTax: number;
   totalValueTax: number;
 }
+
