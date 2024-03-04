@@ -1,23 +1,17 @@
-import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import {Injectable} from '@angular/core';
+import {Observable, of} from 'rxjs';
 
-import { HttpService } from '@core/http.service';
-import { Salesperson } from '../shared/services/models/salesPeople.model';
+import {HttpService} from '@core/http.service';
+import {Salesperson} from '../shared/services/models/salesPeople.model';
 import {SalesPeopleSearch1} from "./salesPeople-search1.model";
 import {SalesPeopleSearch2} from "./salesPeople-search2.model";
-import {ArticleSearch} from "../articles/article-search.model";
-import {Article} from "../shared/services/models/article.model";
 import {EndPoints} from "@shared/end-points";
-import {Ticket} from "../cashier-opened/tickets/tickets.models";
-import {TicketCreation} from "../cashier-opened/shopping-cart/ticket-creation.model";
-import {Provider} from "../providers/provider.model";
+
 @Injectable({
   providedIn: 'root'
 })
 export class SalesPeopleService {
 
-  private salesPersons1: Salesperson[] = [];
-  private salesPersons2: Salesperson[] = [];
 
   static SEARCH = '/search';
 

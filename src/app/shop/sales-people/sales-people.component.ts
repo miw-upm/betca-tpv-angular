@@ -4,7 +4,6 @@ import { SalesPeopleService } from './sales-people.service';
 import {SalesPeopleSearch2} from "./salesPeople-search2.model";
 import { Salesperson } from '../shared/services/models/salesPeople.model';
 import {forkJoin} from "rxjs";
-import {Ticket} from "../cashier-opened/tickets/tickets.models";
 import {TicketService} from "../cashier-opened/tickets/tickets.service";
 @Component({
   selector: 'app-sales-people',
