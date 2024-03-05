@@ -49,8 +49,4 @@ export class TagsComponent {
       this.loadTags();
     });
   }
-
-  search(term: string): void {
-    // TODO: Implement search
-  }
 }
