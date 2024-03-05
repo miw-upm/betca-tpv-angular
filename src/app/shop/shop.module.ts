@@ -83,6 +83,7 @@ import {DataProtectionService} from "./data-protection/data-protection.service";
 import {
   DataProtectionCreationUpdatingDialogComponent
 } from "./data-protection/data-protection-creation-updating-dialog.component";
+import {OffersCreationUpdatingDialogComponent} from "./offers/offers-creation-updating-dialog.component";
 
 @NgModule({
   declarations: [
@@ -132,6 +133,7 @@ import {
     StockAlarmLineDialogComponent,
     CashierClosureComponent,
     OffersComponent,
+    OffersCreationUpdatingDialogComponent,
     SlackSentMessageDialogComponent,
     CashMovementDialogComponent,
     IssueComponent,
