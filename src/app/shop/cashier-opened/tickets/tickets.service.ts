@@ -5,6 +5,8 @@ import { Shopping } from "../shopping-cart/shopping.model";
 import {CashierClosureService} from "../cashier-closure/cashier-closure.service";
 import {SharedVoucherService} from "../../shared/services/shared-voucher.service";
 import {CashierState} from "../cashier-closure/cashier-state.model";
+import {EndPoints} from "@shared/end-points";
+import {HttpService} from "@core/http.service";
 
 @Injectable({
   providedIn: 'root'
@@ -12,8 +14,10 @@ import {CashierState} from "../cashier-closure/cashier-state.model";
 export class TicketService {
   private mockTickets: Ticket[];
   cashierState: Observable<CashierState>;
+
+  static FINALVALUE = '/finalvalue';
   constructor( private cashierClosureService: CashierClosureService,
-               private sharedVoucherService: SharedVoucherService) {
+               private sharedVoucherService: SharedVoucherService, private httpService: HttpService) {
     this.cashierState = this.cashierClosureService.readState();
     let sl = new Shopping("test", "test", 100);
     let sl2 = new Shopping("test2", "test2", 50);
@@ -68,6 +72,11 @@ export class TicketService {
     this.sharedVoucherService.printVoucher(amount).subscribe(response => {
       console.log('Voucher printed', response);
     });
+  }
+
+  getTotal(reference: string): Observable<Number> {
+    return this.httpService
+      .get(EndPoints.TICKETS + TicketService.FINALVALUE + '/' + reference);
   }
 
 }

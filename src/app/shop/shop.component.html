@@ -5,7 +5,7 @@
   <span>
     <app-date></app-date>
     <button (click)="logout()" mat-button>
-      <span>{{username}}</span>
+      <span>{{ username }}</span>
       <mat-icon>person</mat-icon>
       <span>Logout</span>
     </button>
@@ -178,17 +178,17 @@
     <mat-icon>money_off</mat-icon>
     <span>Customer Discount</span>
   </button>
-  <button  mat-menu-item routerLink="messenger">
+  <button mat-menu-item routerLink="messenger">
     <mat-icon>message</mat-icon>
     <span>Messengers</span>
   </button>
-  <button  mat-menu-item routerLink="credit-line">
+  <button mat-menu-item routerLink="credit-line">
     <mat-icon>card_membership</mat-icon>
     <span>Credit</span>
   </button>
 </mat-menu>
 <mat-menu #vat="matMenu">
-  <button mat-menu-item routerLink="/shop/quarter-vat">
+  <button mat-menu-item (click)="showQuarterVATDialog()">
     <mat-icon>money</mat-icon>
     <span>Quarter VAT</span>
   </button>
