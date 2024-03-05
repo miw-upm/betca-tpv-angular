@@ -55,11 +55,12 @@ export class OrdersService {
   }
 
   public search(orderSearch: OrderSearch): Observable<Order[]> {
-    orderSearch.openingDate = orderSearch.openingDate ? orderSearch.openingDate.valueOf() : undefined;
-    orderSearch.closingDate = orderSearch.closingDate ? orderSearch.closingDate.valueOf() : undefined;
+    const orderSearchInstance: OrderSearch = { ...orderSearch };
+    orderSearchInstance.openingDate = orderSearch.openingDate ? orderSearch.openingDate.valueOf() : undefined;
+    orderSearchInstance.closingDate = orderSearch.closingDate ? orderSearch.closingDate.valueOf() : undefined;
 
     return this.http
-      .paramsFrom(orderSearch)
+      .paramsFrom(orderSearchInstance)
       .get(EndPoints.ORDERS + OrdersService.SEARCH);
   }
 
