@@ -7,7 +7,7 @@ import {EndPoints} from "@shared/end-points";
 @Injectable({
   providedIn: 'root',
 })
-export class TagService {
+export class AdviserService {
   constructor(private http: HttpClient) {}
 
   findArticlesByTagName(tagName: string): Observable<Article[]> {

@@ -16,12 +16,12 @@ interface DialogData extends Tag {
   styleUrls: ['tag-creation-reading-updating-dialog.component.css']
 })
 export class TagCreationReadingUpdatingDialogComponent implements OnInit {
-  tag: Tag;
-  title: string;
-  articles: Article[];
-  selectedArticles: Article[] = [];
+  tag: Tag = this.initTag();
+  title: string = this.initTitle();
+  articles: Article[] = [];
+  selectedArticles: Article[] = this.data?.articles || [];
   articleSearch: ArticleSearch = {};
-  readOnly: boolean = false;
+  readOnly: boolean = this.data?.readOnly ?? false;
   originalTagName: string;
   originalTagGroup: string;
 
@@ -31,9 +31,6 @@ export class TagCreationReadingUpdatingDialogComponent implements OnInit {
     private articleService: ArticleService,
     private dialog: MatDialog
   ) {
-    this.title = !this.data ? 'Create Tag' : this.data.readOnly ? 'Read Tag' : 'Update Tag';
-    this.tag = this.data ? this.cloneTag(data) : { name: '', group: '', description: '', articles: [] };
-    this.readOnly = this.data?.readOnly ?? false;
     if (this.data) {
       this.originalTagName = this.data.name;
       this.originalTagGroup = this.data.group;
@@ -41,44 +38,20 @@ export class TagCreationReadingUpdatingDialogComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if (this.data && this.data.articles) {
-      this.selectedArticles = [...this.data.articles];
-    }
     this.fetchInitialArticles();
-    this.resetArticleSearch();
   }
 
-  isCreate(): boolean {
-    return !this.data;
+  initTag(): Tag {
+    return this.data ? { ...this.data } : { name: '', group: '', description: '', articles: [] };
   }
 
-  create(): void {
-    this.tag.articles = this.selectedArticles.map(article => article);
-    this.tagService.create(this.tag).subscribe({
-      next: () => {
-        this.dialog.closeAll();
-      },
-      error: (error) => {
-        console.error('Error creating tag:', error);
-      }
-    });
-  }
-
-  update(): void {
-    this.tag.articles = this.selectedArticles.map(article => article);
-    this.tagService.update(this.originalTagName, this.originalTagGroup, this.tag).subscribe({
-      next: () => {
-        this.dialog.closeAll();
-      },
-      error: (error) => {
-        console.error('Error updating tag:', error);
-      }
-    });
+  initTitle(): string {
+    return this.data ? (this.data.readOnly ? 'Read Tag' : 'Update Tag') : 'Create Tag';
   }
 
   toggleArticleSelection(article: Article): void {
     const index = this.selectedArticles.findIndex(a => a.barcode === article.barcode);
-    if (index > -1) {
+    if (index >= 0) {
       this.selectedArticles.splice(index, 1);
     } else {
       this.selectedArticles.push(article);
@@ -90,42 +63,27 @@ export class TagCreationReadingUpdatingDialogComponent implements OnInit {
   }
 
   fetchInitialArticles(): void {
-    this.articleService.search({}).subscribe(articles => {
-      this.articles = articles.slice(0, 5);
-      this.selectedArticles.forEach(article => {
-        if (!this.articles.some(a => a.barcode === article.barcode)) {
-          this.articles.push(article);
-        }
-      });
+    this.articleService.search(this.articleSearch).subscribe(articles => {
+      this.articles = this.filterAndMergeArticles(articles);
     });
   }
 
   searchArticles(): void {
-    if (!this.articleSearch.barcode && !this.articleSearch.description) {
-      this.fetchInitialArticles();
-      return;
-    }
+    this.fetchInitialArticles();
+  }
 
-    this.articleService.search(this.articleSearch).subscribe(articles => {
-      this.articles = articles;
-      this.selectedArticles.forEach(article => {
-        if (!this.articles.some(a => a.barcode === article.barcode)) {
-          this.articles.unshift(article);
-        }
-      });
+  filterAndMergeArticles(articles: Article[]): Article[] {
+    const mergedArticles = [...this.selectedArticles];
+    articles.forEach(article => {
+      if (!mergedArticles.some(a => a.barcode === article.barcode)) {
+        mergedArticles.push(article);
+      }
     });
-  }
-
-  resetArticleSearch(): void {
-    this.articleSearch = {};
-  }
-
-  private cloneTag(tag: Tag): Tag {
-    return JSON.parse(JSON.stringify(tag));
+    return mergedArticles.slice(0, 5);
   }
 
   hasArticles(): boolean {
-    return this.tag.articles && this.tag.articles.length > 0;
+    return !!this.tag.articles && this.tag.articles.length > 0;
   }
 
   isFormValid(): boolean {
@@ -133,11 +91,16 @@ export class TagCreationReadingUpdatingDialogComponent implements OnInit {
   }
 
   onSubmit(): void {
+    this.tag.articles = this.selectedArticles;
     if (this.isCreate()) {
-      this.create();
+      this.tagService.create(this.tag).subscribe(() => this.dialog.closeAll());
     } else {
-      this.update();
+      this.tagService.update(this.originalTagName, this.originalTagGroup, this.tag).subscribe(() => this.dialog.closeAll());
     }
+  }
+
+  isCreate(): boolean {
+    return !this.data;
   }
 
   showCreateUpdateButton(): string {
