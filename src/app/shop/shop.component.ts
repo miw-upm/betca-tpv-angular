@@ -12,6 +12,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import {
   SlackSentMessageDialogComponent
 } from "./slack-messages/slack-sent-message-dialog/slack-sent-message-dialog.component";
+import {QuarterVatDialogComponent} from "./quarter-vat/quarter-vat-dialog.component";
 @Component({
   templateUrl: 'shop.component.html',
   styleUrls: ['shop.component.css'],
@@ -83,5 +84,9 @@ export class ShopComponent implements OnInit {
 
   showSlackDialog(){
     this.dialog.open(SlackSentMessageDialogComponent);
+  }
+
+  showQuarterVATDialog() {
+    this.dialog.open(QuarterVatDialogComponent);
   }
 }

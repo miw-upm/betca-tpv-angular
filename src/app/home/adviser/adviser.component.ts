@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { TagService} from "@shared/services/tag.service";
+import { AdviserService } from "./adviser.service";
 import { Article} from "../../shop/shared/services/models/article.model";
 import { SlideInterface } from "@shared/components/carousel/slide.interface";
-import { HttpErrorResponse } from '@angular/common/http'; // Import HttpErrorResponse
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-adviser',
@@ -16,7 +16,7 @@ export class AdviserComponent implements OnInit {
   selectedTag: string = '';
 
   constructor(
-    private tagService: TagService,
+    private adviserService: AdviserService,
     private route: ActivatedRoute,
     private router: Router
   ) {}
@@ -33,7 +33,7 @@ export class AdviserComponent implements OnInit {
   }
 
   loadArticles(tagName: string): void {
-    this.tagService.findArticlesByTagName(tagName).subscribe({
+    this.adviserService.findArticlesByTagName(tagName).subscribe({
       next: (articles) => {
         if (articles && articles.length) {
           this.articles = articles;
@@ -45,8 +45,6 @@ export class AdviserComponent implements OnInit {
       error: (error: HttpErrorResponse) => {
         if (error.status === 404) {
           this.redirectToNewTagView();
-        } else {
-          console.error('An error occurred:', error.message);
         }
       }
     });
@@ -62,16 +60,6 @@ export class AdviserComponent implements OnInit {
   }
 
   private redirectToNewTagView(): void {
-    this.router.navigate(['/home/adviser'], { queryParams: { tag: 'New' } })
-      .then(success => {
-        if (success) {
-          console.log('Redirected to /adviser with tag=New');
-        } else {
-          console.error('Failed to redirect to /adviser with tag=New');
-        }
-      })
-      .catch(error => {
-        console.error('Error during navigation:', error);
-      });
+    this.router.navigate(['/home/adviser'], { queryParams: { tag: 'New' } });
   }
 }
