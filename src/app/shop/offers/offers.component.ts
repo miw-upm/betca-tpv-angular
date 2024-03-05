@@ -1,9 +1,12 @@
 import { Component} from '@angular/core';
-import {of} from "rxjs";
+import {Observable, of} from "rxjs";
 import {MatDialog} from "@angular/material/dialog";
 import {OfferService} from "./offers.service";
 import {Offer} from "../shared/services/models/offer.model";
 import {OfferSearch} from "./offers-search.model";
+import {OffersCreationUpdatingDialogComponent} from "./offers-creation-updating-dialog.component";
+import {ReadDetailDialogComponent} from "@shared/dialogs/read-detail.dialog.component";
+import {ArticleCreationUpdatingDialogComponent} from "../articles/article-creation-updating-dialog.component";
 
 @Component({
   selector: 'app-offers',
@@ -13,6 +16,7 @@ import {OfferSearch} from "./offers-search.model";
 export class OffersComponent {
   title = 'Offers management';
   offers = of([]);
+  articles: Observable<string[]> = of([]);
   public offerSearch: OfferSearch;
 
   constructor(private dialog: MatDialog, private offerService: OfferService) {
@@ -29,11 +33,16 @@ export class OffersComponent {
   }
 
   create(): void {
-    //TODO
+    this.dialog.open(OffersCreationUpdatingDialogComponent);
   }
 
   read(offer: Offer): void {
-    //TODO
+    this.dialog.open(ReadDetailDialogComponent, {
+      data: {
+        title: 'Offer Details',
+        object: this.offerService.read(offer.reference)
+      }
+    });
   }
 
   delete(offer: Offer): void {
@@ -41,6 +50,7 @@ export class OffersComponent {
   }
 
   update(offer: Offer): void {
-    //TODO
+    this.offerService.read(offer.reference)
+      .subscribe(fullOffer => this.dialog.open(OffersCreationUpdatingDialogComponent, {data: fullOffer}));
   }
 }
