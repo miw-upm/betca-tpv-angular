@@ -16,4 +16,5 @@ export class EndPoints {
   static TAGS = environment.REST_CORE + '/tags';
   static SALESPEOPLE = environment.REST_CORE + '/salespeople';
   static VAT = environment.REST_CORE + '/vat';
+  static ORDERS: string = environment.REST_CORE + '/orders';
 }
