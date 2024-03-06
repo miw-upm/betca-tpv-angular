@@ -13,19 +13,30 @@ table.mat-table th.mat-header-cell {
 
 .functionality-container {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
 }
 
 .d-flex {
   display: flex;
-  justify-content: space-between;
   align-items: center;
 }
 
-.mat-form-field {
-  width: 100%;
+.employee-input {
+  max-width: 60px;
 }
+
+form {
+  display: flex;
+  flex-direction: row;
+}
+
 
 .mat-datepicker-toggle {
   margin-left: auto;
+}
+
+button {
+  margin: 10px;
+  display: flex;
+  justify-content: center;
 }

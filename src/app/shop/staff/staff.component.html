@@ -18,9 +18,8 @@
             <mat-date-range-picker #picker></mat-date-range-picker>
             <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
           </mat-form-field>
-          <button mat-icon-button>
-            <mat-icon>search</mat-icon>
-          </button>        </form>
+          <button type="submit" mat-raised-button>Submit</button>
+        </form>
         <table mat-table [dataSource]="staffHoursPerDay">
           <ng-container matColumnDef="day">
             <th mat-header-cell *matHeaderCellDef> Day </th>
@@ -39,7 +38,7 @@
         <form class="d-flex">
           <mat-form-field>
             <mat-label>Employee</mat-label>
-            <input matInput>
+            <input class="employee-input" matInput>
           </mat-form-field>
           <mat-form-field class="d-flex">
             <mat-label>Enter a date range</mat-label>
@@ -51,9 +50,7 @@
             <mat-date-range-picker #pickerMonth></mat-date-range-picker>
             <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
           </mat-form-field>
-          <button mat-icon-button>
-            <mat-icon>search</mat-icon>
-          </button>
+          <button type="submit" mat-raised-button>Submit</button>
         </form>
         <table mat-table [dataSource]="staffHoursPerMonth">
           <ng-container matColumnDef="month">
