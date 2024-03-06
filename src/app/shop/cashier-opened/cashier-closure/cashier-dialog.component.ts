@@ -5,6 +5,8 @@ import {CashierClosureService} from './cashier-closure.service';
 import {CashierState} from './cashier-state.model';
 import {CashierClosure} from './cashier-closure.model';
 import {Observable} from 'rxjs';
+import {SignupDialogComponent} from "@shared/dialogs/signup-dialog.component";
+import {CashMovementDialogComponent} from "./cash-movement-dialog.component";
 
 @Component({
   templateUrl: 'cashier-dialog.component.html',
@@ -32,8 +34,6 @@ export class CashierDialogComponent {
   }
 
   cashMovement(): void {
-    // TODO ...
-    console.log('In construction!!!');
+    this.dialog.open(CashMovementDialogComponent);
   }
-
 }

@@ -1,0 +1,54 @@
+<mat-card>
+  <mat-card-content>
+    <div class="filter-container">
+      <mat-label><strong>Filters: </strong></mat-label>
+
+      <!-- Contenedor principal de filtros y botones de acción -->
+
+      <!-- Filtrar por Usuario -->
+      <mat-form-field class="filter-field">
+        <mat-label>Usuario</mat-label>
+        <input [(ngModel)]="customerDiscountSearch.userNumber" matInput>
+      </mat-form-field>
+
+      <!-- Filtrar por Nota -->
+      <mat-form-field class="filter-field">
+        <mat-label>Nota</mat-label>
+        <input [(ngModel)]="customerDiscountSearch.note" matInput>
+      </mat-form-field>
+
+      <!-- Filtrar por Fecha de Registro -->
+      <mat-form-field class="filter-field">
+        <mat-label>Fecha de Registro</mat-label>
+        <input [(ngModel)]="customerDiscountSearch.registrationDate" matInput [matDatepicker]="picker"
+               (click)="picker.open()">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+
+      <!-- Filtrar por Descuento -->
+      <mat-form-field class="filter-field">
+        <mat-label>Descuento</mat-label>
+        <input [(ngModel)]="customerDiscountSearch.discount" matInput type="number">
+      </mat-form-field>
+
+      <!-- Filtrar por Compra Mínima -->
+      <mat-form-field class="filter-field">
+        <mat-label>Compra Mínima</mat-label>
+        <input [(ngModel)]="customerDiscountSearch.minPurchase" matInput type="number">
+      </mat-form-field>
+
+      <button (click)="search()" mat-icon-button>
+        <mat-icon>search</mat-icon>
+      </button>
+      <button (click)="resetSearch()" mat-icon-button>
+        <mat-icon>close</mat-icon>
+      </button>
+
+    </div>
+
+  </mat-card-content>
+</mat-card>
+
+<app-crud (read)="read($event)" (create)="create()" (update)="update($event)" (delete)="delete($event)"
+          [data]="customerDiscounts"  [title]="title"></app-crud>

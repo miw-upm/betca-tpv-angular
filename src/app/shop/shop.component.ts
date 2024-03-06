@@ -9,6 +9,10 @@ import { SharedCashierService } from './shared/services/shared.cashier.service';
 import { CashierDialogComponent } from './cashier-opened/cashier-closure/cashier-dialog.component';
 import { SharedMessengerService } from './shared/services/shared-messager.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import {
+  SlackSentMessageDialogComponent
+} from "./slack-messages/slack-sent-message-dialog/slack-sent-message-dialog.component";
+import {QuarterVatDialogComponent} from "./quarter-vat/quarter-vat-dialog.component";
 @Component({
   templateUrl: 'shop.component.html',
   styleUrls: ['shop.component.css'],
@@ -76,5 +80,13 @@ export class ShopComponent implements OnInit {
       }
 
     });
+  }
+
+  showSlackDialog(){
+    this.dialog.open(SlackSentMessageDialogComponent);
+  }
+
+  showQuarterVATDialog() {
+    this.dialog.open(QuarterVatDialogComponent);
   }
 }

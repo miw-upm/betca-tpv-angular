@@ -3,7 +3,8 @@ import { Order } from "./order.model";
 import { Observable, of } from "rxjs";
 import { OrdersService } from "./orders.service";
 import { OrderSearch } from "./ordersearch.model";
-import { Router } from "@angular/router";
+import { MatDialog, MatDialogRef } from "@angular/material/dialog";
+import { OrderDetailsComponent } from "./order-details/order-details.component";
 
 @Component({
   selector: 'app-orders',
@@ -15,7 +16,9 @@ export class OrdersComponent {
   public orders: Observable<Order[]> = of([]);
   public orderSearch: OrderSearch;
 
-  constructor(private orderService: OrdersService, private router: Router) {
+  constructor(private orderService: OrdersService,
+              private dialog: MatDialog
+  ) {
     this.resetSearch();
   }
 
@@ -28,11 +31,22 @@ export class OrdersComponent {
     this.search();
   }
 
-  public async create(): Promise<void> {
-    await this.router.navigateByUrl("/shop/orders/new");
+  public create(): void {
+    const dialogInstance: MatDialogRef<OrderDetailsComponent> = this.dialog.open(OrderDetailsComponent, {
+      data: { orderReference: undefined },
+      height: '70%',
+      width: '90%',
+      disableClose: true
+    });
+    dialogInstance.afterClosed().subscribe(() => this.search());
   }
 
-  public async details(order: Order): Promise<void> {
-    await this.router.navigateByUrl("/shop/orders/" + order.reference);
+  public details(order: Order): void {
+    this.dialog.open(OrderDetailsComponent, {
+      data: { orderReference: order.reference },
+      height: '70%',
+      width: '90%',
+      disableClose: true
+    });
   }
 }

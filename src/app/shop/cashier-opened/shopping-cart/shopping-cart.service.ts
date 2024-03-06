@@ -80,16 +80,21 @@ export class ShoppingCartService {
   }
 
   createInvoiceAndPrint(ticketId: string): Observable<void> {
-    alert('invoice creation not implemented');
     return EMPTY; // TODO change EMPTY
   }
 
   createGiftTicketAndPrint(ticketId: string, giftTicketCreation: GiftTicketCreation): Observable<void> {
-    alert('Gift ticket creation not implemented yet. You wrote: ' + giftTicketCreation.message);
-    return EMPTY; // TODO change EMPTY
+    return this.httpService.post(EndPoints.GIFT_TICKETS, {ticketId: ticketId, message: giftTicketCreation.message})
+      .pipe(
+        concatMap(giftTicket => {
+          const receipt = this.httpService.pdf().get(EndPoints.GIFT_TICKETS + '/' + giftTicket.id + ShoppingCartService.RECEIPT)
+          return receipt;
+        })
+      );
   }
 
   createDataProtectionActAndPrint(ticket): Observable<void> {
+    alert('Data protection act creation not implemented');
     return EMPTY; // TODO change EMPTY
   }
   getPointsDiscountShoppingForUser(mobileNumber: string, totalShoppingCart: number): Observable<Shopping> {

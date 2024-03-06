@@ -1,4 +1,4 @@
-import { Article} from "../../home/shared/article.model";
+import { Article } from "../../shop/shared/services/models/article.model";
 
 export interface Tag {
   name: string;

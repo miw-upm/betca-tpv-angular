@@ -9,7 +9,7 @@
       <mat-label>Description</mat-label>
       <input matInput [(ngModel)]="orderSearch.description">
     </mat-form-field>
-    <app-search-by-company [(company)]="orderSearch.providerCompany" style="width: auto; display: inline-block"></app-search-by-company>
+    <app-search-by-company [(company)]="orderSearch.providerCompany" [obligatory]="'false'" style="width: auto; display: inline-block"></app-search-by-company>
     <mat-form-field (click)="openingDateDatepicker.open()">
       <mat-label>Opening date</mat-label>
       <input matInput [matDatepicker]="openingDateDatepicker" [(ngModel)]="orderSearch.openingDate" [max]="orderSearch.closingDate ?? null">
@@ -24,6 +24,7 @@
       <mat-datepicker-toggle matSuffix [for]="closingDateDatepicker"></mat-datepicker-toggle>
       <mat-datepicker #closingDateDatepicker></mat-datepicker>
     </mat-form-field>
+    <mat-slide-toggle [(ngModel)]="orderSearch.onlyNonClosed">Only non-closed orders</mat-slide-toggle>
     <button (click)="search()" mat-icon-button>
       <mat-icon>search</mat-icon>
     </button>
