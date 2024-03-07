@@ -26,6 +26,12 @@ export class VouchersService {
       .get(EndPoints.PROVIDERS + '/' + reference);
   }
 
+  update(reference: string) : Observable<Voucher> {
+    return this.httpService
+      .successful()
+      .put(EndPoints.VOUCHERS + '/' + reference);
+  }
+
   search(vouchersSearch: VouchersSearch): Observable<Voucher[]> {
     return this.httpService
       .paramsFrom(vouchersSearch)
