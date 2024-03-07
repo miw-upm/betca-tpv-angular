@@ -3,7 +3,7 @@ import { SalesPeopleSearch1 } from './salesPeople-search1.model';
 import { SalesPeopleService } from './sales-people.service';
 import {SalesPeopleSearch2} from "./salesPeople-search2.model";
 import { Salesperson } from '../shared/services/models/salesPeople.model';
-import {forkJoin} from "rxjs";
+import {forkJoin, Observable} from "rxjs";
 import {TicketService} from "../cashier-opened/tickets/tickets.service";
 @Component({
   selector: 'app-sales-people',
@@ -24,10 +24,23 @@ export class SalesPeopleComponent implements OnInit {
   }
 
   searchBySalesPeopleMobileAndCreationDateBetween() {
-    this.salesPeopleService.searchBySalesPeopleMobileAndCreationDateBetween(this.salesPeopleSearch1).subscribe(
+    this.fetchSalesPeopleData(
+      this.salesPeopleService.searchBySalesPeopleMobileAndCreationDateBetween(this.salesPeopleSearch1)
+    );
+  }
+
+  searchByMonth() {
+    this.fetchSalesPeopleData(
+      this.salesPeopleService.searchByMonth(this.salesPeopleSearch2)
+    );
+  }
+
+  private fetchSalesPeopleData(observable: Observable<any>): void {
+    observable.subscribe(
       (data) => {
         console.log('Data received:', data);
         this.salesPeople = data;
+
         const observables = this.salesPeople.map(salesPerson =>
           this.ticketService.getTotal(salesPerson.ticket.reference)
         );
@@ -47,18 +60,7 @@ export class SalesPeopleComponent implements OnInit {
       }
     );
   }
-  //NOT IMPLEMENTED
-  searchByMonth() {
-    this.salesPeopleService.searchByMonth(this.salesPeopleSearch2).subscribe(
-      (data) => {
-        console.log('Data received:', data);
-        this.salesPeople = data;
-      },
-      (error) => {
-        console.error('Error fetching sales people:', error);
-      }
-    );
-  }
+
   resetSearchBySalesPeopleMobileAndCreationDateBetween(): void {
     this.salesPeopleSearch1.mobile = "";
     this.salesPeopleSearch1.startDate = null;
