@@ -14,7 +14,8 @@ export class SalesPeopleService {
 
 
   static SEARCH = '/search';
-
+  static DATE = "/byDate";
+  static MONTH = "/byMonth";
 
   constructor(private httpService: HttpService) {
 
@@ -23,14 +24,13 @@ export class SalesPeopleService {
   searchBySalesPeopleMobileAndCreationDateBetween(salesPeopleSearch1: SalesPeopleSearch1): Observable<Salesperson[]> {
     return this.httpService
       .paramsFrom(salesPeopleSearch1)
-      .get(EndPoints.SALESPEOPLE + SalesPeopleService.SEARCH);
+      .get(EndPoints.SALESPEOPLE + SalesPeopleService.SEARCH + SalesPeopleService.DATE);
   }
 
-  //NOT IMPLEMENTED
   searchByMonth(salesPeopleSearch2: SalesPeopleSearch2): Observable<Salesperson[]> {
     return this.httpService
       .paramsFrom(salesPeopleSearch2)
-      .get(EndPoints.SALESPEOPLE + SalesPeopleService.SEARCH);
+      .get(EndPoints.SALESPEOPLE + SalesPeopleService.SEARCH + SalesPeopleService.MONTH);
   }
 
 
