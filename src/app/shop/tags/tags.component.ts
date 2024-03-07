@@ -45,10 +45,8 @@ export class TagsComponent {
   }
 
   delete(tag: Tag): void {
-    // TODO: Implement delete
-  }
-
-  search(term: string): void {
-    // TODO: Implement search
+    this.tagService.delete(tag.name, tag.group).subscribe(() => {
+      this.loadTags();
+    });
   }
 }

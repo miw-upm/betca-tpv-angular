@@ -25,6 +25,11 @@ export class TagService {
       .put(EndPoints.TAGS + '/' + name + '/' + group, tag);
   }
 
+  delete(name: string, group: string): Observable<Tag> {
+    return this.httpService
+      .delete(EndPoints.TAGS + '/' + name + '/' + group);
+  }
+
   findAll(): Observable<Tag[]> {
     return this.httpService
       .get(EndPoints.TAGS);

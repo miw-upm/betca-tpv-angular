@@ -1,12 +1,16 @@
 import { Injectable } from '@angular/core';
 import { Order } from "./order.model";
-import { Observable, of } from "rxjs";
+import { Observable, of, take } from "rxjs";
 import { OrderSearch } from "./ordersearch.model";
+import { HttpService } from "@core/http.service";
+import { EndPoints } from "@shared/end-points";
+import { map } from "rxjs/operators";
 
 @Injectable({
   providedIn: 'root'
 })
 export class OrdersService {
+  private static SEARCH = '/search';
 
   private orderMock: Order[] = [
     {
@@ -35,15 +39,29 @@ export class OrdersService {
     }
   ];
 
-  constructor() {
+  constructor(private http: HttpService) {
   }
 
-  public read(reference: string): Observable<Order> {
-    return of(this.orderMock.find(order => order.reference === reference));
+  public readByReference(reference: string): Observable<Order> {
+    return this.http.get(`${EndPoints.ORDERS}/${reference}`).pipe(
+      take(1), // take the first value and complete
+      map((order: Order) => {
+          order.openingDate = new Date(order.openingDate);
+          order.closingDate = order.closingDate ? new Date(order.closingDate) : undefined;
+          return order;
+        }
+      )
+    );
   }
 
   public search(orderSearch: OrderSearch): Observable<Order[]> {
-    return of(this.orderMock.filter(order => !(orderSearch.reference && order.reference !== orderSearch.reference)));
+    const orderSearchInstance: OrderSearch = { ...orderSearch };
+    orderSearchInstance.openingDate = orderSearch.openingDate ? orderSearch.openingDate.valueOf() : undefined;
+    orderSearchInstance.closingDate = orderSearch.closingDate ? orderSearch.closingDate.valueOf() : undefined;
+
+    return this.http
+      .paramsFrom(orderSearchInstance)
+      .get(EndPoints.ORDERS + OrdersService.SEARCH);
   }
 
   public create(order: Order): Observable<Order> {
