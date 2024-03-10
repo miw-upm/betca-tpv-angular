@@ -20,7 +20,10 @@
           </mat-option>
         </mat-select>
       </mat-form-field>
-
+      <span mat-menu-item [disabled]="true">
+        <mat-icon>monetization_on</mat-icon>
+        <span>You have {{(customerPoints | async)?.value}} points</span>
+      </span>
       <mat-card-content class="settings-general-container">
         <button (click)="saveProfileInfo()" *ngIf="userHasChanged" color="accent" mat-raised-button>
           Save changes
