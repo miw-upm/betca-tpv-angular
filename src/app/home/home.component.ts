@@ -14,7 +14,7 @@ import {CustomerPointsService} from "./customer-points/customer-points.service";
 export class HomeComponent {
   title = 'TPV';
   username = undefined;
-  customerPoints: Observable<CustomerPoints>;
+
   constructor(private dialog: MatDialog, private authService: AuthService, private customerPointsService: CustomerPointsService) {
   }
 
@@ -23,7 +23,6 @@ export class HomeComponent {
       .afterClosed()
       .subscribe(() => {
         this.username = this.authService.getName();
-        this.customerPoints = this.customerPointsService.getCurrentCustomerPoints();
       });
   }
 
