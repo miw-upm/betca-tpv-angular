@@ -23,7 +23,7 @@ export class VouchersService {
 
   read(reference: string): Observable<Voucher> {
     return this.httpService
-      .get(EndPoints.PROVIDERS + '/' + reference);
+      .get(EndPoints.VOUCHERS + '/' + reference);
   }
 
   update(reference: string) : Observable<Voucher> {

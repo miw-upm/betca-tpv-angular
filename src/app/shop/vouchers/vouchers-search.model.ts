@@ -1,7 +1,7 @@
 export class VouchersSearch {
   reference?: string;
   userMobile?: string;
-  startDate?: Date;
-  endDate?: Date;
+  creationDateStart?: string;
+  creationDateEnd?: string;
   isConsumed?: boolean;
 }
