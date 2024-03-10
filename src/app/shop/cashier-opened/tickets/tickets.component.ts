@@ -14,6 +14,7 @@ import {TicketCreationUpdatingDialogComponent} from "./ticket-creation-updating-
 export class TicketsComponent implements OnInit {
   tickets= of([]);
   searchQuery: string = '';
+  searchByGiftTicketReference: string = '';
   shoppingStates: any
   title = 'Ticket management';
 
@@ -29,6 +30,10 @@ export class TicketsComponent implements OnInit {
     this.tickets = this.ticketService.search(this.searchQuery)
   }
 
+  searchByGiftTicket(): void {
+    this.tickets = this.ticketService.searchByGiftTicket(this.searchByGiftTicketReference)
+  }
+
   read(ticket: Ticket): void {
     this.dialog.open(ReadDetailDialogComponent, {
       data: {
@@ -40,6 +45,7 @@ export class TicketsComponent implements OnInit {
 
   resetSearch(): void {
     this.searchQuery = null;
+    this.searchByGiftTicketReference = null;
   }
 
   update(ticket: Ticket): void {
