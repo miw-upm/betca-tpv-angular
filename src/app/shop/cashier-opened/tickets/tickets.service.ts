@@ -56,6 +56,9 @@ export class TicketService {
   }
 
   searchByGiftTicket(searchByGiftTicketReference: string): Observable<Ticket[]> {
+    if (!searchByGiftTicketReference || /^\s*$/.test(searchByGiftTicketReference)) {
+      return of([]);
+    }
     return this.httpService.paramsFrom({reference: searchByGiftTicketReference}).get(EndPoints.TICKETS + TicketService.SEARCHBYGIFTTICKET);
   }
 
