@@ -7,5 +7,5 @@
 <mat-dialog-actions *ngIf="(object | async) as data">
     <button mat-dialog-close mat-raised-button>Close</button>
     <button mat-raised-button>Print</button>
-    <button mat-raised-button *ngIf="!labels(data).includes('dateOfUse')">Consume</button>
+    <button mat-raised-button *ngIf="!labels(data).includes('dateOfUse')" (click)="consume(data['reference'])">Consume</button>
 </mat-dialog-actions>
