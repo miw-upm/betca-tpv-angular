@@ -1,4 +1,4 @@
-export class ArticleLoss {
+export interface ArticleLoss {
   barcode: string;
   amount: number;
 }
