@@ -20,4 +20,5 @@ export class EndPoints {
   static ORDERS: string = environment.REST_CORE + '/orders';
   static GIFT_TICKETS = environment.REST_CORE + '/gift-tickets';
   static STOCK_AUDITS = environment.REST_CORE + '/stock-audits';
+  static ONLINE_ORDERS = environment.REST_CORE + '/online-orders';
 }

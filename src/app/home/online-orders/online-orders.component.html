@@ -27,7 +27,7 @@
       <ng-container matColumnDef="ticketReference">
         <mat-header-cell *matHeaderCellDef fxFlex="20%"> Ticket reference</mat-header-cell>
         <mat-cell *matCellDef="let item" fxFlex="20%">
-          {{item.ticketReference}}
+          {{item.ticket.reference}}
         </mat-cell>
       </ng-container>
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
