@@ -2,7 +2,7 @@ import {Component, Inject} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialog} from "@angular/material/dialog";
 import {StockAudit} from "../../shared/services/models/stock-audit.model";
 import {StockAuditService} from "../stock-audit.service";
-import {ArticleLoss} from "../../shared/services/models/articleLoss.model";
+import {ArticleLoss} from "../../shared/services/models/article-loss.model";
 import {Observable, of} from "rxjs";
 import {Article} from "../../shared/services/models/article.model";
 
@@ -13,7 +13,7 @@ export class StockAuditDialogComponent {
   stockAudit: StockAudit;
   stockAuditEdited: StockAudit;
   articlesWithoutAudit: Observable<Article[]>;
-  losses: Observable<ArticleLoss[]>;
+  articlesLosses: Observable<ArticleLoss[]>;
   title: string;
   titleLosses: string = 'Articles losses';
 
@@ -25,14 +25,14 @@ export class StockAuditDialogComponent {
       creationDate: null,
       closeDate: null,
       articlesWithoutAudit: [],
-      lossValue: undefined,
-      losses: []
+      articlesLosses: [],
+      lossValue: undefined
     };
     // Copia profunda del objeto por no instalar loadash
     this.stockAuditEdited = JSON.parse(JSON.stringify(this.stockAudit));
 
     this.articlesWithoutAudit = of(this.stockAudit.articlesWithoutAudit);
-    this.losses = of(this.stockAudit.losses);
+    this.articlesLosses = of(this.stockAudit.articlesLosses);
   }
 
   create(): void {
@@ -73,8 +73,8 @@ export class StockAuditDialogComponent {
 
     // Agregar el articulo a la lista de articulos con perdida
     if(articleAmountLosses > 0){
-      this.stockAuditEdited.losses = this.stockAuditEdited.losses.concat({barcode: article.barcode, amount: articleAmountLosses});
-      this.losses = of(this.stockAuditEdited.losses);
+      this.stockAuditEdited.articlesLosses = this.stockAuditEdited.articlesLosses.concat({barcode: article.barcode, amount: articleAmountLosses});
+      this.articlesLosses = of(this.stockAuditEdited.articlesLosses);
     }
 
     // Calcular la perdida
@@ -83,7 +83,7 @@ export class StockAuditDialogComponent {
 
   updateStockAudit(): void {
     this.stockAudit.articlesWithoutAudit = this.stockAuditEdited.articlesWithoutAudit;
-    this.stockAudit.losses = this.stockAuditEdited.losses;
+    this.stockAudit.articlesLosses = this.stockAuditEdited.articlesLosses;
     this.stockAudit.lossValue = this.stockAuditEdited.lossValue;
   }
 }

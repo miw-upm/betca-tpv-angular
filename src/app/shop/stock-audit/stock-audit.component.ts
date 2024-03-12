@@ -20,7 +20,7 @@ export class StockAuditComponent {
   }
 
   loadAudits(): void {
-    this.stockAudits = this.stockAuditService.search();
+    this.stockAudits = this.stockAuditService.readAll();
   }
 
   create(): void {
@@ -57,7 +57,7 @@ export class StockAuditComponent {
   }
 
   isClosed(stockAudit: StockAudit): boolean {
-    return stockAudit.closeDate !== null;
+    return ((stockAudit.closeDate !== null) && (stockAudit.closeDate !== undefined));
   }
 }
 
