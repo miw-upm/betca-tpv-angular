@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import {StockAudit} from "../shared/services/models/stock-audit.model";
 import {Article} from "../shared/services/models/article.model";
+import {HttpService} from "@core/http.service";
+import {EndPoints} from "@shared/end-points";
 
 @Injectable({
   providedIn: 'root',
@@ -31,8 +33,8 @@ export class StockAuditService {
           retailPrice: 5,
           providerCompany: "Oral-B",
         }
-      ], lossValue: 0, losses: [] },
-    { creationDate: new Date('2020-01-03'), closeDate: new Date('2020-01-04'), articlesWithoutAudit: [], lossValue: 124, losses: [
+      ], lossValue: 0, articlesLosses: [] },
+    { creationDate: new Date('2020-01-03'), closeDate: new Date('2020-01-04'), articlesWithoutAudit: [], lossValue: 124, articlesLosses: [
         {
           barcode: "123456789",
           amount: 2,
@@ -82,10 +84,11 @@ export class StockAuditService {
     },
   ];
 
-  constructor() {}
+  constructor(private httpService: HttpService) {}
 
-  search(): Observable<StockAudit[]> {
-    return of(this.mockStockAudits);
+  readAll(): Observable<StockAudit[]> {
+    return this.httpService
+      .get(EndPoints.STOCK_AUDITS);
   }
 
   create(stockAudit: StockAudit): Observable<StockAudit> {
@@ -107,7 +110,7 @@ export class StockAuditService {
   closeAudit(stockAudit: StockAudit): Observable<StockAudit> {
     stockAudit.closeDate = new Date();
     for (let article of stockAudit.articlesWithoutAudit) {
-      stockAudit.losses.push({ barcode: article.barcode, amount: article.stock });
+      stockAudit.articlesLosses.push({ barcode: article.barcode, amount: article.stock });
       stockAudit.lossValue += article.stock * article.retailPrice;
     }
     stockAudit.articlesWithoutAudit = [];
