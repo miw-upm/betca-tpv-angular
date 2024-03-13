@@ -91,12 +91,9 @@ export class StockAuditService {
       .get(EndPoints.STOCK_AUDITS);
   }
 
-  create(stockAudit: StockAudit): Observable<StockAudit> {
-    stockAudit.creationDate = new Date();
-    stockAudit.articlesWithoutAudit = this.mockArticles;
-    stockAudit.lossValue = 0;
-    this.mockStockAudits.push(stockAudit);
-    return of(stockAudit);
+  create(): Observable<StockAudit> {
+    return this.httpService
+      .post(EndPoints.STOCK_AUDITS)
   }
 
   read(stockAudit: StockAudit): Observable<StockAudit> {

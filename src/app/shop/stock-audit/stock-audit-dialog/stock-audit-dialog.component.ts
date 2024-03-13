@@ -14,31 +14,19 @@ export class StockAuditDialogComponent {
   stockAuditEdited: StockAudit;
   articlesWithoutAudit: Observable<Article[]>;
   articlesLosses: Observable<ArticleLoss[]>;
-  title: string;
+  title = 'Update Stock Audit';
   titleLosses: string = 'Articles losses';
 
   constructor(@Inject(MAT_DIALOG_DATA) data: StockAudit,
               private dialog: MatDialog,
               private stockAuditService: StockAuditService) {
-    this.title = data ? "Update Stock Audit" : "Create Stock Audit";
-    this.stockAudit = data ? data : {
-      creationDate: null,
-      closeDate: null,
-      articlesWithoutAudit: [],
-      articlesLosses: [],
-      lossValue: undefined
-    };
+    this.stockAudit = data;
+    console.log(this.stockAudit)
     // Copia profunda del objeto por no instalar loadash
     this.stockAuditEdited = JSON.parse(JSON.stringify(this.stockAudit));
 
     this.articlesWithoutAudit = of(this.stockAudit.articlesWithoutAudit);
     this.articlesLosses = of(this.stockAudit.articlesLosses);
-  }
-
-  create(): void {
-    this.stockAuditService
-      .create(this.stockAudit)
-      .subscribe(() => this.dialog.closeAll());
   }
 
   save(): void {
@@ -53,10 +41,6 @@ export class StockAuditDialogComponent {
     this.stockAuditService
       .closeAudit(this.stockAudit)
       .subscribe(() => this.dialog.closeAll());
-  }
-
-  isCreated(): boolean {
-    return this.stockAudit.creationDate === null;
   }
 
   auditArticle(article: Article, realStockString: string): void {
