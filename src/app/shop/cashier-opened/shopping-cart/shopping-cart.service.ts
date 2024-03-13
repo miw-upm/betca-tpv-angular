@@ -12,6 +12,7 @@ import {ArticleQuickCreationDialogComponent} from './article-quick-creation-dial
 import {ShoppingState} from './shopping-state.model';
 import {EndPoints} from '@shared/end-points';
 import { GiftTicketCreation } from './gift-ticket-creation.model';
+import {Budget} from "./budgets.model";
 
 @Injectable({
   providedIn: 'root',
@@ -73,6 +74,20 @@ export class ShoppingCartService {
 
   printTicket(ticketId: string): Observable<void> {
     return this.httpService.pdf().get(EndPoints.TICKETS + '/' + ticketId + ShoppingCartService.RECEIPT);
+  }
+
+  createBudgetAndPrintReceipt(budget: Budget): Observable<void> {
+    return this.httpService
+      .post(EndPoints.BUDGETS, budget)
+      .pipe(
+        concatMap(budget => {
+          return this.printBudget(budget.reference);
+        })
+      );
+  }
+
+  printBudget(budgetReference: string): Observable<void> {
+    return this.httpService.pdf().get(EndPoints.BUDGETS + '/' + budgetReference + ShoppingCartService.RECEIPT);
   }
 
   createVoucherAndPrint(voucher: number): Observable<void> {

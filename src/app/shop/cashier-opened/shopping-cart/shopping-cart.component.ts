@@ -11,6 +11,7 @@ import {CustomerPointsConstants} from "@shared/models/customer-points.model";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {WarningMessages} from "./WarningMessages";
 import {CheckOutDialogDataModel} from "./check-out-dialog-data.model";
+import {Budget} from "./budgets.model";
 
 
 @Component({
@@ -23,6 +24,7 @@ export class ShoppingCartComponent implements OnInit {
 
   barcode: string;
   barcodes: Observable<number[]> = of([]);
+  budget: Budget;
 
   displayedColumns = ['id', 'description', 'retailPrice', 'amount', 'discount', 'total', 'actions'];
   shoppingCart: Shopping[] = [];
@@ -173,7 +175,11 @@ export class ShoppingCartComponent implements OnInit {
   }
 
   createBudget(): void {
-    alert("Creating budget...");
+    this.budget = {reference: null, creationDate: null, shoppingList: this.shoppingCart};
+    this.shoppingCartService.createBudgetAndPrintReceipt(this.budget)
+      .subscribe(() => {
+        this.ngOnInit()
+      })
   }
 
   addBudget(reference: string): void {
