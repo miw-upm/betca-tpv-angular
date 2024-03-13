@@ -1,11 +1,11 @@
 import {Component, Inject} from '@angular/core';
 
-import {TicketCreation} from './ticket-creation.model';
+import {TicketCreation} from '@shared/models/ticket-creation.model';
 import {ShoppingCartService} from './shopping-cart.service';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
 import { GiftTicketCreation } from './gift-ticket-creation.model';
 import {VoucherApplyDialogComponent} from './voucher-apply-dialog.component';
-import {User} from "./user.models";
+import {User} from "@shared/models/user.models";
 import {CheckOutDialogDataModel} from "./check-out-dialog-data.model";
 
 @Component({

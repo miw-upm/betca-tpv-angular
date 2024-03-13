@@ -6,6 +6,7 @@ import {AuthService} from '@core/auth.service';
 import {Observable} from "rxjs";
 import {CustomerPoints} from "@shared/models/customer-points.model";
 import {CustomerPointsService} from "./customer-points/customer-points.service";
+import {ShoppingBasketService} from "./shopping-basket/shopping-basket.service";
 
 @Component({
   templateUrl: 'home.component.html',
@@ -15,7 +16,8 @@ export class HomeComponent {
   title = 'TPV';
   username = undefined;
 
-  constructor(private dialog: MatDialog, private authService: AuthService, private customerPointsService: CustomerPointsService) {
+  constructor(private dialog: MatDialog, private authService: AuthService
+              , private customerPointsService: CustomerPointsService, private shoppingBasketService: ShoppingBasketService) {
   }
 
   login(): void {
@@ -30,7 +32,8 @@ export class HomeComponent {
     this.authService.logout();
   }
 
-  cart(): void {
+  cart(): number {
+    return this.shoppingBasketService.shoppingBasketCount();
   }
 
   isAuthenticated(): boolean {
