@@ -15,7 +15,6 @@ import {CarouselModule} from "@shared/components/carousel/carousel.module";
 import {AdviserComponent} from "./adviser/adviser.component";
 import { Top5Component } from './adviser/top5/top5.component';
 import {SearchByDescriptionComponent} from "./shared/search-by-description.component";
-import {PhoneRequestDialogComponent} from "./shopping-basket/phone-request-dialog.component";
 import {OnlineOrdersComponent} from "./online-orders/online-orders.component";
 import { RefundsComponent } from './refunds/refunds.component';
 import { SettingsComponent } from './settings/settings.component';
@@ -32,7 +31,6 @@ import {ChatWindowComponent} from "./technical-support/chat-window.component";
     AdviserComponent,
     SearchByDescriptionComponent,
     ComplaintsComponent,
-    PhoneRequestDialogComponent,
     ComplaintCreationDialogComponent,
     ReviewsComponent,
     ReviewDialogComponent,

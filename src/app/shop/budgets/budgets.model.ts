@@ -1,4 +1,4 @@
-import {Shopping} from "../cashier-opened/shopping-cart/shopping.model";
+import {Shopping} from "@shared/models/shopping.model";
 
 export interface Budget {
   reference?: string;

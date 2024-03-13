@@ -1,4 +1,4 @@
-import {ShoppingState} from './shopping-state.model';
+import {ShoppingState} from '../../shop/cashier-opened/shopping-cart/shopping-state.model';
 
 export class Shopping {
   amount: number;
