@@ -5,6 +5,7 @@ import {ReadDetailDialogComponent} from "@shared/dialogs/read-detail.dialog.comp
 import {StockAudit} from "../shared/services/models/stock-audit.model";
 import {MatDialog} from "@angular/material/dialog";
 import {StockAuditDialogComponent} from "./stock-audit-dialog/stock-audit-dialog.component";
+import {CancelYesDialogComponent} from "@shared/dialogs/cancel-yes-dialog.component";
 
 @Component({
   templateUrl: 'stock-audit.component.html'
@@ -20,15 +21,21 @@ export class StockAuditComponent {
   }
 
   loadAudits(): void {
-    this.stockAudits = this.stockAuditService.search();
+    this.stockAudits = this.stockAuditService.readAll();
   }
 
   create(): void {
-    this.dialog.open(StockAuditDialogComponent, {
-      width: '80%'
-    })
+    this.dialog.open(CancelYesDialogComponent)
       .afterClosed()
-      .subscribe(() => this.loadAudits())
+      .subscribe(result => {
+        if(result){
+          this.stockAuditService.create()
+            .subscribe((stockAudit) => {
+              this.loadAudits();
+              this.update(stockAudit);
+            })
+        }
+      });
   }
 
   read(stockAudit: StockAudit): void {
@@ -57,7 +64,7 @@ export class StockAuditComponent {
   }
 
   isClosed(stockAudit: StockAudit): boolean {
-    return stockAudit.closeDate !== null;
+    return ((stockAudit.closeDate !== null) && (stockAudit.closeDate !== undefined));
   }
 }
 

@@ -1,12 +1,14 @@
 import {Component, Inject} from '@angular/core';
 
-import {TicketCreation} from './ticket-creation.model';
+import {TicketCreation} from '@shared/models/ticket-creation.model';
 import {ShoppingCartService} from './shopping-cart.service';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {GiftTicketCreation} from './gift-ticket-creation.model';
 import {VoucherApplyDialogComponent} from './voucher-apply-dialog.component';
 import {Salesperson} from "../../shared/services/models/salesPeople.model";
 import {SalesPeopleService} from "../../sales-people/sales-people.service";
+import {User} from "@shared/models/user.models";
+import {CheckOutDialogDataModel} from "./check-out-dialog-data.model";
 
 @Component({
   templateUrl: 'check-out-dialog.component.html',
@@ -24,11 +26,16 @@ export class CheckOutDialogComponent {
   constructor(@Inject(MAT_DIALOG_DATA) data, private dialogRef: MatDialogRef<CheckOutDialogComponent>,
               private dialog: MatDialog, private shoppingCartService: ShoppingCartService,
               private salesPeopleService: SalesPeopleService) {
-    this.ticketCreation = {cash: 0, card: 0, voucher: 0, shoppingList: data, note: ''};
+    this.ticketCreation = {user:this.getUserFromData(data),cash: 0, card: 0, voucher: 0, shoppingList: data.shoppingCart, note: ''};
     this.ticketGiftCreation = {message: ''};
     this.total();
   }
-
+  private getUserFromData(dataModel:CheckOutDialogDataModel): User{
+    if(dataModel.mobile != null){
+      return <User>{mobile:Number(dataModel.mobile)};
+    }
+    return null;
+  }
   total(): void {
     this.totalPurchase = 0;
     for (const shopping of this.ticketCreation.shoppingList) {
@@ -44,7 +51,7 @@ export class CheckOutDialogComponent {
   searchUser(mobile: string): void {
     if (mobile) {
       // TODO falta buscar el user en BD, si no existe, debe sacar un dialogo para crearlo
-      this.ticketCreation.user = {mobile: Number(mobile)};
+      this.ticketCreation.user = <User>{mobile: Number(mobile)};
     }
   }
 
@@ -209,5 +216,12 @@ export class CheckOutDialogComponent {
   invalidICreditLine(): boolean {
     // TODO pendiente de calcular. Hace falta el usuario
     return true;
+  }
+
+  getUserMobile() {
+    if(this.managedMobile()){
+      return this.ticketCreation.user.mobile;
+    }
+    return null;
   }
 }

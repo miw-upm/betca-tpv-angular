@@ -2,7 +2,7 @@ import {Component, Inject} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialog} from '@angular/material/dialog';
 import {TicketService} from "./tickets.service";
 import {Ticket} from "./tickets.models";
-import {Shopping} from "../shopping-cart/shopping.model";
+import {Shopping} from "@shared/models/shopping.model";
 import {ShoppingState} from "../shopping-cart/shopping-state.model";
 import {CashierClosureService} from "../cashier-closure/cashier-closure.service";
 import {Observable} from "rxjs";

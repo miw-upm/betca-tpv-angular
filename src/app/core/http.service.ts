@@ -19,7 +19,7 @@ export class HttpService {
   private responseType: string;
   private successfulNotification = undefined;
   private errorNotification = undefined;
-
+  private showErrors: boolean = true;
   constructor(private http: HttpClient, private snackBar: MatSnackBar, private router: Router) {
     this.resetOptions();
   }
@@ -50,6 +50,11 @@ export class HttpService {
   pdf(): HttpService {
     this.responseType = 'blob';
     this.header('Accept', 'application/pdf , application/json');
+    return this;
+  }
+
+  hideError(): HttpService {
+    this.showErrors = false;
     return this;
   }
 
@@ -146,12 +151,15 @@ export class HttpService {
   }
 
   private showError(notification: string): void {
-    if (this.errorNotification) {
-      this.snackBar.open(this.errorNotification, 'Error', {duration: 5000});
-      this.errorNotification = undefined;
-    } else {
-      this.snackBar.open(notification, 'Error', {duration: 5000});
+    if(this.showErrors) {
+      if (this.errorNotification) {
+        this.snackBar.open(this.errorNotification, 'Error', {duration: 5000});
+        this.errorNotification = undefined;
+      } else {
+        this.snackBar.open(notification, 'Error', {duration: 5000});
+      }
     }
+    this.showErrors = true;
   }
 
   private handleError(response): any {

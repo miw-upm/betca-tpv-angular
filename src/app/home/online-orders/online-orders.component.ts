@@ -3,6 +3,7 @@ import {AfterViewInit, Component} from '@angular/core';
 import {OnlineOrderState} from "@shared/models/online-order-state";
 import {OnlineOrdersService} from "@shared/services/online-orders.service";
 import {of} from "rxjs";
+import {map} from "rxjs/operators";
 
 @Component({
   templateUrl: 'online-orders.component.html'
@@ -18,6 +19,11 @@ export class OnlineOrdersComponent implements AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this.onlineOrders = this.onlineOrderService.search();
+    this.onlineOrders = this.onlineOrderService.searchPersonal()
+      .pipe(map(onlineOrders =>
+        onlineOrders.map(onlineOrder => {
+          onlineOrder.state = OnlineOrderState[onlineOrder.state.toString()];
+          return onlineOrder;
+        })));
   }
 }

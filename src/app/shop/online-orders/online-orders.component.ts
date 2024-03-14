@@ -4,6 +4,7 @@ import {OnlineOrderState} from "@shared/models/online-order-state";
 import {OnlineOrdersService} from "@shared/services/online-orders.service";
 import {of} from "rxjs";
 import {OnlineOrder} from "@shared/models/online-order.model";
+import {map} from "rxjs/operators";
 
 @Component({
   templateUrl: 'online-orders.component.html'
@@ -25,7 +26,12 @@ export class OnlineOrdersComponent implements AfterViewInit {
   }
 
   reloadList(): void {
-    this.onlineOrders = this.onlineOrderService.search();
+    this.onlineOrders = this.onlineOrderService.search()
+      .pipe(map(onlineOrders =>
+        onlineOrders.map(onlineOrder => {
+          onlineOrder.state = OnlineOrderState[onlineOrder.state.toString()];
+          return onlineOrder;
+        })));
   }
 
   update(onlineOrder: OnlineOrder) {

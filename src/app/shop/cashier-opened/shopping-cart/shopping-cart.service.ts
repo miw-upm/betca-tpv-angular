@@ -5,14 +5,14 @@ import {catchError, concatMap, map} from 'rxjs/operators';
 
 import {HttpService} from '@core/http.service';
 import {SharedArticleService} from '../../shared/services/shared.article.service';
-import {Shopping} from './shopping.model';
-import {TicketCreation} from './ticket-creation.model';
+import {TicketCreation} from '@shared/models/ticket-creation.model';
 import {ArticleQuickCreationDialogComponent} from './article-quick-creation-dialog.component';
 
 import {ShoppingState} from './shopping-state.model';
 import {EndPoints} from '@shared/end-points';
 import { GiftTicketCreation } from './gift-ticket-creation.model';
 import {Salesperson} from "../../shared/services/models/salesPeople.model";
+import {Shopping} from "@shared/models/shopping.model";
 
 @Injectable({
   providedIn: 'root',

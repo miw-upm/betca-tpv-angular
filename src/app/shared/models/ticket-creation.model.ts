@@ -1,5 +1,5 @@
-import {Shopping} from './shopping.model';
 import {User} from './user.models';
+import {Shopping} from "@shared/models/shopping.model";
 
 export interface TicketCreation {
   user?: User;

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { Ticket } from './tickets.models';
-import { Shopping } from "../shopping-cart/shopping.model";
+import { Shopping } from "@shared/models/shopping.model";
 import {CashierClosureService} from "../cashier-closure/cashier-closure.service";
 import {SharedVoucherService} from "../../shared/services/shared-voucher.service";
 import {CashierState} from "../cashier-closure/cashier-state.model";
@@ -16,6 +16,7 @@ export class TicketService {
   cashierState: Observable<CashierState>;
 
   static FINALVALUE = '/finalvalue';
+  static SEARCHBYGIFTTICKET = '/search-by-gift-ticket';
   constructor( private cashierClosureService: CashierClosureService,
                private sharedVoucherService: SharedVoucherService, private httpService: HttpService) {
     this.cashierState = this.cashierClosureService.readState();
@@ -52,6 +53,13 @@ export class TicketService {
   search(query: string): Observable<Ticket[]> {
     const filteredTicket = this.mockTickets.filter(ticket => ticket.id === query || ticket.userMobile === query || ticket.reference === query);
     return of(filteredTicket);
+  }
+
+  searchByGiftTicket(searchByGiftTicketReference: string): Observable<Ticket[]> {
+    if (!searchByGiftTicketReference || /^\s*$/.test(searchByGiftTicketReference)) {
+      return of([]);
+    }
+    return this.httpService.paramsFrom({reference: searchByGiftTicketReference}).get(EndPoints.TICKETS + TicketService.SEARCHBYGIFTTICKET);
   }
 
   read(query: string): Observable<Ticket> {
