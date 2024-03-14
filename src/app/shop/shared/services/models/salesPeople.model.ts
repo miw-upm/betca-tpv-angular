@@ -1,4 +1,4 @@
-import {User} from "@shared/models/user.models";
+import {User} from "@core/user.model";
 import {Ticket} from "../../../cashier-opened/tickets/tickets.models";
 
 
