@@ -90,6 +90,21 @@ export class ShoppingCartService {
     return this.httpService.pdf().get(EndPoints.BUDGETS + '/' + budgetReference + ShoppingCartService.RECEIPT);
   }
 
+  readBudget(budgetReference: string): Observable<Shopping[]> {
+    return this.httpService
+      .get(EndPoints.BUDGETS + "/" + budgetReference)
+      .pipe(
+        map(budget => {
+            const shoppingInBudget: Shopping[] = [];
+            budget.shoppingList.forEach(shopping =>
+              shoppingInBudget.push(shopping)
+            );
+            return shoppingInBudget;
+          }
+        )
+      );
+  }
+
   createVoucherAndPrint(voucher: number): Observable<void> {
     return EMPTY; // TODO change EMPTY
   }

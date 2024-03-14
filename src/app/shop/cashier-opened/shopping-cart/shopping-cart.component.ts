@@ -183,7 +183,26 @@ export class ShoppingCartComponent implements OnInit {
   }
 
   addBudget(reference: string): void {
-    alert("Adding articles to shopping cart from budget " + reference + "...");
+    this.shoppingCartService.readBudget(reference)
+      .subscribe(shoppingInBudget => {
+        shoppingInBudget.forEach(shopping => {
+          this.addShoppingWithUpdatePrice(shopping);
+        })
+      });
+  }
+
+  addShoppingWithUpdatePrice(shopping: Shopping): void {
+    this.shoppingCartService
+      .read(shopping.barcode)
+      .subscribe(newShopping => {
+        shopping.total = shopping.retailPrice * shopping.amount * (1 - shopping.discount / 100);
+        if (newShopping.total > shopping.total) {
+          newShopping.total = shopping.total;
+          newShopping.updateDiscount();
+        }
+        this.shoppingCart.push(newShopping);
+        this.synchronizeShoppingCart();
+      });
   }
 
   addDiscount(mobile): void {

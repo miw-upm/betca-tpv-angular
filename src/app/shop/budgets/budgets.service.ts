@@ -5,12 +5,13 @@ import {HttpService} from '@core/http.service';
 import {EndPoints} from '@shared/end-points';
 import {Budget} from "../cashier-opened/shopping-cart/budgets.model";
 import {BudgetsSearch} from "./budgets-search.model";
+import {map} from "rxjs/operators";
 
 @Injectable({
   providedIn: 'root',
 })
 export class BudgetsService {
-  static SEARCH = '/search';
+  static REFERENCE = '/reference';
   private budgetList: Budget[] = [
     { reference: '123456', creationDate: new Date('2024-02-21'), shoppingList: [] },
     { reference: '234567', creationDate: new Date('2024-02-22'), shoppingList: [] },
@@ -32,8 +33,16 @@ export class BudgetsService {
     return of(this.budgetList.filter(budget => budget.reference.toLowerCase().includes(budgetSearch.reference.toLowerCase())));
 
     // return this.httpService
-    //   .paramsFrom(budgetSearch)
-    //   .get(EndPoints.BUDGETS + BudgetsService.SEARCH);
+    //   .get(EndPoints.BUDGETS + budgetSearch.reference);
+  }
+
+  searchReference(reference: string): Observable<string[]> {
+    return this.httpService
+      .param('reference', reference)
+      .get(EndPoints.BUDGETS + BudgetsService.REFERENCE)
+      .pipe(
+        map(response => response.references)
+      );
   }
 
   searchAll(): Observable<Budget[]> {
