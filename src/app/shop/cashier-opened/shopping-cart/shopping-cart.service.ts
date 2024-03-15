@@ -13,6 +13,7 @@ import {ShoppingState} from './shopping-state.model';
 import {EndPoints} from '@shared/end-points';
 import { GiftTicketCreation } from './gift-ticket-creation.model';
 import {Budget} from "./budgets.model";
+import {BudgetExpiredDialogComponent} from "./budget-expired.dialog.component";
 
 @Injectable({
   providedIn: 'root',
@@ -96,9 +97,20 @@ export class ShoppingCartService {
       .pipe(
         map(budget => {
             const shoppingInBudget: Shopping[] = [];
-            budget.shoppingList.forEach(shopping =>
-              shoppingInBudget.push(shopping)
-            );
+            const actualDate: Date = new Date();
+            const expireDate: Date = new Date(budget.creationDate);
+            expireDate.setMonth(expireDate.getMonth() + 1);
+            if (expireDate > actualDate) {
+              budget.shoppingList.forEach(shopping =>
+                shoppingInBudget.push(shopping)
+              );
+            } else {
+              this.dialog.open(BudgetExpiredDialogComponent, {
+                data: {
+                  creationDate: budget.creationDate
+                }
+              });
+            }
             return shoppingInBudget;
           }
         )

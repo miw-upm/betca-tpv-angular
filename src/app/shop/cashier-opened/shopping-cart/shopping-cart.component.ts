@@ -12,6 +12,7 @@ import {MatSnackBar} from "@angular/material/snack-bar";
 import {WarningMessages} from "./WarningMessages";
 import {CheckOutDialogDataModel} from "./check-out-dialog-data.model";
 import {Budget} from "./budgets.model";
+import {BudgetExpiredDialogComponent} from "./budget-expired.dialog.component";
 
 
 @Component({
