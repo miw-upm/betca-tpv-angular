@@ -1,4 +1,4 @@
-import {User} from "../../../cashier-opened/shopping-cart/user.models";
+import {User} from "@core/user.model";
 import {Ticket} from "../../../cashier-opened/tickets/tickets.models";
 
 

@@ -19,11 +19,11 @@
       </ng-container>
       <ng-container matColumnDef="description">
         <mat-header-cell *matHeaderCellDef fxFlex="28%"> Description</mat-header-cell>
-        <mat-cell *matCellDef="let item" [matTooltip]="item.article.barcode" fxFlex="28%"> {{item.article.description}}</mat-cell>
+        <mat-cell *matCellDef="let item" [matTooltip]="item.barcode" fxFlex="28%"> {{item.description}}</mat-cell>
       </ng-container>
       <ng-container matColumnDef="retailPrice">
         <mat-header-cell *matHeaderCellDef fxFlex="11%"> Retail Price</mat-header-cell>
-        <mat-cell *matCellDef="let item" fxFlex="11%">{{item.article.retailPrice}}</mat-cell>
+        <mat-cell *matCellDef="let item" fxFlex="11%">{{item.retailPrice}}</mat-cell>
       </ng-container>
       <ng-container matColumnDef="amount">
         <mat-header-cell *matHeaderCellDef fxFlex="20%"> Nº</mat-header-cell>
@@ -56,7 +56,7 @@
     </div>
   </mat-card-content>
   <mat-card-content>
-    <button (click)="order()" [disabled]="isEmpty()" color="accent" mat-raised-button>
+    <button (click)="order()" [disabled]="isEmpty() || !userIsLogged()" color="accent" mat-raised-button>
       Order
     </button>
   </mat-card-content>

@@ -1,17 +1,18 @@
 import {Injectable} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
-import {EMPTY, iif, merge, Observable} from 'rxjs';
+import {EMPTY, iif, merge, mergeMap, Observable, of} from 'rxjs';
 import {catchError, concatMap, map} from 'rxjs/operators';
 
 import {HttpService} from '@core/http.service';
 import {SharedArticleService} from '../../shared/services/shared.article.service';
-import {Shopping} from './shopping.model';
-import {TicketCreation} from './ticket-creation.model';
+import {TicketCreation} from '@shared/models/ticket-creation.model';
 import {ArticleQuickCreationDialogComponent} from './article-quick-creation-dialog.component';
 
 import {ShoppingState} from './shopping-state.model';
 import {EndPoints} from '@shared/end-points';
 import { GiftTicketCreation } from './gift-ticket-creation.model';
+import {Salesperson} from "../../shared/services/models/salesPeople.model";
+import {Shopping} from "@shared/models/shopping.model";
 import {Budget} from "./budgets.model";
 import {BudgetExpiredDialogComponent} from "./budget-expired.dialog.component";
 
@@ -58,11 +59,13 @@ export class ShoppingCartService {
   }
 
   createTicketAndPrintReceipts(ticketCreation: TicketCreation, giftTicketCreation: GiftTicketCreation, voucher: number, requestedInvoice: boolean, requestedGiftTicket: boolean,
-                               requestDataProtectionAct: boolean): Observable<void> {
+                               requestDataProtectionAct: boolean,  salesPerson: Salesperson): Observable<void> {
     return this.httpService
       .post(EndPoints.TICKETS, ticketCreation)
       .pipe(
         concatMap(ticket => {
+          salesPerson.ticket = ticket;
+          this.createSalesPeople(salesPerson);
           let receipts = this.printTicket(ticket.id);
           receipts = iif(() => voucher > 0, merge(receipts, this.createVoucherAndPrint(voucher)), receipts);
           receipts = iif(() => requestedInvoice, merge(receipts, this.createInvoiceAndPrint(ticket.id)), receipts);
@@ -144,5 +147,10 @@ export class ShoppingCartService {
       .pipe(
         map(article=>new Shopping(article.barcode,article.description,article.retailPrice))
       );
+  }
+
+  createSalesPeople(salesPerson: Salesperson): Observable<Salesperson> {
+    return this.httpService
+      .post(EndPoints.SALESPEOPLE, salesPerson);
   }
 }

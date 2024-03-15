@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
-import {Shopping} from "../../shop/cashier-opened/shopping-cart/shopping.model";
+import {Shopping} from "@shared/models/shopping.model";
 import {TicketTrackingService} from "./ticket-tracking.service";
 
 @Component({

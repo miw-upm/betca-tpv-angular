@@ -2,7 +2,7 @@ import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {Observable, of} from 'rxjs';
 
 import {ShoppingCartService} from './shopping-cart.service';
-import {Shopping} from './shopping.model';
+import {Shopping} from '@shared/models/shopping.model';
 import {CheckOutDialogComponent} from './check-out-dialog.component';
 import {MatDialog} from '@angular/material/dialog';
 import {ShoppingState} from './shopping-state.model';

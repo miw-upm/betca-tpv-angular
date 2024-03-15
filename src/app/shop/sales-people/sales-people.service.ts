@@ -6,6 +6,7 @@ import {Salesperson} from '../shared/services/models/salesPeople.model';
 import {SalesPeopleSearch1} from "./salesPeople-search1.model";
 import {SalesPeopleSearch2} from "./salesPeople-search2.model";
 import {EndPoints} from "@shared/end-points";
+import {User} from "@core/user.model";
 
 @Injectable({
   providedIn: 'root'
@@ -33,5 +34,10 @@ export class SalesPeopleService {
       .get(EndPoints.SALESPEOPLE + SalesPeopleService.SEARCH + SalesPeopleService.MONTH);
   }
 
+  searchSalespersonByMobile(mobile:string):Observable<User>{
+    return this.httpService
+      .get(EndPoints.USERS + '/' + mobile);
+  }
 
-}
+  }
+

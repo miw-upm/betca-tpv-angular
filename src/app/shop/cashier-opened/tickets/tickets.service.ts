@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { Ticket } from './tickets.models';
-import { Shopping } from "../shopping-cart/shopping.model";
+import { Shopping } from "@shared/models/shopping.model";
 import {CashierClosureService} from "../cashier-closure/cashier-closure.service";
 import {SharedVoucherService} from "../../shared/services/shared-voucher.service";
 import {CashierState} from "../cashier-closure/cashier-state.model";

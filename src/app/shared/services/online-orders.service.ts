@@ -30,4 +30,9 @@ export class OnlineOrdersService {
     return this.httpService
       .put(EndPoints.ONLINE_ORDERS + "/" + reference, updatedOnlineOrder);
   }
+
+  create(newOnlineOrder: OnlineOrder): Observable<OnlineOrder> {
+    return this.httpService
+      .post(EndPoints.ONLINE_ORDERS, newOnlineOrder);
+  }
 }

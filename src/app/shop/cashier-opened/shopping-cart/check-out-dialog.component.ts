@@ -1,11 +1,13 @@
 import {Component, Inject} from '@angular/core';
 
-import {TicketCreation} from './ticket-creation.model';
+import {TicketCreation} from '@shared/models/ticket-creation.model';
 import {ShoppingCartService} from './shopping-cart.service';
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from '@angular/material/dialog';
-import { GiftTicketCreation } from './gift-ticket-creation.model';
+import {GiftTicketCreation} from './gift-ticket-creation.model';
 import {VoucherApplyDialogComponent} from './voucher-apply-dialog.component';
-import {User} from "./user.models";
+import {Salesperson} from "../../shared/services/models/salesPeople.model";
+import {SalesPeopleService} from "../../sales-people/sales-people.service";
+import {User} from "@shared/models/user.models";
 import {CheckOutDialogDataModel} from "./check-out-dialog-data.model";
 
 @Component({
@@ -22,7 +24,8 @@ export class CheckOutDialogComponent {
   requestedCreditLine = false;
 
   constructor(@Inject(MAT_DIALOG_DATA) data, private dialogRef: MatDialogRef<CheckOutDialogComponent>,
-              private dialog: MatDialog, private shoppingCartService: ShoppingCartService) {
+              private dialog: MatDialog, private shoppingCartService: ShoppingCartService,
+              private salesPeopleService: SalesPeopleService) {
     this.ticketCreation = {user:this.getUserFromData(data),cash: 0, card: 0, voucher: 0, shoppingList: data.shoppingCart, note: ''};
     this.ticketGiftCreation = {message: ''};
     this.total();
@@ -131,6 +134,32 @@ export class CheckOutDialogComponent {
       });
   }
 
+  async associateTicketToSalesPerson(): Promise<Salesperson> {
+    let phoneNumber = this.generatePhoneNumber();
+
+    let salesPerson: Salesperson = {
+      salesperson: {
+        token: "user_token",
+        mobile: phoneNumber,
+      },
+      ticket: null
+    };
+
+    salesPerson.salesperson = await this.salesPeopleService.searchSalespersonByMobile(phoneNumber.toString()).toPromise();
+
+    return salesPerson;
+  }
+
+  private generatePhoneNumber(): number {
+    const randomNumber = Math.random();
+
+    if (randomNumber < 0.5) {
+      return 666666001;
+    } else {
+      return 666666002;
+    }
+  }
+
   invalidCheckOut(): boolean {
     return (this.totalPurchase + this.returnedAmount() - this.totalCommitted() < -0.01); // rounding errors
   }
@@ -139,7 +168,7 @@ export class CheckOutDialogComponent {
     return Math.round(value * 100) / 100;
   }
 
-  pay(): any {
+  async pay(){
     const returned = this.returnedAmount();
     const cash = this.ticketCreation.cash;
     let voucher = 0;
@@ -168,8 +197,14 @@ export class CheckOutDialogComponent {
     if (returned > 0) {
       this.ticketCreation.note += ' Return: ' + this.round(returned) + '.';
     }
+    let salesperson: Salesperson = await this.associateTicketToSalesPerson();
+
+    this.ticketCreation.note+= '\n Salesperson:' +
+      '\n Name: ' + salesperson.salesperson.firstName + '.' +
+      '\n Email: ' + salesperson.salesperson.email + '.' ;
+
     this.shoppingCartService.createTicketAndPrintReceipts(this.ticketCreation, this.ticketGiftCreation, voucher,
-      this.requestedInvoice, this.requestedGiftTicket, this.requestedDataProtectionAct)
+      this.requestedInvoice, this.requestedGiftTicket, this.requestedDataProtectionAct, salesperson)
       .subscribe(() => this.dialogRef.close(true));
   }
 
