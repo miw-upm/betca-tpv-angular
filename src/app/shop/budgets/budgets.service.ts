@@ -1,43 +1,45 @@
 import {Injectable} from '@angular/core';
-import {Observable, of} from 'rxjs';
+import {Observable} from 'rxjs';
 
 import {HttpService} from '@core/http.service';
 import {EndPoints} from '@shared/end-points';
-import {Budget} from "./budgets.model";
+import {Budget} from "../cashier-opened/shopping-cart/budgets.model";
 import {BudgetsSearch} from "./budgets-search.model";
+import {map} from "rxjs/operators";
 
 @Injectable({
   providedIn: 'root',
 })
 export class BudgetsService {
-  static SEARCH = '/search';
-  private budgetList: Budget[] = [
-    { reference: '123456', creationDate: new Date('2024-02-21'), shoppings: [] },
-    { reference: '234567', creationDate: new Date('2024-02-22'), shoppings: [] },
-    { reference: '345678', creationDate: new Date('2024-02-23'), shoppings: [] }
-  ];
+  static REFERENCE = '/reference';
+  private static SEARCH: string = '/search';
 
   constructor(private httpService: HttpService) {
   }
 
   read(reference: string): Observable<Budget> {
-    const budget = this.budgetList.find(b => b.reference === reference);
-    return of(budget);
-
-    // return this.httpService
-    //   .get(EndPoints.BUDGETS + '/' + reference);
+    return this.httpService
+      .get(EndPoints.BUDGETS + '/' + reference);
   }
 
   search(budgetSearch: BudgetsSearch): Observable<Budget[]> {
-    return of(this.budgetList.filter(budget => budget.reference.toLowerCase().includes(budgetSearch.reference.toLowerCase())));
+    return this.httpService
+      .param('reference', budgetSearch.reference)
+      .get(EndPoints.BUDGETS + BudgetsService.SEARCH);
+  }
 
-    // return this.httpService
-    //   .paramsFrom(budgetSearch)
-    //   .get(EndPoints.BUDGETS + BudgetsService.SEARCH);
+  searchReference(reference: string): Observable<string[]> {
+    return this.httpService
+      .param('reference', reference)
+      .get(EndPoints.BUDGETS + BudgetsService.REFERENCE)
+      .pipe(
+        map(response => response.references)
+      );
   }
 
   searchAll(): Observable<Budget[]> {
-    return of(this.budgetList.filter(budget => budget.reference.toLowerCase()));
+    return this.httpService
+      .get(EndPoints.BUDGETS + BudgetsService.SEARCH);
   }
 }
 

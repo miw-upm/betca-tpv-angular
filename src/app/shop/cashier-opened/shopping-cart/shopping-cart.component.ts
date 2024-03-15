@@ -11,6 +11,8 @@ import {CustomerPointsConstants} from "@shared/models/customer-points.model";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {WarningMessages} from "./WarningMessages";
 import {CheckOutDialogDataModel} from "./check-out-dialog-data.model";
+import {Budget} from "./budgets.model";
+import {BudgetExpiredDialogComponent} from "./budget-expired.dialog.component";
 
 
 @Component({
@@ -23,6 +25,7 @@ export class ShoppingCartComponent implements OnInit {
 
   barcode: string;
   barcodes: Observable<number[]> = of([]);
+  budget: Budget;
 
   displayedColumns = ['id', 'description', 'retailPrice', 'amount', 'discount', 'total', 'actions'];
   shoppingCart: Shopping[] = [];
@@ -173,11 +176,34 @@ export class ShoppingCartComponent implements OnInit {
   }
 
   createBudget(): void {
-    alert("Creating budget...");
+    this.budget = {reference: null, creationDate: null, shoppingList: this.shoppingCart};
+    this.shoppingCartService.createBudgetAndPrintReceipt(this.budget)
+      .subscribe(() => {
+        this.ngOnInit()
+      })
   }
 
   addBudget(reference: string): void {
-    alert("Adding articles to shopping cart from budget " + reference + "...");
+    this.shoppingCartService.readBudget(reference)
+      .subscribe(shoppingInBudget => {
+        shoppingInBudget.forEach(shopping => {
+          this.addShoppingWithUpdatePrice(shopping);
+        })
+      });
+  }
+
+  addShoppingWithUpdatePrice(shopping: Shopping): void {
+    this.shoppingCartService
+      .read(shopping.barcode)
+      .subscribe(newShopping => {
+        shopping.total = shopping.retailPrice * shopping.amount * (1 - shopping.discount / 100);
+        if (newShopping.total > shopping.total) {
+          newShopping.total = shopping.total;
+          newShopping.updateDiscount();
+        }
+        this.shoppingCart.push(newShopping);
+        this.synchronizeShoppingCart();
+      });
   }
 
   addDiscount(mobile): void {

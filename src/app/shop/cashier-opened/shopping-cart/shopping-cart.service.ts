@@ -13,6 +13,8 @@ import {EndPoints} from '@shared/end-points';
 import { GiftTicketCreation } from './gift-ticket-creation.model';
 import {Salesperson} from "../../shared/services/models/salesPeople.model";
 import {Shopping} from "@shared/models/shopping.model";
+import {Budget} from "./budgets.model";
+import {BudgetExpiredDialogComponent} from "./budget-expired.dialog.component";
 
 @Injectable({
   providedIn: 'root',
@@ -76,6 +78,46 @@ export class ShoppingCartService {
 
   printTicket(ticketId: string): Observable<void> {
     return this.httpService.pdf().get(EndPoints.TICKETS + '/' + ticketId + ShoppingCartService.RECEIPT);
+  }
+
+  createBudgetAndPrintReceipt(budget: Budget): Observable<void> {
+    return this.httpService
+      .post(EndPoints.BUDGETS, budget)
+      .pipe(
+        concatMap(budget => {
+          return this.printBudget(budget.reference);
+        })
+      );
+  }
+
+  printBudget(budgetReference: string): Observable<void> {
+    return this.httpService.pdf().get(EndPoints.BUDGETS + '/' + budgetReference + ShoppingCartService.RECEIPT);
+  }
+
+  readBudget(budgetReference: string): Observable<Shopping[]> {
+    return this.httpService
+      .get(EndPoints.BUDGETS + "/" + budgetReference)
+      .pipe(
+        map(budget => {
+            const shoppingInBudget: Shopping[] = [];
+            const actualDate: Date = new Date();
+            const expireDate: Date = new Date(budget.creationDate);
+            expireDate.setMonth(expireDate.getMonth() + 1);
+            if (expireDate > actualDate) {
+              budget.shoppingList.forEach(shopping =>
+                shoppingInBudget.push(shopping)
+              );
+            } else {
+              this.dialog.open(BudgetExpiredDialogComponent, {
+                data: {
+                  creationDate: budget.creationDate
+                }
+              });
+            }
+            return shoppingInBudget;
+          }
+        )
+      );
   }
 
   createVoucherAndPrint(voucher: number): Observable<void> {

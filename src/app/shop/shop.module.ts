@@ -84,6 +84,8 @@ import {
   DataProtectionCreationUpdatingDialogComponent
 } from "./data-protection/data-protection-creation-updating-dialog.component";
 import {OffersCreationUpdatingDialogComponent} from "./offers/offers-creation-updating-dialog.component";
+import { SearchByReferenceComponent } from './shared/search-by-reference.component';
+import { BudgetExpiredDialogComponent } from './cashier-opened/shopping-cart/budget-expired.dialog.component';
 
 @NgModule({
   declarations: [
@@ -139,7 +141,9 @@ import {OffersCreationUpdatingDialogComponent} from "./offers/offers-creation-up
     IssueComponent,
     IssuesCreateDialogComponent,
     DataProtectionComponent,
-    DataProtectionCreationUpdatingDialogComponent
+    DataProtectionCreationUpdatingDialogComponent,
+    SearchByReferenceComponent,
+    BudgetExpiredDialogComponent
   ],
   imports: [
     SharedModule,
