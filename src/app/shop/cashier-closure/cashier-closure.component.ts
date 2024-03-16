@@ -16,13 +16,20 @@ import {map} from "rxjs/operators";
 export class CashierClosureComponent {
   title: string = "Cashier Closures"
   cashiers: Observable<Cashier[]>;
-  month: number;
-  specificMonth: number;
-  year: number;
-  specificYear: number;
   total: Observable<number>;
 
+  months: string[] = [
+    'January', 'February', 'March', 'April', 'May', 'June',
+    'July', 'August', 'September', 'October', 'November', 'December'
+  ];
+
+  currentMonth: number;
+  currentYear: number;
+
   constructor(private cashierClosureService: CashierClosureService) {
+    this.currentMonth = new Date().getMonth();
+    this.currentYear = new Date().getFullYear();
+
     this.search();
     this.calculateTotalIncoming();
   }
@@ -69,5 +76,14 @@ export class CashierClosureComponent {
 
   calculateTotalIncoming(): void {
     this.total = of(100);
+  }
+
+  generateYearList(): number[] {
+    const years: number[] = [];
+    /*this.cashierClosureService.findFirstClosureYear()*/
+    for (let year = 2000; year <= this.currentYear; year++) {
+      years.push(year);
+    }
+    return years;
   }
 }
