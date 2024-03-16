@@ -11,11 +11,15 @@
     <br>
   </mat-card-content>
 
+  <mat-label><strong>Filters: </strong></mat-label>
   <mat-card-content>
-    <mat-label><strong>Filters: </strong></mat-label>
     <mat-form-field>
       <mat-label>Month</mat-label>
-      <input [(ngModel)]="specificMonth" matInput type="number" placeholder="Enter specific month">
+      <mat-select [(ngModel)]="months[currentMonth]">
+        <mat-option *ngFor="let month of months; let i = index" [value]=month>
+          {{ month }}
+        </mat-option>
+      </mat-select>
     </mat-form-field>
     <button (click)="searchBySpecificMonth()" mat-icon-button>
       <mat-icon>search</mat-icon>
@@ -23,7 +27,11 @@
 
     <mat-form-field>
       <mat-label>Year</mat-label>
-      <input [(ngModel)]="specificYear" matInput type="number" placeholder="Enter specific year">
+      <mat-select [(ngModel)]="currentYear">
+        <mat-option *ngFor="let year of generateYearList()" [value]=year>
+          {{ year }}
+        </mat-option>
+      </mat-select>
     </mat-form-field>
     <button (click)="searchBySpecificYear()" mat-icon-button>
       <mat-icon>search</mat-icon>
