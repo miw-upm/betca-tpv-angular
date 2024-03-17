@@ -2,8 +2,6 @@ import {Injectable} from '@angular/core';
 
 import {Article} from '../shared/article.model';
 import {HttpService} from "@core/http.service";
-import {TicketService} from "../../shop/cashier-opened/tickets/tickets.service";
-import {OnlineOrdersService} from "@shared/services/online-orders.service";
 import {AuthService} from "@core/auth.service";
 import {EndPoints} from "@shared/end-points";
 import {Observable} from "rxjs";
