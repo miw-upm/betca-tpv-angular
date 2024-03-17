@@ -1,10 +1,8 @@
 import {Injectable} from '@angular/core';
-import {Observable, of} from 'rxjs';
+import {Observable} from 'rxjs';
 import {OnlineOrder} from "@shared/models/online-order.model";
-import {OnlineOrderState} from "@shared/models/online-order-state";
 import {HttpService} from "@core/http.service";
 import {EndPoints} from "@shared/end-points";
-import {AuthService} from "@core/auth.service";
 
 @Injectable({
   providedIn: 'root',
@@ -12,7 +10,7 @@ import {AuthService} from "@core/auth.service";
 export class OnlineOrdersService {
   static PERSONAL = '/personal';
 
-  constructor(private httpService: HttpService, private auth: AuthService) {
+  constructor(private httpService: HttpService) {
 
   }
 
@@ -21,18 +19,8 @@ export class OnlineOrdersService {
       .get(EndPoints.ONLINE_ORDERS);
   }
 
-  searchPersonal(): Observable<OnlineOrder[]> {
-    return this.httpService
-      .get(EndPoints.ONLINE_ORDERS + OnlineOrdersService.PERSONAL);
-  }
-
   update(reference: string, updatedOnlineOrder: OnlineOrder): Observable<OnlineOrder> {
     return this.httpService
       .put(EndPoints.ONLINE_ORDERS + "/" + reference, updatedOnlineOrder);
-  }
-
-  create(newOnlineOrder: OnlineOrder): Observable<OnlineOrder> {
-    return this.httpService
-      .post(EndPoints.ONLINE_ORDERS, newOnlineOrder);
   }
 }

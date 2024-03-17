@@ -86,6 +86,7 @@ import {
 import {OffersCreationUpdatingDialogComponent} from "./offers/offers-creation-updating-dialog.component";
 import { SearchByReferenceComponent } from './shared/search-by-reference.component';
 import { BudgetExpiredDialogComponent } from './cashier-opened/shopping-cart/budget-expired.dialog.component';
+import {OnlineOrdersService} from "./online-orders/online-orders.service";
 
 @NgModule({
   declarations: [
@@ -174,7 +175,8 @@ import { BudgetExpiredDialogComponent } from './cashier-opened/shopping-cart/bud
     StockAlarmLineService,
     StaffService,
     IssueService,
-    DataProtectionService
+    DataProtectionService,
+    OnlineOrdersService
   ],
 })
 export class ShopModule {
