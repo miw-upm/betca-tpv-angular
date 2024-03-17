@@ -1,10 +1,10 @@
 import {AfterViewInit, Component} from '@angular/core';
 
 import {OnlineOrderState} from "@shared/models/online-order-state";
-import {OnlineOrdersService} from "@shared/services/online-orders.service";
 import {of} from "rxjs";
 import {OnlineOrder} from "@shared/models/online-order.model";
 import {map} from "rxjs/operators";
+import {OnlineOrdersService} from "./online-orders.service";
 
 @Component({
   templateUrl: 'online-orders.component.html'

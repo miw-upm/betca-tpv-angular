@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {of} from "rxjs";
 import {OnlineOrderState} from "@shared/models/online-order-state";
-import {OnlineOrdersService} from "@shared/services/online-orders.service";
 import {map} from "rxjs/operators";
 import {OnlineOrder} from "@shared/models/online-order.model";
+import {OnlineOrdersService} from "../online-orders/online-orders.service";
 
 @Component({
   selector: 'app-refunds',
