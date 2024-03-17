@@ -35,7 +35,7 @@
           <mat-header-cell *matHeaderCellDef>
             <ng-container *ngIf="(articlesWithoutAudit | async)?.length > 0"> Stock </ng-container>
           </mat-header-cell>
-          <mat-cell *matCellDef="let article"> {{article.stock}} </mat-cell>
+          <mat-cell *matCellDef="let article"> {{article.stock ?? 0}} </mat-cell>
         </ng-container>
 
         <!-- Real Stock Column -->
@@ -47,7 +47,10 @@
             <mat-form-field>
               <input #realStockInput matInput type="number" placeholder="Introduce el stock real">
             </mat-form-field>
-            <button (click)="auditArticle(article, realStockInput.value)" mat-raised-button color="primary">Audit</button>
+            <button [disabled]="realStockInput.value === '' || +realStockInput.value < 0 || +realStockInput.value > article.stock"
+                    (click)="auditArticle(article, realStockInput.value)" mat-raised-button color="primary">Audit</button>
+            <div *ngIf="+realStockInput.value < 0">Real stock cannot be negative</div>
+            <div *ngIf="+realStockInput.value > (article.stock ?? 0)">Real stock cannot be greater</div>
           </mat-cell>
         </ng-container>
 

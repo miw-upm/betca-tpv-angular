@@ -14,14 +14,13 @@ export class StockAuditDialogComponent {
   stockAuditEdited: StockAudit;
   articlesWithoutAudit: Observable<Article[]>;
   articlesLosses: Observable<ArticleLoss[]>;
-  title = 'Update Stock Audit';
+  title: string = 'Audit existing stock';
   titleLosses: string = 'Articles losses';
 
   constructor(@Inject(MAT_DIALOG_DATA) data: StockAudit,
               private dialog: MatDialog,
               private stockAuditService: StockAuditService) {
     this.stockAudit = data;
-    console.log(this.stockAudit)
     // Copia profunda del objeto por no instalar loadash
     this.stockAuditEdited = JSON.parse(JSON.stringify(this.stockAudit));
 
@@ -32,24 +31,21 @@ export class StockAuditDialogComponent {
   save(): void {
     this.updateStockAudit();
     this.stockAuditService
-      .update(this.stockAuditEdited)
+      .update(this.stockAudit)
       .subscribe(() => this.dialog.closeAll());
   }
 
   closeAudit(): void {
     this.updateStockAudit();
     this.stockAuditService
-      .closeAudit(this.stockAudit)
+      .close(this.stockAudit)
       .subscribe(() => this.dialog.closeAll());
   }
 
   auditArticle(article: Article, realStockString: string): void {
-    let articleAmountLosses: number = 0;
     let realStock: number = parseInt(realStockString);
-
-
-    // Calcular la cantidad de perdida del articulo
-    articleAmountLosses = article.stock - realStock;
+    let theoricalStock: number = article.stock ? article.stock : 0;
+    let articleAmountLosses = theoricalStock - realStock;
 
     // Quitar el articulo de la lista de articulos sin auditar
     this.stockAuditEdited.articlesWithoutAudit = this.stockAuditEdited.articlesWithoutAudit.filter(a => a.barcode !== article.barcode);

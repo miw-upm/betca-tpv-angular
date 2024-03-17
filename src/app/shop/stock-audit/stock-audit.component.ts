@@ -14,7 +14,7 @@ import {CancelYesDialogComponent} from "@shared/dialogs/cancel-yes-dialog.compon
 export class StockAuditComponent {
   title: string = 'Stock Audit Management';
   stockAudits: Observable<StockAudit[]> = of([]);
-  edit: boolean = false;
+
   constructor(private dialog: MatDialog,
               private stockAuditService: StockAuditService) {
     this.loadAudits();
@@ -22,6 +22,15 @@ export class StockAuditComponent {
 
   loadAudits(): void {
     this.stockAudits = this.stockAuditService.readAll();
+  }
+
+  read(stockAudit: StockAudit): void {
+    this.dialog.open(ReadDetailDialogComponent, {
+      data: {
+        title: "Stock Audit Details",
+        object: this.stockAuditService.read(stockAudit)
+      }
+    });
   }
 
   create(): void {
@@ -38,15 +47,6 @@ export class StockAuditComponent {
       });
   }
 
-  read(stockAudit: StockAudit): void {
-    this.dialog.open(ReadDetailDialogComponent, {
-      data: {
-        title: "Stock Audit Details",
-        object: this.stockAuditService.read(stockAudit)
-      }
-    });
-  }
-
   update(stockAudit: StockAudit): void {
     if(this.isClosed(stockAudit)){
       alert("You can't update a closed stock audit!");
@@ -54,7 +54,7 @@ export class StockAuditComponent {
       this.stockAuditService.read(stockAudit)
         .subscribe(stockAudit =>
           this.dialog.open(StockAuditDialogComponent, {
-            width: '80%',
+            width: '100%',
             data: stockAudit
           })
             .afterClosed()
