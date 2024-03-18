@@ -18,6 +18,9 @@ export class CashierClosureComponent {
   cashiers: Observable<Cashier[]>;
   total: Observable<number>;
 
+  monthFiltering: boolean;
+  yearFiltering: boolean;
+
   months: string[] = [
     'January', 'February', 'March', 'April', 'May', 'June',
     'July', 'August', 'September', 'October', 'November', 'December'
@@ -32,6 +35,8 @@ export class CashierClosureComponent {
 
     this.search();
     this.calculateTotalIncoming();
+    this.monthFiltering = false;
+    this.yearFiltering = false;
   }
 
   search(): void {
