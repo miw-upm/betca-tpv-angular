@@ -14,4 +14,9 @@ export class AdviserService {
     const url = `${EndPoints.TAGS}/${tagName}/articles`;
     return this.http.get<Article[]>(url);
   }
+
+  findTopFiveArticles(): Observable<Article[]> {
+    const url = `${EndPoints.ARTICLES}/top-five-sales-last-week`;
+    return this.http.get<Article[]>(url);
+  }
 }
