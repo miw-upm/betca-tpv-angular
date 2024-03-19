@@ -33,6 +33,7 @@ export class SlackSentMessageDialogComponent {
   onSubmit(): void {
 
     this.slackMessage = {
+      type: this.messageLevel,
       subject: this.subject,
       description: this.description,
       annotation: this.annotation
