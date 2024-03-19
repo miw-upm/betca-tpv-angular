@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {Observable, of} from 'rxjs';
+import {Observable} from 'rxjs';
 
 import {HttpService} from '@core/http.service';
 import {EndPoints} from '@shared/end-points';

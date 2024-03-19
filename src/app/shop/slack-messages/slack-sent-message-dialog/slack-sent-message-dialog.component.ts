@@ -1,9 +1,7 @@
-import {Component, NgModule} from '@angular/core';
+import {Component} from '@angular/core';
 import {MatDialog, MatDialogRef} from '@angular/material/dialog';
-import {Observable} from "rxjs";
 import {SlackMessagesService} from "../slack-messages.service";
 import {SlackMessage} from "@shared/models/slack-message.model";
-import {MatInputModule} from "@angular/material/input";
 
 
 @Component({
