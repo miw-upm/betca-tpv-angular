@@ -7,7 +7,7 @@
     <textarea placeholder="Body" [(ngModel)]="newIssue.body" matInput required></textarea>
   </mat-form-field>
 <mat-form-field>
-  <mat-select  placeholder="Label" [(ngModel)]="newIssue.labels" name="labels" required>
+  <mat-select  placeholder="Label" [(ngModel)]="newIssue.labels[0]" name="labels" required>
     <mat-option value="bug">bug</mat-option>
     <mat-option value="enhancement">enhancement</mat-option>
   </mat-select>
@@ -15,6 +15,6 @@
 </mat-dialog-content>
 <mat-dialog-actions>
   <button cdkFocusInitial mat-dialog-close mat-raised-button>Close</button>
-  <button (click)="create()" *ngIf="isCreate()"  color="primary" mat-raised-button>Create
+  <button (click)="create()" [disabled]=invalid()  color="primary" mat-raised-button>Create
   </button>
 </mat-dialog-actions>

@@ -1,48 +1,45 @@
-import { Component, OnInit } from '@angular/core';
-import { of } from 'rxjs';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { Observable, of } from 'rxjs'; // Importa Observable y of
+import { IssueService } from './issues.service';
 import { IssuesCreateDialogComponent } from './issues-create-dialog.component';
-import {NewIssue} from './issues-model';
-import {IssueService} from './issues.service';
+import { Issue } from './issues-model';
+
 @Component({
   selector: 'app-issues',
   templateUrl: './issues.component.html',
   styleUrls: ['./issues.component.css'],
 })
 export class IssueComponent implements OnInit {
-  constructor(private dialog: MatDialog,private issueService: IssueService) {}
-  issues = of([]);
+  constructor(
+    private dialog: MatDialog,
+    private issueService: IssueService,
+    private changeDetectorRef: ChangeDetectorRef
+  ) {}
+
+  issues: Issue[] = [];
   title = 'List Issues';
+
   ngOnInit(): void {
     this.search();
   }
-  search(): void {
-    this.issues = this.issueService.search();
-  }
 
-  resetSearch(): void {
-    // this.providerSearch = {};
+  search(): void {
+    this.issueService.search().subscribe((issues) => {
+      this.issues = issues;
+      this.changeDetectorRef.detectChanges();
+    });
   }
 
   create(): void {
-    this.dialog.open(IssuesCreateDialogComponent);
+    const dialogRef = this.dialog.open(IssuesCreateDialogComponent);
+
+    dialogRef.componentInstance.issueCreated.subscribe(() => {
+      this.search();
+    });
   }
 
-  read(provider: any): void {
-    /*  this.dialog.open(ReadDetailDialogComponent, {
-      data: {
-        title: 'Provider Details',
-        object: this.providerService.read(provider.company)
-      }
-    });*/
-  }
-
-  update(provider: any): void {
-    /* this.providerService
-      .read(provider.company)
-      .subscribe(fullProvider => this.dialog.open(ProviderCreationUpdatingDialogComponent, {data: fullProvider})
-        .afterClosed()
-        .subscribe(() => this.search())
-      );*/
+  getDataAsObservable(): Observable<Issue[]> {
+    return of(this.issues);
   }
 }

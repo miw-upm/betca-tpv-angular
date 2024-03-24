@@ -89,4 +89,7 @@ export class ShopComponent implements OnInit {
   showQuarterVATDialog() {
     this.dialog.open(QuarterVatDialogComponent);
   }
+  showIssueDialog(){
+   this.router.navigate( ['shop', 'issues']);
+  }
 }
