@@ -6,8 +6,7 @@ export class NewIssue {
 export class Issue {
   id: number;
   title: string;
-  state: 'open' | 'closed';
+  state: string;
   assigned: boolean;
-  milestone: string;
   created_at: string;
 }

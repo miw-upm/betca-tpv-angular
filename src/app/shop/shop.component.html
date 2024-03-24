@@ -51,7 +51,7 @@
     <mat-icon>local_atm</mat-icon>
     <span>Publish on Slack</span>
   </button>
-  <button [matMenuTriggerFor]="issues" mat-menu-item>
+  <button  (click)="showIssueDialog()" mat-menu-item>
     <mat-icon>local_atm</mat-icon>
     <span>Issues</span>
   </button>
@@ -199,12 +199,6 @@
   <button disabled="disabled" mat-menu-item routerLink="/home/stock-management">
     <mat-icon>local_shipping</mat-icon>
     <span>Provider Invoice</span>
-  </button>
-</mat-menu>
-<mat-menu #issues="matMenu">
-  <button mat-menu-item routerLink="/shop/issues">
-    <mat-icon>money</mat-icon>
-    <span>Issues</span>
   </button>
 </mat-menu>
 

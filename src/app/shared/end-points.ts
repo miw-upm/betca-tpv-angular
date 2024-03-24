@@ -13,7 +13,7 @@ export class EndPoints {
   static CREDIT = environment.REST_CORE + '/credit';
   static MESSENGER = environment.REST_CORE + '/messenger';
   static SLACK: string = environment.REST_CORE + '/slack';
-  static ISSUE = environment.REST_CORE +'/issue';
+  static ISSUE = environment.REST_CORE +'/issues';
   static TAGS = environment.REST_CORE + '/tags';
   static SALESPEOPLE = environment.REST_CORE + '/salespeople';
   static VAT = environment.REST_CORE + '/vat';
