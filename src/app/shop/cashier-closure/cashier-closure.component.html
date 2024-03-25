@@ -1,12 +1,16 @@
 <mat-card>
   <mat-card-content>
     <button mat-raised-button color="primary" class="form-field-spacing"
-            (click)="readAll()">
+            (click)="filterByCurrentMonth()">
       Current month
     </button>
     <button mat-raised-button color="primary" class="form-field-spacing"
-            (click)="readClosed()">
+            (click)="filterByCurrentYear()">
       Current year
+    </button>
+    <button mat-raised-button color="primary" class="form-field-spacing"
+            (click)="readAll()">
+      All
     </button>
     <br>
   </mat-card-content>
@@ -15,27 +19,22 @@
   <mat-card-content>
     <mat-form-field>
       <mat-label>Month</mat-label>
-      <mat-select [(ngModel)]="months[currentMonth]">
-        <mat-option *ngFor="let month of months; let i = index" [value]=month>
+      <mat-select [(ngModel)]="months[currentMonth]" [disabled]="!monthFiltering">
+        <mat-option *ngFor="let month of months; let i = index" [value]=month (click)="searchCashierClosures()">
           {{ month }}
         </mat-option>
       </mat-select>
     </mat-form-field>
-    <button (click)="searchBySpecificMonth()" mat-icon-button>
-      <mat-icon>search</mat-icon>
-    </button>
-
+    <mat-checkbox [(ngModel)]="monthFiltering"></mat-checkbox>
     <mat-form-field>
       <mat-label>Year</mat-label>
-      <mat-select [(ngModel)]="currentYear">
-        <mat-option *ngFor="let year of generateYearList()" [value]=year>
+      <mat-select [(ngModel)]="currentYear" [disabled]="!yearFiltering">
+        <mat-option *ngFor="let year of generateYearList()" [value]=year (click)="searchCashierClosures()">
           {{ year }}
         </mat-option>
       </mat-select>
     </mat-form-field>
-    <button (click)="searchBySpecificYear()" mat-icon-button>
-      <mat-icon>search</mat-icon>
-    </button>
+    <mat-checkbox [(ngModel)]="yearFiltering"></mat-checkbox>
   </mat-card-content>
   <br>
   <p>Total incoming: {{this.total | async }}</p>

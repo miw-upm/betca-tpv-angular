@@ -13,7 +13,7 @@ export class EndPoints {
   static CREDIT = environment.REST_CORE + '/credit';
   static MESSENGER = environment.REST_CORE + '/messenger';
   static SLACK: string = environment.REST_CORE + '/slack';
-  static ISSUE = environment.REST_CORE +'/issue';
+  static ISSUE = environment.REST_CORE +'/issues';
   static TAGS = environment.REST_CORE + '/tags';
   static SALESPEOPLE = environment.REST_CORE + '/salespeople';
   static VAT = environment.REST_CORE + '/vat';
@@ -24,4 +24,5 @@ export class EndPoints {
   static STOCK_AUDITS = environment.REST_CORE + '/stock-audits';
   static ONLINE_ORDERS = environment.REST_CORE + '/online-orders';
   static REFUNDS = environment.REST_CORE + '/refunds';
+  static STOCK_ALARMS = environment.REST_CORE + '/stock-alarms';
 }

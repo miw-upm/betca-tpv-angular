@@ -38,7 +38,7 @@ export class TicketsComponent implements OnInit {
     this.dialog.open(ReadDetailDialogComponent, {
       data: {
         title: 'Ticket Details',
-        object: this.ticketService.read(ticket.id)
+        object: this.ticketService.read(ticket.reference)
       }
     });
   }

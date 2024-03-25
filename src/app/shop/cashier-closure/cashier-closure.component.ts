@@ -18,6 +18,9 @@ export class CashierClosureComponent {
   cashiers: Observable<Cashier[]>;
   total: Observable<number>;
 
+  monthFiltering: boolean;
+  yearFiltering: boolean;
+
   months: string[] = [
     'January', 'February', 'March', 'April', 'May', 'June',
     'July', 'August', 'September', 'October', 'November', 'December'
@@ -29,49 +32,51 @@ export class CashierClosureComponent {
   constructor(private cashierClosureService: CashierClosureService) {
     this.currentMonth = new Date().getMonth();
     this.currentYear = new Date().getFullYear();
+    this.monthFiltering = false;
+    this.yearFiltering = false;
 
-    this.search();
+    this.searchCashierClosures();
     this.calculateTotalIncoming();
-  }
-
-  search(): void {
-    this.cashiers = this.cashierClosureService.readAll();
   }
 
   resetSearch(): void {
     this.cashiers = of([]);
   }
-/*
-  read(article: Article): void {
-    this.dialog.open(ReadDetailDialogComponent, {
-      data: {
-        title: 'Article Details',
-        object: this.articleService.read(article.barcode)
-      }
-    });
-  }*/
-  searchCurrentMonth() {
 
-  }
-
-  searchByYear() {
-
-  }
-
-  searchBySpecificMonth() {
-
-  }
-
-  searchBySpecificYear() {
-
+  searchCashierClosures(): void {
+    if (this.monthFiltering && this.yearFiltering) {
+      // this.cashiers = this.cashierClosureService.readBydMonthAndYear();
+    } else if (this.monthFiltering) {
+      // this.cashiers = this.cashierClosureService.readByMonth();
+    } else if (this.yearFiltering) {
+      // this.cashiers = this.cashierClosureService.readByYear();
+    } else {
+      this.cashiers = this.cashierClosureService.readAll();
+    }
   }
 
   readAll() {
+    this.monthFiltering = false;
+    this.yearFiltering = false;
     this.cashiers = this.cashierClosureService.readAll();
   }
 
   readClosed() {
     this.cashiers = this.cashierClosureService.readClosed();
+  }
+
+  filterByCurrentMonth(): void {
+    this.monthFiltering = true;
+    this.yearFiltering = false;
+    this.currentMonth = new Date().getMonth();
+    this.searchCashierClosures();
+  }
+
+  filterByCurrentYear(): void {
+    this.yearFiltering = true;
+    this.monthFiltering = false;
+    this.currentYear = new Date().getFullYear();
+    this.searchCashierClosures();
   }
 
   calculateTotalIncoming(): void {

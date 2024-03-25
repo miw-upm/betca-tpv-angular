@@ -16,6 +16,7 @@ export class TicketService {
   cashierState: Observable<CashierState>;
 
   static FINALVALUE = '/finalvalue';
+  static SEARCHBYTICKET = '/search';
   static SEARCHBYGIFTTICKET = '/search-by-gift-ticket';
   constructor( private cashierClosureService: CashierClosureService,
                private sharedVoucherService: SharedVoucherService, private httpService: HttpService) {
@@ -51,8 +52,7 @@ export class TicketService {
   }
 
   search(query: string): Observable<Ticket[]> {
-    const filteredTicket = this.mockTickets.filter(ticket => ticket.id === query || ticket.userMobile === query || ticket.reference === query);
-    return of(filteredTicket);
+    return this.httpService.paramsFrom({query:query}).get(EndPoints.TICKETS + TicketService.SEARCHBYTICKET);
   }
 
   searchByGiftTicket(searchByGiftTicketReference: string): Observable<Ticket[]> {
@@ -62,8 +62,9 @@ export class TicketService {
     return this.httpService.paramsFrom({reference: searchByGiftTicketReference}).get(EndPoints.TICKETS + TicketService.SEARCHBYGIFTTICKET);
   }
 
-  read(query: string): Observable<Ticket> {
-    return of(this.mockTickets.find(ticket => ticket.id === query))
+  read(reference: string): Observable<Ticket> {
+    return this.httpService
+      .get(EndPoints.TICKETS +  '/' + reference);
   }
 
   update( ticket: Ticket): Observable<Ticket> {
