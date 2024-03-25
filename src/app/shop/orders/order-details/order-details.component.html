@@ -11,11 +11,11 @@
       <mat-label>Provider company</mat-label>
       <input matInput [(ngModel)]="currentActiveOrder.providerCompany" required [disabled]="currentActiveOrderIsClosed">
     </mat-form-field>
-    <mat-form-field style="width: 15%">
+    <mat-form-field *ngIf="currentActiveOrder.openingDate" style="width: 15%">
       <mat-label>Opening date</mat-label>
       <input matInput [value]="currentActiveOrder.openingDate.toLocaleDateString()" disabled>
     </mat-form-field>
-    <mat-form-field *ngIf="currentActiveOrderIsClosed" style="width: 15%">
+    <mat-form-field *ngIf="currentActiveOrderIsClosed && currentActiveOrder.closingDate" style="width: 15%">
       <mat-label>Closing date</mat-label>
       <input matInput [value]="currentActiveOrder.closingDate.toLocaleDateString()" disabled>
     </mat-form-field>
