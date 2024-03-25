@@ -31,7 +31,7 @@ export class OrderDetailsComponent implements OnInit {
     this.orderIdParameter = this.data.orderReference;
     if (this.orderIdParameter === undefined) {
       this.isCreationMode = true;
-      this.currentActiveOrder = { reference: '', description: '', providerCompany: '', openingDate: new Date(), orderLines: [] };
+      this.currentActiveOrder = { reference: '', description: '', providerCompany: '', orderLines: [] };
     } else {
       this.loadOrderInfoById(this.orderIdParameter);
     }
@@ -60,12 +60,17 @@ export class OrderDetailsComponent implements OnInit {
 
   public saveOrder(): void {
     if (this.isCreationMode) {
-      this.ordersService.create(this.currentActiveOrder); // .subscribe();
+      this.ordersService.create(this.currentActiveOrder).subscribe(
+        (order: Order) => {
+          this.snackbarService.open("Order created successfully.", "Dismiss", { duration: 2000 });
+          this.dialog.close({ isCreation: this.isCreationMode, reference: order.reference });
+        }
+      );
     } else {
       this.ordersService.update(this.currentActiveOrder.reference, this.currentActiveOrder); // .subscribe();
+      this.snackbarService.open("Changes saved successfully.", "Dismiss", { duration: 2000 });
+      this.dialog.close({ isCreation: this.isCreationMode, reference: this.currentActiveOrder.reference });
     }
-    this.snackbarService.open("Changes saved successfully.", "Dismiss", { duration: 2000 });
-    this.dialog.close({ isCreation: this.isCreationMode, reference: this.currentActiveOrder.reference });
   }
 
   public cancelNewOrder(): void {
