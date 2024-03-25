@@ -6,6 +6,7 @@ import {StockAlarmLineDialogComponent} from "../stock-alarm-line-dialog/stock-al
 import {ReadDetailDialogComponent} from "@shared/dialogs/read-detail.dialog.component";
 import {StockAlarmLine} from "../../shared/services/models/stock-alarm-line.model";
 import {StockAlarmLineService} from "../stock-alarm-line.service";
+import {of} from "rxjs";
 
 @Component({
   templateUrl: 'stock-alarm-dialog.component.html',
@@ -13,7 +14,7 @@ import {StockAlarmLineService} from "../stock-alarm-line.service";
 })
 export class StockAlarmDialogComponent {
   stockAlarm: StockAlarm;
-  stockAlarmLines: any;
+  stockAlarmLines = of([]);
   title: string;
   crudTitle: string = 'Stock Alarm Lines';
   oldName: string;
@@ -30,9 +31,7 @@ export class StockAlarmDialogComponent {
       critical: 0,
       stockAlarmLines: []
     };
-    console.log(this.stockAlarm);
     this.oldName = this.stockAlarm.name;
-    console.log(this.oldName);
     this.stockAlarmLines = this.stockAlarmService.getLinesByStockAlarm(this.stockAlarm);
   }
 
@@ -53,6 +52,7 @@ export class StockAlarmDialogComponent {
   }
 
   updateAlarmLine(stockAlarmLine: StockAlarmLine) {
+    console.log(stockAlarmLine);
     this.stockAlarmLineService.read(stockAlarmLine)
       .subscribe(fullStockAlarmLine =>
         this.dialog.open(StockAlarmLineDialogComponent, {data: fullStockAlarmLine})

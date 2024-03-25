@@ -52,8 +52,7 @@ export class StockAlarmLineDialogComponent {
   }
 
   invalid(): boolean {
-    return this.checkString(this.stockAlarmLine.article.barcode)
-      || this.checkNumber(this.stockAlarmLine.warning)
+    return this.checkNumber(this.stockAlarmLine.warning)
       || this.checkNumber(this.stockAlarmLine.critical);
   }
 
@@ -66,8 +65,7 @@ export class StockAlarmLineDialogComponent {
   }
 
   isCreate(): boolean {
-    // Necesaria entidad en el modelo para poder saber si existe en base de datos o no a partir de su identificador
-    return this.stockAlarmLine.article === undefined;
+    return this.stockAlarmLine.warning === 0 && this.stockAlarmLine.critical === 0 && this.stockAlarmLine.article.barcode === undefined;
   }
 
 }
