@@ -65,10 +65,11 @@ export class OrdersService {
   }
 
   public create(order: Order): Observable<Order> {
-    order.reference = `Mock${this.orderMock.length + 1}`;
-    order.openingDate = new Date();
-    this.orderMock.push(order);
-    return of(order);
+    return this.http
+      .post(EndPoints.ORDERS, order)
+      .pipe(
+        take(1) // take the first value and complete
+      );
   }
 
   public update(oldReference: string, order: Order): Observable<Order> {
