@@ -2,7 +2,10 @@ import {Component,} from '@angular/core';
 import { MatDialog} from '@angular/material/dialog';
 import {CreditLineService} from './credit-line.service';
 import {CreditLine} from './credit-line.model';
-import {of} from "rxjs";
+import {Observable, of} from "rxjs";
+import {map} from "rxjs/operators";
+import {CreditSale} from "./credit-sale.model";
+import {Ticket} from "../cashier-opened/tickets/tickets.models";
 
 
 @Component({
@@ -11,42 +14,55 @@ import {of} from "rxjs";
 
 export class CreditLineComponent {
 
-  creditLine: CreditLine;
+  mobile = "";
+  creditLine: Observable<CreditLine>;
   card = false;
   cash = false;
   total = 0;
-  unpaidTickets = of([]);
+  unpaidTickets: Observable<CreditSale[]> = of([]);
 
   constructor(private dialog: MatDialog, private creditLineService: CreditLineService) {
 
   }
 
 
+  clearMobile(){
+    this.mobile ="";
+  }
    create(mobile: string): void {
     if(this.checkUser(mobile)) {
-      this.creditLineService
-        .create(this.creditLine)
-        .subscribe(() => this.dialog.closeAll());
+
     }
   }
 
 
   searchUnpaidTicketsByMobile(mobile: string): void {
-    this.unpaidTickets = this.creditLineService.findUnpaidTicketsFromCreditLineByMobile(mobile)
+    this.creditLine = this.creditLineService.findCreditByUserReference(mobile);
+
+    this.unpaidTickets = this.creditLine.pipe(
+      map(creditLine => creditLine.sales.filter(sale => !sale.payed))
+    );
+
+    this.unpaidTickets.subscribe(tickets => {
+      this.total = tickets.reduce((acc, curr) => acc + this.calculateTicketTotal(curr.ticket), 0);
+      console.log("tickets por pagar", tickets);
+      console.log("el total es =", this.total);
+    });
   }
 
+  calculateTicketTotal(ticket: Ticket): number {
+    console.log(ticket.shoppingList.reduce((acc, curr) => acc + curr.total, 0))
+    return ticket.shoppingList.reduce((acc, item) => acc + (item.retailPrice * item.amount), 0);
+  }
 
   checkUser(mobile:string){
-    if(this.creditLineService.findByUserReference(mobile)){
-      return false;
-    }
-  return false
+   return true
   }
   pay(): void {
     if (this.card === true){
-      this.creditLineService.payUnpaidTicketsFromCreditLine(this.creditLine.mobile, 'card');
+
     }else if (this.cash === true){
-      this.creditLineService.payUnpaidTicketsFromCreditLine(this.creditLine.mobile, 'cash');
+
     }
   }
 
@@ -59,5 +75,6 @@ export class CreditLineComponent {
       this.card = true;
     }
   }
+
 
 }
