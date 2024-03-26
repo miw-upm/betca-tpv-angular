@@ -95,16 +95,16 @@ export class OrderDetailsComponent implements OnInit {
 
   public async copyToNewOrder(): Promise<void> {
     const newOrder: Order = {
-      reference: `FakeOrder${Math.floor(Math.random() * 1000)}`,
       description: this.currentActiveOrder.description,
       providerCompany: this.currentActiveOrder.providerCompany,
-      openingDate: undefined,
-      closingDate: undefined,
-      orderLines: this.currentActiveOrder.orderLines.map(orderLine => ({ articleBarcode: orderLine.articleBarcode, requiredAmount: orderLine.requiredAmount, finalAmount: undefined }))
+      orderLines: this.currentActiveOrder.orderLines.map(orderLine => ({ articleBarcode: orderLine.articleBarcode, requiredAmount: orderLine.requiredAmount }))
     };
-    this.ordersService.create(newOrder); // .subscribe();
-    this.snackbarService.open(`Order copied successfully with reference ${newOrder.reference}.`, "Dismiss", { duration: 2000 });
-    this.dialog.close();
+    this.ordersService.create(newOrder).subscribe(
+      (order: Order) => {
+        this.snackbarService.open(`Order copied successfully with reference ${order.reference}.`, "Dismiss", { duration: 2000 });
+        this.dialog.close();
+      }
+    );
   }
 
   private refreshTable(): void {
