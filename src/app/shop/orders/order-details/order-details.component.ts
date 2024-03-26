@@ -78,9 +78,12 @@ export class OrderDetailsComponent implements OnInit {
   }
 
   public deleteOrder(): void {
-    this.ordersService.delete(this.currentActiveOrder.reference); // .subscribe();
-    this.snackbarService.open("Order deleted successfully.", "Dismiss", { duration: 2000 });
-    this.dialog.close();
+    this.ordersService.delete(this.currentActiveOrder.reference).subscribe(
+      () => {
+        this.snackbarService.open("Order deleted successfully.", "Dismiss", { duration: 2000 });
+        this.dialog.close({ isCreation: this.isCreationMode, reference: this.currentActiveOrder.reference });
+      }
+    );
   }
 
   public markAsClosed(): void {

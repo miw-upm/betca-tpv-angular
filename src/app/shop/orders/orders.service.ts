@@ -79,8 +79,10 @@ export class OrdersService {
   }
 
   public delete(reference: string): Observable<void> {
-    const index = this.orderMock.findIndex(order => order.reference === reference);
-    this.orderMock.splice(index, 1);
-    return of();
+    return this.http
+      .delete(`${EndPoints.ORDERS}/${reference}`)
+      .pipe(
+        take(1) // take the first value and complete
+      );
   }
 }
