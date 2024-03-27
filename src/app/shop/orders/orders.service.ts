@@ -44,13 +44,7 @@ export class OrdersService {
 
   public readByReference(reference: string): Observable<Order> {
     return this.http.get(`${EndPoints.ORDERS}/${reference}`).pipe(
-      take(1), // take the first value and complete
-      map((order: Order) => {
-          order.openingDate = new Date(order.openingDate);
-          order.closingDate = order.closingDate ? new Date(order.closingDate) : undefined;
-          return order;
-        }
-      )
+      take(1) // take the first value and complete
     );
   }
 
@@ -72,10 +66,20 @@ export class OrdersService {
       );
   }
 
-  public update(oldReference: string, order: Order): Observable<Order> {
-    const index = this.orderMock.findIndex(order => order.reference === oldReference);
-    this.orderMock[index] = order;
-    return of(order);
+  public update(reference: string, order: Order): Observable<Order> {
+    return this.http
+      .put(`${EndPoints.ORDERS}/${reference}`, order)
+      .pipe(
+        take(1) // take the first value and complete
+      );
+  }
+
+  public markOrderAsClosed(reference: string): Observable<Order> {
+    return this.http
+      .put(`${EndPoints.ORDERS}/${reference}/closing-date`)
+      .pipe(
+        take(1) // take the first value and complete
+      );
   }
 
   public delete(reference: string): Observable<void> {

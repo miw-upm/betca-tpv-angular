@@ -67,9 +67,12 @@ export class OrderDetailsComponent implements OnInit {
         }
       );
     } else {
-      this.ordersService.update(this.currentActiveOrder.reference, this.currentActiveOrder); // .subscribe();
-      this.snackbarService.open("Changes saved successfully.", "Dismiss", { duration: 2000 });
-      this.dialog.close({ isCreation: this.isCreationMode, reference: this.currentActiveOrder.reference });
+      this.ordersService.update(this.currentActiveOrder.reference, this.currentActiveOrder).subscribe(
+        (order: Order) => {
+          this.snackbarService.open("Changes saved successfully.", "Dismiss", { duration: 2000 });
+          this.dialog.close({ isCreation: this.isCreationMode, reference: order.reference });
+        }
+      );
     }
   }
 
@@ -87,10 +90,14 @@ export class OrderDetailsComponent implements OnInit {
   }
 
   public markAsClosed(): void {
-    this.currentActiveOrder.closingDate = new Date();
-    this.currentActiveOrderIsClosed = true;
-    this.refreshTable();
-    this.snackbarService.open(`Order closed. Fill the final received amounts and press "Save".`, "Dismiss", { duration: 6000 });
+    this.ordersService.markOrderAsClosed(this.currentActiveOrder.reference).subscribe(
+      (order: Order) => {
+        this.currentActiveOrder = order;
+        this.currentActiveOrderIsClosed = true;
+        this.snackbarService.open(`Order closed. Fill the final received amounts and press "Save".`, "Dismiss", { duration: 2000 });
+        this.refreshTable();
+      }
+    );
   }
 
   public async copyToNewOrder(): Promise<void> {
