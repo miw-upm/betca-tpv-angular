@@ -1,15 +1,17 @@
 import {AfterViewInit, Component, ElementRef, ViewChild} from '@angular/core';
-
 import {ShoppingBasketService} from './shopping-basket.service';
 import {AuthService} from "@core/auth.service";
 import {MatDialog} from "@angular/material/dialog";
 import {SharedArticleService} from "../shared/services/shared.article.service";
+import {NumberDialogComponent} from "@shared/dialogs/number-dialog.component";
+import {CustomerPointsConstants} from "@shared/models/customer-points.model";
 import * as uuid from 'uuid';
 import {ShoppingState} from "../../shop/cashier-opened/shopping-cart/shopping-state.model";
 import {Shopping} from "@shared/models/shopping.model";
 import {OnlineOrder} from "@shared/models/online-order.model";
 import {Ticket} from "../../shop/cashier-opened/tickets/tickets.models";
 import {OnlineOrderState} from "@shared/models/online-order-state";
+
 
 @Component({
   selector: 'app-shopping-basket',
@@ -93,5 +95,28 @@ export class ShoppingBasketComponent {
 
   userIsLogged(): boolean {
     return this.authService.isAuthenticated();
+  }
+
+  updateTotal(shopping: Shopping): void {
+    if(!this.isDiscountPointsItem(shopping)) {
+      this.dialog.open(NumberDialogComponent, {data: shopping.total})
+        .afterClosed()
+        .subscribe(result => {
+          if (result) {
+            shopping.total = result;
+            if (shopping.total > (shopping.retailPrice * shopping.amount)) {
+              shopping.total = shopping.retailPrice * shopping.amount;
+            }
+            if (shopping.total < 0) {
+              shopping.total = 0;
+            }
+            shopping.updateDiscount();
+            this.synchronizeShoppingBasket();
+          }
+        });
+    }
+  }
+  isDiscountPointsItem(item: Shopping): boolean{
+    return item.barcode == CustomerPointsConstants.BARCODE;
   }
 }
