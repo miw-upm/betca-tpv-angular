@@ -7,6 +7,8 @@
   import {TicketService} from "../cashier-opened/tickets/tickets.service";
   import {User} from "@shared/models/user.models";
   import {MatSnackBar} from "@angular/material/snack-bar";
+  import {CashierState} from "../cashier-opened/cashier-closure/cashier-state.model";
+  import {CashierClosureService} from "../cashier-opened/cashier-closure/cashier-closure.service";
 
 
 
@@ -26,7 +28,8 @@
     unpaidTickets: Observable<Number>;
 
     constructor(private dialog: MatDialog, private creditLineService: CreditLineService,
-                private ticketService: TicketService, private snackBar: MatSnackBar) {
+                private ticketService: TicketService, private cashierService: CashierClosureService,
+                private snackBar: MatSnackBar) {
 
     }
 
@@ -53,11 +56,22 @@
 
 
     searchUnpaidTicketsByMobile(mobile: string): void {
-
       const creditLine = this.creditLineService.findCreditByUserReference(mobile);
-
       this.unpaidTickets = creditLine.pipe(
         switchMap(creditLine => {
+          if (!creditLine) {
+            this.snackBar.open('El crédito no existe', 'Cerrar', {
+              duration: 3000,
+            });
+            return of(0);
+          }
+          if (creditLine.sales.length === 0) {
+            this.snackBar.open('No hay tickets pendientes de pago', 'Close', {
+              duration: 3000,
+            });
+            return of(0);
+          }
+
           const totalObservables: Observable<Number>[] = creditLine.sales
             .filter(sale => !sale.payed)
             .map(sale => this.ticketService.getTotal(sale.ticket.reference));
@@ -73,13 +87,28 @@
       });
     }
 
-    pay(): void {
-      if (this.card === true){
+    pay(mobile: string): void {
+      this.cashierService.readState().subscribe((cashierState: CashierState) => {
+        if (cashierState.opened) {
+          if (this.card === true) {
+            this.creditLineService.payUnpaidTicketsFromCreditLine(this.mobile, "card");
+          } else if (this.cash === true) {
+            this.creditLineService.payUnpaidTicketsFromCreditLine(this.mobile, "cash");
+          }
+          this.snackBar.open('Pay successfully', 'Close', {
+            duration: 3000,
+          });
+          this.total = 0;
+        } else {
+          this.snackBar.open('La caja está cerrada, no se puede procesar el pago', 'Cerrar', {
+            duration: 5000,
+            panelClass: ['error-snackbar']
 
-      }else if (this.cash === true){
-
-      }
+          });
+        }
+      });
     }
+
 
     changePayMethod(method: string): void{
       if (method == "cash") {
