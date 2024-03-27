@@ -6,6 +6,8 @@ import {Shopping} from "./shopping.model";
 import {MatDialog} from "@angular/material/dialog";
 import {PhoneRequestDialogComponent} from "./phone-request-dialog.component";
 import {SharedArticleService} from "../shared/services/shared.article.service";
+import {NumberDialogComponent} from "@shared/dialogs/number-dialog.component";
+import {CustomerPointsConstants} from "@shared/models/customer-points.model";
 
 @Component({
   selector: 'app-shopping-basket',
@@ -96,5 +98,28 @@ export class ShoppingBasketComponent implements AfterViewInit {
 
   userIsLogged(): boolean {
     return this.authService.isAuthenticated();
+  }
+
+  updateTotal(shopping: Shopping): void {
+    if(!this.isDiscountPointsItem(shopping)) {
+      this.dialog.open(NumberDialogComponent, {data: shopping.total})
+        .afterClosed()
+        .subscribe(result => {
+          if (result) {
+            shopping.total = result;
+            if (shopping.total > (shopping.retailPrice * shopping.amount)) {
+              shopping.total = shopping.retailPrice * shopping.amount;
+            }
+            if (shopping.total < 0) {
+              shopping.total = 0;
+            }
+            shopping.updateDiscount();
+            this.synchronizeShoppingCart();
+          }
+        });
+    }
+  }
+  isDiscountPointsItem(item: Shopping): boolean{
+    return item.barcode == CustomerPointsConstants.BARCODE;
   }
 }
