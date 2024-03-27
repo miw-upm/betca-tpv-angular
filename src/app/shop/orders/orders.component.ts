@@ -42,11 +42,12 @@ export class OrdersComponent {
   }
 
   public details(order: Order): void {
-    this.dialog.open(OrderDetailsComponent, {
+    const dialogInstance: MatDialogRef<OrderDetailsComponent> = this.dialog.open(OrderDetailsComponent, {
       data: { orderReference: order.reference },
       height: '70%',
       width: '90%',
       disableClose: true
     });
+    dialogInstance.afterClosed().subscribe(() => this.search());
   }
 }

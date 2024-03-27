@@ -24,4 +24,5 @@ export class EndPoints {
   static STOCK_AUDITS = environment.REST_CORE + '/stock-audits';
   static ONLINE_ORDERS = environment.REST_CORE + '/online-orders';
   static REFUNDS = environment.REST_CORE + '/refunds';
+  static STOCK_ALARMS = environment.REST_CORE + '/stock-alarms';
 }
