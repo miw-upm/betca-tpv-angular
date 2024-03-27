@@ -9,8 +9,12 @@
 <mat-card>
   <mat-card-title>
     <mat-icon color="primary">shopping_cart</mat-icon>
-    Shopping Cart {{totalShoppingBasket| currency:'EUR':'symbol'}}
+    Shopping Cart {{totalShoppingBasket | currency:'EUR':'symbol'}}
   </mat-card-title>
+  <ng-container matColumnDef="total">
+    <mat-header-cell *matHeaderCellDef fxFlex="12%"> Total</mat-header-cell>
+    <mat-cell (click)="updateTotal(item)" *matCellDef="let item" fxFlex="12%">{{item.total}}</mat-cell>
+  </ng-container>
   <mat-card-content>
     <mat-table [dataSource]="shoppingBasket" class="mat-elevation-z8">
       <ng-container matColumnDef="id">
