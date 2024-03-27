@@ -24,4 +24,8 @@ export class VoucherReadDetailDialogComponent {
   consume(reference: string) {
     this.vouchersService.update(reference).subscribe();
   }
+
+  print(reference: string) {
+    this.vouchersService.readReceipt(reference).subscribe();
+  }
 }

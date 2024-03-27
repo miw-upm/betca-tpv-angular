@@ -16,8 +16,7 @@ export class VoucherCreationDialogComponent {
   constructor(private vouchersService: VouchersService, private dialog: MatDialog) {
     this.title = 'Create Voucher';
     this.voucher = {
-      value: undefined,
-      userMobile: undefined
+      value: undefined
     };
   }
 
@@ -28,7 +27,7 @@ export class VoucherCreationDialogComponent {
   }
 
   invalid(): boolean {
-    return this.check(this.voucher.value) || this.check(this.voucher.userMobile);
+    return this.check(this.voucher.value);
   }
 
   check(attr: string | number): boolean {
