@@ -1,20 +1,19 @@
 import {Component, OnInit} from '@angular/core';
 import {QuarterVatService} from './quarter-vat.service';
-import {QuarterVatResult} from './quarter-vat.model';
+import {VATResult} from './quarter-vat.model';
 import {MatTableDataSource} from "@angular/material/table";
-import {Tax} from "../shared/services/models/Tax";
 
 @Component({
   selector: 'app-quarter-vat',
-  templateUrl: './quarter-vat.component.html',
-  styleUrls: ['./quarter-vat.component.css']
+  templateUrl: './quarter-vat-dialog.component.html',
+  styleUrls: ['./quarter-vat-dialog.component.css']
 })
 
-export class QuarterVatComponent implements OnInit {
+export class QuarterVatDialogComponent implements OnInit {
   selectedYear: number;
   selectedQuarter: number;
   yearRange: number[] = [];
-  vatResult: QuarterVatResult | null = null;
+  vatResult: VATResult | null = null;
   dataSource = new MatTableDataSource<any>([]);
   displayedColumns: string[] = ['taxRate', 'baseTax', 'valueTax'];
 
@@ -38,21 +37,30 @@ export class QuarterVatComponent implements OnInit {
     return control?.errors?.required && control?.touched;
   }
 
-  calculateVat() {
+  calculateVAT() {
     if (this.selectedYear && this.selectedQuarter) {
       this.quarterVatService.getVatDataForQuarter(this.selectedYear, this.selectedQuarter)
         .subscribe(data => {
           this.vatResult = data;
 
           if (this.vatResult) {
-            const taxRows = Object.keys(this.vatResult.taxes).map(taxKey => {
-              const taxInfo = this.vatResult.taxes[taxKey];
-              return {
-                taxRate: `${this.getTaxName(+taxKey)} (${this.getTaxPercentage(+taxKey)}%)`,
-                baseTax: taxInfo.baseTax,
-                valueTax: taxInfo.valueTax
-              };
-            });
+            const taxRows = [
+              {
+                taxRate: `Super Reduced (${this.getTaxPercentage(2)}%)`,
+                baseTax: this.vatResult.baseTaxSuperReduced,
+                valueTax: this.vatResult.valueTaxSuperReduced
+              },
+              {
+                taxRate: `Reduced (${this.getTaxPercentage(1)}%)`,
+                baseTax: this.vatResult.baseTaxReduced,
+                valueTax: this.vatResult.valueTaxReduced
+              },
+              {
+                taxRate: `General (${this.getTaxPercentage(0)}%)`,
+                baseTax: this.vatResult.baseTaxGeneral,
+                valueTax: this.vatResult.valueTaxGeneral
+              }
+            ];
 
             const totalRow = {
               taxRate: 'Total',
@@ -66,13 +74,13 @@ export class QuarterVatComponent implements OnInit {
     }
   }
 
+
   getQuarterDateRange(): string {
     if (!this.vatResult) {
       return '';
     }
 
-    const quarter = parseInt(this.vatResult.quarter, 10);
-    switch (quarter) {
+    switch (this.vatResult.quarter) {
       case 1:
         return '(January 1st to March 31st)';
       case 2:
@@ -86,12 +94,8 @@ export class QuarterVatComponent implements OnInit {
     }
   }
 
-  getTaxName(taxKey: number): string {
-    return Tax[taxKey];
-  }
-
   getTaxPercentage(taxKey: number): number {
-    switch(taxKey) {
+    switch (taxKey) {
       case 0:
         return 21;
       case 1:

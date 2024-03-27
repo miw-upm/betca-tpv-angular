@@ -9,7 +9,6 @@ import {ProvidersComponent} from './providers/providers.component';
 import {ShopComponent} from './shop.component';
 import {TicketsComponent} from './cashier-opened/tickets/tickets.component';
 import {SalesPeopleComponent} from './sales-people/sales-people.component';
-import {QuarterVatComponent} from "./quarter-vat/quarter-vat.component";
 import { MessengerComponent } from './messenger/messenger.component';
 import {TagsComponent} from "./tags/tags.component";
 import {CustomerDiscountComponent} from "./customer-discount/customer-discount.component";
@@ -29,6 +28,7 @@ import {OffersComponent} from "./offers/offers.component";
 import {IssueComponent} from "./issues/issues.component";
 import {TechnicalSupportComponent} from "../home/technical-support/technical-support.component";
 import {ChatWindowComponent} from "../home/technical-support/chat-window.component";
+import {DataProtectionComponent} from "./data-protection/data-protection.component";
 
 const routes: Routes = [
   {
@@ -45,7 +45,6 @@ const routes: Routes = [
       {path: 'tickets', component: TicketsComponent},
       {path: 'salesPeople', component: SalesPeopleComponent},
       {path: 'messenger', component: MessengerComponent},
-      {path: 'quarter-vat', component: QuarterVatComponent},
       {path: 'tags', component: TagsComponent},
       {path: 'customer-discount', component: CustomerDiscountComponent},
       {path: 'advertising',component:AdvertisingComponent},
@@ -71,7 +70,8 @@ const routes: Routes = [
       {
         path: 'chat/:id',
         component: ChatWindowComponent
-      }
+      },
+      {path: 'data-protection', component: DataProtectionComponent}
     ]
   }
 ];

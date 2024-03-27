@@ -1,10 +1,10 @@
 import { OrderLine } from "./orderline.model";
 
 export interface Order {
-  reference: string;
+   reference?: string;
   description: string;
   providerCompany: string;
-  openingDate: Date;
+  openingDate?: Date;
   closingDate?: Date;
   orderLines: OrderLine[];
 }

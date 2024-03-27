@@ -11,7 +11,7 @@
   </mat-form-field>
 
   <mat-card>
-    <mat-card-title>Auditoría de Stock</mat-card-title>
+    <mat-card-title>Articles without audit</mat-card-title>
     <mat-card-content>
       <mat-table #table [dataSource]="articlesWithoutAudit | async" class="mat-elevation-z8">
         <!-- Barcode Column -->
@@ -35,7 +35,7 @@
           <mat-header-cell *matHeaderCellDef>
             <ng-container *ngIf="(articlesWithoutAudit | async)?.length > 0"> Stock </ng-container>
           </mat-header-cell>
-          <mat-cell *matCellDef="let article"> {{article.stock}} </mat-cell>
+          <mat-cell *matCellDef="let article"> {{article.stock ?? 0}} </mat-cell>
         </ng-container>
 
         <!-- Real Stock Column -->
@@ -47,7 +47,10 @@
             <mat-form-field>
               <input #realStockInput matInput type="number" placeholder="Introduce el stock real">
             </mat-form-field>
-            <button (click)="auditArticle(article, realStockInput.value)" mat-raised-button color="primary">Audit</button>
+            <button [disabled]="realStockInput.value === '' || +realStockInput.value < 0 || +realStockInput.value > article.stock"
+                    (click)="auditArticle(article, realStockInput.value)" mat-raised-button color="primary">Audit</button>
+            <div *ngIf="+realStockInput.value < 0">Real stock cannot be negative</div>
+            <div *ngIf="+realStockInput.value > (article.stock ?? 0)">Real stock cannot be greater</div>
           </mat-cell>
         </ng-container>
 
@@ -57,7 +60,7 @@
     </mat-card-content>
   </mat-card>
 
-  <app-crud [data]="losses" [title]="titleLosses" [deleteAction]="false" [readAction]="false" [createAction]="false" [updateAction]="false"></app-crud>
+  <app-crud [data]="articlesLosses" [title]="titleLosses" [deleteAction]="false" [readAction]="false" [createAction]="false" [updateAction]="false"></app-crud>
   <br>
   <mat-form-field >
     <mat-label>Loss value</mat-label>
@@ -68,13 +71,10 @@
   <button cdkFocusInitial mat-dialog-close mat-raised-button>
     Close
   </button>
-  <button (click)="create()" *ngIf="isCreated()" color="primary" mat-raised-button>
-    Create
-  </button>
-  <button (click)="save()" *ngIf="!isCreated()" color="primary" mat-raised-button>
+  <button (click)="save()" color="primary" mat-raised-button>
     Save
   </button>
-  <button (click)="closeAudit()" *ngIf="!isCreated()" color="accent" mat-raised-button>
+  <button (click)="closeAudit()" color="accent" mat-raised-button>
     Close audit
   </button>
 </mat-dialog-actions>

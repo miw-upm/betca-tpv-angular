@@ -3,7 +3,7 @@ import {MAT_DIALOG_DATA, MatDialog} from '@angular/material/dialog';
 
 import {Invoice} from "../cashier-opened/shopping-cart/invoice.model";
 import {InvoiceService} from "./invoice.service";
-import {TicketCreation} from "../cashier-opened/shopping-cart/ticket-creation.model";
+import {TicketCreation} from "@shared/models/ticket-creation.model";
 import {User} from "@core/user.model";
 import {InvoiceSearch} from "./invoice-search.model";
 

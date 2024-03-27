@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {of} from "rxjs";
 
 import {ReadDetailDialogComponent} from "@shared/dialogs/read-detail.dialog.component";
-import {Budget} from "./budgets.model";
+import {Budget} from "../cashier-opened/shopping-cart/budgets.model";
 import {BudgetsSearch} from "./budgets-search.model";
 import {MatDialog} from "@angular/material/dialog";
 import {BudgetsService} from "./budgets.service";

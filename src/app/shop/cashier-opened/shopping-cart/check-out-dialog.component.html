@@ -6,7 +6,7 @@
         <mat-icon color="warn">report_problem</mat-icon> Uncommit articles & phone not registered</span>
   <!-- <app-user-quick-crud (found)="updateUser($event)"></app-user-quick-crud> -->
   <mat-form-field>
-    <input #mobile [disabled]="managedMobile()" matInput placeholder="Mobile" type="number"/>
+    <input #mobile [disabled]="managedMobile()" matInput placeholder="Mobile" type="number" [value]="getUserMobile()"/>
     <button (click)="searchUser(mobile.value)" *ngIf="!managedMobile()" mat-button mat-icon-button matSuffix>
       <mat-icon color="warn">search</mat-icon>
     </button>
@@ -46,9 +46,9 @@
   </mat-checkbox>
   <mat-form-field *ngIf="requestedGiftTicket">
     <mat-label>Leave a message</mat-label>
-    <textarea [(ngModel)]="ticketGiftCreation.message" matInput placeholder="Because you deserve it sweety!"></textarea>ç
+    <textarea [(ngModel)]="ticketGiftCreation.message" matInput placeholder="Because you deserve it sweety!"></textarea>
   </mat-form-field>
-  <mat-checkbox [(ngModel)]="requestedDataProtectionAct" [disabled]="true">
+  <mat-checkbox [(ngModel)]="requestedDataProtectionAct">
     <span>Data Protection Act</span>
   </mat-checkbox>
   <div *ngIf="!invalidCheckOut()&&returnedCash()>0" class="mat-raised-button mat-primary"> Cash Return:

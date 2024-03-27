@@ -4,6 +4,9 @@ import {User} from "@core/user.model";
 import {AuthService} from "@core/auth.service";
 import {MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {SettingsSavedInfoDialogComponent} from "./settings-saved-info-dialog/settings-saved-info-dialog.component";
+import {CustomerPoints} from "@shared/models/customer-points.model";
+import {Observable} from "rxjs";
+import {CustomerPointsService} from "../customer-points/customer-points.service";
 
 @Component({
   selector: 'app-settings',
@@ -14,15 +17,16 @@ export class SettingsComponent {
   userHasChanged:boolean=false;
   initialUser:User;
   currentUser:User;
-  constructor(private authService: AuthService,public dialog: MatDialog) {
+  customerPoints: Observable<CustomerPoints>;
+  constructor(private authService: AuthService, private customerPointsService:CustomerPointsService,public dialog: MatDialog) {
     this.getCurrentUser();
   }
 
   getCurrentUser(){
     this.userHasChanged=false;
-
     this.currentUser=this.authService.getUser();
     this.initialUser={ ...this.authService.getUser() };
+    this.customerPoints = this.customerPointsService.getCurrentCustomerPoints();
   }
 
   onChange(){

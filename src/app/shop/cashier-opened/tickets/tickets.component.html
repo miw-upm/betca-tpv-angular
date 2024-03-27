@@ -7,6 +7,13 @@
         <mat-icon>search</mat-icon>
       </button>
     </mat-form-field>
+    <mat-form-field>
+      <mat-label>Search by Gift Ticket Reference</mat-label>
+      <input [(ngModel)]="searchByGiftTicketReference" matInput>
+      <button mat-icon-button matSuffix (click)="searchByGiftTicket()">
+        <mat-icon>search</mat-icon>
+      </button>
+    </mat-form-field>
     <button (click)="resetSearch()" mat-icon-button>
       <mat-icon>close</mat-icon>
     </button>

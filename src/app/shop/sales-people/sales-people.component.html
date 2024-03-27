@@ -2,9 +2,12 @@
   <mat-card-content>
     <mat-label><strong>Filters: </strong></mat-label>
     <mat-form-field>
-      <mat-label>Name</mat-label>
-      <input [(ngModel)]="salesPeopleSearch1.nameSalesPeople" matInput>
+      <mat-label>SalesPerson Mobile</mat-label>
+      <input [(ngModel)]="salesPeopleSearch1.mobile" matInput>
     </mat-form-field>
+    <button color="primary" disabled="disabled" mat-icon-button>
+      <mat-icon>smartphone</mat-icon>
+    </button>
     <mat-form-field>
       <mat-label>Start date</mat-label>
       <input [(ngModel)]="salesPeopleSearch1.startDate" matInput type="date">
@@ -13,10 +16,10 @@
       <mat-label>End Date</mat-label>
       <input [(ngModel)]="salesPeopleSearch1.endDate" matInput type="date">
     </mat-form-field>
-    <button (click)="searchSalesPeople1()" mat-icon-button>
+    <button (click)="searchBySalesPeopleMobileAndCreationDateBetween()" mat-icon-button>
       <mat-icon>search</mat-icon>
     </button>
-    <button (click)="resetSearch1()" mat-icon-button>
+    <button (click)="resetSearchBySalesPeopleMobileAndCreationDateBetween()" mat-icon-button>
       <mat-icon>close</mat-icon>
     </button>
   </mat-card-content>
@@ -27,10 +30,10 @@
       <mat-label>Month</mat-label>
       <input [(ngModel)]="salesPeopleSearch2.month" matInput>
     </mat-form-field>
-    <button (click)="searchSalesPeople2()" mat-icon-button>
+    <button (click)="searchByMonth()" mat-icon-button>
       <mat-icon>search</mat-icon>
     </button>
-    <button (click)="resetSearch2()" mat-icon-button>
+    <button (click)="resetSearchByMonth()" mat-icon-button>
       <mat-icon>close</mat-icon>
     </button>
   </mat-card-content>
@@ -48,12 +51,14 @@
         </tr>
         </thead>
         <tbody>
-        <tr *ngFor="let salesPerson of salesPeople">
+        <tr *ngFor="let salesPerson of salesPeople; let i = index">
           <td>{{ salesPerson.salesperson.mobile }}</td>
           <td>
             <table>
               <thead>
               <tr>
+                <th>Creation Date</th>
+                <th>Reference</th>
                 <th>Cash</th>
                 <th>Card</th>
                 <th>Voucher</th>
@@ -62,7 +67,9 @@
               </thead>
               <tbody>
               <tr>
-                <td>{{ salesPerson.ticket.cash }}</td>
+                <td>{{ salesPerson.ticket.creationDate}}</td>
+                <td>{{ salesPerson.ticket.reference }}</td>
+                <td>{{ salesPerson.ticket.cash }}€</td>
                 <td>{{ salesPerson.ticket.card }}</td>
                 <td>{{ salesPerson.ticket.voucher }}</td>
                 <td>{{ salesPerson.ticket.note }}</td>
@@ -83,17 +90,15 @@
               <tr *ngFor="let shopping of salesPerson.ticket.shoppingList">
                 <td>{{ shopping.barcode }}</td>
                 <td>{{ shopping.description }}</td>
-                <td>{{ shopping.retailPrice }}</td>
+                <td>{{ shopping.retailPrice }}€</td>
               </tr>
               </tbody>
             </table>
           </td>
-          <td></td>
+          <td>{{ finalValues[i] }}€</td>
         </tr>
         </tbody>
       </table>
     </mat-card-content>
   </mat-card>
 </mat-card>
-
-

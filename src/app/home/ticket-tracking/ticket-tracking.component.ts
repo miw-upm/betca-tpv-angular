@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {ActivatedRoute} from "@angular/router";
-import {Shopping} from "../../shop/cashier-opened/shopping-cart/shopping.model";
-import {TicketTrackingService} from "./ticket-tracking.service";
+import { ActivatedRoute } from "@angular/router";
+import { Shopping } from "../../shared/models/shopping.model";
+import { TicketTrackingService } from "./ticket-tracking.service";
 
 @Component({
   selector: 'app-ticket-tracking',
@@ -19,8 +19,13 @@ export class TicketTrackingComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.route.params.subscribe(params => this.id = params["id"]);
-    this.ticketTrackingService.read().subscribe(products => this.products = products);
+    this.route.params.subscribe(params => {
+      this.id = params["id"];
+      this.ticketTrackingService.read(this.id).subscribe(data => {
+          console.log(data)
+          // @ts-ignore
+          this.products = data.shoppingList;
+      })
+    });
   }
-
 }

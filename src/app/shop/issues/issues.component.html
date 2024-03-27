@@ -1,2 +1,8 @@
-<app-crud (create)="create()"
-          [data]="issues" [deleteAction]="false" [updateAction]="false" [readAction]="false" [title]="title"></app-crud>
+<app-crud
+  (create)="create()"
+  [data]="getDataAsObservable()"
+  [deleteAction]="false"
+  [updateAction]="false"
+  [readAction]="false"
+  [title]="title"
+></app-crud>

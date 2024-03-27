@@ -10,6 +10,7 @@ export class SearchByCompanyComponent {
   companies: Observable<string[]> = of([]);
 
   @Input() company: string;
+  @Input() obligatory: "true" | "false" = "true";
   @Output() companyChange = new EventEmitter<string>();
 
   constructor(private sharedProviderService: SharedProviderService) {

@@ -1,18 +1,25 @@
 import {Injectable} from '@angular/core';
-import {EMPTY, Observable} from 'rxjs';
+import {VouchersService} from 'app/shop/vouchers/vouchers.service';
+import {Observable, switchMap} from 'rxjs';
+import {Voucher} from './models/voucher.model';
+import {VoucherCreation} from 'app/shop/vouchers/voucher-creation.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SharedVoucherService {
 
-  printVoucher(value: number): Observable<any> {
-    console.log('Printing voucher with value: ' + value);
-    return EMPTY; // TODO create and print voucher
+  constructor(private voucherService: VouchersService) {
   }
 
-  consumeVoucher(reference: string): Observable<any> {
-    console.log('Consuming voucher with reference: ' + reference);
-    return EMPTY; // TODO consume voucher
+  printVoucher(value: number): Observable<void> {
+    const voucher: VoucherCreation = { value: value };
+    return this.voucherService.create(voucher).pipe(
+      switchMap((voucher: Voucher) => this.voucherService.readReceipt(voucher.reference))
+    );
+  }
+
+  consumeVoucher(reference: string): Observable<Voucher> {
+    return this.voucherService.update(reference);
   }
 }

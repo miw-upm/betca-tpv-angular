@@ -14,14 +14,10 @@
       <button color="primary" disabled="disabled" mat-icon-button>
         <mat-icon>category</mat-icon>
       </button>
-      <form>
-        <mat-form-field>
-          <input #budge matInput placeholder="Budge" type="text">
-        </mat-form-field>
-        <button (click)="addBudget(budge.value); budge.value=''" [disabled]="budge.value === ''" color="primary" mat-icon-button type="submit">
-          <mat-icon>description</mat-icon>
-        </button>
-      </form>
+      <app-search-by-reference (add)="addBudget($event)"></app-search-by-reference>
+      <button color="primary" disabled="disabled" mat-icon-button>
+        <mat-icon>description</mat-icon>
+      </button>
       <form>
         <mat-form-field>
           <input #mobile matInput placeholder="Customer Discount" type="text">

@@ -1,19 +1,18 @@
 import { Injectable } from '@angular/core';
-import {Observable, of} from "rxjs";
-import {Shopping} from "../../shop/cashier-opened/shopping-cart/shopping.model";
+import { Observable, of } from 'rxjs';
+import { Shopping } from "../../shared/models/shopping.model";
+import { HttpService } from '@core/http.service';
+import { EndPoints } from '@shared/end-points';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TicketTrackingService {
+  static REFERENCE = '/reference';
 
-  constructor() { }
+  constructor(private httpService: HttpService) { }
 
-  read(): Observable<Shopping[]> {
-    const shopping1: Shopping = new Shopping('barcode1', 'description1',1);
-    const shopping2: Shopping = new Shopping('barcode2', 'description2',2);
-    const shopping3: Shopping = new Shopping('barcode3', 'description3',3);
-
-    return of([shopping1, shopping2, shopping3]);
+  read(reference: string): Observable<Shopping[]> {
+    return this.httpService.get(EndPoints.TICKETS + '/' + reference + TicketTrackingService.REFERENCE);
   }
 }

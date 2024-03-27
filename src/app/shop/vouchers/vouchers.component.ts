@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
-import {of} from 'rxjs';
+import {Observable, of} from 'rxjs';
 
 import {Voucher} from './voucher.model';
 import {VouchersService} from './vouchers.service';
@@ -13,19 +13,37 @@ import {VoucherCreationDialogComponent} from './voucher-creation-dialog.componen
 })
 export class VouchersComponent {
   vouchersSearch: VouchersSearch;
+  startDatePicker: Date;
+  endDatePicker: Date;
   title = 'Vouchers management';
-  vouchers = of([]);
+  vouchers: Observable<Voucher[]> = of([]);
 
   constructor(private dialog: MatDialog, private vouchersService: VouchersService) {
     this.resetSearch();
   }
 
+  ngOnInit(): void {
+    this.search();
+  }
+
   search(): void {
+    if (this.startDatePicker && this.endDatePicker) {
+      this.vouchersSearch.creationDateStart = this.formatDate(this.startDatePicker);
+      this.vouchersSearch.creationDateEnd = this.formatDate(this.endDatePicker);
+    }
     this.vouchers = this.vouchersService.search(this.vouchersSearch);
   }
 
   resetSearch(): void {
-    this.vouchersSearch = {};
+    this.startDatePicker = null;
+    this.endDatePicker = null;
+    this.vouchersSearch = {
+      reference: '',
+      userMobile: '',
+      creationDateStart: '',
+      creationDateEnd: '',
+      isConsumed: false
+    };
   }
 
   create(): void {
@@ -42,5 +60,9 @@ export class VouchersComponent {
         object: this.vouchersService.read(voucher.reference)
       }
     });
+  }
+
+  private formatDate(date: Date): string {
+    return date.toJSON().split('.')[0];
   }
 }

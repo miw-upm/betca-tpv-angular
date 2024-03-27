@@ -1,4 +1,4 @@
-import {Shopping} from "../shopping-cart/shopping.model";
+import {Shopping} from "@shared/models/shopping.model";
 
 export interface Ticket {
   id: string;

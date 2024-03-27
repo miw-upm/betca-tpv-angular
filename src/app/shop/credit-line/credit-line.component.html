@@ -1,33 +1,33 @@
 <div style="font-size: x-small; margin-left: 20px;">
 <mat-tab-group>
-    <mat-tab label="Add credit-line">
-      <h3>Add credit-line</h3>
-      <mat-form-field>
-        <input #mobile matInput placeholder="Mobile" type="string"/>
-        <button (click)="mobile.value = '' " mat-button mat-icon-button matSuffix>
-          <mat-icon color="warn">close</mat-icon>
-        </button>
-      </mat-form-field>
-      <button mat-button (click)="create(mobile.value)">Create</button>
-    </mat-tab>
+  <mat-tab label="Add credit-line">
+    <h3>Add credit-line</h3>
+    <mat-form-field>
+      <input [(ngModel)]="mobile" matInput placeholder="Mobile" type="string"/>
+      <button mat-button mat-icon-button matSuffix (click)="clearMobile()">
+        <mat-icon color="warn">close</mat-icon>
+      </button>
+    </mat-form-field>
+    <button mat-button (click)="create(mobile)">Create</button>
+  </mat-tab>
 
-    <mat-tab label="Pay pending tickets">
-      <h3>Pay pending tickets</h3>
-      <mat-form-field>
-      <input #mobile matInput placeholder="Mobile" type="string"/>
-      <button (click)="searchUnpaidTicketsByMobile(mobile.value)"  mat-button mat-icon-button matSuffix>
+  <mat-tab label="Pay pending tickets">
+    <h3>Pay pending tickets</h3>
+    <mat-form-field>
+      <input [(ngModel)]="mobile" matInput placeholder="Mobile" type="string"/>
+      <button mat-button mat-icon-button matSuffix (click)="searchUnpaidTicketsByMobile(mobile)">
         <mat-icon color="warn">search</mat-icon>
       </button>
-        </mat-form-field>
-      <div style="font-size: x-small; margin-left: 30vw;">
-        <mat-checkbox (change)="changePayMethod('cash')" [checked]="cash" style="margin-right: 2vw; margin-top: 2vw;">Cash</mat-checkbox>
-        <mat-checkbox (change)="changePayMethod('card')" [checked]="card">Card</mat-checkbox>
-        <p style="margin-top: 1vw; font-size: xx-large;">TOTAL: {{total}}€</p>
-      </div>
-      <div style="margin-top: -1vw;">
-        <button mat-button mat-dialog-close>Cancel</button>
-        <button (click)="pay()" [disabled]="!card && !cash"  mat-button>Pay</button>
-      </div>
-    </mat-tab>
-  </mat-tab-group>
+    </mat-form-field>
+    <div style="font-size: x-small; margin-left: 30vw;">
+      <mat-checkbox (change)="changePayMethod('cash')" [checked]="cash" style="margin-right: 2vw; margin-top: 2vw;">Cash</mat-checkbox>
+      <mat-checkbox (change)="changePayMethod('card')" [checked]="card">Card</mat-checkbox>
+      <p style="margin-top: 1vw; font-size: xx-large;">TOTAL: {{total}}€</p>
+    </div>
+    <div style="margin-top: -1vw;">
+      <button mat-button mat-dialog-close>Cancel</button>
+      <button (click)="pay(mobile)" [disabled]="!card && !cash"  mat-button>Pay</button>
+    </div>
+  </mat-tab>
+</mat-tab-group>
 </div>

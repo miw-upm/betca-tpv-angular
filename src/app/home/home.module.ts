@@ -15,7 +15,6 @@ import {CarouselModule} from "@shared/components/carousel/carousel.module";
 import {AdviserComponent} from "./adviser/adviser.component";
 import { Top5Component } from './adviser/top5/top5.component';
 import {SearchByDescriptionComponent} from "./shared/search-by-description.component";
-import {PhoneRequestDialogComponent} from "./shopping-basket/phone-request-dialog.component";
 import {OnlineOrdersComponent} from "./online-orders/online-orders.component";
 import { RefundsComponent } from './refunds/refunds.component';
 import { SettingsComponent } from './settings/settings.component';
@@ -25,6 +24,7 @@ import { TicketTrackingComponent } from './ticket-tracking/ticket-tracking.compo
 import { ProductComponent } from './ticket-tracking/product/product.component';
 import {TechnicalSupportComponent} from "./technical-support/technical-support.component";
 import {ChatWindowComponent} from "./technical-support/chat-window.component";
+import {OnlineOrdersService} from "./online-orders/online-orders.service";
 
 
 @NgModule({
@@ -32,7 +32,6 @@ import {ChatWindowComponent} from "./technical-support/chat-window.component";
     AdviserComponent,
     SearchByDescriptionComponent,
     ComplaintsComponent,
-    PhoneRequestDialogComponent,
     ComplaintCreationDialogComponent,
     ReviewsComponent,
     ReviewDialogComponent,
@@ -59,7 +58,8 @@ import {ChatWindowComponent} from "./technical-support/chat-window.component";
 
   providers: [
     ShoppingBasketService,
-    CustomerPointsService
+    CustomerPointsService,
+    OnlineOrdersService
   ]
 })
 export class HomeModule {

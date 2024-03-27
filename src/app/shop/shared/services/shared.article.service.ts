@@ -5,13 +5,16 @@ import {map} from 'rxjs/operators';
 import {HttpService} from '@core/http.service';
 import {EndPoints} from '@shared/end-points';
 import {Article} from './models/article.model';
-import {CustomerPointsConstants} from "@shared/models/customer-points.model";
 
 @Injectable({
   providedIn: 'root',
 })
 export class SharedArticleService {
   private static BARCODE = '/barcode';
+  private static SEARCH: string = '/search';
+  private static MOBILE: string = 'mobile';
+  private static CART_TOTAL: string = 'cartTotal';
+  private static DISCOUNT_ARTICLE_ENDPOINT = EndPoints.ARTICLES+'/discount';
 
   constructor(private httpService: HttpService) {
   }
@@ -35,10 +38,9 @@ export class SharedArticleService {
       );
   }
   getPointsDiscountArticleForUser(mobileNumber: string, totalShoppingCart: number): Observable<Article> {
-    return of(<Article> {
-      barcode: CustomerPointsConstants.BARCODE,
-      description: "POINTS DISCOUNT",
-      retailPrice: -1 * (0.5*totalShoppingCart),
-    });
+    return this.httpService
+      .param(SharedArticleService.MOBILE, mobileNumber)
+      .param(SharedArticleService.CART_TOTAL, totalShoppingCart.toString())
+      .get(SharedArticleService.DISCOUNT_ARTICLE_ENDPOINT+SharedArticleService.SEARCH)
   }
 }

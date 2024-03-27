@@ -31,7 +31,7 @@ export class OrderDetailsComponent implements OnInit {
     this.orderIdParameter = this.data.orderReference;
     if (this.orderIdParameter === undefined) {
       this.isCreationMode = true;
-      this.currentActiveOrder = { reference: '', description: '', providerCompany: '', openingDate: new Date(), orderLines: [] };
+      this.currentActiveOrder = { reference: '', description: '', providerCompany: '', orderLines: [] };
     } else {
       this.loadOrderInfoById(this.orderIdParameter);
     }
@@ -40,11 +40,8 @@ export class OrderDetailsComponent implements OnInit {
 
 
   public loadOrderInfoById(orderId: string): void {
-    this.ordersService.read(orderId.toString())
-      .pipe(
-        take(1)
-      )
-      .subscribe(order => {
+    this.ordersService.readByReference(orderId.toString())
+      .subscribe((order: Order) => {
         this.currentActiveOrder = order;
         this.currentActiveOrderIsClosed = order.closingDate !== undefined;
         this.refreshTable();
@@ -63,12 +60,17 @@ export class OrderDetailsComponent implements OnInit {
 
   public saveOrder(): void {
     if (this.isCreationMode) {
-      this.ordersService.create(this.currentActiveOrder); // .subscribe();
+      this.ordersService.create(this.currentActiveOrder).subscribe(
+        (order: Order) => {
+          this.snackbarService.open("Order created successfully.", "Dismiss", { duration: 2000 });
+          this.dialog.close({ isCreation: this.isCreationMode, reference: order.reference });
+        }
+      );
     } else {
       this.ordersService.update(this.currentActiveOrder.reference, this.currentActiveOrder); // .subscribe();
+      this.snackbarService.open("Changes saved successfully.", "Dismiss", { duration: 2000 });
+      this.dialog.close({ isCreation: this.isCreationMode, reference: this.currentActiveOrder.reference });
     }
-    this.snackbarService.open("Changes saved successfully.", "Dismiss", { duration: 2000 });
-    this.dialog.close({ isCreation: this.isCreationMode, reference: this.currentActiveOrder.reference });
   }
 
   public cancelNewOrder(): void {
@@ -76,9 +78,12 @@ export class OrderDetailsComponent implements OnInit {
   }
 
   public deleteOrder(): void {
-    this.ordersService.delete(this.currentActiveOrder.reference); // .subscribe();
-    this.snackbarService.open("Order deleted successfully.", "Dismiss", { duration: 2000 });
-    this.dialog.close();
+    this.ordersService.delete(this.currentActiveOrder.reference).subscribe(
+      () => {
+        this.snackbarService.open("Order deleted successfully.", "Dismiss", { duration: 2000 });
+        this.dialog.close({ isCreation: this.isCreationMode, reference: this.currentActiveOrder.reference });
+      }
+    );
   }
 
   public markAsClosed(): void {
@@ -90,16 +95,16 @@ export class OrderDetailsComponent implements OnInit {
 
   public async copyToNewOrder(): Promise<void> {
     const newOrder: Order = {
-      reference: `FakeOrder${Math.floor(Math.random() * 1000)}`,
       description: this.currentActiveOrder.description,
       providerCompany: this.currentActiveOrder.providerCompany,
-      openingDate: undefined,
-      closingDate: undefined,
-      orderLines: this.currentActiveOrder.orderLines.map(orderLine => ({ articleBarcode: orderLine.articleBarcode, requiredAmount: orderLine.requiredAmount, finalAmount: undefined }))
+      orderLines: this.currentActiveOrder.orderLines.map(orderLine => ({ articleBarcode: orderLine.articleBarcode, requiredAmount: orderLine.requiredAmount }))
     };
-    this.ordersService.create(newOrder); // .subscribe();
-    this.snackbarService.open(`Order copied successfully with reference ${newOrder.reference}.`, "Dismiss", { duration: 2000 });
-    this.dialog.close();
+    this.ordersService.create(newOrder).subscribe(
+      (order: Order) => {
+        this.snackbarService.open(`Order copied successfully with reference ${order.reference}.`, "Dismiss", { duration: 2000 });
+        this.dialog.close();
+      }
+    );
   }
 
   private refreshTable(): void {

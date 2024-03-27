@@ -17,9 +17,9 @@
       </button>
       <mat-form-field>
         <mat-label>Creation Date</mat-label>
-        <mat-date-range-input [rangePicker]="picker">7
-          <input matStartDate placeholder="Start date" [(ngModel)]="vouchersSearch.startDate">
-          <input matEndDate placeholder="End date" [(ngModel)]="vouchersSearch.endDate">
+        <mat-date-range-input [rangePicker]="picker">
+          <input matStartDate placeholder="Start date" [(ngModel)]="startDatePicker">
+          <input matEndDate placeholder="End date" [(ngModel)]="endDatePicker">
         </mat-date-range-input>
         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-date-range-picker #picker></mat-date-range-picker>

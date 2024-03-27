@@ -28,7 +28,7 @@
       </button>
       <!--<button (click)="cart()" mat-button>routerLink=""-->
       <button mat-button routerLink="/home/shopping-basket">
-        <mat-icon matBadge="3" matBadgeColor="accent" matBadgeOverlap="false" matBadgeSize="medium">shopping_cart
+        <mat-icon [matBadge]=cart() matBadgeColor="accent" matBadgeOverlap="false" matBadgeSize="medium">shopping_cart
         </mat-icon>
       </button>
     </div>
@@ -58,10 +58,6 @@
       <mat-icon>build</mat-icon>
       <span>Technical Support</span>
     </button>
-    <span mat-menu-item [disabled]="true">
-      <mat-icon>monetization_on</mat-icon>
-      <span>You have {{(customerPoints | async)?.value}} points</span>
-    </span>
 
   </mat-menu>
   <mat-toolbar class="center">

@@ -16,8 +16,8 @@ import {CrudComponent} from '@shared/components/crud.component';
 import {DateComponent} from '@shared/components/date.component';
 import {FooterComponent} from '@shared/components/footer.component';
 import {SearchComponent} from '@shared/components/search.component';
-import {OnlineOrdersService} from "@shared/services/online-orders.service";
 import {SignupDialogComponent} from './dialogs/signup-dialog.component';
+import { PasswordRecoveryDialogComponent } from './dialogs/password-recovery-dialog.component';
 
 @NgModule({
   imports: [
@@ -38,6 +38,7 @@ import {SignupDialogComponent} from './dialogs/signup-dialog.component';
     SearchComponent,
     UppercaseWords,
     SignupDialogComponent,
+    PasswordRecoveryDialogComponent,
   ],
   exports: [
     CancelYesDialogComponent,
@@ -54,9 +55,6 @@ import {SignupDialogComponent} from './dialogs/signup-dialog.component';
     ReadDetailDialogComponent,
     SearchComponent,
     UppercaseWords,
-  ],
-  providers: [
-    OnlineOrdersService
   ]
 })
 export class SharedModule {

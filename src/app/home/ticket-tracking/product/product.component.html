@@ -1,6 +1,6 @@
 <div class="ticket-tracking-product">
     <mat-card
-        [ngClass]="{'not_committed': state === 0, 'require_provider': state === 1, 'in_stock': state === 2, 'committed': state === 3}"
+      class="{{state}}"
     >
         <mat-card-title>{{barcode}}</mat-card-title>
         <mat-card-subtitle>{{description}}</mat-card-subtitle>

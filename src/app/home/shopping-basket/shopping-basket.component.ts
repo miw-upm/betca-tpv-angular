@@ -1,43 +1,33 @@
-import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-
+import {AfterViewInit, Component, ElementRef, ViewChild} from '@angular/core';
 import {ShoppingBasketService} from './shopping-basket.service';
 import {AuthService} from "@core/auth.service";
-import {Shopping} from "./shopping.model";
 import {MatDialog} from "@angular/material/dialog";
-import {PhoneRequestDialogComponent} from "./phone-request-dialog.component";
 import {SharedArticleService} from "../shared/services/shared.article.service";
 import {NumberDialogComponent} from "@shared/dialogs/number-dialog.component";
 import {CustomerPointsConstants} from "@shared/models/customer-points.model";
+import * as uuid from 'uuid';
+import {ShoppingState} from "../../shop/cashier-opened/shopping-cart/shopping-state.model";
+import {Shopping} from "@shared/models/shopping.model";
+import {OnlineOrder} from "@shared/models/online-order.model";
+import {Ticket} from "../../shop/cashier-opened/tickets/tickets.models";
+import {OnlineOrderState} from "@shared/models/online-order-state";
+
 
 @Component({
   selector: 'app-shopping-basket',
   styleUrls: ['shopping-basket.component.css'],
   templateUrl: 'shopping-basket.component.html'
 })
-export class ShoppingBasketComponent implements AfterViewInit {
+export class ShoppingBasketComponent {
   barcode: string;
   displayedColumns = ['id', 'description', 'retailPrice', 'amount', 'actions'];
   shoppingBasket: Shopping[] = [];
   totalShoppingBasket = 0;
   phone = 0;
-  @ViewChild('code', {static: true}) private elementRef: ElementRef;
-
-  private mockShopping: Shopping[] = [
-    { amount: 2, article: {barcode: "111111", description: "Primer producto", retailPrice: 10}},
-    { amount: 1, article: {barcode: "222222", description: "Segundo producto", retailPrice: 20}},
-    { amount: 5, article: {barcode: "333333", description: "Tercer producto", retailPrice: 30}}
-  ];
 
   constructor(private shoppingBasketService: ShoppingBasketService, private sharedArticleService : SharedArticleService,
               private authService: AuthService, private dialog: MatDialog) {
-    this.shoppingBasket = [];
-    this.shoppingBasket = [...this.shoppingBasket, ...this.mockShopping];
-    this.synchronizeShoppingBasket();
-  }
-
-  ngAfterViewInit(): void {
-    this.elementRef.nativeElement.focus();
-    this.shoppingBasket = [];
+    this.shoppingBasket = this.shoppingBasketService.loadShoppingBasketContent();
     this.synchronizeShoppingBasket();
   }
 
@@ -45,30 +35,34 @@ export class ShoppingBasketComponent implements AfterViewInit {
     this.shoppingBasket = [...this.shoppingBasket];
     let total = 0;
     for (const shopping of this.shoppingBasket) {
-      total = total + (shopping.article.retailPrice * shopping.amount);
+      total = total + (shopping.retailPrice * shopping.amount);
     }
     this.totalShoppingBasket = Math.round(total * 100) / 100;
+    this.shoppingBasketService.saveShoppingBasketContent(this.shoppingBasket);
   }
 
-  addDescription(description): void {
+  addDescription(description: string): void {
     this.sharedArticleService
       .read(description)
-      .subscribe(newShopping => {
-        this.shoppingBasket.push(newShopping);
-        this.synchronizeShoppingBasket();
-      });
-    this.elementRef.nativeElement.focus();
+      .subscribe(newShoppings =>
+        newShoppings.map(newShopping => {
+          newShopping.state = ShoppingState.NOT_COMMITTED;
+          this.shoppingBasket.push(newShopping);
+          this.synchronizeShoppingBasket();
+        }));
   }
 
   incrementAmount(shopping: Shopping): void {
     shopping.amount++;
+    shopping.updateTotal();
     this.synchronizeShoppingBasket();
   }
 
   decreaseAmount(shopping: Shopping): any {
-    if (shopping.amount > 0) {
+    if (shopping.amount > 1) {
       shopping.amount--;
     }
+    shopping.updateTotal();
     this.synchronizeShoppingBasket();
   }
 
@@ -86,14 +80,17 @@ export class ShoppingBasketComponent implements AfterViewInit {
   }
 
   order(): void {
-    if(this.userIsLogged()) {
-      // TODO crear una orden y demás proceso
-    }
-    else {
-      this.dialog.open(PhoneRequestDialogComponent)
-        .afterClosed()
-        .subscribe(response => console.log(response)); // TODO trabajar con el telefono
-    }
+    this.shoppingBasketService.createTicket(this.shoppingBasket)
+      .subscribe(response => this.treatResponse(response));
+  }
+
+  treatResponse(ticket: Ticket) {
+    console.log(ticket);
+    let onlineOrder: OnlineOrder = {ticket: ticket, reference: uuid.v4(), state: OnlineOrderState.PREPARING};
+    this.shoppingBasketService.createOrder(onlineOrder).subscribe();
+    this.shoppingBasketService.printTicket(ticket.id).subscribe();
+    this.shoppingBasket = [];
+    this.synchronizeShoppingBasket();
   }
 
   userIsLogged(): boolean {
@@ -114,7 +111,7 @@ export class ShoppingBasketComponent implements AfterViewInit {
               shopping.total = 0;
             }
             shopping.updateDiscount();
-            this.synchronizeShoppingCart();
+            this.synchronizeShoppingBasket();
           }
         });
     }

@@ -2,7 +2,7 @@ import {Component, Inject} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialog} from '@angular/material/dialog';
 import {TicketService} from "./tickets.service";
 import {Ticket} from "./tickets.models";
-import {Shopping} from "../shopping-cart/shopping.model";
+import {Shopping} from "@shared/models/shopping.model";
 import {ShoppingState} from "../shopping-cart/shopping-state.model";
 import {CashierClosureService} from "../cashier-closure/cashier-closure.service";
 import {Observable} from "rxjs";
@@ -25,25 +25,28 @@ export class TicketCreationUpdatingDialogComponent {
   }
   update(): void {
     this.ticketService
-      .update(this.ticket)
+      .update(this.ticket.id, this.ticket)
       .subscribe(() => this.dialog.closeAll());
   }
 
   decreaseAmount(item: Shopping) {
-    this.cashierState.subscribe(response => {
-      if(response.opened) {
-        if (item.amount > 0 && item.state === ShoppingState.NOT_COMMITTED) {
-          item.amount--;
-        }else if(item.state === ShoppingState.COMMITTED) {
-          this.ticketService.printVoucher(item.total);
-        }
-      }
-    })
-
+    if (item.amount > 0 && this.getStateDescription(item.state) === 'Not Committed') {
+      item.amount--;
+    }else if(this.getStateDescription(item.state) === 'Committed') {
+      item.amount--;
+    }
   }
 
-  getStateDescription(state: ShoppingState): string {
-    switch(state) {
+  getStateDescription(state: ShoppingState | string): string {
+    let stateValue: ShoppingState;
+
+    if (typeof state === 'string') {
+      stateValue = ShoppingState[state as keyof typeof ShoppingState];
+    } else {
+      stateValue = state;
+    }
+
+    switch (stateValue) {
       case ShoppingState.NOT_COMMITTED:
         return 'Not Committed';
       case ShoppingState.REQUIRE_PROVIDER:
@@ -55,5 +58,13 @@ export class TicketCreationUpdatingDialogComponent {
       default:
         return 'Unknown State';
     }
+  }
+
+  isNotCommitted(state: ShoppingState) {
+    return this.getStateDescription(state) === 'Not Committed'
+  }
+
+  isCommitted(state: ShoppingState) {
+    return this.getStateDescription(state) === 'Committed'
   }
 }

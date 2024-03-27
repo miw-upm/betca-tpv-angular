@@ -1,17 +1,20 @@
 import {Injectable} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
-import {EMPTY, iif, merge, Observable} from 'rxjs';
+import {EMPTY, iif, merge, mergeMap, Observable, of} from 'rxjs';
 import {catchError, concatMap, map} from 'rxjs/operators';
 
 import {HttpService} from '@core/http.service';
 import {SharedArticleService} from '../../shared/services/shared.article.service';
-import {Shopping} from './shopping.model';
-import {TicketCreation} from './ticket-creation.model';
+import {TicketCreation} from '@shared/models/ticket-creation.model';
 import {ArticleQuickCreationDialogComponent} from './article-quick-creation-dialog.component';
 
 import {ShoppingState} from './shopping-state.model';
 import {EndPoints} from '@shared/end-points';
 import { GiftTicketCreation } from './gift-ticket-creation.model';
+import {Salesperson} from "../../shared/services/models/salesPeople.model";
+import {Shopping} from "@shared/models/shopping.model";
+import {Budget} from "./budgets.model";
+import {BudgetExpiredDialogComponent} from "./budget-expired.dialog.component";
 
 @Injectable({
   providedIn: 'root',
@@ -56,11 +59,13 @@ export class ShoppingCartService {
   }
 
   createTicketAndPrintReceipts(ticketCreation: TicketCreation, giftTicketCreation: GiftTicketCreation, voucher: number, requestedInvoice: boolean, requestedGiftTicket: boolean,
-                               requestDataProtectionAct: boolean): Observable<void> {
+                               requestDataProtectionAct: boolean,  salesPerson: Salesperson): Observable<void> {
     return this.httpService
       .post(EndPoints.TICKETS, ticketCreation)
       .pipe(
         concatMap(ticket => {
+          salesPerson.ticket = ticket;
+          this.createSalesPeople(salesPerson);
           let receipts = this.printTicket(ticket.id);
           receipts = iif(() => voucher > 0, merge(receipts, this.createVoucherAndPrint(voucher)), receipts);
           receipts = iif(() => requestedInvoice, merge(receipts, this.createInvoiceAndPrint(ticket.id)), receipts);
@@ -75,21 +80,66 @@ export class ShoppingCartService {
     return this.httpService.pdf().get(EndPoints.TICKETS + '/' + ticketId + ShoppingCartService.RECEIPT);
   }
 
+  createBudgetAndPrintReceipt(budget: Budget): Observable<void> {
+    return this.httpService
+      .post(EndPoints.BUDGETS, budget)
+      .pipe(
+        concatMap(budget => {
+          return this.printBudget(budget.reference);
+        })
+      );
+  }
+
+  printBudget(budgetReference: string): Observable<void> {
+    return this.httpService.pdf().get(EndPoints.BUDGETS + '/' + budgetReference + ShoppingCartService.RECEIPT);
+  }
+
+  readBudget(budgetReference: string): Observable<Shopping[]> {
+    return this.httpService
+      .get(EndPoints.BUDGETS + "/" + budgetReference)
+      .pipe(
+        map(budget => {
+            const shoppingInBudget: Shopping[] = [];
+            const actualDate: Date = new Date();
+            const expireDate: Date = new Date(budget.creationDate);
+            expireDate.setMonth(expireDate.getMonth() + 1);
+            if (expireDate > actualDate) {
+              budget.shoppingList.forEach(shopping =>
+                shoppingInBudget.push(shopping)
+              );
+            } else {
+              this.dialog.open(BudgetExpiredDialogComponent, {
+                data: {
+                  creationDate: budget.creationDate
+                }
+              });
+            }
+            return shoppingInBudget;
+          }
+        )
+      );
+  }
+
   createVoucherAndPrint(voucher: number): Observable<void> {
     return EMPTY; // TODO change EMPTY
   }
 
   createInvoiceAndPrint(ticketId: string): Observable<void> {
-    alert('invoice creation not implemented');
     return EMPTY; // TODO change EMPTY
   }
 
   createGiftTicketAndPrint(ticketId: string, giftTicketCreation: GiftTicketCreation): Observable<void> {
-    alert('Gift ticket creation not implemented yet. You wrote: ' + giftTicketCreation.message);
-    return EMPTY; // TODO change EMPTY
+    return this.httpService.post(EndPoints.GIFT_TICKETS, {ticketId: ticketId, message: giftTicketCreation.message})
+      .pipe(
+        concatMap(giftTicket => {
+          const receipt = this.httpService.pdf().get(EndPoints.GIFT_TICKETS + '/' + giftTicket.id + ShoppingCartService.RECEIPT)
+          return receipt;
+        })
+      );
   }
 
   createDataProtectionActAndPrint(ticket): Observable<void> {
+    alert('Data protection act creation not implemented');
     return EMPTY; // TODO change EMPTY
   }
   getPointsDiscountShoppingForUser(mobileNumber: string, totalShoppingCart: number): Observable<Shopping> {
@@ -97,5 +147,10 @@ export class ShoppingCartService {
       .pipe(
         map(article=>new Shopping(article.barcode,article.description,article.retailPrice))
       );
+  }
+
+  createSalesPeople(salesPerson: Salesperson): Observable<Salesperson> {
+    return this.httpService
+      .post(EndPoints.SALESPEOPLE, salesPerson);
   }
 }
