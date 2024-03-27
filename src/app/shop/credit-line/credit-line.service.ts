@@ -29,9 +29,8 @@ export class CreditLineService {
   }
 
 
-
-  payUnpaidTicketsFromCreditLine(userReference: string, cashOrCard: string): Observable<CreditLine>{
-    return this.httpService.put(EndPoints.CREDIT + '/' + userReference + this.PAY + '/' + cashOrCard);
+  payUnpaidTicketsFromCreditLine(userMobile: string, cashOrCard: string): Observable<CreditLine>{
+      return this.httpService.patch(EndPoints.CREDIT + '/' + userMobile + this.PAY + '/' + cashOrCard);
   }
 
 }

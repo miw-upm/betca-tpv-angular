@@ -28,7 +28,8 @@
             <mat-form-field class="full-width">
               <mat-label>Amount</mat-label>
               <input [(ngModel)]="item.amount" matInput readonly type="text"/>
-              <button (click)="decreaseAmount(item)" [disabled]="item.amount <= 0">Quitar uno</button>
+              <button *ngIf="isNotCommitted(item.state)" (click)="decreaseAmount(item)" [disabled]="item.amount <= 0">Quitar uno</button>
+              <button *ngIf="isCommitted(item.state)" (click)="decreaseAmount(item)" [disabled]="item.amount <= 0">Devolver uno</button>
             </mat-form-field>
             <mat-form-field class="full-width">
                 <mat-label>State</mat-label>
