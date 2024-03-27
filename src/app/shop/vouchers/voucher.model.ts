@@ -3,5 +3,5 @@ export interface Voucher {
     value: number;
     creationDate: Date;
     dateOfUse?: Date;
-    userMobile: string;
+    userMobile?: string;
 }
