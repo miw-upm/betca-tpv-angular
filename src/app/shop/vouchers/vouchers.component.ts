@@ -22,6 +22,10 @@ export class VouchersComponent {
     this.resetSearch();
   }
 
+  ngOnInit(): void {
+    this.search();
+  }
+
   search(): void {
     if (this.startDatePicker && this.endDatePicker) {
       this.vouchersSearch.creationDateStart = this.formatDate(this.startDatePicker);
@@ -31,7 +35,15 @@ export class VouchersComponent {
   }
 
   resetSearch(): void {
-    this.vouchersSearch = {};
+    this.startDatePicker = null;
+    this.endDatePicker = null;
+    this.vouchersSearch = {
+      reference: '',
+      userMobile: '',
+      creationDateStart: '',
+      creationDateEnd: '',
+      isConsumed: false
+    };
   }
 
   create(): void {
