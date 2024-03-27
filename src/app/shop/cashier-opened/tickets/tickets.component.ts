@@ -49,7 +49,7 @@ export class TicketsComponent implements OnInit {
   }
 
   update(ticket: Ticket): void {
-    this.ticketService.read(ticket.id)
+    this.ticketService.read(ticket.reference)
       .subscribe(fullTicket => this.dialog.open(TicketCreationUpdatingDialogComponent, {data: fullTicket}));
   }
 

@@ -20,7 +20,7 @@ export class TicketService {
   static SEARCHBYGIFTTICKET = '/search-by-gift-ticket';
   constructor( private cashierClosureService: CashierClosureService,
                private sharedVoucherService: SharedVoucherService, private httpService: HttpService) {
-    this.cashierState = this.cashierClosureService.readState();
+    //this.cashierState = this.cashierClosureService.readState();
     let sl = new Shopping("test", "test", 100);
     let sl2 = new Shopping("test2", "test2", 50);
     this.mockTickets = [
@@ -67,14 +67,10 @@ export class TicketService {
       .get(EndPoints.TICKETS +  '/' + reference);
   }
 
-  update( ticket: Ticket): Observable<Ticket> {
-    this.cashierState.subscribe(response => {
-      if(response.opened) {
-        alert("NOT IMPLEMENT");
-        // TODO disminuir cantidad o devolución
-      }
-    })
-    return of(ticket)
+  update(oldId: string, ticket: Ticket): Observable<Ticket> {
+    return this.httpService
+      .successful()
+      .put(EndPoints.TICKETS + '/' + oldId, ticket);
   }
 
   printVoucher(amount: number): void {
