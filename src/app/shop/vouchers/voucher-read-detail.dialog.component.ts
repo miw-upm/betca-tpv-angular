@@ -1,6 +1,6 @@
 import {Component, Inject} from '@angular/core';
 import {MAT_DIALOG_DATA} from '@angular/material/dialog';
-import {Observable} from 'rxjs';
+import {map, Observable} from 'rxjs';
 import {VouchersService} from './vouchers.service';
 
 @Component({
@@ -22,7 +22,11 @@ export class VoucherReadDetailDialogComponent {
   }
 
   consume(reference: string) {
-    this.vouchersService.update(reference).subscribe();
+    this.vouchersService.update(reference).subscribe(() => {
+      this.object = this.object.pipe(map((voucher: any) => {
+        return { ...voucher };
+      }));
+    });
   }
 
   print(reference: string) {
