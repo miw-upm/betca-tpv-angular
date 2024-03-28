@@ -1,0 +1,10 @@
+<h2 mat-dialog-title>Reply to Complaint</h2>
+<mat-dialog-content class="mat-typography">
+  <mat-form-field class="full-width">
+    <textarea matInput [(ngModel)]="reply" placeholder="Enter your reply here"></textarea>
+  </mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button cdkFocusInitial mat-dialog-close mat-raised-button (click)="onNoClick()">Close</button>
+  <button mat-raised-button color="primary" [mat-dialog-close]="reply" cdkFocusInitial>Reply and Close</button>
+</mat-dialog-actions>

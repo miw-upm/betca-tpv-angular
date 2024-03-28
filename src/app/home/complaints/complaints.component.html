@@ -6,5 +6,36 @@
     </button>
   </mat-card-content>
 </mat-card>
-<app-crud (create)="create()" (delete)="delete($event)" (read)="read($event)" (update)="onUpdate($event)"
-          [data]="complaints" [title]="title" [updateAction]="true"></app-crud>
+
+<div *ngIf="!isManager">
+  <app-crud (create)="create()" (delete)="delete($event)" (read)="read($event)" (update)="onUpdate($event)"
+            [data]="complaints$" [title]="title" [updateAction]="true"></app-crud>
+</div>
+
+<div *ngIf="isManager">
+  <mat-accordion multi="true">
+    <mat-expansion-panel *ngFor="let complaint of complaints$ | async">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Complaint ID: {{complaint.id}} - {{complaint.state | uppercase}}
+        </mat-panel-title>
+        <mat-panel-description>
+          <mat-icon>info</mat-icon>
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+
+      <div class="complaint-card">
+        <div class="complaint-details">
+          <p><strong>Mobile:</strong> {{complaint.mobile}}</p>
+          <p><strong>Barcode:</strong> {{complaint.barcode}}</p>
+          <p><strong>Description:</strong> {{complaint.description}}</p>
+          <p><strong>Registered On:</strong> {{complaint.registrationDate | date: 'medium'}}</p>
+          <p><strong>Status:</strong> {{complaint.state | uppercase}}</p>
+          <p *ngIf="complaint.reply"><strong>Reply:</strong> {{complaint.reply}}</p>
+        </div>
+        <div class="complaint-response" *ngIf="complaint.state === 'open'">
+          <button mat-raised-button color="primary" class="reply-button" (click)="openReplyDialog(complaint.id)">Reply</button>        </div>
+      </div>
+    </mat-expansion-panel>
+  </mat-accordion>
+</div>

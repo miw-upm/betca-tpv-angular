@@ -28,6 +28,7 @@ import {OffersComponent} from "./offers/offers.component";
 import {IssueComponent} from "./issues/issues.component";
 import {TechnicalSupportComponent} from "../home/technical-support/technical-support.component";
 import {ChatWindowComponent} from "../home/technical-support/chat-window.component";
+import {ComplaintsComponent} from '../home/complaints/complaints.component';
 import {DataProtectionComponent} from "./data-protection/data-protection.component";
 
 const routes: Routes = [
@@ -41,6 +42,7 @@ const routes: Routes = [
       {path: 'cashier-closed', component: CashierClosedComponent},
       {path: 'cashier-opened', component: CashierOpenedComponent},
       {path: 'cashier-closure', component: CashierClosureComponent},
+      {path: 'complaints', component: ComplaintsComponent },
       {path: 'providers', component: ProvidersComponent},
       {path: 'tickets', component: TicketsComponent},
       {path: 'salesPeople', component: SalesPeopleComponent},

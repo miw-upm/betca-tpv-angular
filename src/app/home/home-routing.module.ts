@@ -33,7 +33,7 @@ const routes: Routes = [
         path: 'complaints',
         component: ComplaintsComponent,
         canActivate: [RoleGuardService],
-        data: {roles: [Role.CUSTOMER]}
+        data: {roles: [Role.CUSTOMER, Role.MANAGER, Role.ADMIN]}
       },
       {
         path: 'shopping-basket',
