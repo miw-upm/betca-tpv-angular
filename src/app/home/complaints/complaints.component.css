@@ -1,0 +1,66 @@
+.complaint-card {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+  }
+  
+  .complaint-details, .complaint-response {
+    width: calc(50% - 10px);
+  }
+  
+  .complaint-details {
+    padding-right: 20px; 
+  }
+  
+  .complaint-info p, .complaint-details p {
+    margin: 4px 0;
+  }
+  
+  mat-form-field.full-width {
+    width: 100%;
+  }
+  
+  .mat-action-row, .complaint-response {
+    text-align: right;
+  }
+  
+  mat-card {
+    margin-bottom: 8px;
+  }
+  
+  mat-icon {
+    vertical-align: bottom;
+  }
+  
+  button.mat-raised-button {
+    margin-top: 8px;
+    background-color: #2196F3;
+    color: white;
+  }
+  
+  button.mat-raised-button:not(:hover) {
+    background-color: #1976D2;
+  }
+  
+  button.mat-raised-button:hover {
+    background-color: #64B5F6;
+  }
+  
+  textarea {
+    width: 100%;
+    min-height: 100px;
+  }
+  
+  .complaint-response {
+    padding: 0 20px;
+  }
+  
+  .reply-textarea {
+    min-height: 150px;
+    margin-bottom: 20px; 
+  }
+  
+  .reply-button {
+    margin-top: 10px;
+  }
+  
