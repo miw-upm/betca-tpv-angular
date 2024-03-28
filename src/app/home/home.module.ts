@@ -5,6 +5,7 @@ import {HomeComponent} from './home.component';
 import {HomeRoutingModule} from './home-routing.module';
 import {ShoppingBasketService} from './shopping-basket/shopping-basket.service';
 import {ComplaintCreationDialogComponent} from './complaints/complaint-creation-dialog.component';
+import {ComplaintReplyDialogComponent} from './complaints/complaint-reply-dialog.component';
 import {ComplaintsComponent} from './complaints/complaints.component';
 import {ShoppingBasketComponent} from "./shopping-basket/shopping-basket.component";
 import {ShopModule} from "../shop/shop.module";
@@ -33,6 +34,7 @@ import {OnlineOrdersService} from "./online-orders/online-orders.service";
     SearchByDescriptionComponent,
     ComplaintsComponent,
     ComplaintCreationDialogComponent,
+    ComplaintReplyDialogComponent,
     ReviewsComponent,
     ReviewDialogComponent,
     HomeComponent,
