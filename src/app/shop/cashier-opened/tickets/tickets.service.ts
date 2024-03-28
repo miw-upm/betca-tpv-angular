@@ -16,10 +16,11 @@ export class TicketService {
   cashierState: Observable<CashierState>;
 
   static FINALVALUE = '/finalvalue';
+  static SEARCHBYTICKET = '/search';
   static SEARCHBYGIFTTICKET = '/search-by-gift-ticket';
   constructor( private cashierClosureService: CashierClosureService,
                private sharedVoucherService: SharedVoucherService, private httpService: HttpService) {
-    this.cashierState = this.cashierClosureService.readState();
+    //this.cashierState = this.cashierClosureService.readState();
     let sl = new Shopping("test", "test", 100);
     let sl2 = new Shopping("test2", "test2", 50);
     this.mockTickets = [
@@ -51,8 +52,7 @@ export class TicketService {
   }
 
   search(query: string): Observable<Ticket[]> {
-    const filteredTicket = this.mockTickets.filter(ticket => ticket.id === query || ticket.userMobile === query || ticket.reference === query);
-    return of(filteredTicket);
+    return this.httpService.paramsFrom({query:query}).get(EndPoints.TICKETS + TicketService.SEARCHBYTICKET);
   }
 
   searchByGiftTicket(searchByGiftTicketReference: string): Observable<Ticket[]> {
@@ -62,18 +62,15 @@ export class TicketService {
     return this.httpService.paramsFrom({reference: searchByGiftTicketReference}).get(EndPoints.TICKETS + TicketService.SEARCHBYGIFTTICKET);
   }
 
-  read(query: string): Observable<Ticket> {
-    return of(this.mockTickets.find(ticket => ticket.id === query))
+  read(reference: string): Observable<Ticket> {
+    return this.httpService
+      .get(EndPoints.TICKETS +  '/' + reference);
   }
 
-  update( ticket: Ticket): Observable<Ticket> {
-    this.cashierState.subscribe(response => {
-      if(response.opened) {
-        alert("NOT IMPLEMENT");
-        // TODO disminuir cantidad o devolución
-      }
-    })
-    return of(ticket)
+  update(oldId: string, ticket: Ticket): Observable<Ticket> {
+    return this.httpService
+      .successful()
+      .put(EndPoints.TICKETS + '/' + oldId, ticket);
   }
 
   printVoucher(amount: number): void {

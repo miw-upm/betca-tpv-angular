@@ -15,7 +15,7 @@
       <ng-container matColumnDef="state">
         <mat-header-cell *matHeaderCellDef fxFlex="11%"> State</mat-header-cell>
         <mat-cell *matCellDef="let item" fxFlex="11%">
-          {{onlineOrderStateKeys[item.state]}}
+          {{item.state}}
         </mat-cell>
       </ng-container>
       <ng-container matColumnDef="deliveryDate">
@@ -27,7 +27,7 @@
       <ng-container matColumnDef="ticketReference">
         <mat-header-cell *matHeaderCellDef fxFlex="20%"> Ticket reference</mat-header-cell>
         <mat-cell *matCellDef="let item" fxFlex="20%">
-          {{item.ticketReference}}
+          {{item.ticket.reference}}
         </mat-cell>
       </ng-container>
       <ng-container matColumnDef="actions">

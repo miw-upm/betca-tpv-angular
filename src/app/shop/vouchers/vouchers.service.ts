@@ -12,6 +12,7 @@ import {VoucherCreation} from './voucher-creation.model';
 })
 export class VouchersService {
   private static SEARCH = '/search';
+  private static RECEIPT = '/receipt';
 
   constructor(private httpService: HttpService) {
   }
@@ -36,5 +37,9 @@ export class VouchersService {
     return this.httpService
       .paramsFrom(vouchersSearch)
       .get(EndPoints.VOUCHERS + VouchersService.SEARCH);
+  }
+
+  readReceipt(reference: string): Observable<void> {
+    return this.httpService.pdf().get(EndPoints.VOUCHERS + '/' + reference + VouchersService.RECEIPT);
   }
 }

@@ -19,14 +19,20 @@ export class StockAlarmComponent {
   constructor(private dialog: MatDialog,
               private stockAlarmService: StockAlarmService) {
     this.resetSearch();
+    this.loadStockAlarms();
   }
 
-  ngOnInit(): void {
-    this.stockAlarms = this.stockAlarmService.getStockAlarms();
+  loadStockAlarms(): void {
+    this.stockAlarms = this.stockAlarmService.readAll();
   }
 
   search(): void {
-    this.stockAlarms = this.stockAlarmService.search(this.stockAlarmSearch);
+
+    if (this.stockAlarmSearch.warning || this.stockAlarmSearch.critical) {
+      this.stockAlarms = this.stockAlarmService.findByFilter(this.stockAlarmSearch);
+    } else {
+      this.loadStockAlarms();
+    }
   }
 
   resetSearch(): void {
