@@ -15,8 +15,8 @@ export class ComplaintService {
   }
 
   private mockComplaints: Complaint[] = [
-    { id: '1', barcode: '123456789', description: 'Mocked Complaint 1', registrationDate: new Date() },
-    { id: '2', barcode: '987654321', description: 'Mocked Complaint 2', registrationDate: new Date() },
+    { id: '1', barcode: '123456789', description: 'Mocked Complaint 1', registrationDate: new Date(), state: 'open'},
+    { id: '2', barcode: '987654321', description: 'Mocked Complaint 2', registrationDate: new Date(), state: 'open'},
   ];
 
   /*create(complaint: Complaint): Observable<Complaint> {
@@ -30,6 +30,7 @@ export class ComplaintService {
       barcode: complaint.barcode,
       description: complaint.description,
       registrationDate: new Date(),
+      state: 'open'
     };
     return of(mockResponse);
   }
@@ -71,5 +72,13 @@ export class ComplaintService {
       this.mockComplaints[index] = complaint;
     }
     return of(complaint);
+  }
+
+  closeComplaint(complaintId: string, response: string): Observable<Complaint> {
+    const changes = {
+      state: 'closed',
+      response: response
+    };
+    return this.httpService.patch(`${EndPoints.COMPLAINTS}/${complaintId}`, changes);
   }
 }
