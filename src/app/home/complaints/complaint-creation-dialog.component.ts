@@ -18,7 +18,7 @@ export class ComplaintCreationDialogComponent {
     if (data && data.complaint) {
       this.complaint = data.complaint;
     } else {
-      this.complaint = {barcode: undefined, description: undefined};
+      this.complaint = {barcode: undefined, description: undefined, state: "open"};
     }
   }
 
@@ -27,7 +27,7 @@ export class ComplaintCreationDialogComponent {
       .create(this.complaint)
       .subscribe(() => {
           this.dialog.closeAll();
-          this.snackBar.open('Su reclamación ha sido creada exitosamente! Gracias!', 'Close', {
+          this.snackBar.open('Your claim has been successfully created! Thank you!', 'Close', {
           duration: 3000
           });
       });
