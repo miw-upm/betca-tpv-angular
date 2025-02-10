@@ -5,7 +5,6 @@ COPY package.json package-lock.json ./
 RUN npm ci
 COPY . .
 RUN npm run build-prod
-RUN npm install -g serve
 
 # Etapa de runtime, recomendable: nginx
 FROM node:22.13.1-alpine
