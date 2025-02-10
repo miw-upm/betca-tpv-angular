@@ -1,0 +1,19 @@
+FROM node:22.13.1-alpine AS build
+WORKDIR /app
+COPY package.json package-lock.json ./
+RUN npm ci
+COPY . .
+EXPOSE 4200
+
+CMD ["npm", "run", "start"]
+
+# Contruir la imagen
+#> docker build -f Dockerfile-dev -t betca-tpv-angular .
+
+# Crear y arrancar el contenedor
+#> docker run -d -p 4200:4200 --name betca-tpv-angular-app betca-tpv-angular
+
+# Arrancar el contenedor
+#> docker start betca-tpv-angular-app
+
+

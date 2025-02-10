@@ -3,12 +3,12 @@ WORKDIR /app
 COPY package.json package-lock.json ./
 RUN npm ci
 COPY . .
-RUN npm run build:prod
+RUN npm run build-prod
 
 FROM nginx:mainline-alpine
 WORKDIR /usr/share/nginx/html
 RUN rm -rf ./*
-COPY --from=build /app/dist/betca-tpv-angular/browser ./
+COPY --from=build /app/dist/betca-tpv-angular ./
 EXPOSE 80
 CMD ["nginx", "-g", "daemon off;"]
 

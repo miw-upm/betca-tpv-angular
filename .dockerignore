@@ -14,5 +14,4 @@ yarn-error.log
 .gitignore
 docker-compose.yml
 .dockerignore
-.vscode
 .idea

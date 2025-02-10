@@ -2,9 +2,9 @@
   "name": "betca-tpv-angular",
   "version": "4.6.0-SNAPSHOT",
   "scripts": {
-    "build-prod": "ng build --prod",
+    "build-prod": "ng build --configuration production",
     "test-ci": "ng test --browsers=ChromeHeadless --watch=false --code-coverage",
-    "start": "node server.js"
+    "start": "ng serve --host 0.0.0.0 --port 4200"
   },
   "private": true,
   "dependencies": {
