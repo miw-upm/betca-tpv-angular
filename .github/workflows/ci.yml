@@ -28,7 +28,7 @@ jobs:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
       - name: SonarCloud Scan
         if: success()
-        uses: SonarSource/sonarcloud-github-action@master # file: sonar-project.properties
+        uses: SonarSource/sonarqube-scan-action@V4 # file: sonar-project.properties
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
