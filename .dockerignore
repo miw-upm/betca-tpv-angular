@@ -1,0 +1,18 @@
+# Ignorar dependencias locales
+node_modules
+dist
+coverage
+
+# Archivos de configuración y caché
+npm-debug.log
+yarn-error.log
+package-lock.json
+
+# Archivos del sistema y del repositorio
+.DS_Store
+.git
+.gitignore
+docker-compose.yml
+.dockerignore
+.vscode
+.idea
