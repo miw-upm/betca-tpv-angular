@@ -6,7 +6,7 @@ coverage
 # Archivos de configuración y caché
 npm-debug.log
 yarn-error.log
-package-lock.json
+# package-lock.json
 
 # Archivos del sistema y del repositorio
 .DS_Store
