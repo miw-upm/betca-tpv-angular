@@ -17,7 +17,7 @@ jobs:
       - name: Build Angular App
         run: npm run-script build-prod  # package.json -> "scripts"
       - name: Tests
-        run: npm run-script test  # package.json -> "scripts"
+        run: npm run-script test-ci  # package.json -> "scripts"
       - name: Slack WebHook
         if: failure()
         uses: 8398a7/action-slack@v3
