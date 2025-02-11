@@ -1,19 +1,34 @@
 import {Component} from '@angular/core';
-import {MatDialog} from '@angular/material/dialog';
+import {MatDialog, MatDialogActions, MatDialogClose, MatDialogContent, MatDialogTitle} from '@angular/material/dialog';
 
 import {Complaint} from './complaint.model';
 import {ComplaintService} from './complaint.service';
 import {AuthService} from '@core/auth.service';
+import {MatFormField, MatLabel} from '@angular/material/form-field';
+import {FormsModule} from '@angular/forms';
+import {MatInput} from '@angular/material/input';
+import {MatButton} from '@angular/material/button';
 
 @Component({
   templateUrl: 'complaint-creation-dialog.component.html',
+  imports: [
+    MatDialogContent,
+    MatFormField,
+    MatLabel,
+    FormsModule,
+    MatDialogActions,
+    MatDialogTitle,
+    MatInput,
+    MatDialogClose,
+    MatButton
+  ],
   styleUrls: ['complaint-dialog.component.css']
 })
 
 export class ComplaintCreationDialogComponent {
   complaint: Complaint;
 
-  constructor(private complaintService: ComplaintService, private dialog: MatDialog, private authService: AuthService) {
+  constructor(private readonly complaintService: ComplaintService, private readonly dialog: MatDialog, private readonly authService: AuthService) {
     this.complaint = {barcode: undefined, description: undefined};
   }
 

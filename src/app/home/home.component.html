@@ -1,14 +1,14 @@
 <mat-toolbar color="primary">
   <div>
     <mat-form-field appearance="fill" hideRequiredMarker="true">
-      <mat-label><small>Description</small></mat-label>
+      <mat-label>Description</mat-label>
       <input #code matInput placeholder="" required>
     </mat-form-field>
     <button (click)="search(code.value)" mat-icon-button>
       <mat-icon>pageview</mat-icon>
     </button>
   </div>
-  <img alt="miw" src="../../assets/images/miw.png"/>
+  <img alt="miw" ngSrc="assets/miw.png" height="32" width="69"/>
   <button mat-button routerLink="/home/adviser">
     <span>TPV</span>
   </button>
@@ -27,8 +27,7 @@
       <span>Profile</span>
     </button>
     <button (click)="cart()" mat-button>
-      <mat-icon matBadge="3" matBadgeColor="accent" matBadgeOverlap="false" matBadgeSize="medium">shopping_cart
-      </mat-icon>
+      <mat-icon  [matBadge]="cartItemCount" matBadgeColor="accent" matBadgeOverlap="false" matBadgeSize="medium">shopping_cart</mat-icon>
     </button>
   </div>
 </mat-toolbar>
@@ -67,8 +66,5 @@
   </mat-menu>
   <button mat-button>Top 5</button>
 </mat-toolbar>
-
 <router-outlet></router-outlet>
-
 <app-footer></app-footer>
-

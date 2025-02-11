@@ -1,9 +1,14 @@
 import {Component} from '@angular/core';
 import {timer} from 'rxjs';
+import {DatePipe} from '@angular/common';
 
 @Component({
   selector: 'app-date',
-  template: `<a>{{date | date: "medium"}}</a>`,
+  standalone:true,
+  template: `<a>{{ date | date: "medium" }}</a>`,
+  imports: [
+    DatePipe
+  ],
   styles: [`
     a {
       padding-left: 10px;

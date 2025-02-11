@@ -2,11 +2,41 @@ import {Component, Inject} from '@angular/core';
 
 import {TicketCreation} from './ticket-creation.model';
 import {ShoppingCartService} from './shopping-cart.service';
-import {MAT_DIALOG_DATA, MatDialogRef} from '@angular/material/dialog';
+import {
+  MAT_DIALOG_DATA,
+  MatDialogActions, MatDialogClose,
+  MatDialogContent,
+  MatDialogRef,
+  MatDialogTitle
+} from '@angular/material/dialog';
+import {CurrencyPipe, NgIf} from '@angular/common';
+import {MatIcon} from '@angular/material/icon';
+import {MatFormField, MatSuffix} from '@angular/material/form-field';
+import {MatInput} from '@angular/material/input';
+import {MatButton, MatIconButton} from '@angular/material/button';
+import {FormsModule} from '@angular/forms';
+import {MatCheckbox} from '@angular/material/checkbox';
 
 @Component({
+  standalone:true,
   templateUrl: 'check-out-dialog.component.html',
-  styleUrls: ['shopping-cart.component.css']
+  imports: [
+    MatDialogTitle,
+    CurrencyPipe,
+    MatDialogContent,
+    NgIf,
+    MatIcon,
+    MatFormField,
+    MatInput,
+    MatButton,
+    MatIconButton,
+    FormsModule,
+    MatCheckbox,
+    MatDialogActions,
+    MatDialogClose,
+    MatSuffix
+  ],
+  styleUrls: ['check-out-dialog.component.css']
 })
 export class CheckOutDialogComponent {
   ticketCreation: TicketCreation;
@@ -15,8 +45,8 @@ export class CheckOutDialogComponent {
   requestedGiftTicket = false;
   requestedDataProtectionAct = false;
 
-  constructor(@Inject(MAT_DIALOG_DATA) data, private dialogRef: MatDialogRef<CheckOutDialogComponent>,
-              private shoppingCartService: ShoppingCartService) {
+  constructor(@Inject(MAT_DIALOG_DATA) data, private readonly dialogRef: MatDialogRef<CheckOutDialogComponent>,
+              private readonly shoppingCartService: ShoppingCartService) {
     this.ticketCreation = {cash: 0, card: 0, voucher: 0, shoppingList: data, note: ''};
     this.total();
   }
@@ -30,7 +60,7 @@ export class CheckOutDialogComponent {
   }
 
   format(value: number): number {
-    return value ? value : 0; // empty string,NaN,false,undefined,null,0 is: false
+    return value || 0; // empty string,NaN,false,undefined,null,0 is: false
   }
 
   searchUser(mobile: string): void {

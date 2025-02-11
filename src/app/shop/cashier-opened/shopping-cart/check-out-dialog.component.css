@@ -1,6 +1,5 @@
-
-.vertical-content {
+mat-dialog-content {
   display: flex;
   flex-direction: column;
+  width: 100%;
 }
-

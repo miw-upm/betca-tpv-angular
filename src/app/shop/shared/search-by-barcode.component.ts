@@ -1,9 +1,14 @@
 import {Observable, of} from 'rxjs';
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {SharedArticleService} from './services/shared.article.service';
+import {SearchComponent} from '@shared/components/search.component';
 
 @Component({
   selector: 'app-search-by-barcode',
+  standalone:true,
+  imports: [
+    SearchComponent
+  ],
   templateUrl: './search-by-barcode.component.html'
 })
 export class SearchByBarcodeComponent {
@@ -12,7 +17,7 @@ export class SearchByBarcodeComponent {
   @Input() barcode: string;
   @Output() add = new EventEmitter<string>();
 
-  constructor(private sharedArticleService: SharedArticleService) {
+  constructor(private readonly sharedArticleService: SharedArticleService) {
   }
 
   public onSelect(value): void {

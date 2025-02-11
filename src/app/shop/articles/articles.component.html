@@ -16,7 +16,7 @@
     <mat-form-field>
       <mat-label>Stock</mat-label>
       <input [(ngModel)]="articleSearch.stock" matInput type="number">
-      <mat-hint align="start">Less than</mat-hint>
+      <mat-hint>Less than</mat-hint>
     </mat-form-field>
     <mat-slide-toggle [(ngModel)]="articleSearch.discontinued">Discontinued</mat-slide-toggle>
     <button (click)="search()" mat-icon-button>
@@ -28,7 +28,7 @@
     <mat-form-field>
       <mat-label>Unfinished</mat-label>
       <input [(ngModel)]="articleSearch.reference" matInput readonly>
-      <button (click)="unfinished()" mat-button mat-icon-button matSuffix>
+      <button (click)="unfinished()" mat-icon-button matSuffix>
         <mat-icon>search</mat-icon>
       </button>
     </mat-form-field>

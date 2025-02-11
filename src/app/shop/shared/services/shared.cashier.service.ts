@@ -10,7 +10,7 @@ import {CashierLast} from './models/cashier-last.model';
 })
 export class SharedCashierService {
 
-  constructor(private httpService: HttpService) {
+  constructor(private readonly httpService: HttpService) {
   }
 
   openCashier(): Observable<void> {

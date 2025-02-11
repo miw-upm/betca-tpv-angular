@@ -12,15 +12,13 @@ import {ArticleQuickCreationDialogComponent} from './article-quick-creation-dial
 import {ShoppingState} from './shopping-state.model';
 import {EndPoints} from '@shared/end-points';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable({ providedIn: 'root'})
 export class ShoppingCartService {
-  static RECEIPT = '/receipt';
-  static VARIOUS_BARCODE = '1';
-  static VARIOUS_LENGTH = 5;
+  static readonly RECEIPT = '/receipt';
+  static readonly VARIOUS_BARCODE = '1';
+  static readonly VARIOUS_LENGTH = 5;
 
-  constructor(private dialog: MatDialog, private articleService: SharedArticleService, private httpService: HttpService) {
+  constructor(private readonly dialog: MatDialog, private readonly articleService: SharedArticleService, private readonly httpService: HttpService) {
   }
 
   read(newBarcode: string): Observable<Shopping> {

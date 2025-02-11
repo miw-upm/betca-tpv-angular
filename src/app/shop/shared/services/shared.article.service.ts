@@ -10,9 +10,9 @@ import {Article} from './models/article.model';
   providedIn: 'root',
 })
 export class SharedArticleService {
-  private static BARCODE = '/barcode';
+  private static readonly BARCODE = '/barcode';
 
-  constructor(private httpService: HttpService) {
+  constructor(private readonly httpService: HttpService) {
   }
 
   read(barcode: string): Observable<Article> {

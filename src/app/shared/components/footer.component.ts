@@ -1,9 +1,25 @@
 import {Component} from '@angular/core';
 import {environment} from '@env';
+import {MatDivider} from '@angular/material/divider';
+import {MatGridList, MatGridTile} from '@angular/material/grid-list';
+import {MatList, MatListItem, MatListSubheaderCssMatStyler} from '@angular/material/list';
+import {MatIcon} from '@angular/material/icon';
+import {NgOptimizedImage} from "@angular/common";
 
 @Component({
   selector: 'app-footer',
+  standalone:true,
   templateUrl: './footer.component.html',
+  imports: [
+    MatDivider,
+    MatGridTile,
+    MatGridList,
+    MatList,
+    MatListItem,
+    MatIcon,
+    MatListSubheaderCssMatStyler,
+    NgOptimizedImage
+  ],
   styleUrls: ['./footer.component.css']
 })
 export class FooterComponent {

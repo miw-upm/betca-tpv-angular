@@ -7,14 +7,64 @@ import {CheckOutDialogComponent} from './check-out-dialog.component';
 import {MatDialog} from '@angular/material/dialog';
 import {ShoppingState} from './shopping-state.model';
 import {NumberDialogComponent} from '@shared/dialogs/number-dialog.component';
+import {MatCard, MatCardContent, MatCardTitle} from '@angular/material/card';
+import {MatFormField, MatSuffix} from '@angular/material/form-field';
+import {MatInput} from '@angular/material/input';
+import {MatButton, MatIconButton} from '@angular/material/button';
+import {MatIcon} from '@angular/material/icon';
+import {SearchByBarcodeComponent} from '../../shared/search-by-barcode.component';
+import {CurrencyPipe} from '@angular/common';
+import {
+  MatCell,
+  MatCellDef,
+  MatColumnDef,
+  MatHeaderCell,
+  MatHeaderCellDef,
+  MatHeaderRow,
+  MatHeaderRowDef,
+  MatRow,
+  MatRowDef,
+  MatTable
+} from '@angular/material/table';
+import {MatTooltip} from '@angular/material/tooltip';
+import {MatCheckbox} from '@angular/material/checkbox';
+import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 @Component({
   selector: 'app-shopping-cart',
+  standalone: true,
   styleUrls: ['shopping-cart.component.css'],
+  imports: [
+    MatCard,
+    MatCardContent,
+    MatFormField,
+    MatInput,
+    MatIconButton,
+    MatIcon,
+    SearchByBarcodeComponent,
+    MatCardTitle,
+    CurrencyPipe,
+    MatTable,
+    MatHeaderCell,
+    MatCell,
+    MatCellDef,
+    MatHeaderCellDef,
+    MatTooltip,
+    MatColumnDef,
+    MatButton,
+    MatSuffix,
+    MatCheckbox,
+    MatHeaderRow,
+    MatRow,
+    MatHeaderRowDef,
+    MatRowDef,
+    FormsModule,
+    ReactiveFormsModule
+  ],
   templateUrl: 'shopping-cart.component.html'
 })
 export class ShoppingCartComponent implements OnInit {
-  static SHOPPING_CART_NUM = 4;
+  static readonly SHOPPING_CART_NUM = 4;
 
   barcode: string;
   barcodes: Observable<number[]> = of([]);
@@ -24,9 +74,14 @@ export class ShoppingCartComponent implements OnInit {
   indexShoppingCart = 0;
   totalShoppingCart = 0;
   private shoppingCartList: Array<Array<Shopping>> = [];
-  @ViewChild('code', {static: true}) private elementRef: ElementRef;
+  @ViewChild('code', {static: true}) private readonly elementRef: ElementRef;
 
-  constructor(private dialog: MatDialog, private shoppingCartService: ShoppingCartService) {
+  barcodeControl = new FormControl('');
+  budgeControl = new FormControl('');
+  discountControl = new FormControl('');
+  offerControl = new FormControl('');
+
+  constructor(private readonly dialog: MatDialog, private readonly shoppingCartService: ShoppingCartService) {
     for (let i = 0; i < ShoppingCartComponent.SHOPPING_CART_NUM; i++) {
       this.shoppingCartList.push([]);
     }
@@ -34,7 +89,6 @@ export class ShoppingCartComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.elementRef.nativeElement.focus();
     this.shoppingCart = [];
     this.synchronizeShoppingCart();
   }
@@ -48,14 +102,14 @@ export class ShoppingCartComponent implements OnInit {
     this.totalShoppingCart = Math.round(total * 100) / 100;
   }
 
-  addBarcode(barcode): void {
+  addBarcode(barcode:string ): void {
     this.shoppingCartService
       .read(barcode)
       .subscribe(newShopping => {
         this.shoppingCart.push(newShopping);
         this.synchronizeShoppingCart();
+        this.barcodeControl.reset();
       });
-    this.elementRef.nativeElement.focus();
   }
 
   incrementAmount(shopping: Shopping): void {
@@ -155,15 +209,22 @@ export class ShoppingCartComponent implements OnInit {
     );
   }
 
+  addBudge(budge: string) {
+    this.budgeControl.reset();
+    // TODO create budget
+  }
+
   createBudget(): void {
     // TODO create budget
   }
 
   addDiscount(mobile): void {
+    this.discountControl.reset();
     // TODO add discount
   }
 
   addOffer(offer): void {
+    this.offerControl.reset();
     // TODO add offer
   }
 

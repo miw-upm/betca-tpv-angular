@@ -5,14 +5,12 @@ import {EMPTY, Observable, throwError} from 'rxjs';
 import {catchError, map} from 'rxjs/operators';
 import {MatSnackBar} from '@angular/material/snack-bar';
 
-import {Error} from '@core/error.model';
+import {AppError} from '@core/app-error.model';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable({providedIn: 'root'})
 export class HttpService {
-  static CONNECTION_REFUSE = 0;
-  static UNAUTHORIZED = 401;
+  static readonly CONNECTION_REFUSE = 0;
+  static readonly UNAUTHORIZED = 401;
 
   private headers: HttpHeaders;
   private params: HttpParams;
@@ -20,34 +18,34 @@ export class HttpService {
   private successfulNotification = undefined;
   private errorNotification = undefined;
 
-  constructor(private http: HttpClient, private snackBar: MatSnackBar, private router: Router) {
+  constructor(private readonly http: HttpClient, private readonly snackBar: MatSnackBar, private readonly router: Router) {
     this.resetOptions();
   }
 
-  param(key: string, value: string): HttpService {
+  param(key: string, value: string): this {
     if (value != null) {
       this.params = this.params.append(key, value); // This class is immutable
     }
     return this;
   }
 
-  paramsFrom(dto: any): HttpService {
+  paramsFrom(dto: any): this {
     Object.getOwnPropertyNames(dto)
       .forEach(item => this.param(item, dto[item]));
     return this;
   }
 
-  successful(notification = 'Successful'): HttpService {
+  successful(notification = 'Successful'): this {
     this.successfulNotification = notification;
     return this;
   }
 
-  error(notification: string): HttpService {
+  error(notification: string): this {
     this.errorNotification = notification;
     return this;
   }
 
-  pdf(): HttpService {
+  pdf(): this {
     this.responseType = 'blob';
     this.header('Accept', 'application/pdf , application/json');
     return this;
@@ -155,7 +153,7 @@ export class HttpService {
   }
 
   private handleError(response): any {
-    let error: Error;
+    let error: AppError;
     if (response.status === HttpService.UNAUTHORIZED) {
       this.showError('Unauthorized');
       this.router.navigate(['']).then();

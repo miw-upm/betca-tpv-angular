@@ -1,4 +1,4 @@
-<h2 mat-dialog-title>{{title}}</h2>
+<h4 mat-dialog-title>{{title}}</h4>
 <mat-dialog-content>
   <mat-form-field class="full-width">
     <mat-label>Company</mat-label>
@@ -28,7 +28,7 @@
   <mat-slide-toggle [(ngModel)]="provider.active">Active</mat-slide-toggle>
 </mat-dialog-content>
 <mat-dialog-actions>
-  <button cdkFocusInitial mat-dialog-close mat-raised-button>Close</button>
+  <button mat-dialog-close mat-raised-button>Close</button>
   <button (click)="create()" *ngIf="isCreate()" [disabled]=invalid() color="primary" mat-raised-button>Create
   </button>
   <button (click)="update()" *ngIf="!isCreate()" [disabled]=invalid() color="primary" mat-raised-button>Update

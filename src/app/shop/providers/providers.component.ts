@@ -7,8 +7,27 @@ import {Provider} from './provider.model';
 import {ProviderService} from './provider.service';
 import {ProviderSearch} from './provider-search.model';
 import {ProviderCreationUpdatingDialogComponent} from './provider-creation-updating-dialog.component';
+import {MatCard, MatCardContent} from '@angular/material/card';
+import {MatFormField, MatLabel} from '@angular/material/form-field';
+import {FormsModule} from '@angular/forms';
+import {MatInput} from '@angular/material/input';
+import {MatIconButton} from '@angular/material/button';
+import {MatIcon} from '@angular/material/icon';
+import {CrudComponent} from '@shared/components/crud.component';
 
 @Component({
+  standalone:true,
+  imports: [
+    MatCard,
+    MatCardContent,
+    MatFormField,
+    MatLabel,
+    FormsModule,
+    MatInput,
+    MatIconButton,
+    MatIcon,
+    CrudComponent
+  ],
   templateUrl: 'providers.component.html'
 })
 export class ProvidersComponent {
@@ -16,7 +35,7 @@ export class ProvidersComponent {
   title = 'Providers management';
   providers = of([]);
 
-  constructor(private dialog: MatDialog, private providerService: ProviderService) {
+  constructor(private readonly dialog: MatDialog, private readonly providerService: ProviderService) {
     this.resetSearch();
   }
 

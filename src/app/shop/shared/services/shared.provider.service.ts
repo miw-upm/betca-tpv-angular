@@ -9,9 +9,9 @@ import {EndPoints} from '@shared/end-points';
   providedIn: 'root',
 })
 export class SharedProviderService {
-  private static COMPANY = '/company';
+  private static readonly COMPANY = '/company';
 
-  constructor(private httpService: HttpService) {
+  constructor(private readonly httpService: HttpService) {
   }
 
   searchCompanies(company: string): Observable<string[]> {

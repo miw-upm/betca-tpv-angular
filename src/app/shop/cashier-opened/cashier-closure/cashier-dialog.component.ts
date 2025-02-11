@@ -1,21 +1,48 @@
 import {Component} from '@angular/core';
-import {MatDialog, MatDialogRef} from '@angular/material/dialog';
+import {
+  MatDialog,
+  MatDialogActions,
+  MatDialogClose,
+  MatDialogContent,
+  MatDialogRef,
+  MatDialogTitle
+} from '@angular/material/dialog';
 
 import {CashierClosureService} from './cashier-closure.service';
 import {CashierState} from './cashier-state.model';
 import {CashierClosure} from './cashier-closure.model';
 import {Observable} from 'rxjs';
+import {AsyncPipe} from '@angular/common';
+import {MatFormField, MatLabel} from '@angular/material/form-field';
+import {FormsModule} from '@angular/forms';
+import {MatInput} from '@angular/material/input';
+import {MatButton} from '@angular/material/button';
+import {MatIcon} from '@angular/material/icon';
 
 @Component({
+  standalone:true,
   templateUrl: 'cashier-dialog.component.html',
+  imports: [
+    MatDialogTitle,
+    AsyncPipe,
+    MatDialogContent,
+    MatFormField,
+    MatLabel,
+    FormsModule,
+    MatInput,
+    MatIcon,
+    MatDialogActions,
+    MatDialogClose,
+    MatButton
+  ],
   styleUrls: ['cashier-dialog.component.css']
 })
 export class CashierDialogComponent {
   cashierFinal: CashierClosure = {finalCash: null, finalCard: null, comment: undefined};
   cashierState: Observable<CashierState>;
 
-  constructor(private dialog: MatDialog, private dialogRef: MatDialogRef<CashierDialogComponent>,
-              private cashierService: CashierClosureService) {
+  constructor(private readonly dialog: MatDialog, private readonly dialogRef: MatDialogRef<CashierDialogComponent>,
+              private readonly cashierService: CashierClosureService) {
     this.cashierState = this.cashierService.readState();
   }
 

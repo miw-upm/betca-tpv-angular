@@ -11,9 +11,9 @@ import {EndPoints} from '@shared/end-points';
   providedIn: 'root',
 })
 export class CashierClosureService {
-  private static STATE = '/state';
+  private static readonly STATE = '/state';
 
-  constructor(private httpService: HttpService) {
+  constructor(private readonly httpService: HttpService) {
   }
 
   close(cashierClosure: CashierClosure): Observable<void> {

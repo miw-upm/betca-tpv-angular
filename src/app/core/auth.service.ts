@@ -2,21 +2,19 @@ import {Injectable} from '@angular/core';
 import {Router} from '@angular/router';
 import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
-import {JwtHelperService} from '@auth0/angular-jwt';
 
 import {environment} from '@env';
 import {User} from '@core/user.model';
 import {HttpService} from '@core/http.service';
 import {Role} from '@core/role.model';
+import {JwtHelperService} from '@auth0/angular-jwt';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable({providedIn: 'root'})
 export class AuthService {
-  static END_POINT = environment.REST_USER + '/users/token';
+  static readonly END_POINT = environment.REST_USER + '/users/token';
   private user: User;
 
-  constructor(private httpService: HttpService, private router: Router) {
+  constructor(private readonly httpService: HttpService, private readonly router: Router) {
   }
 
   login(mobile: number, password: string): Observable<User> {

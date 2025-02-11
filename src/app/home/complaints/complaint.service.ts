@@ -9,9 +9,9 @@ import {Complaint} from './complaint.model';
   providedIn: 'root',
 })
 export class ComplaintService {
-  private static SEARCH = '/search';
+  private static readonly SEARCH = '/search';
 
-  constructor(private httpService: HttpService) {
+  constructor(private readonly httpService: HttpService) {
   }
 
   create(complaint: Complaint): Observable<Complaint> {

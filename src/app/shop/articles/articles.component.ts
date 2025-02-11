@@ -7,8 +7,30 @@ import {Article} from '../shared/services/models/article.model';
 import {ArticleService} from './article.service';
 import {ArticleCreationUpdatingDialogComponent} from './article-creation-updating-dialog.component';
 import {ArticleSearch} from './article-search.model';
+import {MatCard, MatCardContent} from '@angular/material/card';
+import {MatFormField, MatHint, MatLabel} from '@angular/material/form-field';
+import {FormsModule} from '@angular/forms';
+import {MatInput} from '@angular/material/input';
+import {MatSlideToggle} from '@angular/material/slide-toggle';
+import {MatButton, MatIconButton} from '@angular/material/button';
+import {MatIcon} from '@angular/material/icon';
+import {CrudComponent} from '@shared/components/crud.component';
 
 @Component({
+  standalone:true,
+  imports: [
+    MatCard,
+    MatCardContent,
+    MatLabel,
+    MatFormField,
+    FormsModule,
+    MatInput,
+    MatSlideToggle,
+    MatIconButton,
+    MatIcon,
+    MatHint,
+    CrudComponent
+  ],
   templateUrl: 'articles.component.html'
 })
 export class ArticlesComponent {
@@ -17,7 +39,7 @@ export class ArticlesComponent {
   title = 'Articles management';
   articles = of([]);
 
-  constructor(private dialog: MatDialog, private articleService: ArticleService) {
+  constructor(private readonly dialog: MatDialog, private readonly articleService: ArticleService) {
     this.resetSearch();
   }
 

@@ -6,15 +6,24 @@ import {ComplaintCreationDialogComponent} from './complaint-creation-dialog.comp
 import {ComplaintService} from './complaint.service';
 import {Complaint} from './complaint.model';
 import {ReadDetailDialogComponent} from '@shared/dialogs/read-detail.dialog.component';
+import {MatCard, MatCardContent} from '@angular/material/card';
+import {MatIcon} from '@angular/material/icon';
+import {CrudComponent} from '@shared/components/crud.component';
 
 @Component({
+  imports: [
+    MatCard,
+    MatIcon,
+    CrudComponent,
+    MatCardContent
+  ],
   templateUrl: 'complaints.component.html'
 })
 export class ComplaintsComponent {
   title = 'Complaints management';
   complaints = of([]);
 
-  constructor(private dialog: MatDialog, private complaintService: ComplaintService) {
+  constructor(private readonly dialog: MatDialog, private readonly complaintService: ComplaintService) {
   }
 
   create(): void {

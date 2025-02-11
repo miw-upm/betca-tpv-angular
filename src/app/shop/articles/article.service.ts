@@ -6,14 +6,12 @@ import {Article} from '../shared/services/models/article.model';
 import {ArticleSearch} from './article-search.model';
 import {EndPoints} from '@shared/end-points';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable({providedIn: 'root'})
 export class ArticleService {
-  static SEARCH = '/search';
-  static UNFINISHED = '/unfinished';
+  static readonly SEARCH = '/search';
+  static readonly UNFINISHED = '/unfinished';
 
-  constructor(private httpService: HttpService) {
+  constructor(private readonly httpService: HttpService) {
   }
 
   create(article: Article): Observable<Article> {
