@@ -9,11 +9,11 @@ RUN npm run build-prod
 # Etapa de runtime, recomendable: nginx
 FROM node:22.13.1-alpine
 WORKDIR /app
-COPY --from=build /app/dist/betca-tpv-angular /app
+COPY --from=build /app/dist/betca-tpv-angular/browser /app
 RUN npm install -g serve
 EXPOSE 10000
 CMD ["serve", "-s", "-l", "10000", "/app"]
 
 #
 #> docker build -t betca-tpv-angular-prod .
-#> docker run -d -p 8080:10000 --name betca-tpv-angular-prod-app betca-tpv-angular-prod
+#> docker run -it -p 8080:10000 --name betca-tpv-angular-prod-app betca-tpv-angular-prod

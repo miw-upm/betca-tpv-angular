@@ -1,6 +1,6 @@
 {
   "name": "betca-tpv-angular",
-  "version": "4.9.0-SNAPSHOT",
+  "version": "4.9.0-SANPSHOT",
   "scripts": {
     "build-prod": "ng build --configuration production",
     "test-ci": "ng test --browsers=ChromeHeadless --watch=false --code-coverage",
@@ -19,6 +19,7 @@
     "@angular/platform-browser-dynamic": "^19.1.0",
     "@angular/router": "^19.1.0",
     "@auth0/angular-jwt": "^5.2.0",
+    "express": "^4.21.2",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.15.0"
