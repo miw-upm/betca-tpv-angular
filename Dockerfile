@@ -10,7 +10,7 @@ RUN npm run build-prod
 FROM nginx:stable-alpine
 WORKDIR /usr/share/nginx/html
 COPY --from=build /app/dist/betca-tpv-angular/browser/ ./
-EXPOSE 80
+EXPOSE 10000
 CMD ["nginx", "-g", "daemon off;"]
 
 #
