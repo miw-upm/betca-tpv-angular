@@ -1,6 +1,6 @@
 {
   "name": "betca-tpv-angular",
-  "version": "4.7.0-SNAPSHOT",
+  "version": "4.8.0-SNAPSHOT",
   "scripts": {
     "build-prod": "ng build --configuration production",
     "test-ci": "ng test --browsers=ChromeHeadless --watch=false --code-coverage",
