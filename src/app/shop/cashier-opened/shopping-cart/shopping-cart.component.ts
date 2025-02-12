@@ -29,14 +29,14 @@ import {CheckOutDialogComponent} from './check-out-dialog.component';
 import {SearchByBarcodeComponent} from '../../shared/components/search-by-barcode.component';
 import {Shopping} from './shopping.model';
 import {ShoppingState} from './shopping-state.model';
-import {InputText} from "@shared/components/input-text.component";
+import {InputData} from "@shared/components/input-data.component";
 
 @Component({
     standalone: true,
     imports: [MatCard, MatCardContent, MatIconButton, MatIcon, SearchByBarcodeComponent,
         MatCardTitle, CurrencyPipe, MatTable, MatHeaderCell, MatCell, MatCellDef, MatHeaderCellDef, MatTooltip,
         MatColumnDef, MatButton, MatSuffix, MatCheckbox, MatHeaderRow, MatRow, MatHeaderRowDef, MatRowDef,
-        FormsModule, ReactiveFormsModule, InputText],
+        FormsModule, ReactiveFormsModule, InputData],
     selector: 'app-shopping-cart',
     styleUrls: ['shopping-cart.component.css'],
     templateUrl: 'shopping-cart.component.html'

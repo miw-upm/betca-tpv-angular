@@ -1,0 +1,9 @@
+<form (ngSubmit)="submit()">
+    <mat-form-field appearance="outline">
+        <mat-label>{{ title }}</mat-label>
+        <input [formControl]="control"  matInput [type]="type">
+        <button [disabled]="!control.value" mat-icon-button matSuffix>
+            <mat-icon>{{ icon }}</mat-icon>
+        </button>
+    </mat-form-field>
+</form>

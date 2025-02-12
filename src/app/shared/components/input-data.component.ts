@@ -8,18 +8,22 @@ import {MatInput} from "@angular/material/input";
 @Component({
     standalone: true,
     imports: [MatFormField, MatIcon, MatIconButton, MatLabel, FormsModule, MatInput, MatSuffix, ReactiveFormsModule],
-    selector: 'app-input-text',
-    templateUrl: 'input-text.component.html',
+    selector: 'app-input-data',
+    templateUrl: 'input-data.component.html',
 })
-export class InputText {
+export class InputData {
     @Input() title: string = 'Input text';
     @Input() icon: string = 'add_circle';
+    @Input() type: string = 'text';
+    @Input() model: string = '';
     @Output() action = new EventEmitter<string>();
 
     control = new FormControl('');
 
-    submit(value: string ) {
-        this.action.emit(value);
-        this.control.reset();
+    submit() {
+        if (this.control.value) {
+            this.action.emit(this.control.value);
+            this.control.reset();
+        }
     }
 }
