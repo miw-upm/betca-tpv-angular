@@ -25,13 +25,13 @@
         <button (click)="resetSearch()" mat-icon-button>
             <mat-icon>close</mat-icon>
         </button>
-        <mat-form-field>
-            <mat-label>Unfinished</mat-label>
-            <input [(ngModel)]="articleSearch.reference" matInput readonly>
-            <button (click)="unfinished()" mat-icon-button matSuffix>
+
+
+            <button (click)="unfinished()"  mat-fab extended>
                 <mat-icon>search</mat-icon>
+                Unfinished
             </button>
-        </mat-form-field>
+
     </mat-card-content>
 </mat-card>
 <app-crud (create)="create()" (read)="read($event)" (update)="update($event)"

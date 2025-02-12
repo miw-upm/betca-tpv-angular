@@ -1,0 +1,6 @@
+.dialog-content {
+    display: flex;
+    flex-direction: column;
+    gap: 16px; /* Espaciado entre los elementos */
+    padding: 16px;
+}

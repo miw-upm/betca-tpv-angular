@@ -19,7 +19,7 @@ import {SharedArticleService} from '../../shared/services/shared.article.service
     imports: [MatDialogTitle, MatDialogContent, FormsModule, MatInput, MatFormField, MatDialogActions, MatDialogClose,
         MatError, MatButton],
     templateUrl: 'article-quick-creation-dialog.component.html',
-    styleUrls: ['shopping-cart.component.css']
+    styleUrls: ['article-quick-creation-dialog.component.css']
 })
 export class ArticleQuickCreationDialogComponent {
     article: Article;

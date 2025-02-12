@@ -5,7 +5,7 @@ import {MatCard, MatCardContent} from '@angular/material/card';
 import {MatFormField, MatHint, MatLabel} from '@angular/material/form-field';
 import {MatInput} from '@angular/material/input';
 import {MatSlideToggle} from '@angular/material/slide-toggle';
-import {MatIconButton} from '@angular/material/button';
+import {MatFabButton, MatIconButton} from '@angular/material/button';
 import {MatIcon} from '@angular/material/icon';
 import {of} from 'rxjs';
 
@@ -19,7 +19,7 @@ import {ArticleSearch} from './article-search.model';
 @Component({
     standalone: true,
     imports: [MatCard, MatCardContent, MatLabel, MatFormField, FormsModule, MatInput, MatSlideToggle, MatIconButton,
-        MatIcon, MatHint, CrudComponent],
+        MatIcon, MatHint, CrudComponent, MatFabButton],
     templateUrl: 'articles.component.html'
 })
 export class ArticlesComponent {

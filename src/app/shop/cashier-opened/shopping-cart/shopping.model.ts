@@ -1,16 +1,13 @@
 import {ShoppingState} from './shopping-state.model';
 
 export class Shopping {
-    amount: number;
-    discount: number;
+    amount: number = 1;
+    discount: number = 0;
     total: number;
-    state: ShoppingState;
+    state: ShoppingState = ShoppingState.COMMITTED;
 
     constructor(public barcode: string, public description: string, public retailPrice: number) {
-        this.amount = 1;
-        this.discount = 0;
         this.total = this.retailPrice * this.amount * (1 - this.discount / 100);
-        this.state = ShoppingState.COMMITTED;
     }
 
     static round2decimal(value: number): number {
