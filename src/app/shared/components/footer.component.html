@@ -1,38 +1,45 @@
 <mat-divider></mat-divider>
 <mat-grid-list cols="3" rowHeight="240px">
-  <mat-grid-tile>
-    <mat-list>
-      <div mat-subheader><img alt="miw" ngSrc="assets/miw.png" height="32" width="69"/></div>
-      <mat-list-item>
-        <mat-icon>location_on</mat-icon> C/ Alan Turing s/n, 28031 Madrid
-      </mat-list-item>
-      <mat-list-item>
-        <mat-icon>call</mat-icon> +34 913366000
-      </mat-list-item>
-      <mat-list-item>
-        <mat-icon>mail_outline</mat-icon> miw.etsisi&#64;upm.es
-      </mat-list-item>
-    </mat-list>
-  </mat-grid-tile>
-  <mat-grid-tile>
-    <mat-list>
-      <div mat-subheader>ARTIFACTS VERSIONS</div>
-      <mat-list-item>
-        <mat-icon>computer</mat-icon> Front-end - {{version}}({{profile}})</mat-list-item>
-      <mat-list-item>
-        <mat-icon>cloud_queue</mat-icon> Back-end User: {{backEndUser}}
-      </mat-list-item>
-      <mat-list-item>
-        <mat-icon>cloud_queue</mat-icon> Back-end Core: {{backEndCore}}
-      </mat-list-item>
-    </mat-list>
-  </mat-grid-tile>
-  <mat-grid-tile>
-    <mat-list>
-      <div mat-subheader>ABOUT AS</div>
-      <mat-list-item>Universidad Politécnica de Madrid</mat-list-item>
-      <mat-list-item>Máster en Ingeniería Web</mat-list-item>
-      <mat-list-item>Back-end con Tecnologías de Código Abierto</mat-list-item>
-    </mat-list>
-  </mat-grid-tile>
+    <mat-grid-tile>
+        <mat-list>
+            <div mat-subheader><img alt="miw" height="32" ngSrc="assets/miw.png" width="69"/></div>
+            <mat-list-item>
+                <mat-icon>location_on</mat-icon>
+                C/ Alan Turing s/n, 28031 Madrid
+            </mat-list-item>
+            <mat-list-item>
+                <mat-icon>call</mat-icon>
+                +34 913366000
+            </mat-list-item>
+            <mat-list-item>
+                <mat-icon>mail_outline</mat-icon>
+                miw.etsisi&#64;upm.es
+            </mat-list-item>
+        </mat-list>
+    </mat-grid-tile>
+    <mat-grid-tile>
+        <mat-list>
+            <div mat-subheader>ARTIFACTS VERSIONS</div>
+            <mat-list-item>
+                <mat-icon>computer</mat-icon>
+                Front-end - {{ version }}({{ profile }})
+            </mat-list-item>
+            <mat-list-item>
+                <mat-icon>cloud_queue</mat-icon>
+                Back-end User: {{ backEndUser }}
+            </mat-list-item>
+            <mat-list-item>
+                <mat-icon>cloud_queue</mat-icon>
+                Back-end Core: {{ backEndCore }}
+            </mat-list-item>
+        </mat-list>
+    </mat-grid-tile>
+    <mat-grid-tile>
+        <mat-list>
+            <div mat-subheader>ABOUT AS</div>
+            <mat-list-item>Universidad Politécnica de Madrid</mat-list-item>
+            <mat-list-item>Máster en Ingeniería Web</mat-list-item>
+            <mat-list-item>Back-end con Tecnologías de Código Abierto</mat-list-item>
+        </mat-list>
+    </mat-grid-tile>
 </mat-grid-list>

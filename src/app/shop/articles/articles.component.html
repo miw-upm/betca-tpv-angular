@@ -1,38 +1,38 @@
 <mat-card>
-  <mat-card-content>
-    <mat-label><strong>Filters: </strong></mat-label>
-    <mat-form-field>
-      <mat-label>Barcode</mat-label>
-      <input [(ngModel)]="articleSearch.barcode" matInput>
-    </mat-form-field>
-    <mat-form-field>
-      <mat-label>Description</mat-label>
-      <input [(ngModel)]="articleSearch.description" matInput>
-    </mat-form-field>
-    <mat-form-field>
-      <mat-label>Reference</mat-label>
-      <input [(ngModel)]="articleSearch.reference" matInput>
-    </mat-form-field>
-    <mat-form-field>
-      <mat-label>Stock</mat-label>
-      <input [(ngModel)]="articleSearch.stock" matInput type="number">
-      <mat-hint>Less than</mat-hint>
-    </mat-form-field>
-    <mat-slide-toggle [(ngModel)]="articleSearch.discontinued">Discontinued</mat-slide-toggle>
-    <button (click)="search()" mat-icon-button>
-      <mat-icon>search</mat-icon>
-    </button>
-    <button (click)="resetSearch()" mat-icon-button>
-      <mat-icon>close</mat-icon>
-    </button>
-    <mat-form-field>
-      <mat-label>Unfinished</mat-label>
-      <input [(ngModel)]="articleSearch.reference" matInput readonly>
-      <button (click)="unfinished()" mat-icon-button matSuffix>
-        <mat-icon>search</mat-icon>
-      </button>
-    </mat-form-field>
-  </mat-card-content>
+    <mat-card-content>
+        <mat-label><strong>Filters: </strong></mat-label>
+        <mat-form-field>
+            <mat-label>Barcode</mat-label>
+            <input [(ngModel)]="articleSearch.barcode" matInput>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Description</mat-label>
+            <input [(ngModel)]="articleSearch.description" matInput>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Reference</mat-label>
+            <input [(ngModel)]="articleSearch.reference" matInput>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Stock</mat-label>
+            <input [(ngModel)]="articleSearch.stock" matInput type="number">
+            <mat-hint>Less than</mat-hint>
+        </mat-form-field>
+        <mat-slide-toggle [(ngModel)]="articleSearch.discontinued">Discontinued</mat-slide-toggle>
+        <button (click)="search()" mat-icon-button>
+            <mat-icon>search</mat-icon>
+        </button>
+        <button (click)="resetSearch()" mat-icon-button>
+            <mat-icon>close</mat-icon>
+        </button>
+        <mat-form-field>
+            <mat-label>Unfinished</mat-label>
+            <input [(ngModel)]="articleSearch.reference" matInput readonly>
+            <button (click)="unfinished()" mat-icon-button matSuffix>
+                <mat-icon>search</mat-icon>
+            </button>
+        </mat-form-field>
+    </mat-card-content>
 </mat-card>
 <app-crud (create)="create()" (read)="read($event)" (update)="update($event)"
           [data]="articles" [deleteAction]="false" [title]="title"></app-crud>

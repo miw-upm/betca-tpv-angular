@@ -1,16 +1,16 @@
 <h3 mat-dialog-title>Login</h3>
 <mat-dialog-content>
-  <mat-form-field>
-    <input [(ngModel)]="mobile" matInput placeholder="Mobile" type="text"/>
-    <button (click)="mobile=undefined" *ngIf="mobile" aria-label="Clear" mat-icon-button matSuffix>
-      <mat-icon>close</mat-icon>
-    </button>
-  </mat-form-field>
-  <mat-form-field>
-    <input [(ngModel)]="password" matInput placeholder="Password" type="password"/>
-  </mat-form-field>
+    <mat-form-field>
+        <input [(ngModel)]="mobile" matInput placeholder="Mobile" type="text"/>
+        <button (click)="mobile=undefined" *ngIf="mobile" aria-label="Clear" mat-icon-button matSuffix>
+            <mat-icon>close</mat-icon>
+        </button>
+    </mat-form-field>
+    <mat-form-field>
+        <input [(ngModel)]="password" matInput placeholder="Password" type="password"/>
+    </mat-form-field>
 </mat-dialog-content>
 <mat-dialog-actions>
-  <button mat-button mat-dialog-close>Cancel</button>
-  <button (click)="login()" mat-button>Submit</button>
+    <button mat-button mat-dialog-close>Cancel</button>
+    <button (click)="login()" mat-button>Submit</button>
 </mat-dialog-actions>

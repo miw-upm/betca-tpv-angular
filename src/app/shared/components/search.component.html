@@ -1,22 +1,23 @@
 <mat-form-field class="full-width">
-  <mat-label>{{ title }}</mat-label>
-  <input (ngModelChange)="onChange($event)"
-         [matAutocomplete]="auto"
-         [ngModel]="key"
-         [required]="obligatory"
-         matInput
-         type="text"
-  >
-  <button (click)="onRenew()" mat-icon-button matSuffix matTooltip="Renew" matTooltipShowDelay="2000">
-    <mat-icon>autorenew</mat-icon>
-  </button>
-    <button *ngIf="key" (click)="resetKey()" aria-label="Clear" mat-icon-button matSuffix>
-      <mat-icon>close</mat-icon>
+    <mat-label>{{ title }}</mat-label>
+    <input (ngModelChange)="onChange($event)"
+           [matAutocomplete]="auto"
+           [ngModel]="key"
+           [required]="obligatory"
+           matInput
+           type="text"
+    >
+    <button (click)="onRenew()" mat-icon-button matSuffix matTooltip="Renew" matTooltipShowDelay="2000">
+        <mat-icon>autorenew</mat-icon>
+    </button>
+    <button (click)="resetKey()" *ngIf="key" aria-label="Clear" mat-icon-button matSuffix>
+        <mat-icon>close</mat-icon>
     </button>
     <mat-autocomplete #auto="matAutocomplete">
-      <mat-option *ngFor="let option of (keys | async); trackBy: trackOption" (click)="onClick(option)" onKeyDown=(option) [value]="option">
-        {{ option }}
-      </mat-option>
+        <mat-option (click)="onClick(option)" *ngFor="let option of (keys | async); trackBy: trackOption"
+                    [value]="option" onKeyDown=(option)>
+            {{ option }}
+        </mat-option>
     </mat-autocomplete>
 
 </mat-form-field>

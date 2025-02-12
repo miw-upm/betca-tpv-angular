@@ -1,54 +1,51 @@
 import {Component} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
-import {of} from 'rxjs';
-
-import {ComplaintCreationDialogComponent} from './complaint-creation-dialog.component';
-import {ComplaintService} from './complaint.service';
-import {Complaint} from './complaint.model';
-import {ReadDetailDialogComponent} from '@shared/dialogs/read-detail.dialog.component';
 import {MatCard, MatCardContent} from '@angular/material/card';
 import {MatIcon} from '@angular/material/icon';
+import {of} from 'rxjs';
+
+import {ComplaintService} from './complaint.service';
+import {ComplaintCreationDialogComponent} from './complaint-creation-dialog.component';
+import {ReadDetailDialogComponent} from '@shared/dialogs/read-detail.dialog.component';
 import {CrudComponent} from '@shared/components/crud.component';
+import {Complaint} from './complaint.model';
+import {MatIconButton} from "@angular/material/button";
 
 @Component({
-  imports: [
-    MatCard,
-    MatIcon,
-    CrudComponent,
-    MatCardContent
-  ],
-  templateUrl: 'complaints.component.html'
+    standalone: true,
+    imports: [MatCard, MatIcon, CrudComponent, MatCardContent, MatIconButton],
+    templateUrl: 'complaints.component.html'
 })
 export class ComplaintsComponent {
-  title = 'Complaints management';
-  complaints = of([]);
+    title = 'Complaints management';
+    complaints = of([]);
 
-  constructor(private readonly dialog: MatDialog, private readonly complaintService: ComplaintService) {
-  }
+    constructor(private readonly dialog: MatDialog, private readonly complaintService: ComplaintService) {
+    }
 
-  create(): void {
-    this.dialog
-      .open(ComplaintCreationDialogComponent)
-      .afterClosed()
-      .subscribe(() => this.searchAll());
-  }
+    create(): void {
+        this.dialog
+            .open(ComplaintCreationDialogComponent)
+            .afterClosed()
+            .subscribe(() => this.searchAll());
+    }
 
-  searchAll(): void {
-    this.complaints = this.complaintService.searchAll();
-  }
+    searchAll(): void {
+        this.complaints = this.complaintService.searchAll();
+    }
 
-  read(complaint: Complaint): void {
-    this.dialog.open(ReadDetailDialogComponent, {
-      data: {
-        title: 'Complaint Details',
-        object: this.complaintService.read(complaint.id)
-      }
-    });
-  }
+    read(complaint: Complaint): void {
+        this.dialog.open(ReadDetailDialogComponent, {
+            data: {
+                title: 'Complaint Details',
+                object: this.complaintService.read(complaint.id)
+            }
+        });
+    }
 
-  delete(complaint: Complaint): void {
-    this.complaintService
-      .delete(complaint.id)
-      .subscribe(() => this.searchAll());
-  }
+    delete(complaint: Complaint): void {
+        this.complaintService
+            .delete(complaint.id)
+            .subscribe(() => this.searchAll());
+    }
 }

@@ -1,36 +1,36 @@
 <mat-card>
-  <mat-card-title>{{title}}<span *ngIf="columns.length===0"> - EMPTY!</span></mat-card-title>
-  <mat-card-content>
-    <mat-table #table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
-      <mat-header-row *matHeaderRowDef="columnsHeader"></mat-header-row>
-      <mat-row *matRowDef="let item; columns: columnsHeader"></mat-row>
-      <!-- Dynamic column -->
-      <ng-container *ngFor="let def of columns" [matColumnDef]="def">
-        <mat-header-cell *matHeaderCellDef>{{ def | uppercaseWords }}</mat-header-cell>
-        <mat-cell *matCellDef="let row">
-          <div *ngIf="isArray(row[def]);then is_array else not_array"></div>
-          <ng-template #is_array> {{ row[def].length }}</ng-template>
-          <ng-template #not_array> {{ row[def] }}</ng-template>
-        </mat-cell>
-      </ng-container>
-      <ng-container matColumnDef="actions">
-        <mat-header-cell *matHeaderCellDef>
-          <button (click)="onCreate()" *ngIf="createAction==true" mat-icon-button matSuffix>
-            <mat-icon color="warn">add</mat-icon>
-          </button>
-        </mat-header-cell>
-        <mat-cell *matCellDef="let item">
-          <button (click)="onRead(item)" *ngIf="readAction==true" mat-icon-button matSuffix>
-            <mat-icon>visibility</mat-icon>
-          </button>
-          <button (click)="onUpdate(item)" *ngIf="updateAction==true" mat-icon-button matSuffix>
-            <mat-icon color="warn">mode_edit</mat-icon>
-          </button>
-          <button (click)="onDelete(item)" *ngIf="deleteAction==true" mat-icon-button matSuffix>
-            <mat-icon color="warn">close</mat-icon>
-          </button>
-        </mat-cell>
-      </ng-container>
-    </mat-table>
-  </mat-card-content>
+    <mat-card-title>{{ title }}<span *ngIf="columns.length===0"> - EMPTY!</span></mat-card-title>
+    <mat-card-content>
+        <mat-table #table [dataSource]="dataSource" class="mat-elevation-z8" matSort>
+            <mat-header-row *matHeaderRowDef="columnsHeader"></mat-header-row>
+            <mat-row *matRowDef="let item; columns: columnsHeader"></mat-row>
+            <!-- Dynamic column -->
+            <ng-container *ngFor="let def of columns" [matColumnDef]="def">
+                <mat-header-cell *matHeaderCellDef>{{ def | uppercaseWords }}</mat-header-cell>
+                <mat-cell *matCellDef="let row">
+                    <div *ngIf="isArray(row[def]);then is_array else not_array"></div>
+                    <ng-template #is_array> {{ row[def].length }}</ng-template>
+                    <ng-template #not_array> {{ row[def] }}</ng-template>
+                </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="actions">
+                <mat-header-cell *matHeaderCellDef>
+                    <button (click)="onCreate()" *ngIf="createAction==true" mat-icon-button matSuffix>
+                        <mat-icon color="warn">add</mat-icon>
+                    </button>
+                </mat-header-cell>
+                <mat-cell *matCellDef="let item">
+                    <button (click)="onRead(item)" *ngIf="readAction==true" mat-icon-button matSuffix>
+                        <mat-icon>visibility</mat-icon>
+                    </button>
+                    <button (click)="onUpdate(item)" *ngIf="updateAction==true" mat-icon-button matSuffix>
+                        <mat-icon color="warn">mode_edit</mat-icon>
+                    </button>
+                    <button (click)="onDelete(item)" *ngIf="deleteAction==true" mat-icon-button matSuffix>
+                        <mat-icon color="warn">close</mat-icon>
+                    </button>
+                </mat-cell>
+            </ng-container>
+        </mat-table>
+    </mat-card-content>
 </mat-card>

@@ -1,36 +1,21 @@
-import {Component} from '@angular/core';
-import {timer} from 'rxjs';
-import {DatePipe} from '@angular/common';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
+import {AsyncPipe, DatePipe, NgIf} from '@angular/common';
+import { timer, Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Component({
-  selector: 'app-date',
-  standalone:true,
-  template: `<a>{{ date | date: "medium" }}</a>`,
-  imports: [
-    DatePipe
-  ],
-  styles: [`
-    a {
-      padding-left: 10px;
-      padding-right: 10px;
-    }
-
-    @media screen and (max-width: 700px) {
-      a {
-        visibility: hidden;
-        display: none;
-      }
-    }
-  `]
+    standalone: true,
+    imports: [DatePipe, NgIf, AsyncPipe],
+    selector: 'app-date',
+    template: `<a *ngIf="date$ | async as date">{{ date | date: 'medium' }}</a>`,
+    styles: [`
+        a { padding: 0 10px; }
+        @media screen and (max-width: 700px) {
+            a { display: none; }
+        }
+    `],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DateComponent {
-
-  date: Date;
-
-  constructor() {
-    timer(0, 1000).subscribe(
-      () => this.date = new Date()
-    );
-  }
-
+    date$: Observable<Date> = timer(0, 1000).pipe(map(() => new Date()));
 }

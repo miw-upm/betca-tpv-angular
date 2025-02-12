@@ -4,16 +4,10 @@ import {MatIcon} from '@angular/material/icon';
 import {MatButton} from '@angular/material/button';
 
 @Component({
-  standalone:true,
-  templateUrl: 'cancel-yes-dialog.component.html',
-  imports: [
-    MatDialogTitle,
-    MatIcon,
-    MatDialogActions,
-    MatDialogClose,
-    MatButton
-  ],
-  styleUrls: ['./dialog.component.css']
+    standalone: true,
+    imports: [MatDialogTitle, MatIcon, MatDialogActions, MatDialogClose, MatButton],
+    templateUrl: 'cancel-yes-dialog.component.html',
+    styleUrls: ['./dialog.component.css']
 })
 export class CancelYesDialogComponent {
 }

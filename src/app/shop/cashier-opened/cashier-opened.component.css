@@ -1,9 +1,9 @@
 .search-zone {
-  width: 50%;
+    width: 50%;
 }
 
 .mat-dialog-content {
-  display: flex;
-  flex-direction: column;
+    display: flex;
+    flex-direction: column;
 }
 

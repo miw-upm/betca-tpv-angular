@@ -1,11 +1,11 @@
 .mat-toolbar {
-  justify-content: space-between;
+    justify-content: space-between;
 }
 
 .center {
-  justify-content: center;
+    justify-content: center;
 }
 
 .mat-grid-tile {
-  font-size: xx-large;
+    font-size: xx-large;
 }

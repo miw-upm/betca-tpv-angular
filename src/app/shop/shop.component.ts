@@ -3,8 +3,8 @@ import {Router, RouterLink, RouterOutlet} from '@angular/router';
 import {map} from 'rxjs/operators';
 import {MatDialog} from '@angular/material/dialog';
 
-import {HttpService} from '@core/http.service';
-import {AuthService} from '@core/auth.service';
+import {HttpService} from '@core/services/http.service';
+import {AuthService} from '@core/services/auth.service';
 import {SharedCashierService} from './shared/services/shared.cashier.service';
 import {CashierDialogComponent} from './cashier-opened/cashier-closure/cashier-dialog.component';
 import {MatToolbar} from '@angular/material/toolbar';
@@ -16,74 +16,74 @@ import {NgIf, NgOptimizedImage} from '@angular/common';
 import {FooterComponent} from '@shared/components/footer.component';
 
 @Component({
-  standalone:true,
-  templateUrl: 'shop.component.html',
-  styleUrls: ['shop.component.css'],
+    standalone: true,
+    templateUrl: 'shop.component.html',
+    styleUrls: ['shop.component.css'],
 
-  imports: [
-    MatToolbar,
-    DateComponent,
-    MatIcon,
-    MatMenuTrigger,
-    MatButton,
-    NgOptimizedImage,
-    MatIconButton,
-    MatMenu,
-    MatMenuItem,
-    RouterLink,
-    NgIf,
-    RouterOutlet,
-    FooterComponent
-  ]
+    imports: [
+        MatToolbar,
+        DateComponent,
+        MatIcon,
+        MatMenuTrigger,
+        MatButton,
+        NgOptimizedImage,
+        MatIconButton,
+        MatMenu,
+        MatMenuItem,
+        RouterLink,
+        NgIf,
+        RouterOutlet,
+        FooterComponent
+    ]
 })
 export class ShopComponent {
-  username: string;
-  cashierClosed: boolean;
+    username: string;
+    cashierClosed: boolean;
 
-  constructor(private readonly router: Router, private readonly dialog: MatDialog, private readonly httpService: HttpService,
-              private readonly tokensService: AuthService, private readonly sharedCashierService: SharedCashierService) {
-    this.username = tokensService.getName();
-    this.cashierClosed = true;
-    this.cashier();
-  }
+    constructor(private readonly router: Router, private readonly dialog: MatDialog, private readonly httpService: HttpService,
+                private readonly tokensService: AuthService, private readonly sharedCashierService: SharedCashierService) {
+        this.username = tokensService.getName();
+        this.cashierClosed = true;
+        this.cashier();
+    }
 
-  untilManager(): boolean {
-    return this.tokensService.untilManager();
-  }
+    untilManager(): boolean {
+        return this.tokensService.untilManager();
+    }
 
-  cashier(): void {
-    this.sharedCashierService.readLast()
-      .pipe(
-        map(cashier => cashier.closed)
-      )
-      .subscribe(
-        closed => {
-          this.cashierClosed = closed;
-          if (closed) {
-            this.router.navigate(['shop', 'cashier-closed']).then();
-          } else {
-            this.router.navigate(['shop', 'cashier-opened']).then();
-          }
-        }
-      );
-  }
+    cashier(): void {
+        this.sharedCashierService.readLast()
+            .pipe(
+                map(cashier => cashier.closed)
+            )
+            .subscribe(
+                closed => {
+                    this.cashierClosed = closed;
+                    if (closed) {
+                        this.router.navigate(['shop', 'cashier-closed']).then();
+                    } else {
+                        this.router.navigate(['shop', 'cashier-opened']).then();
+                    }
+                }
+            );
+    }
 
-  logout(): void {
-    this.tokensService.logout();
-  }
+    logout(): void {
+        this.tokensService.logout();
+    }
 
-  openCashier(): void {
-    this.sharedCashierService
-      .openCashier()
-      .subscribe(() => this.cashier());
-  }
+    openCashier(): void {
+        this.sharedCashierService
+            .openCashier()
+            .subscribe(() => this.cashier());
+    }
 
-  closeCashier(): void {
-    this.dialog
-      .open(CashierDialogComponent)
-      .afterClosed()
-      .subscribe(() => this.cashier());
-  }
+    closeCashier(): void {
+        this.dialog
+            .open(CashierDialogComponent)
+            .afterClosed()
+            .subscribe(() => this.cashier());
+    }
 
 
 }

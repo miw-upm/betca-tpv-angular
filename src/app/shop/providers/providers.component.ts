@@ -16,59 +16,59 @@ import {MatIcon} from '@angular/material/icon';
 import {CrudComponent} from '@shared/components/crud.component';
 
 @Component({
-  standalone:true,
-  imports: [
-    MatCard,
-    MatCardContent,
-    MatFormField,
-    MatLabel,
-    FormsModule,
-    MatInput,
-    MatIconButton,
-    MatIcon,
-    CrudComponent
-  ],
-  templateUrl: 'providers.component.html'
+    standalone: true,
+    imports: [
+        MatCard,
+        MatCardContent,
+        MatFormField,
+        MatLabel,
+        FormsModule,
+        MatInput,
+        MatIconButton,
+        MatIcon,
+        CrudComponent
+    ],
+    templateUrl: 'providers.component.html'
 })
 export class ProvidersComponent {
-  providerSearch: ProviderSearch;
-  title = 'Providers management';
-  providers = of([]);
+    providerSearch: ProviderSearch;
+    title = 'Providers management';
+    providers = of([]);
 
-  constructor(private readonly dialog: MatDialog, private readonly providerService: ProviderService) {
-    this.resetSearch();
-  }
+    constructor(private readonly dialog: MatDialog, private readonly providerService: ProviderService) {
+        this.resetSearch();
+    }
 
-  search(): void {
-    this.providers = this.providerService.search(this.providerSearch);
-  }
+    search(): void {
+        this.providers = this.providerService.search(this.providerSearch);
+    }
 
-  resetSearch(): void {
-    this.providerSearch = {};
-  }
+    resetSearch(): void {
+        this.providerSearch = {};
+    }
 
-  create(): void {
-    this.dialog
-      .open(ProviderCreationUpdatingDialogComponent)
-      .afterClosed()
-      .subscribe(() => this.search());
-  }
+    create(): void {
+        this.dialog
+            .open(ProviderCreationUpdatingDialogComponent)
+            .afterClosed()
+            .subscribe(() => this.search());
+    }
 
-  read(provider: Provider): void {
-    this.dialog.open(ReadDetailDialogComponent, {
-      data: {
-        title: 'Provider Details',
-        object: this.providerService.read(provider.company)
-      }
-    });
-  }
+    read(provider: Provider): void {
+        this.dialog.open(ReadDetailDialogComponent, {
+            data: {
+                title: 'Provider Details',
+                object: this.providerService.read(provider.company)
+            }
+        });
+    }
 
-  update(provider: Provider): void {
-    this.providerService
-      .read(provider.company)
-      .subscribe(fullProvider => this.dialog.open(ProviderCreationUpdatingDialogComponent, {data: fullProvider})
-        .afterClosed()
-        .subscribe(() => this.search())
-      );
-  }
+    update(provider: Provider): void {
+        this.providerService
+            .read(provider.company)
+            .subscribe(fullProvider => this.dialog.open(ProviderCreationUpdatingDialogComponent, {data: fullProvider})
+                .afterClosed()
+                .subscribe(() => this.search())
+            );
+    }
 }

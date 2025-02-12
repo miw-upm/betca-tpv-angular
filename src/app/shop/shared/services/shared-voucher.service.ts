@@ -2,11 +2,11 @@ import {Injectable} from '@angular/core';
 import {EMPTY, Observable} from 'rxjs';
 
 @Injectable({
-  providedIn: 'root',
+    providedIn: 'root',
 })
 export class SharedVoucherService {
 
-  printVoucher(value: number): Observable<any> {
-    return EMPTY; // TODO create and print voucher
-  }
+    printVoucher(value: number): Observable<any> {
+        return EMPTY; // TODO create and print voucher
+    }
 }

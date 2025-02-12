@@ -1,16 +1,13 @@
 import {Injectable} from '@angular/core';
+import {Article} from "../../shop/shared/services/models/article.model";
 
-import {Article} from '../shared/article.model';
-
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable({providedIn: 'root'})
 export class ShoppingBasketService {
 
-  constructor() {
-  }
+    constructor() {
+    }
 
-  addArticle(article: Article): void {
-    console.log('Article added to shopping basket: ' + article.description);
-  }
+    addArticle(article: Article): void {
+        console.log('Article added to shopping basket: ' + article.description);
+    }
 }

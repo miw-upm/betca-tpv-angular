@@ -1,11 +1,11 @@
-<h2 mat-dialog-title> {{title}}</h2>
+<h2 mat-dialog-title> {{ title }}</h2>
 <mat-dialog-content>
-  <ng-container *ngIf="(object | async) as data">
-    @for (def of labels(data); track def) {
-      <mat-label><strong>{{ def | uppercaseWords }}: </strong>{{ data[def] }}</mat-label>
-    }
-  </ng-container>
+    <ng-container *ngIf="(object | async) as data">
+        @for (def of labels(data); track def) {
+            <mat-label><strong>{{ def | uppercaseWords }}: </strong>{{ data[def] }}</mat-label>
+        }
+    </ng-container>
 </mat-dialog-content>
 <mat-dialog-actions>
-  <button mat-dialog-close mat-raised-button>Close</button>
+    <button mat-dialog-close mat-raised-button>Close</button>
 </mat-dialog-actions>

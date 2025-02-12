@@ -1,3 +1,3 @@
 export interface User {
-  mobile: number;
+    mobile: number;
 }

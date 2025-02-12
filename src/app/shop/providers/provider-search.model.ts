@@ -1,5 +1,5 @@
 export class ProviderSearch {
-  company?: string;
-  phone?: string;
-  note?: string;
+    company?: string;
+    phone?: string;
+    note?: string;
 }

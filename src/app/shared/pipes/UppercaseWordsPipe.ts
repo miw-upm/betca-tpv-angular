@@ -1,10 +1,13 @@
-import {Pipe, PipeTransform} from '@angular/core';
+import { Pipe, PipeTransform } from '@angular/core';
 
-@Pipe({name: 'uppercaseWords'})
-export class UppercaseWords implements PipeTransform {
-  transform(value: string): string {
-    const words = value.split(/(?=[A-Z])/);
-    words[0] = words[0].charAt(0).toUpperCase() + words[0].slice(1);
-    return words.join(' ');
-  }
+@Pipe({ name: 'uppercaseWords' })
+export class UppercaseWordsPipe implements PipeTransform {
+    transform(value: string | null | undefined): string {
+        if (!value) return ''; // Maneja valores nulos o indefinidos
+
+        return value
+            .split(/[\s-_]+|(?=[A-Z])/) // Maneja espacios, guiones y camelCase
+            .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()) // Capitaliza cada palabra
+            .join(' ');
+    }
 }

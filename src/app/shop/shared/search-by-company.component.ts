@@ -4,27 +4,27 @@ import {SharedProviderService} from './services/shared.provider.service';
 import {SearchComponent} from '@shared/components/search.component';
 
 @Component({
-  selector: 'app-search-by-company',
-  standalone:true,
-  imports: [
-    SearchComponent
-  ],
-  templateUrl: './search-by-company.component.html'
+    selector: 'app-search-by-company',
+    standalone: true,
+    imports: [
+        SearchComponent
+    ],
+    templateUrl: './search-by-company.component.html'
 })
 export class SearchByCompanyComponent {
-  companies: Observable<string[]> = of([]);
+    companies: Observable<string[]> = of([]);
 
-  @Input() company: string;
-  @Output() companyChange = new EventEmitter<string>();
+    @Input() company: string;
+    @Output() companyChange = new EventEmitter<string>();
 
-  constructor(private readonly sharedProviderService: SharedProviderService) {
-  }
+    constructor(private readonly sharedProviderService: SharedProviderService) {
+    }
 
-  public onSelect(): void {
-    this.companyChange.emit(this.company);
-  }
+    public onSelect(): void {
+        this.companyChange.emit(this.company);
+    }
 
-  searchByCompany(): void {
-    this.companies = this.sharedProviderService.searchCompanies(this.company);
-  }
+    searchByCompany(): void {
+        this.companies = this.sharedProviderService.searchCompanies(this.company);
+    }
 }
