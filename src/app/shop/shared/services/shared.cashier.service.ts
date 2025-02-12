@@ -3,11 +3,9 @@ import {Observable} from 'rxjs';
 
 import {HttpService} from '@core/services/http.service';
 import {EndPoints} from '@core/end-points';
-import {CashierLast} from './models/cashier-last.model';
+import {CashierLast} from '../models/cashier-last.model';
 
-@Injectable({
-    providedIn: 'root',
-})
+@Injectable({providedIn: 'root'})
 export class SharedCashierService {
 
     constructor(private readonly httpService: HttpService) {

@@ -1,33 +1,24 @@
 import {Component} from '@angular/core';
+import {FormsModule} from '@angular/forms';
 import {MatDialog} from '@angular/material/dialog';
-import {of} from 'rxjs';
-
-import {ReadDetailDialogComponent} from '@shared/dialogs/read-detail.dialog.component';
-import {Provider} from './provider.model';
-import {ProviderService} from './provider.service';
-import {ProviderSearch} from './provider-search.model';
-import {ProviderCreationUpdatingDialogComponent} from './provider-creation-updating-dialog.component';
 import {MatCard, MatCardContent} from '@angular/material/card';
 import {MatFormField, MatLabel} from '@angular/material/form-field';
-import {FormsModule} from '@angular/forms';
 import {MatInput} from '@angular/material/input';
 import {MatIconButton} from '@angular/material/button';
 import {MatIcon} from '@angular/material/icon';
+import {of} from 'rxjs';
+
+import {ProviderService} from './provider.service';
+import {ReadDetailDialogComponent} from '@shared/dialogs/read-detail.dialog.component';
 import {CrudComponent} from '@shared/components/crud.component';
+import {ProviderCreationUpdatingDialogComponent} from './provider-creation-updating-dialog.component';
+import {Provider} from './provider.model';
+import {ProviderSearch} from './provider-search.model';
 
 @Component({
     standalone: true,
-    imports: [
-        MatCard,
-        MatCardContent,
-        MatFormField,
-        MatLabel,
-        FormsModule,
-        MatInput,
-        MatIconButton,
-        MatIcon,
-        CrudComponent
-    ],
+    imports: [MatCard, MatCardContent, MatFormField, MatLabel, FormsModule, MatInput, MatIconButton, MatIcon,
+        CrudComponent],
     templateUrl: 'providers.component.html'
 })
 export class ProvidersComponent {

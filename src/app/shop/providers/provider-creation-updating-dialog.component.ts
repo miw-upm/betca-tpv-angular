@@ -1,4 +1,6 @@
 import {Component, Inject} from '@angular/core';
+import {FormsModule} from '@angular/forms';
+import {NgIf} from '@angular/common';
 import {
     MAT_DIALOG_DATA,
     MatDialog,
@@ -7,33 +9,19 @@ import {
     MatDialogContent,
     MatDialogTitle
 } from '@angular/material/dialog';
-
-import {ProviderService} from './provider.service';
-import {Provider} from './provider.model';
 import {MatFormField, MatHint, MatLabel} from '@angular/material/form-field';
-import {FormsModule} from '@angular/forms';
 import {MatInput} from '@angular/material/input';
 import {MatSlideToggle} from '@angular/material/slide-toggle';
 import {MatButton} from '@angular/material/button';
-import {NgIf} from '@angular/common';
+
+import {ProviderService} from './provider.service';
+import {Provider} from './provider.model';
 
 @Component({
     standalone: true,
+    imports: [MatDialogTitle, MatDialogContent, MatFormField, MatLabel, MatHint, FormsModule, MatInput, MatSlideToggle,
+        MatDialogActions, MatDialogClose, MatButton, NgIf],
     templateUrl: 'provider-creation-updating-dialog.component.html',
-    imports: [
-        MatDialogTitle,
-        MatDialogContent,
-        MatFormField,
-        MatLabel,
-        MatHint,
-        FormsModule,
-        MatInput,
-        MatSlideToggle,
-        MatDialogActions,
-        MatDialogClose,
-        MatButton,
-        NgIf
-    ],
     styleUrls: ['provider-dialog.component.css']
 })
 

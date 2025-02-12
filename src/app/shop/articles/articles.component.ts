@@ -13,7 +13,7 @@ import {ArticleService} from './article.service';
 import {ReadDetailDialogComponent} from '@shared/dialogs/read-detail.dialog.component';
 import {CrudComponent} from '@shared/components/crud.component';
 import {ArticleCreationUpdatingDialogComponent} from './article-creation-updating-dialog.component';
-import {Article} from '../shared/services/models/article.model';
+import {Article} from '../shared/models/article.model';
 import {ArticleSearch} from './article-search.model';
 
 @Component({

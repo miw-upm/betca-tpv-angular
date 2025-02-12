@@ -2,13 +2,11 @@ import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 
 import {HttpService} from '@core/services/http.service';
+import {EndPoints} from '@core/end-points';
 import {Provider} from './provider.model';
 import {ProviderSearch} from './provider-search.model';
-import {EndPoints} from '@core/end-points';
 
-@Injectable({
-    providedIn: 'root',
-})
+@Injectable({providedIn: 'root'})
 export class ProviderService {
     private static readonly SEARCH = '/search';
 

@@ -17,9 +17,9 @@ import {MatInput} from '@angular/material/input';
 import {Observable, of} from 'rxjs';
 
 import {ArticleService} from './article.service';
-import {SearchByCompanyComponent} from '../shared/search-by-company.component';
-import {Article} from '../shared/services/models/article.model';
-import {Tax} from '../shared/services/models/Tax';
+import {SearchByCompanyComponent} from '../shared/components/search-by-company.component';
+import {Article} from '../shared/models/article.model';
+import {Tax} from '../shared/models/Tax';
 
 @Component({
     standalone: true,

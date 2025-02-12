@@ -3,7 +3,7 @@ import {Observable} from 'rxjs';
 
 import {HttpService} from '@core/services/http.service';
 import {EndPoints} from '@core/end-points';
-import {Article} from '../shared/services/models/article.model';
+import {Article} from '../shared/models/article.model';
 import {ArticleSearch} from './article-search.model';
 
 @Injectable({providedIn: 'root'})

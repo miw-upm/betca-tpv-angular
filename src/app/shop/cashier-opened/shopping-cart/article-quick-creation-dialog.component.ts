@@ -11,7 +11,7 @@ import {
 import {MatError, MatFormField, MatInput} from '@angular/material/input';
 import {MatButton} from '@angular/material/button';
 
-import {Article} from '../../shared/services/models/article.model';
+import {Article} from '../../shared/models/article.model';
 import {SharedArticleService} from '../../shared/services/shared.article.service';
 
 @Component({

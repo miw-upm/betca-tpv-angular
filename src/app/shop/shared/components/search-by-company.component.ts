@@ -1,14 +1,13 @@
-import {Observable, of} from 'rxjs';
 import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {SharedProviderService} from './services/shared.provider.service';
+import {Observable, of} from 'rxjs';
+
+import {SharedProviderService} from '../services/shared.provider.service';
 import {SearchComponent} from '@shared/components/search.component';
 
 @Component({
-    selector: 'app-search-by-company',
     standalone: true,
-    imports: [
-        SearchComponent
-    ],
+    imports: [SearchComponent],
+    selector: 'app-search-by-company',
     templateUrl: './search-by-company.component.html'
 })
 export class SearchByCompanyComponent {

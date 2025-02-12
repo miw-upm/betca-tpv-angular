@@ -81,11 +81,15 @@
             </ng-container>
             <ng-container matColumnDef="discount">
                 <mat-header-cell *matHeaderCellDef> %</mat-header-cell>
-                <mat-cell (click)="updateDiscount(item)" *matCellDef="let item">{{ item.discount }}</mat-cell>
+                <mat-cell *matCellDef="let item">
+                    <button mat-button (click)="updateDiscount(item)">{{ item.discount }}</button>
+                </mat-cell>
             </ng-container>
             <ng-container matColumnDef="total">
                 <mat-header-cell *matHeaderCellDef> Total</mat-header-cell>
-                <mat-cell (click)="updateTotal(item)" *matCellDef="let item">{{ item.total }}</mat-cell>
+                <mat-cell *matCellDef="let item">
+                    <button mat-button (click)="updateTotal(item)">{{ item.total }}</button>
+                </mat-cell>
             </ng-container>
             <ng-container matColumnDef="actions">
                 <mat-header-cell *matHeaderCellDef>

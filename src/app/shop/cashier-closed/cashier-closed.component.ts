@@ -5,7 +5,7 @@ import {MatIcon} from '@angular/material/icon';
 import {Observable} from 'rxjs';
 
 import {SharedCashierService} from '../shared/services/shared.cashier.service';
-import {CashierLast} from '../shared/services/models/cashier-last.model';
+import {CashierLast} from '../shared/models/cashier-last.model';
 
 @Component({
     standalone: true,

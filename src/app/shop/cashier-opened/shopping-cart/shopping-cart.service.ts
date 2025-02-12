@@ -4,13 +4,12 @@ import {EMPTY, iif, merge, Observable} from 'rxjs';
 import {catchError, concatMap, map} from 'rxjs/operators';
 
 import {HttpService} from '@core/services/http.service';
+import {EndPoints} from '@core/end-points';
 import {SharedArticleService} from '../../shared/services/shared.article.service';
+import {ArticleQuickCreationDialogComponent} from './article-quick-creation-dialog.component';
 import {Shopping} from './shopping.model';
 import {TicketCreation} from './ticket-creation.model';
-import {ArticleQuickCreationDialogComponent} from './article-quick-creation-dialog.component';
-
 import {ShoppingState} from './shopping-state.model';
-import {EndPoints} from '@core/end-points';
 
 @Injectable({providedIn: 'root'})
 export class ShoppingCartService {

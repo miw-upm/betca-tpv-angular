@@ -17,17 +17,13 @@ import {environment} from '@env';
 })
 export class FooterComponent {
     version: string;
-    profile: string;
     backEndUser: string;
     backEndCore: string;
-    backEndCustomerSupport: string;
 
     constructor() {
         this.version = environment.VERSION;
-        this.profile = environment.production ? 'Prod' : 'Dev';
         this.backEndUser = environment.REST_USER;
         this.backEndCore = environment.REST_CORE;
-        this.backEndCustomerSupport = environment.REST_CUSTOMER_SUPPORT;
     }
 
 }

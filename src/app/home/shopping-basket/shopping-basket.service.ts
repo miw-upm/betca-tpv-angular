@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Article} from "../../shop/shared/services/models/article.model";
+import {Article} from "../../shop/shared/models/article.model";
 
 @Injectable({providedIn: 'root'})
 export class ShoppingBasketService {

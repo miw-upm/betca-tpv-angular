@@ -6,5 +6,5 @@ export class EndPoints {
     static readonly CASHIERS = environment.REST_CORE + '/cashiers';
     static readonly CASHIERS_LAST = EndPoints.CASHIERS + '/last';
     static readonly TICKETS = environment.REST_CORE + '/tickets';
-    static readonly COMPLAINTS = environment.REST_CUSTOMER_SUPPORT + '/complaints';
+    static readonly COMPLAINTS = environment.REST_CORE  + '/complaints';
 }

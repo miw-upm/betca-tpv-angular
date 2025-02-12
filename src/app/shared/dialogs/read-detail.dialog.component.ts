@@ -5,11 +5,11 @@ import {MatLabel} from '@angular/material/form-field';
 import {MatButton} from '@angular/material/button';
 import {Observable} from 'rxjs';
 
-import {UppercaseWords} from '@shared/pipes/UppercaseWordsPipe';
+import {UppercaseWordsPipe} from '@shared/pipes/uppercase-words.pipe';
 
 @Component({
     standalone: true,
-    imports: [MatDialogContent, AsyncPipe, MatLabel, UppercaseWords, MatDialogActions, MatDialogClose, MatButton,
+    imports: [MatDialogContent, AsyncPipe, MatLabel, UppercaseWordsPipe, MatDialogActions, MatDialogClose, MatButton,
         NgIf, MatDialogTitle],
     templateUrl: 'read-detail.dialog.component.html',
     styleUrls: ['./dialog.component.css']

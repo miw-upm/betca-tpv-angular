@@ -1,40 +1,26 @@
 import {Component} from '@angular/core';
 import {Router, RouterLink, RouterOutlet} from '@angular/router';
-import {map} from 'rxjs/operators';
+import {NgIf, NgOptimizedImage} from '@angular/common';
 import {MatDialog} from '@angular/material/dialog';
-
-import {HttpService} from '@core/services/http.service';
-import {AuthService} from '@core/services/auth.service';
-import {SharedCashierService} from './shared/services/shared.cashier.service';
-import {CashierDialogComponent} from './cashier-opened/cashier-closure/cashier-dialog.component';
-import {MatToolbar} from '@angular/material/toolbar';
-import {DateComponent} from '@shared/components/date.component';
 import {MatIcon} from '@angular/material/icon';
 import {MatMenu, MatMenuItem, MatMenuTrigger} from '@angular/material/menu';
 import {MatButton, MatIconButton} from '@angular/material/button';
-import {NgIf, NgOptimizedImage} from '@angular/common';
+import {MatToolbar} from '@angular/material/toolbar';
+import {map} from 'rxjs/operators';
+
+import {AuthService} from '@core/services/auth.service';
+import {HttpService} from '@core/services/http.service';
+import {SharedCashierService} from './shared/services/shared.cashier.service';
+import {DateComponent} from '@shared/components/date.component';
 import {FooterComponent} from '@shared/components/footer.component';
+import {CashierDialogComponent} from './cashier-opened/cashier-closure/cashier-dialog.component';
 
 @Component({
     standalone: true,
+    imports: [MatToolbar, DateComponent, MatIcon, MatMenuTrigger, MatButton, NgOptimizedImage, MatIconButton,
+        MatMenu, MatMenuItem, RouterLink, NgIf, RouterOutlet, FooterComponent],
     templateUrl: 'shop.component.html',
-    styleUrls: ['shop.component.css'],
-
-    imports: [
-        MatToolbar,
-        DateComponent,
-        MatIcon,
-        MatMenuTrigger,
-        MatButton,
-        NgOptimizedImage,
-        MatIconButton,
-        MatMenu,
-        MatMenuItem,
-        RouterLink,
-        NgIf,
-        RouterOutlet,
-        FooterComponent
-    ]
+    styleUrls: ['shop.component.css']
 })
 export class ShopComponent {
     username: string;

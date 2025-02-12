@@ -1,19 +1,6 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import {Observable, of} from 'rxjs';
-
-import {ShoppingCartService} from './shopping-cart.service';
-import {Shopping} from './shopping.model';
-import {CheckOutDialogComponent} from './check-out-dialog.component';
-import {MatDialog} from '@angular/material/dialog';
-import {ShoppingState} from './shopping-state.model';
-import {NumberDialogComponent} from '@shared/dialogs/number-dialog.component';
-import {MatCard, MatCardContent, MatCardTitle} from '@angular/material/card';
-import {MatFormField, MatSuffix} from '@angular/material/form-field';
-import {MatInput} from '@angular/material/input';
-import {MatButton, MatIconButton} from '@angular/material/button';
-import {MatIcon} from '@angular/material/icon';
-import {SearchByBarcodeComponent} from '../../shared/search-by-barcode.component';
 import {CurrencyPipe} from '@angular/common';
+import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {
     MatCell,
     MatCellDef,
@@ -26,41 +13,31 @@ import {
     MatRowDef,
     MatTable
 } from '@angular/material/table';
+import {MatDialog} from '@angular/material/dialog';
+import {MatCard, MatCardContent, MatCardTitle} from '@angular/material/card';
+import {MatFormField, MatSuffix} from '@angular/material/form-field';
+import {MatInput} from '@angular/material/input';
+import {MatButton, MatIconButton} from '@angular/material/button';
+import {MatIcon} from '@angular/material/icon';
 import {MatTooltip} from '@angular/material/tooltip';
 import {MatCheckbox} from '@angular/material/checkbox';
-import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {Observable, of} from 'rxjs';
+
+import {ShoppingCartService} from './shopping-cart.service';
+import {NumberDialogComponent} from '@shared/dialogs/number-dialog.component';
+import {CheckOutDialogComponent} from './check-out-dialog.component';
+import {SearchByBarcodeComponent} from '../../shared/components/search-by-barcode.component';
+import {Shopping} from './shopping.model';
+import {ShoppingState} from './shopping-state.model';
 
 @Component({
-    selector: 'app-shopping-cart',
     standalone: true,
+    imports: [MatCard, MatCardContent, MatFormField, MatInput, MatIconButton, MatIcon, SearchByBarcodeComponent,
+        MatCardTitle, CurrencyPipe, MatTable, MatHeaderCell, MatCell, MatCellDef, MatHeaderCellDef, MatTooltip,
+        MatColumnDef, MatButton, MatSuffix, MatCheckbox, MatHeaderRow, MatRow, MatHeaderRowDef, MatRowDef,
+        FormsModule, ReactiveFormsModule],
+    selector: 'app-shopping-cart',
     styleUrls: ['shopping-cart.component.css'],
-    imports: [
-        MatCard,
-        MatCardContent,
-        MatFormField,
-        MatInput,
-        MatIconButton,
-        MatIcon,
-        SearchByBarcodeComponent,
-        MatCardTitle,
-        CurrencyPipe,
-        MatTable,
-        MatHeaderCell,
-        MatCell,
-        MatCellDef,
-        MatHeaderCellDef,
-        MatTooltip,
-        MatColumnDef,
-        MatButton,
-        MatSuffix,
-        MatCheckbox,
-        MatHeaderRow,
-        MatRow,
-        MatHeaderRowDef,
-        MatRowDef,
-        FormsModule,
-        ReactiveFormsModule
-    ],
     templateUrl: 'shopping-cart.component.html'
 })
 export class ShoppingCartComponent implements OnInit {

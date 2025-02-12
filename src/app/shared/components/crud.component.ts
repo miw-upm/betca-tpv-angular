@@ -20,12 +20,12 @@ import {MatIcon} from '@angular/material/icon';
 import {MatSort} from '@angular/material/sort';
 import {Observable} from 'rxjs';
 
-import {UppercaseWords} from '@shared/pipes/UppercaseWordsPipe';
+import {UppercaseWordsPipe} from '@shared/pipes/uppercase-words.pipe';
 
 @Component({
     standalone: true,
     imports: [MatCard, MatCardTitle, MatCardContent, MatTable, NgIf, MatHeaderRow, MatHeaderRowDef, MatRowDef,
-        MatRow, MatColumnDef, MatHeaderCell, UppercaseWords, MatCell, MatCellDef, MatHeaderCellDef, NgForOf,
+        MatRow, MatColumnDef, MatHeaderCell, UppercaseWordsPipe, MatCell, MatCellDef, MatHeaderCellDef, NgForOf,
         MatIconButton, MatSuffix, MatIcon, MatSort],
     selector: 'app-crud',
     templateUrl: 'crud.component.html'

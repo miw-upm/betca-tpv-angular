@@ -1,14 +1,13 @@
-import {Observable, of} from 'rxjs';
 import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {SharedArticleService} from './services/shared.article.service';
+import {Observable, of} from 'rxjs';
+
+import {SharedArticleService} from '../services/shared.article.service';
 import {SearchComponent} from '@shared/components/search.component';
 
 @Component({
-    selector: 'app-search-by-barcode',
     standalone: true,
-    imports: [
-        SearchComponent
-    ],
+    imports: [SearchComponent],
+    selector: 'app-search-by-barcode',
     templateUrl: './search-by-barcode.component.html'
 })
 export class SearchByBarcodeComponent {
