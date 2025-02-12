@@ -15,7 +15,7 @@ import {
 } from '@angular/material/table';
 import {MatDialog} from '@angular/material/dialog';
 import {MatCard, MatCardContent, MatCardTitle} from '@angular/material/card';
-import {MatFormField, MatSuffix} from '@angular/material/form-field';
+import {MatFormField, MatLabel, MatSuffix} from '@angular/material/form-field';
 import {MatInput} from '@angular/material/input';
 import {MatButton, MatIconButton} from '@angular/material/button';
 import {MatIcon} from '@angular/material/icon';
@@ -29,13 +29,14 @@ import {CheckOutDialogComponent} from './check-out-dialog.component';
 import {SearchByBarcodeComponent} from '../../shared/components/search-by-barcode.component';
 import {Shopping} from './shopping.model';
 import {ShoppingState} from './shopping-state.model';
+import {InputText} from "@shared/components/input-text.component";
 
 @Component({
     standalone: true,
-    imports: [MatCard, MatCardContent, MatFormField, MatInput, MatIconButton, MatIcon, SearchByBarcodeComponent,
+    imports: [MatCard, MatCardContent, MatIconButton, MatIcon, SearchByBarcodeComponent,
         MatCardTitle, CurrencyPipe, MatTable, MatHeaderCell, MatCell, MatCellDef, MatHeaderCellDef, MatTooltip,
         MatColumnDef, MatButton, MatSuffix, MatCheckbox, MatHeaderRow, MatRow, MatHeaderRowDef, MatRowDef,
-        FormsModule, ReactiveFormsModule],
+        FormsModule, ReactiveFormsModule, InputText],
     selector: 'app-shopping-cart',
     styleUrls: ['shopping-cart.component.css'],
     templateUrl: 'shopping-cart.component.html'

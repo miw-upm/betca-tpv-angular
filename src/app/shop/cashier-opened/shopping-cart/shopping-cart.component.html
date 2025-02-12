@@ -1,49 +1,14 @@
 <mat-card>
     <mat-card-content>
         <div class="container">
-
-            <form (ngSubmit)="addBarcode(barcodeControl.value)">
-                <mat-form-field>
-                    <input [formControl]="barcodeControl" matInput placeholder="Barcode" type="text">
-                </mat-form-field>
-                <button [disabled]="barcodeControl.value === ''" color="primary" mat-icon-button type="submit">
-                    <mat-icon>add_circle</mat-icon>
-                </button>
-            </form>
-
+            <app-input-text title="Barcode" (action)="addBarcode($event)"></app-input-text>
             <app-search-by-barcode (add)="addBarcode($event)"></app-search-by-barcode>
-
             <button color="primary" disabled="disabled" mat-icon-button>
                 <mat-icon>category</mat-icon>
             </button>
-
-            <form (ngSubmit)="addBudge(barcodeControl.value)">
-                <mat-form-field>
-                    <input [formControl]="budgeControl" matInput placeholder="Budge" type="text">
-                </mat-form-field>
-                <button [disabled]="budgeControl.value === ''" color="primary" mat-icon-button type="submit">
-                    <mat-icon>description</mat-icon>
-                </button>
-            </form>
-
-            <form (ngSubmit)="addDiscount(discountControl.value)">
-                <mat-form-field>
-                    <input [formControl]="discountControl" matInput placeholder="Customer Discount" type="text">
-                </mat-form-field>
-                <button [disabled]="discountControl.value === ''" color="primary" mat-icon-button type="submit">
-                    <mat-icon>money_off</mat-icon>
-                </button>
-            </form>
-
-            <form (ngSubmit)="addOffer(offerControl.value)">
-                <mat-form-field>
-                    <input [formControl]="offerControl" matInput placeholder="Offers" type="text">
-                </mat-form-field>
-                <button [disabled]="offerControl.value === ''" color="primary" mat-icon-button type="submit">
-                    <mat-icon>local_atm</mat-icon>
-                </button>
-            </form>
-
+            <app-input-text title="Budge" icon ="description" (action)="addBudge($event)"></app-input-text>
+            <app-input-text title="Customer Discount" icon ="money_off" (action)="addDiscount($event)"></app-input-text>
+            <app-input-text title="Offers" icon ="local_atm" (action)="addOffer($event)"></app-input-text>
         </div>
     </mat-card-content>
 </mat-card>
