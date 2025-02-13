@@ -9,11 +9,13 @@
         <input [(ngModel)]="cashierFinal.finalCard" matInput required type="number"/>
     </mat-form-field>
     <mat-form-field>
-        <input [ngModel]="((cashierState|async)?.totalVoucher)" matInput placeholder="Total vouchers" readonly
+        <mat-label>Total vouchers</mat-label>
+        <input [ngModel]="((cashierState|async)?.totalVoucher)" matInput readonly
                type="number"/>
     </mat-form-field>
     <mat-form-field>
-        <input [(ngModel)]="cashierFinal.comment" matInput placeholder="Comment" required type="text"/>
+        <mat-label>Comment</mat-label>
+        <input [(ngModel)]="cashierFinal.comment" matInput required type="text"/>
     </mat-form-field>
 </mat-dialog-content>
 <mat-dialog-actions>
