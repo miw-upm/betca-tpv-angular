@@ -10,9 +10,9 @@ import {map} from 'rxjs/operators';
 
 import {AuthService} from '@core/services/auth.service';
 import {HttpService} from '@core/services/http.service';
+import {DateComponent} from '@common/components/date.component';
+import {FooterComponent} from '@common/components/footer.component';
 import {SharedCashierService} from './shared/services/shared.cashier.service';
-import {DateComponent} from '../../common/components/date.component';
-import {FooterComponent} from '../../common/components/footer.component';
 import {CashierDialogComponent} from './cashier-opened/cashier-closure/cashier-dialog.component';
 
 @Component({

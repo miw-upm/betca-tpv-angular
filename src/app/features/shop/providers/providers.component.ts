@@ -7,12 +7,12 @@ import {MatIcon} from '@angular/material/icon';
 import {of} from 'rxjs';
 
 import {ProviderService} from './provider.service';
-import {ReadDetailDialogComponent} from '../../../common/dialogs/read-detail.dialog.component';
-import {CrudComponent} from '../../../common/components/crud.component';
+import {ReadDetailDialogComponent} from '@common/dialogs/read-detail.dialog.component';
+import {CrudComponent} from '@common/components/crud.component';
+import {FilterInputComponent} from "@common/components/filter-input.component";
 import {ProviderCreationUpdatingDialogComponent} from './provider-creation-updating-dialog.component';
 import {Provider} from './provider.model';
 import {ProviderSearch} from './provider-search.model';
-import {FilterInputComponent} from "../../../common/components/filter-input.component";
 
 @Component({
     standalone: true,

@@ -15,8 +15,7 @@ import {
 } from '@angular/material/table';
 import {MatDialog} from '@angular/material/dialog';
 import {MatCard, MatCardContent, MatCardTitle} from '@angular/material/card';
-import {MatFormField, MatLabel, MatSuffix} from '@angular/material/form-field';
-import {MatInput} from '@angular/material/input';
+import {MatSuffix} from '@angular/material/form-field';
 import {MatButton, MatIconButton} from '@angular/material/button';
 import {MatIcon} from '@angular/material/icon';
 import {MatTooltip} from '@angular/material/tooltip';
@@ -24,12 +23,12 @@ import {MatCheckbox} from '@angular/material/checkbox';
 import {Observable, of} from 'rxjs';
 
 import {ShoppingCartService} from './shopping-cart.service';
-import {NumberDialogComponent} from '../../../../common/dialogs/number-dialog.component';
+import {NumberDialogComponent} from '@common/dialogs/number-dialog.component';
+import {InputData} from "@common/components/input-data.component";
 import {CheckOutDialogComponent} from './check-out-dialog.component';
 import {SearchByBarcodeComponent} from '../../shared/components/search-by-barcode.component';
 import {Shopping} from './shopping.model';
 import {ShoppingState} from './shopping-state.model';
-import {InputData} from "../../../../common/components/input-data.component";
 
 @Component({
     standalone: true,
