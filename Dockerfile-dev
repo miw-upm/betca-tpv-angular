@@ -13,7 +13,5 @@ CMD ["npm", "run", "start"]
 # Crear y arrancar el contenedor
 #> docker run -d -p 4200:4200 --name betca-tpv-angular-app betca-tpv-angular
 
-# Arrancar el contenedor
-#> docker start betca-tpv-angular-app
 
 

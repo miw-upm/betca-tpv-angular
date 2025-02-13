@@ -1,11 +1,10 @@
 import {Component} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import {MatDialog} from '@angular/material/dialog';
-import {MatCard, MatCardContent} from '@angular/material/card';
-import {MatFormField, MatHint, MatLabel} from '@angular/material/form-field';
-import {MatInput} from '@angular/material/input';
+import {MatCard, MatCardContent, MatCardTitle} from '@angular/material/card';
+import {MatLabel} from '@angular/material/form-field';
 import {MatSlideToggle} from '@angular/material/slide-toggle';
-import {MatFabButton, MatIconButton} from '@angular/material/button';
+import {MatButton} from '@angular/material/button';
 import {MatIcon} from '@angular/material/icon';
 import {of} from 'rxjs';
 
@@ -15,11 +14,12 @@ import {CrudComponent} from '@shared/components/crud.component';
 import {ArticleCreationUpdatingDialogComponent} from './article-creation-updating-dialog.component';
 import {Article} from '../shared/models/article.model';
 import {ArticleSearch} from './article-search.model';
+import {FilterInputComponent} from "@shared/components/filter-input.component";
 
 @Component({
     standalone: true,
-    imports: [MatCard, MatCardContent, MatLabel, MatFormField, FormsModule, MatInput, MatSlideToggle, MatIconButton,
-        MatIcon, MatHint, CrudComponent, MatFabButton],
+    imports: [MatCard, MatCardContent, FormsModule, MatSlideToggle, MatIcon, CrudComponent,
+        FilterInputComponent, MatButton, MatCardTitle],
     templateUrl: 'articles.component.html'
 })
 export class ArticlesComponent {

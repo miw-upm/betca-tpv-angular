@@ -1,38 +1,24 @@
 <mat-card>
+    <mat-card-title>
+        <mat-icon>search</mat-icon>
+        Filters
+    </mat-card-title>
     <mat-card-content>
-        <mat-label><strong>Filters: </strong></mat-label>
-        <mat-form-field>
-            <mat-label>Barcode</mat-label>
-            <input [(ngModel)]="articleSearch.barcode" matInput>
-        </mat-form-field>
-        <mat-form-field>
-            <mat-label>Description</mat-label>
-            <input [(ngModel)]="articleSearch.description" matInput>
-        </mat-form-field>
-        <mat-form-field>
-            <mat-label>Reference</mat-label>
-            <input [(ngModel)]="articleSearch.reference" matInput>
-        </mat-form-field>
-        <mat-form-field>
-            <mat-label>Stock</mat-label>
-            <input [(ngModel)]="articleSearch.stock" matInput type="number">
-            <mat-hint>Less than</mat-hint>
-        </mat-form-field>
+        <app-filter-input title = "Barcode" [(value)]="articleSearch.barcode"></app-filter-input>
+        <app-filter-input title = "Description" [(value)]="articleSearch.description"></app-filter-input>
+        <app-filter-input title = "Reference" [(value)]="articleSearch.reference"></app-filter-input>
+        <app-filter-input title = "Stock" [(value)]="articleSearch.stock" type="number"></app-filter-input>
         <mat-slide-toggle [(ngModel)]="articleSearch.discontinued">Discontinued</mat-slide-toggle>
-        <button (click)="search()" mat-icon-button>
+        <button (click)="search()" mat-stroked-button>
             <mat-icon>search</mat-icon>
+            Find
         </button>
-        <button (click)="resetSearch()" mat-icon-button>
-            <mat-icon>close</mat-icon>
-        </button>
-
-
-        <button (click)="unfinished()" mat-fab extended>
+        <button (click)="unfinished()" mat-stroked-button>
             <mat-icon>search</mat-icon>
             Unfinished
         </button>
-
     </mat-card-content>
 </mat-card>
+
 <app-crud (create)="create()" (read)="read($event)" (update)="update($event)"
           [data]="articles" [deleteAction]="false" [title]="title"></app-crud>

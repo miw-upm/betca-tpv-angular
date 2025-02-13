@@ -1,25 +1,17 @@
 <mat-card>
+    <mat-card-title>
+        <mat-icon>search</mat-icon>
+        Filters
+    </mat-card-title>
     <mat-card-content>
-        <mat-label><strong>Filters: </strong></mat-label>
-        <mat-form-field>
-            <mat-label>Company</mat-label>
-            <input [(ngModel)]="providerSearch.company" matInput>
-        </mat-form-field>
-        <mat-form-field>
-            <mat-label>Phone</mat-label>
-            <input [(ngModel)]="providerSearch.phone" matInput>
-        </mat-form-field>
-        <mat-form-field>
-            <mat-label>Note</mat-label>
-            <input [(ngModel)]="providerSearch.note" matInput>
-        </mat-form-field>
-        <button (click)="search()" mat-icon-button>
+        <app-filter-input title="Company" [(value)]="providerSearch.company"></app-filter-input>
+        <app-filter-input title="Phone" [(value)]="providerSearch.phone"></app-filter-input>
+        <app-filter-input title="Note" [(value)]="providerSearch.note"></app-filter-input>
+        <button (click)="search()" mat-stroked-button>
             <mat-icon>search</mat-icon>
-        </button>
-        <button (click)="resetSearch()" mat-icon-button>
-            <mat-icon>close</mat-icon>
+            Find
         </button>
     </mat-card-content>
 </mat-card>
 <app-crud (create)="create()" (read)="read($event)" (update)="update($event)"
-          [data]="providers" [deleteAction]="false" [title]="title"></app-crud>
+          [data]="providers" [title]="title"></app-crud>

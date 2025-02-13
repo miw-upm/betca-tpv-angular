@@ -3,16 +3,14 @@
         <div class="container">
             <app-input-data title="Barcode" (action)="addBarcode($event)"></app-input-data>
             <app-search-by-barcode (add)="addBarcode($event)"></app-search-by-barcode>
-            <button color="primary" disabled="disabled" mat-icon-button>
-                <mat-icon>category</mat-icon>
-            </button>
+            <app-input-data title="Article Family" icon ="category"></app-input-data>
             <app-input-data title="Budge" icon ="description" (action)="addBudge($event)"></app-input-data>
             <app-input-data title="Customer Discount" icon ="money_off" (action)="addDiscount($event)"></app-input-data>
             <app-input-data title="Offers" icon ="local_atm" (action)="addOffer($event)"></app-input-data>
         </div>
     </mat-card-content>
 </mat-card>
-<!-------------------------------->
+<!----------------------------------------------------------------------------------------------------------->
 <mat-card>
     <mat-card-title>
         <mat-icon color="primary">shopping_cart</mat-icon>
@@ -86,4 +84,3 @@
         </button>
     </mat-card-content>
 </mat-card>
-

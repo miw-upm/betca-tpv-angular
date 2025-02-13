@@ -35,11 +35,15 @@ export class CrudComponent {
     @Input() createAction = true;
     @Input() readAction = true;
     @Input() updateAction = true;
-    @Input() deleteAction = true;
+    @Input() deleteAction = false;
+    @Input() printAction = false;
+    @Input() runAction = false;
     @Output() create = new EventEmitter<any>();
     @Output() read = new EventEmitter<any>();
     @Output() update = new EventEmitter<any>();
     @Output() delete = new EventEmitter<any>();
+    @Output() print = new EventEmitter<any>();
+    @Output() run = new EventEmitter<any>();
     dataSource: MatTableDataSource<any>;
     columns: Array<string>;
     columnsHeader: Array<string>;
@@ -76,6 +80,13 @@ export class CrudComponent {
 
     onDelete(item): void {
         this.delete.emit(item);
+    }
+
+    onPrint(item): void {
+        this.print.emit(item);
+    }
+    onRun(item): void {
+        this.run.emit(item);
     }
 
     isArray(obj: any) {

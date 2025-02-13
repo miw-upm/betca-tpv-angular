@@ -1,10 +1,8 @@
 import {Component} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import {MatDialog} from '@angular/material/dialog';
-import {MatCard, MatCardContent} from '@angular/material/card';
-import {MatFormField, MatLabel} from '@angular/material/form-field';
-import {MatInput} from '@angular/material/input';
-import {MatIconButton} from '@angular/material/button';
+import {MatCard, MatCardContent, MatCardTitle} from '@angular/material/card';
+import {MatButton} from '@angular/material/button';
 import {MatIcon} from '@angular/material/icon';
 import {of} from 'rxjs';
 
@@ -14,11 +12,12 @@ import {CrudComponent} from '@shared/components/crud.component';
 import {ProviderCreationUpdatingDialogComponent} from './provider-creation-updating-dialog.component';
 import {Provider} from './provider.model';
 import {ProviderSearch} from './provider-search.model';
+import {FilterInputComponent} from "@shared/components/filter-input.component";
 
 @Component({
     standalone: true,
-    imports: [MatCard, MatCardContent, MatFormField, MatLabel, FormsModule, MatInput, MatIconButton, MatIcon,
-        CrudComponent],
+    imports: [MatCard, MatCardContent, FormsModule, MatIcon, CrudComponent, MatCardTitle, FilterInputComponent,
+        MatButton],
     templateUrl: 'providers.component.html'
 })
 export class ProvidersComponent {
