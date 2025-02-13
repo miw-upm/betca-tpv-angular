@@ -2,15 +2,15 @@ import {Routes} from '@angular/router';
 
 import {RoleGuardService} from '@core/services/role-guard.service';
 import {Role} from '@core/models/role.model';
-import {AdviserComponent} from './home/adviser/adviser.component';
-import {ArticlesComponent} from './shop/articles/articles.component';
-import {CashierClosedComponent} from './shop/cashier-closed/cashier-closed.component';
-import {CashierOpenedComponent} from './shop/cashier-opened/cashier-opened.component';
-import {ComplaintsComponent} from './home/complaints/complaints.component';
-import {HomeComponent} from "./home/home.component";
-import {ProvidersComponent} from './shop/providers/providers.component';
-import {ShopComponent} from "./shop/shop.component";
-import {TicketsComponent} from './shop/cashier-opened/tickets/tickets.component';
+import {AdviserComponent} from './features/home/adviser/adviser.component';
+import {ArticlesComponent} from './features/shop/articles/articles.component';
+import {CashierClosedComponent} from './features/shop/cashier-closed/cashier-closed.component';
+import {CashierOpenedComponent} from './features/shop/cashier-opened/cashier-opened.component';
+import {ComplaintsComponent} from './features/home/complaints/complaints.component';
+import {HomeComponent} from "./features/home/home.component";
+import {ProvidersComponent} from './features/shop/providers/providers.component';
+import {ShopComponent} from "./features/shop/shop.component";
+import {TicketsComponent} from './features/shop/cashier-opened/tickets/tickets.component';
 
 export const routes: Routes = [
     {path: '', pathMatch: 'full', redirectTo: 'home/adviser'},

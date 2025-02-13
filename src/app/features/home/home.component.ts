@@ -11,8 +11,8 @@ import {MatBadge} from '@angular/material/badge';
 import {MatInput} from '@angular/material/input';
 
 import {AuthService} from "@core/services/auth.service";
-import {FooterComponent} from '@shared/components/footer.component';
-import {LoginDialogComponent} from "@shared/dialogs/login-dialog.component";
+import {FooterComponent} from '../../common/components/footer.component';
+import {LoginDialogComponent} from "../../common/dialogs/login-dialog.component";
 
 @Component({
     standalone: true,

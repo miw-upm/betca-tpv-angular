@@ -5,7 +5,7 @@ import {MatLabel} from '@angular/material/form-field';
 import {MatButton} from '@angular/material/button';
 import {Observable} from 'rxjs';
 
-import {UppercaseWordsPipe} from '@shared/pipes/uppercase-words.pipe';
+import {UppercaseWordsPipe} from '../pipes/uppercase-words.pipe';
 
 @Component({
     standalone: true,

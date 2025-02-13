@@ -20,7 +20,7 @@ import {MatIcon} from '@angular/material/icon';
 import {MatSort} from '@angular/material/sort';
 import {Observable} from 'rxjs';
 
-import {UppercaseWordsPipe} from '@shared/pipes/uppercase-words.pipe';
+import {UppercaseWordsPipe} from '../pipes/uppercase-words.pipe';
 
 @Component({
     standalone: true,

@@ -6,8 +6,8 @@ import {of} from 'rxjs';
 
 import {ComplaintService} from './complaint.service';
 import {ComplaintCreationDialogComponent} from './complaint-creation-dialog.component';
-import {ReadDetailDialogComponent} from '@shared/dialogs/read-detail.dialog.component';
-import {CrudComponent} from '@shared/components/crud.component';
+import {ReadDetailDialogComponent} from '../../../common/dialogs/read-detail.dialog.component';
+import {CrudComponent} from '../../../common/components/crud.component';
 import {Complaint} from './complaint.model';
 import {MatIconButton} from "@angular/material/button";
 

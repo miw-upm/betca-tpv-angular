@@ -24,12 +24,12 @@ import {MatCheckbox} from '@angular/material/checkbox';
 import {Observable, of} from 'rxjs';
 
 import {ShoppingCartService} from './shopping-cart.service';
-import {NumberDialogComponent} from '@shared/dialogs/number-dialog.component';
+import {NumberDialogComponent} from '../../../../common/dialogs/number-dialog.component';
 import {CheckOutDialogComponent} from './check-out-dialog.component';
 import {SearchByBarcodeComponent} from '../../shared/components/search-by-barcode.component';
 import {Shopping} from './shopping.model';
 import {ShoppingState} from './shopping-state.model';
-import {InputData} from "@shared/components/input-data.component";
+import {InputData} from "../../../../common/components/input-data.component";
 
 @Component({
     standalone: true,
