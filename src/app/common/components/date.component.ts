@@ -1,7 +1,7 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import {ChangeDetectionStrategy, Component} from '@angular/core';
 import {AsyncPipe, DatePipe, NgIf} from '@angular/common';
-import { timer, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import {Observable, timer} from 'rxjs';
+import {map} from 'rxjs/operators';
 
 @Component({
     standalone: true,

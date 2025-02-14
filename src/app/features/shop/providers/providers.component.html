@@ -4,9 +4,9 @@
         Filters
     </mat-card-title>
     <mat-card-content>
-        <app-filter-input title="Company" [(value)]="providerSearch.company"></app-filter-input>
-        <app-filter-input title="Phone" [(value)]="providerSearch.phone"></app-filter-input>
-        <app-filter-input title="Note" [(value)]="providerSearch.note"></app-filter-input>
+        <app-filter-input [(value)]="providerSearch.company" title="Company"></app-filter-input>
+        <app-filter-input [(value)]="providerSearch.phone" title="Phone"></app-filter-input>
+        <app-filter-input [(value)]="providerSearch.note" title="Note"></app-filter-input>
         <button (click)="search()" mat-stroked-button>
             <mat-icon>search</mat-icon>
             Find

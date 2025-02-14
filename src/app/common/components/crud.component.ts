@@ -85,6 +85,7 @@ export class CrudComponent {
     onPrint(item): void {
         this.print.emit(item);
     }
+
     onRun(item): void {
         this.run.emit(item);
     }

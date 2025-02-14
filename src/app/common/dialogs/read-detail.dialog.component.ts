@@ -1,6 +1,12 @@
 import {Component, Inject} from '@angular/core';
 import {AsyncPipe, NgIf} from '@angular/common';
-import {MAT_DIALOG_DATA, MatDialogActions, MatDialogClose, MatDialogContent, MatDialogTitle } from '@angular/material/dialog';
+import {
+    MAT_DIALOG_DATA,
+    MatDialogActions,
+    MatDialogClose,
+    MatDialogContent,
+    MatDialogTitle
+} from '@angular/material/dialog';
 import {MatLabel} from '@angular/material/form-field';
 import {MatButton} from '@angular/material/button';
 import {Observable} from 'rxjs';

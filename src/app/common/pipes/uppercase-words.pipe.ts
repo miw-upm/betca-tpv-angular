@@ -1,6 +1,6 @@
-import { Pipe, PipeTransform } from '@angular/core';
+import {Pipe, PipeTransform} from '@angular/core';
 
-@Pipe({ name: 'uppercaseWords' })
+@Pipe({name: 'uppercaseWords'})
 export class UppercaseWordsPipe implements PipeTransform {
     transform(value: string | null | undefined): string {
         if (!value) return ''; // Maneja valores nulos o indefinidos

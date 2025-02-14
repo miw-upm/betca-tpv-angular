@@ -1,7 +1,7 @@
 <mat-form-field appearance="outline">
-    <mat-label>{{title}}</mat-label>
-    <input [(ngModel)]="value" [type]="type" (ngModelChange)="valueChange.emit($event)" matInput>
-    <button [disabled]="!value" (click)="clearModel()" mat-icon-button matSuffix>
+    <mat-label>{{ title }}</mat-label>
+    <input (ngModelChange)="valueChange.emit($event)" [(ngModel)]="value" [type]="type" matInput>
+    <button (click)="clearModel()" [disabled]="!value" mat-icon-button matSuffix>
         <mat-icon>delete</mat-icon>
     </button>
 </mat-form-field>

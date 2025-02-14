@@ -4,10 +4,10 @@
         Filters
     </mat-card-title>
     <mat-card-content>
-        <app-filter-input title = "Barcode" [(value)]="articleSearch.barcode"></app-filter-input>
-        <app-filter-input title = "Description" [(value)]="articleSearch.description"></app-filter-input>
-        <app-filter-input title = "Reference" [(value)]="articleSearch.reference"></app-filter-input>
-        <app-filter-input title = "Stock" [(value)]="articleSearch.stock" type="number"></app-filter-input>
+        <app-filter-input [(value)]="articleSearch.barcode" title="Barcode"></app-filter-input>
+        <app-filter-input [(value)]="articleSearch.description" title="Description"></app-filter-input>
+        <app-filter-input [(value)]="articleSearch.reference" title="Reference"></app-filter-input>
+        <app-filter-input [(value)]="articleSearch.stock" title="Stock Less than" type="number"></app-filter-input>
         <mat-slide-toggle [(ngModel)]="articleSearch.discontinued">Discontinued</mat-slide-toggle>
         <button (click)="search()" mat-stroked-button>
             <mat-icon>search</mat-icon>
