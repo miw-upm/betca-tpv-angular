@@ -6,7 +6,7 @@ import {AdviserComponent} from './features/home/adviser/adviser.component';
 import {ArticlesComponent} from './features/shop/articles/articles.component';
 import {CashierClosedComponent} from './features/shop/cashier-closed/cashier-closed.component';
 import {CashierOpenedComponent} from './features/shop/cashier-opened/cashier-opened.component';
-import {ComplaintsComponent} from './features/home/complaints/complaints.component';
+import {ComplaintsComponent} from './features/home/complaints-home/complaints.component';
 import {HomeComponent} from "./features/home/home.component";
 import {ProvidersComponent} from './features/shop/providers/providers.component';
 import {ShopComponent} from "./features/shop/shop.component";

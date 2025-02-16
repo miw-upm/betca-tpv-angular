@@ -31,7 +31,17 @@ export class ComplaintsComponent {
     }
 
     searchAll(): void {
-        this.complaints = this.complaintService.searchAll();
+        //this.complaints-home = this.complaintService.searchAll();
+        this.complaints = of([{id:"1",registrationDate:"14/02/2024",mobile: 722255454
+            , barcode: 434533, description: "Queja San Valentín", state: "finalizado",
+            reply: ""},
+            {id:"2",registrationDate:"01/02/2024",mobile: 652542525
+                , barcode: 434531, description: "Queja Febrero", state: false,
+                reply: ""},
+            {id:"3",registrationDate:"07/02/2024",mobile: 555555555
+                , barcode: 434553, description: "Queja tienda", state: false,
+                reply: ""},
+        ]);
     }
 
     read(complaint: Complaint): void {

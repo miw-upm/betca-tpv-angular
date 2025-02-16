@@ -14,22 +14,22 @@ export class ComplaintService {
 
     create(complaint: Complaint): Observable<Complaint> {
         return this.httpService
-            .post(EndPoints.COMPLAINTS, complaint);
+            .post(EndPoints.COMPLAINTS_HOME, complaint);
     }
 
     searchAll(): Observable<Complaint[]> {
         return this.httpService
-            .get(EndPoints.COMPLAINTS + ComplaintService.SEARCH);
+            .get(EndPoints.COMPLAINTS_HOME + ComplaintService.SEARCH);
     }
 
     read(id: string): Observable<Complaint> {
         return this.httpService
-            .get(EndPoints.COMPLAINTS + '/' + id);
+            .get(EndPoints.COMPLAINTS_HOME + '/' + id);
     }
 
     delete(id: string): Observable<void> {
         return this.httpService
-            .delete(EndPoints.COMPLAINTS + '/' + id);
+            .delete(EndPoints.COMPLAINTS_HOME + '/' + id);
     }
 
 }
