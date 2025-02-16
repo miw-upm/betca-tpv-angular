@@ -6,8 +6,8 @@ import {MatInput} from '@angular/material/input';
 import {MatButton} from '@angular/material/button';
 
 import {AuthService} from '@core/services/auth.service';
-import {ComplaintService} from './complaint.service';
-import {Complaint} from './complaint.model';
+import {ComplaintService} from '../../shared/services/complaint.service';
+import {Complaint} from '../../shared/models/complaint.model';
 
 @Component({
     standalone: true,

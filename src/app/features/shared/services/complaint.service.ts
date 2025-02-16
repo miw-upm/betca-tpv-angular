@@ -3,7 +3,7 @@ import {Observable} from 'rxjs';
 
 import {HttpService} from '@core/services/http.service';
 import {EndPoints} from '@core/end-points';
-import {Complaint} from './complaint.model';
+import {Complaint} from '../models/complaint.model';
 
 @Injectable({providedIn: 'root'})
 export class ComplaintService {
