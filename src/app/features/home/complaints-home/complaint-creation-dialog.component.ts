@@ -6,8 +6,9 @@ import {MatInput} from '@angular/material/input';
 import {MatButton} from '@angular/material/button';
 
 import {AuthService} from '@core/services/auth.service';
-import {ComplaintService} from '../../shared/services/complaint.service';
+
 import {Complaint} from '../../shared/models/complaint.model';
+import {ComplaintHomeService} from "./complaint-home.service";
 
 @Component({
     standalone: true,
@@ -20,14 +21,15 @@ import {Complaint} from '../../shared/models/complaint.model';
 export class ComplaintCreationDialogComponent {
     complaint: Complaint;
 
-    constructor(private readonly complaintService: ComplaintService, private readonly dialog: MatDialog, private readonly authService: AuthService) {
+    constructor(private readonly complaintHomeService: ComplaintHomeService, private readonly dialog: MatDialog, private readonly authService: AuthService) {
         this.complaint = {barcode: undefined, description: undefined};
     }
 
     create(): void {
-        this.complaintService
+        /*this.complaintHomeService
             .create(this.complaint)
             .subscribe(() => this.dialog.closeAll());
+         */
     }
 
     invalid(): boolean {

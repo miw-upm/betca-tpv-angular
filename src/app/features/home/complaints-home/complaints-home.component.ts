@@ -10,17 +10,18 @@ import {ReadDetailDialogComponent} from '../../../common/dialogs/read-detail.dia
 import {CrudComponent} from '../../../common/components/crud.component';
 import {Complaint} from '../../shared/models/complaint.model';
 import {MatIconButton} from "@angular/material/button";
+import {ComplaintHomeService} from "./complaint-home.service";
 
 @Component({
     standalone: true,
     imports: [MatCard, MatIcon, CrudComponent, MatCardContent, MatIconButton],
-    templateUrl: 'complaints.component.html'
+    templateUrl: 'complaints-home.component.html'
 })
-export class ComplaintsComponent {
+export class ComplaintsHomeComponent {
     title = 'Complaints management';
     complaints = of([]);
 
-    constructor(private readonly dialog: MatDialog, private readonly complaintService: ComplaintService) {
+    constructor(private readonly dialog: MatDialog, private readonly complaintHomeService: ComplaintHomeService) {
     }
 
     create(): void {
@@ -31,7 +32,7 @@ export class ComplaintsComponent {
     }
 
     searchAll(): void {
-        //this.complaints-home = this.complaintService.searchAll();
+        //this.complaints = this.complaintService.searchAll();
         this.complaints = of([{id:"1",registrationDate:"14/02/2024",mobile: 722255454
             , barcode: 434533, description: "Queja San Valentín", state: "finalizado",
             reply: ""},
@@ -45,16 +46,24 @@ export class ComplaintsComponent {
     }
 
     read(complaint: Complaint): void {
-        this.dialog.open(ReadDetailDialogComponent, {
+        /*this.dialog.open(ReadDetailDialogComponent, {
             data: {
                 title: 'Complaint Details',
                 object: this.complaintService.read(complaint.id)
+            }
+        });*/
+        this.dialog.open(ReadDetailDialogComponent, {
+            data: {
+                title: 'Complaint Details',
+                object: of({id:"1",registrationDate:"14/02/2024",mobile: 722255454
+                    , barcode: 434533, description: "Queja San Valentín", state: "finalizado",
+                    reply: ""})
             }
         });
     }
 
     delete(complaint: Complaint): void {
-        this.complaintService
+        this.complaintHomeService
             .delete(complaint.id)
             .subscribe(() => this.searchAll());
     }

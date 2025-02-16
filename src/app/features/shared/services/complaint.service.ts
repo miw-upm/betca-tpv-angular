@@ -12,11 +12,6 @@ export class ComplaintService {
     constructor(private readonly httpService: HttpService) {
     }
 
-    create(complaint: Complaint): Observable<Complaint> {
-        return this.httpService
-            .post(EndPoints.COMPLAINTS, complaint);
-    }
-
     searchAll(): Observable<Complaint[]> {
         return this.httpService
             .get(EndPoints.COMPLAINTS + ComplaintService.SEARCH);
@@ -25,11 +20,6 @@ export class ComplaintService {
     read(id: string): Observable<Complaint> {
         return this.httpService
             .get(EndPoints.COMPLAINTS + '/' + id);
-    }
-
-    delete(id: string): Observable<void> {
-        return this.httpService
-            .delete(EndPoints.COMPLAINTS + '/' + id);
     }
 
 }
