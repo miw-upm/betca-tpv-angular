@@ -22,4 +22,8 @@ export class ComplaintService {
             .get(EndPoints.COMPLAINTS + '/' + id);
     }
 
+    delete(id: string): Observable<void> {
+        return this.httpService
+            .delete(EndPoints.COMPLAINTS + '/' + id);
+    }
 }

@@ -7,19 +7,9 @@ import {Complaint} from '../../shared/models/complaint.model';
 import {ComplaintService} from "../../shared/services/complaint.service";
 
 @Injectable({providedIn: 'root'})
-export class ComplaintHomeService {
+export class ComplaintShopService {
 
     constructor(private readonly httpService: HttpService,private readonly complaintService: ComplaintService) {
-    }
-
-    create(complaint: Complaint): Observable<Complaint> {
-        return this.httpService
-            .post(EndPoints.COMPLAINTS, complaint);
-    }
-
-    delete(id: string): Observable<void> {
-        return this.httpService
-            .delete(EndPoints.COMPLAINTS + '/' + id);
     }
 
     searchAll(): Observable<Complaint[]> {
