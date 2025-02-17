@@ -10,6 +10,7 @@ import {CrudComponent} from '../../../common/components/crud.component';
 import {Complaint} from '../../shared/models/complaint.model';
 import {MatIconButton} from "@angular/material/button";
 import {ComplaintShopService} from "./complaint-shop.service";
+import {CancelYesDialogComponent} from "@common/dialogs/cancel-yes-dialog.component";
 
 @Component({
     standalone: true,
