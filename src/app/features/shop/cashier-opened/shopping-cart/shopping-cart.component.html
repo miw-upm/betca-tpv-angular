@@ -7,6 +7,7 @@
             <app-input-data (action)="addBudge($event)" icon="description" title="Budge"></app-input-data>
             <app-input-data (action)="addDiscount($event)" icon="money_off" title="Customer Discount"></app-input-data>
             <app-input-data (action)="addOffer($event)" icon="local_atm" title="Offers"></app-input-data>
+            <app-input-data (action)="addPoints($event)" icon="star" title="Use Points"></app-input-data>
         </div>
     </mat-card-content>
 </mat-card>
@@ -14,7 +15,7 @@
 <mat-card>
     <mat-card-title>
         <mat-icon color="primary">shopping_cart</mat-icon>
-        Shopping Cart {{ totalShoppingCart| currency:'EUR':'symbol' }}
+        Shopping Cart {{totalShoppingCart | currency:'EUR':'symbol'}}
     </mat-card-title>
     <mat-card-content>
         <mat-table [dataSource]="shoppingCart" class="mat-elevation-z8">
@@ -33,11 +34,11 @@
             <ng-container matColumnDef="amount">
                 <mat-header-cell *matHeaderCellDef> Nº</mat-header-cell>
                 <mat-cell *matCellDef="let item">
-                    <button (click)="decreaseAmount(item)" color="accent" mat-icon-button>
+                    <button (click)="decreaseAmount(item)" color="accent" mat-icon-button [disabled]="item.barcode === discountBarcode">
                         <mat-icon>remove_circle_outline</mat-icon>
                     </button>
                     {{ item.amount }}
-                    <button (click)="incrementAmount(item)" color="accent" mat-icon-button>
+                    <button (click)="incrementAmount(item)" color="accent" mat-icon-button [disabled]="item.barcode === discountBarcode">
                         <mat-icon>add_circle_outline</mat-icon>
                     </button>
                 </mat-cell>

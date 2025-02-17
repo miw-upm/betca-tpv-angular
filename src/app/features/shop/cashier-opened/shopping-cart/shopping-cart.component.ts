@@ -30,6 +30,9 @@ import {SearchByBarcodeComponent} from '../../shared/components/search-by-barcod
 import {Shopping} from './shopping.model';
 import {ShoppingState} from './shopping-state.model';
 
+import {CustomerPointsService} from './customer-points.service';
+import {CustomerPointsConstants} from "./customer-points.model";
+
 @Component({
     standalone: true,
     imports: [MatCard, MatCardContent, MatIconButton, MatIcon, SearchByBarcodeComponent,
@@ -54,10 +57,18 @@ export class ShoppingCartComponent implements OnInit {
     budgeControl = new FormControl('');
     discountControl = new FormControl('');
     offerControl = new FormControl('');
+    canUsePoints: boolean = false;
+
+    public discountBarcode = CustomerPointsConstants.DISCOUNT_POINTS_BARCODE;
+
     private shoppingCartList: Array<Array<Shopping>> = [];
     @ViewChild('code', {static: true}) private readonly elementRef: ElementRef;
 
-    constructor(private readonly dialog: MatDialog, private readonly shoppingCartService: ShoppingCartService) {
+    constructor(
+        private readonly dialog: MatDialog,
+        private readonly shoppingCartService: ShoppingCartService,
+        private readonly customerPointsService: CustomerPointsService
+    ) {
         for (let i = 0; i < ShoppingCartComponent.SHOPPING_CART_NUM; i++) {
             this.shoppingCartList.push([]);
         }
@@ -67,6 +78,9 @@ export class ShoppingCartComponent implements OnInit {
     ngOnInit(): void {
         this.shoppingCart = [];
         this.synchronizeShoppingCart();
+        this.customerPointsService.customerHasPoints().subscribe(hasPoints => {
+            this.canUsePoints = hasPoints;
+        });
     }
 
     synchronizeShoppingCart(): void {
@@ -179,6 +193,10 @@ export class ShoppingCartComponent implements OnInit {
         this.dialog.open(CheckOutDialogComponent, {data: this.shoppingCart}).afterClosed().subscribe(
             result => {
                 if (result) {
+                    this.customerPointsService.refreshCustomerPoints();
+                    this.customerPointsService.customerHasPoints().subscribe(hasPoints => {
+                        this.canUsePoints = hasPoints;
+                    });
                     this.ngOnInit();
                 }
             }
@@ -202,6 +220,32 @@ export class ShoppingCartComponent implements OnInit {
     addOffer(offer): void {
         this.offerControl.reset();
         // TODO add offer
+    }
+
+    addPoints(pointsInput: string): void {
+        let pointsToUse = Number(pointsInput);
+        const availablePoints = this.customerPointsService.getCurrentPoints().value;
+
+        if (isNaN(pointsToUse)) {
+            return;
+        }
+        if (pointsToUse < 0) {
+            pointsToUse = 0;
+        }
+        if (pointsToUse > availablePoints) {
+            pointsToUse = availablePoints;
+        }
+
+        this.shoppingCart = this.shoppingCart.filter(item => item.barcode !== CustomerPointsConstants.DISCOUNT_POINTS_BARCODE);
+
+        if (pointsToUse > 0) {
+            this.customerPointsService.getPointDiscountShopping(pointsToUse).subscribe(discountShopping => {
+                this.shoppingCart.push(discountShopping);
+                this.synchronizeShoppingCart();
+            });
+        } else {
+            this.synchronizeShoppingCart();
+        }
     }
 
 }
