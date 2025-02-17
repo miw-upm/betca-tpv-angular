@@ -20,6 +20,9 @@ export class ComplaintShopService {
         return this.complaintService.read(id);
     }
 
+    update(complaint:Complaint): Observable<Complaint> {
+        return this.complaintService.update(complaint);
+    }
     delete(id: string): Observable<void> {
         return this.complaintService.delete(id);
     }

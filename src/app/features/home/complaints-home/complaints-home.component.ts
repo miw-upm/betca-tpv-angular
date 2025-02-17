@@ -63,6 +63,7 @@ export class ComplaintsHomeComponent {
     }
 
     delete(complaint: Complaint): void {
+
         this.complaintHomeService
             .delete(complaint.id)
             .subscribe(() => this.searchAll());

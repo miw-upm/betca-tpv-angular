@@ -26,10 +26,10 @@ export class ComplaintCreationDialogComponent {
     }
 
     create(): void {
+        this.dialog.closeAll();
         /*this.complaintHomeService
             .create(this.complaint)
-            .subscribe(() => this.dialog.closeAll());
-         */
+            .subscribe(() => this.dialog.closeAll());*/
     }
 
     invalid(): boolean {

@@ -17,11 +17,6 @@ export class ComplaintHomeService {
             .post(EndPoints.COMPLAINTS, complaint);
     }
 
-    delete(id: string): Observable<void> {
-        return this.httpService
-            .delete(EndPoints.COMPLAINTS + '/' + id);
-    }
-
     searchAll(): Observable<Complaint[]> {
         return this.complaintService.searchAll();
     }
@@ -30,6 +25,9 @@ export class ComplaintHomeService {
         return this.complaintService.read(id);
     }
 
+    update(complaint:Complaint): Observable<Complaint> {
+        return this.complaintService.update(complaint);
+    }
     delete(id: string): Observable<void> {
         return this.complaintService.delete(id);
     }
