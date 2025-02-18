@@ -22,6 +22,7 @@ export class ComplaintsShopComponent {
     complaints = of([]);
 
     constructor(private readonly dialog: MatDialog, private readonly complaintShopService: ComplaintShopService) {
+        this.searchAll();
     }
 
     searchAll(): void {

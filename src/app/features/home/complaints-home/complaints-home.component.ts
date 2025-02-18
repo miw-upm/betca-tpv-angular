@@ -22,6 +22,7 @@ export class ComplaintsHomeComponent {
     complaints = of([]);
 
     constructor(private readonly dialog: MatDialog, private readonly complaintHomeService: ComplaintHomeService) {
+        this.searchAll();
     }
 
     create(): void {
