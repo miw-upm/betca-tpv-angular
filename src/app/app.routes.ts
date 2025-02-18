@@ -11,6 +11,7 @@ import {HomeComponent} from "./features/home/home.component";
 import {ProvidersComponent} from './features/shop/providers/providers.component';
 import {ShopComponent} from "./features/shop/shop.component";
 import {TicketsComponent} from './features/shop/cashier-opened/tickets/tickets.component';
+import {OffersComponent} from "./features/shop/offers/offers.component";
 
 export const routes: Routes = [
     {path: '', pathMatch: 'full', redirectTo: 'home/adviser'},
@@ -32,6 +33,7 @@ export const routes: Routes = [
         data: {roles: [Role.ADMIN, Role.MANAGER, Role.OPERATOR]},
         children: [ // or path: 'shop/articles'
             {path: 'articles', component: ArticlesComponent},
+            {path: 'offers', component: OffersComponent},
             {path: 'cashier-closed', component: CashierClosedComponent},
             {path: 'cashier-opened', component: CashierOpenedComponent},
             {path: 'providers', component: ProvidersComponent},
