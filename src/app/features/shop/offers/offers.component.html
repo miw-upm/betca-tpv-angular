@@ -1,0 +1,20 @@
+<mat-card>
+    <mat-card-title>
+        <mat-icon>search</mat-icon>
+        Filters
+    </mat-card-title>
+    <mat-card-content>
+        <app-filter-input [(value)]="offerSearch.reference" title="Reference"></app-filter-input>
+        <app-filter-input [(value)]="offerSearch.description" title="Description"></app-filter-input>
+        <app-filter-input [(value)]="offerSearch.creationDate" title="Creation Date" type="date"></app-filter-input>
+        <app-filter-input [(value)]="offerSearch.expiryDate" title="Expiry Date" type="date"></app-filter-input>
+        <app-filter-input [(value)]="offerSearch.discount" title="Discount" type="number"></app-filter-input>
+        <button (click)="search()" mat-stroked-button>
+            <mat-icon>search</mat-icon>
+            Find
+        </button>
+    </mat-card-content>
+</mat-card>
+
+<app-crud (create)="create()" (read)="read($event)" (update)="update($event)" (print)="print($event)"
+          [data]="offers" [deleteAction]="false" [title]="title"></app-crud>
