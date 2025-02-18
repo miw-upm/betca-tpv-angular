@@ -12,6 +12,9 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22.13.1
+      - name: Clear cache
+        run: |
+          rm -rf ~/.cache
       - name: Install dependencies
         run: npm ci
       - name: Build Angular App
