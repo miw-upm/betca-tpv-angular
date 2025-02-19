@@ -1,0 +1,8 @@
+<app-crud
+  (create)="onCreate()"
+  (read)="onRead($event)"
+  (update)="onUpdate($event)"
+  [data]="budgets$"
+  [deleteAction]="false"
+  [title]="'Budgets management'"
+></app-crud>
