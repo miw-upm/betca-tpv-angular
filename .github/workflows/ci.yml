@@ -7,11 +7,11 @@ jobs:
   ci:
     runs-on: ubuntu-22.04
     steps:
-      - uses: actions/checkout@v4
-        with: {fetch-depth: 0}
       - uses: actions/setup-node@v4
         with:
           node-version: 22.13.1
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
       - name: Install dependencies
         run: npm ci
       - name: Build Angular App
@@ -28,7 +28,7 @@ jobs:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
       - name: SonarCloud Scan
         if: success()
-        uses: SonarSource/sonarcloud-github-action@master # file: sonar-project.properties
+        uses: SonarSource/sonarcloud-github-action@v2 # file: sonar-project.properties
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}

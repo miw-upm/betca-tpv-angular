@@ -17,6 +17,7 @@ import {MatInput} from '@angular/material/input';
 import {MatButton, MatIconButton} from '@angular/material/button';
 import {FormsModule} from '@angular/forms';
 import {MatCheckbox} from '@angular/material/checkbox';
+import {CustomerPointsConstants} from "./customer-points.model";
 
 @Component({
     standalone: true,
@@ -154,6 +155,10 @@ export class CheckOutDialogComponent {
     }
 
     pay(): any {
+        this.ticketCreation.shoppingList = this.ticketCreation.shoppingList.filter(
+            item => item.barcode !== CustomerPointsConstants.DISCOUNT_POINTS_BARCODE
+        );
+
         const returned = this.returnedAmount();
         const cash = this.ticketCreation.cash;
         let voucher = 0;
