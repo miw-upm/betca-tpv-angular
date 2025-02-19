@@ -15,6 +15,7 @@ import {MatSlideToggle} from '@angular/material/slide-toggle';
 import {MatButton} from '@angular/material/button';
 import {MatInput} from '@angular/material/input';
 import {MatDatepickerInput, MatDatepickerModule, MatDatepickerToggle} from '@angular/material/datepicker';
+import {provideNativeDateAdapter} from '@angular/material/core';
 import {Observable, of} from 'rxjs';
 
 import {OrderService} from './orders.service';
@@ -24,6 +25,7 @@ import {OrderLine} from '../shared/models/order-line.model';
 import {SharedProviderService} from '../shared/services/shared.provider.service';
 @Component({
     standalone: true,
+    providers: [provideNativeDateAdapter()],
     imports: [MatDialogTitle, MatDialogContent, MatFormField, FormsModule, MatLabel, MatHint, MatInput, MatSelect,
         MatOption, MatSlideToggle, SearchByCompanyComponent, NgIf, MatDialogActions, MatDialogClose, MatButton,
         NgForOf, MatDatepickerModule, MatDatepickerInput, MatDatepickerToggle],
@@ -48,6 +50,7 @@ export class OrdersCreationUpdatingDialogComponent {
             closingDate: undefined, orderLines: []
         };
         this.oldReference = data ? data.reference : undefined;
+
         if(data) {
             this.onCompanyChange();
         }

@@ -7,11 +7,12 @@
     <mat-form-field class="full-width">
         <mat-label>Description</mat-label>
         <input [(ngModel)]="order.description" matInput required type="text"/>
-    </mat-form-field>
+    </mat-form-field> 
     <mat-form-field class="full-width" *ngIf="!isCreate()">
         <mat-label>Opening Date</mat-label>
-        <input [(ngModel)]="order.openingDate" matInput [matDatepicker]="picker" required>
-        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <input [(ngModel)]="order.openingDate" matInput [matDatepicker]="picker">
+        <mat-hint>MM/DD/YYYY</mat-hint>
+        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
     </mat-form-field>
     <app-search-by-company [(company)]="order.providerCompany" (companyChange)="onCompanyChange()" class="full-width"></app-search-by-company>
