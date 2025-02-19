@@ -1,72 +1,85 @@
-<mat-toolbar color="primary">
+<div>
+  <mat-toolbar color="primary">
     <div>
-        <mat-form-field appearance="fill" hideRequiredMarker="true">
-            <mat-label>Description</mat-label>
-            <input #code matInput placeholder="" required>
-        </mat-form-field>
-        <button (click)="search(code.value)" mat-icon-button>
-            <mat-icon>pageview</mat-icon>
-        </button>
+      <mat-form-field appearance="fill" hideRequiredMarker="true">
+        <mat-label>Description</mat-label>
+        <input #code matInput placeholder="" required />
+      </mat-form-field>
+      <button (click)="search(code.value)" mat-icon-button>
+        <mat-icon>pageview</mat-icon>
+      </button>
     </div>
-    <img alt="miw" height="32" ngSrc="../../../assets/miw.png" width="69"/>
+    <img alt="miw" height="32" ngSrc="../../../assets/miw.png" width="69" />
     <button mat-button routerLink="/home/adviser">
-        <span>TPV</span>
+      <span>TPV</span>
     </button>
     <div>
-        <button (click)="login()" *ngIf="!isAuthenticated()" mat-button>
-            <mat-icon>person_outline</mat-icon>
-            <span>Login</span>
-        </button>
-        <button (click)="logout()" *ngIf="isAuthenticated()" mat-button>
-            <span>{{ username }}</span>
-            <mat-icon>person_outline</mat-icon>
-            <span>Logout</span>
-        </button>
-        <button *ngIf="isAuthenticated()" [matMenuTriggerFor]="profile" mat-button>
-            <mat-icon>account_box</mat-icon>
-            <span>Profile</span>
-        </button>
-        <button (click)="cart()" mat-button>
-            <mat-icon [matBadge]="cartItemCount" matBadgeColor="accent" matBadgeOverlap="false" matBadgeSize="medium">
-                shopping_cart
-            </mat-icon>
-        </button>
+      <button (click)="login()" *ngIf="!isAuthenticated()" mat-button>
+        <mat-icon>person_outline</mat-icon>
+        <span>Login</span>
+      </button>
+      <button (click)="logout()" *ngIf="isAuthenticated()" mat-button>
+        <span>{{ username }}</span>
+        <mat-icon>person_outline</mat-icon>
+        <span>Logout</span>
+      </button>
+      <button
+        *ngIf="isAuthenticated()"
+        [matMenuTriggerFor]="profile"
+        mat-button
+      >
+        <mat-icon>account_box</mat-icon>
+        <span>Profile</span>
+      </button>
+      <button (click)="cart()" mat-button>
+        <mat-icon
+          [matBadge]="cartItemCount"
+          matBadgeColor="accent"
+          matBadgeOverlap="false"
+          matBadgeSize="medium"
+        >
+          shopping_cart
+        </mat-icon>
+      </button>
     </div>
-</mat-toolbar>
-<mat-menu #profile="matMenu" xPosition="before">
+  </mat-toolbar>
+  <mat-menu #profile="matMenu" xPosition="before">
     <button mat-menu-item>
-        <mat-icon>settings</mat-icon>
-        <span>Settings</span>
+      <mat-icon>settings</mat-icon>
+      <span>Settings</span>
     </button>
     <button mat-menu-item>
-        <mat-icon>grade</mat-icon>
-        <span>Reviews</span>
+      <mat-icon>grade</mat-icon>
+      <span>Reviews</span>
     </button>
     <button mat-menu-item>
-        <mat-icon>shopping_basket</mat-icon>
-        <span>Online Orders</span>
+      <mat-icon>shopping_basket</mat-icon>
+      <span>Online Orders</span>
     </button>
     <button mat-menu-item>
-        <mat-icon>money_off</mat-icon>
-        <span>Refunds</span>
+      <mat-icon>money_off</mat-icon>
+      <span>Refunds</span>
     </button>
     <button mat-menu-item routerLink="/home/complaints">
-        <mat-icon>sentiment_very_dissatisfied</mat-icon>
-        <span>Complaints</span>
+      <mat-icon>sentiment_very_dissatisfied</mat-icon>
+      <span>Complaints</span>
     </button>
     <button mat-menu-item>
-        <mat-icon>build</mat-icon>
-        <span>Technical Support</span>
+      <mat-icon>build</mat-icon>
+      <span>Technical Support</span>
     </button>
-</mat-menu>
-<mat-toolbar class="center">
+  </mat-menu>
+  <mat-toolbar class="center">
     <button [matMenuTriggerFor]="adviser" mat-button>Adviser</button>
     <mat-menu #adviser="matMenu">
-        <button mat-menu-item>Sale</button>
-        <button mat-menu-item>Popular</button>
-        <button mat-menu-item>New</button>
+      <button mat-menu-item>Sale</button>
+      <button mat-menu-item>Popular</button>
+      <button mat-menu-item>New</button>
     </mat-menu>
     <button mat-button>Top 5</button>
-</mat-toolbar>
-<router-outlet></router-outlet>
+  </mat-toolbar>
+</div>
+<div>
+  <router-outlet></router-outlet>
+</div>
 <app-footer></app-footer>
