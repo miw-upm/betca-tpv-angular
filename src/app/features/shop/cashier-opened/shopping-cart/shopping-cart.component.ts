@@ -1,6 +1,7 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {CurrencyPipe} from '@angular/common';
 import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {CustomerPointsService} from './customer-points/customer-points.service';
 import {
     MatCell,
     MatCellDef,
@@ -29,9 +30,7 @@ import {CheckOutDialogComponent} from './check-out-dialog.component';
 import {SearchByBarcodeComponent} from '../../shared/components/search-by-barcode.component';
 import {Shopping} from './shopping.model';
 import {ShoppingState} from './shopping-state.model';
-
-import {CustomerPointsService} from './customer-points.service';
-import {CustomerPointsConstants} from "./customer-points.model";
+import {CustomerPointsConstants} from "./customer-points/customer-points.model";
 
 @Component({
     standalone: true,
@@ -193,10 +192,6 @@ export class ShoppingCartComponent implements OnInit {
         this.dialog.open(CheckOutDialogComponent, {data: this.shoppingCart}).afterClosed().subscribe(
             result => {
                 if (result) {
-                    this.customerPointsService.refreshCustomerPoints();
-                    this.customerPointsService.customerHasPoints().subscribe(hasPoints => {
-                        this.canUsePoints = hasPoints;
-                    });
                     this.ngOnInit();
                 }
             }
@@ -224,21 +219,35 @@ export class ShoppingCartComponent implements OnInit {
 
     addPoints(pointsInput: string): void {
         let pointsToUse = Number(pointsInput);
-        const availablePoints = this.customerPointsService.getCurrentPoints().value;
 
         if (isNaN(pointsToUse)) {
             return;
         }
+
         if (pointsToUse < 0) {
             pointsToUse = 0;
-        }
-        if (pointsToUse > availablePoints) {
-            pointsToUse = availablePoints;
         }
 
         this.shoppingCart = this.shoppingCart.filter(item => item.barcode !== CustomerPointsConstants.DISCOUNT_POINTS_BARCODE);
 
         if (pointsToUse > 0) {
+            if (pointsToUse < CustomerPointsConstants.MINIMUM_POINTS_TO_REDEEM) {
+                console.error("No minimum points reached.");
+                return;
+            }
+
+            let purchaseTotal = 0;
+            for (const item of this.shoppingCart) {
+                if (item.barcode !== CustomerPointsConstants.DISCOUNT_POINTS_BARCODE) {
+                    purchaseTotal += item.total;
+                }
+            }
+            purchaseTotal = Math.round(purchaseTotal * 100) / 100;
+            const maxDiscountAllowed = purchaseTotal * 0.5;
+            if (pointsToUse > maxDiscountAllowed) {
+                pointsToUse = maxDiscountAllowed;
+            }
+
             this.customerPointsService.getPointDiscountShopping(pointsToUse).subscribe(discountShopping => {
                 this.shoppingCart.push(discountShopping);
                 this.synchronizeShoppingCart();

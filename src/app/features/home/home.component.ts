@@ -13,11 +13,12 @@ import {MatInput} from '@angular/material/input';
 import {AuthService} from "@core/services/auth.service";
 import {FooterComponent} from '../../common/components/footer.component';
 import {LoginDialogComponent} from "../../common/dialogs/login-dialog.component";
+import {CustomerPointsProfileComponent} from "./customer-points-profile/customer-points-profile.component";
 
 @Component({
     standalone: true,
     imports: [CommonModule, FooterComponent, MatToolbar, MatFormField, MatIcon, MatButton, RouterLink, MatMenuTrigger,
-        MatBadge, MatMenu, MatMenuItem, MatInput, MatIconButton, NgOptimizedImage, MatLabel, RouterOutlet],
+        MatBadge, MatMenu, MatMenuItem, MatInput, MatIconButton, NgOptimizedImage, MatLabel, RouterOutlet, CustomerPointsProfileComponent],
     selector: 'app-home',
     templateUrl: './home.component.html',
     styleUrl: './home.component.css'
