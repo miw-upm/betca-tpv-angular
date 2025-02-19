@@ -1,179 +1,208 @@
-<mat-toolbar color="primary">
+<div>
+  <mat-toolbar color="primary">
     <span>TPV </span>
-    <img alt="miw" height="32" ngSrc="../../../assets/miw.png" width="69"/>
+    <img alt="miw" height="32" ngSrc="../../../assets/miw.png" width="69" />
     <span>
-    <app-date></app-date>
-    <button (click)="logout()" mat-button>
-      <mat-icon>person</mat-icon>
-      <span>{{ username }}</span>
-      <span> Logout</span>
-    </button>
-    <button mat-button>
-      <mat-icon>account_box</mat-icon>
-      <span>Profile</span>
-    </button>
-    <button [matMenuTriggerFor]="menu" mat-icon-button>
-      <mat-icon>more_vert</mat-icon>
-    </button>
-  </span>
-</mat-toolbar>
+      <app-date></app-date>
+      <button (click)="logout()" mat-button>
+        <mat-icon>person</mat-icon>
+        <span>{{ username }}</span>
+        <span> Logout</span>
+      </button>
+      <button mat-button>
+        <mat-icon>account_box</mat-icon>
+        <span>Profile</span>
+      </button>
+      <button [matMenuTriggerFor]="menu" mat-icon-button>
+        <mat-icon>more_vert</mat-icon>
+      </button>
+    </span>
+  </mat-toolbar>
 
-<mat-menu #menu="matMenu" xPosition="before">
+  <mat-menu #menu="matMenu" xPosition="before">
     <button (click)="cashier()" mat-menu-item>
-        <mat-icon>business</mat-icon>
-        <span>Shop</span>
+      <mat-icon>business</mat-icon>
+      <span>Shop</span>
     </button>
     <button [matMenuTriggerFor]="cashiers" mat-menu-item>
-        <mat-icon>account_balance</mat-icon>
-        <span>Cashier</span>
+      <mat-icon>account_balance</mat-icon>
+      <span>Cashier</span>
     </button>
     <button [matMenuTriggerFor]="receipts" mat-menu-item>
-        <mat-icon>receipt</mat-icon>
-        <span>Receipt</span>
+      <mat-icon>receipt</mat-icon>
+      <span>Receipt</span>
     </button>
     <button [matMenuTriggerFor]="products" mat-menu-item>
-        <mat-icon>line_style</mat-icon>
-        <span>Products</span>
+      <mat-icon>line_style</mat-icon>
+      <span>Products</span>
     </button>
     <button [matMenuTriggerFor]="stock" mat-menu-item>
-        <mat-icon>view_week</mat-icon>
-        <span>Stock</span>
+      <mat-icon>view_week</mat-icon>
+      <span>Stock</span>
     </button>
     <button [matMenuTriggerFor]="users" mat-menu-item>
-        <mat-icon>people</mat-icon>
-        <span>Users</span>
+      <mat-icon>people</mat-icon>
+      <span>Users</span>
     </button>
     <button [matMenuTriggerFor]="vat" mat-menu-item>
-        <mat-icon>local_atm</mat-icon>
-        <span>VAT Management</span>
+      <mat-icon>local_atm</mat-icon>
+      <span>VAT Management</span>
     </button>
-</mat-menu>
-<!--   Menus  -->
-<mat-menu #cashiers="matMenu">
+  </mat-menu>
+  <!--   Menus  -->
+  <mat-menu #cashiers="matMenu">
     <button (click)="closeCashier()" *ngIf="!cashierClosed" mat-menu-item>
-        <mat-icon>lock_outline</mat-icon>
-        <span>Close cashier</span>
+      <mat-icon>lock_outline</mat-icon>
+      <span>Close cashier</span>
     </button>
     <button (click)="openCashier()" *ngIf="cashierClosed" mat-menu-item>
-        <mat-icon>lock_open</mat-icon>
-        <span>Open Cashier</span>
+      <mat-icon>lock_open</mat-icon>
+      <span>Open Cashier</span>
     </button>
-    <button *ngIf="!cashierClosed" disabled="disabled" mat-menu-item routerLink="">
-        <mat-icon>account_balance_wallet</mat-icon>
-        <span>Cash Movement</span>
+    <button
+      *ngIf="!cashierClosed"
+      disabled="disabled"
+      mat-menu-item
+      routerLink=""
+    >
+      <mat-icon>account_balance_wallet</mat-icon>
+      <span>Cash Movement</span>
     </button>
     <button disabled="disabled" mat-menu-item routerLink="">
-        <mat-icon>account_balance</mat-icon>
-        <span>Cashier Closure</span>
+      <mat-icon>account_balance</mat-icon>
+      <span>Cashier Closure</span>
     </button>
-</mat-menu>
-<mat-menu #receipts="matMenu">
+  </mat-menu>
+  <mat-menu #receipts="matMenu">
     <button *ngIf="!cashierClosed" mat-menu-item routerLink="/shop/tickets">
-        <mat-icon>toc</mat-icon>
-        <span>Tickets</span>
+      <mat-icon>toc</mat-icon>
+      <span>Tickets</span>
     </button>
     <button disabled="disabled" mat-menu-item routerLink="">
-        <mat-icon>shopping_basket</mat-icon>
-        <span>Online Orders</span>
+      <mat-icon>shopping_basket</mat-icon>
+      <span>Online Orders</span>
     </button>
     <button disabled="disabled" mat-menu-item routerLink="">
-        <mat-icon>playlist_add_check</mat-icon>
-        <span>Ticket tracking</span>
+      <mat-icon>playlist_add_check</mat-icon>
+      <span>Ticket tracking</span>
     </button>
     <button disabled="disabled" mat-menu-item routerLink="">
-        <mat-icon>receipt</mat-icon>
-        <span>Invoices</span>
+      <mat-icon>receipt</mat-icon>
+      <span>Invoices</span>
     </button>
     <button disabled="disabled" mat-menu-item routerLink="">
-        <mat-icon>description</mat-icon>
-        <span>Budgets</span>
+      <mat-icon>description</mat-icon>
+      <span>Budgets</span>
     </button>
     <button disabled="disabled" mat-menu-item routerLink="">
-        <mat-icon>local_offer</mat-icon>
-        <span>Vouchers</span>
+      <mat-icon>local_offer</mat-icon>
+      <span>Vouchers</span>
     </button>
-</mat-menu>
-<mat-menu #products="matMenu">
+  </mat-menu>
+  <mat-menu #products="matMenu">
     <button mat-menu-item routerLink="/shop/articles">
-        <mat-icon>view_list</mat-icon>
-        <span>Articles</span>
+      <mat-icon>view_list</mat-icon>
+      <span>Articles</span>
     </button>
     <button disabled="disabled" mat-menu-item routerLink="">
-        <mat-icon>category</mat-icon>
-        <span>Articles Family</span>
+      <mat-icon>category</mat-icon>
+      <span>Articles Family</span>
     </button>
     <button disabled="disabled" mat-menu-item routerLink="">
-        <mat-icon>view_module</mat-icon>
-        <span>Articles Sizes Family Creator</span>
+      <mat-icon>view_module</mat-icon>
+      <span>Articles Sizes Family Creator</span>
     </button>
     <button mat-menu-item routerLink="/shop/providers">
-        <mat-icon>local_shipping</mat-icon>
-        <span>Providers</span>
+      <mat-icon>local_shipping</mat-icon>
+      <span>Providers</span>
     </button>
-    <button *ngIf="untilManager()" disabled="disabled" mat-menu-item routerLink="">
-        <mat-icon>storage</mat-icon>
-        <span>Orders</span>
+    <button
+      *ngIf="untilManager()"
+      disabled="disabled"
+      mat-menu-item
+      routerLink=""
+    >
+      <mat-icon>storage</mat-icon>
+      <span>Orders</span>
     </button>
     <button disabled="disabled" mat-menu-item routerLink="">
-        <mat-icon>view_comfy</mat-icon>
-        <span>Tags</span>
+      <mat-icon>view_comfy</mat-icon>
+      <span>Tags</span>
     </button>
     <button disabled="disabled" mat-menu-item routerLink="">
-        <mat-icon>local_atm</mat-icon>
-        <span>Offers</span>
+      <mat-icon>local_atm</mat-icon>
+      <span>Offers</span>
     </button>
-</mat-menu>
-<mat-menu #stock="matMenu">
+  </mat-menu>
+  <mat-menu #stock="matMenu">
     <button disabled="disabled" mat-menu-item routerLink="/home/stock-alarm">
-        <mat-icon>alarm</mat-icon>
-        <span>Stock Alarm</span>
+      <mat-icon>alarm</mat-icon>
+      <span>Stock Alarm</span>
     </button>
-    <button disabled="disabled" mat-menu-item routerLink="/home/stock-management">
-        <mat-icon>equalizer</mat-icon>
-        <span>Stock Management</span>
+    <button
+      disabled="disabled"
+      mat-menu-item
+      routerLink="/home/stock-management"
+    >
+      <mat-icon>equalizer</mat-icon>
+      <span>Stock Management</span>
     </button>
-    <button disabled="disabled" mat-menu-item routerLink="/home/stock-management">
-        <mat-icon>assessment</mat-icon>
-        <span>Stock Audit</span>
+    <button
+      disabled="disabled"
+      mat-menu-item
+      routerLink="/home/stock-management"
+    >
+      <mat-icon>assessment</mat-icon>
+      <span>Stock Audit</span>
     </button>
-</mat-menu>
-<mat-menu #users="matMenu">
+  </mat-menu>
+  <mat-menu #users="matMenu">
     <button disabled="disabled" mat-menu-item routerLink="/shop/users">
-        <mat-icon>account_circle</mat-icon>
-        <span>Users</span>
+      <mat-icon>account_circle</mat-icon>
+      <span>Users</span>
     </button>
     <button disabled="disabled" mat-menu-item routerLink="/shop/users">
-        <mat-icon>assignment_ind</mat-icon>
-        <span>Salespeople</span>
+      <mat-icon>assignment_ind</mat-icon>
+      <span>Salespeople</span>
     </button>
     <button disabled="disabled" mat-menu-item>
-        <mat-icon>gavel</mat-icon>
-        <span>Data Protection Act</span>
+      <mat-icon>gavel</mat-icon>
+      <span>Data Protection Act</span>
     </button>
     <button disabled="disabled" mat-menu-item routerLink="">
-        <mat-icon>money_off</mat-icon>
-        <span>Customer Discount</span>
+      <mat-icon>money_off</mat-icon>
+      <span>Customer Discount</span>
     </button>
     <button disabled="disabled" mat-menu-item routerLink="">
-        <mat-icon>message</mat-icon>
-        <span>Messengers</span>
+      <mat-icon>message</mat-icon>
+      <span>Messengers</span>
     </button>
     <button disabled="disabled" mat-menu-item routerLink="">
-        <mat-icon>card_membership</mat-icon>
-        <span>Credit</span>
+      <mat-icon>card_membership</mat-icon>
+      <span>Credit</span>
     </button>
-</mat-menu>
-<mat-menu #vat="matMenu">
-    <button disabled="disabled" mat-menu-item routerLink="/home/stock-management">
-        <mat-icon>money</mat-icon>
-        <span>Quarter VAT</span>
+  </mat-menu>
+  <mat-menu #vat="matMenu">
+    <button
+      disabled="disabled"
+      mat-menu-item
+      routerLink="/home/stock-management"
+    >
+      <mat-icon>money</mat-icon>
+      <span>Quarter VAT</span>
     </button>
-    <button disabled="disabled" mat-menu-item routerLink="/home/stock-management">
-        <mat-icon>local_shipping</mat-icon>
-        <span>Provider Invoice</span>
+    <button
+      disabled="disabled"
+      mat-menu-item
+      routerLink="/home/stock-management"
+    >
+      <mat-icon>local_shipping</mat-icon>
+      <span>Provider Invoice</span>
     </button>
-</mat-menu>
-
-<router-outlet></router-outlet>
+  </mat-menu>
+</div>
+<div>
+  <router-outlet></router-outlet>
+</div>
 
 <app-footer></app-footer>
