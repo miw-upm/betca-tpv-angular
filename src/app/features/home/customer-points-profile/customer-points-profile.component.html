@@ -1,0 +1,10 @@
+<div class="customer-points-profile">
+    <mat-divider></mat-divider>
+    <div class="points-info">
+        <span>Available Points:</span>
+        <strong>{{ points }}</strong>
+    </div>
+    <div class="last-updated" *ngIf="lastUpdated">
+        <small>Updated: {{ lastUpdated | date:'short' }}</small>
+    </div>
+</div>

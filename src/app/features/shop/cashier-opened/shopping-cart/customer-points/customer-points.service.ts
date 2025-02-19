@@ -3,7 +3,7 @@ import { BehaviorSubject, Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { AuthService } from '@core/services/auth.service';
 import { CustomerPoints, CustomerPointsConstants } from './customer-points.model';
-import { Shopping } from './shopping.model';
+import { Shopping } from '../shopping.model';
 
 @Injectable({
     providedIn: 'root'
@@ -21,17 +21,29 @@ export class CustomerPointsService {
             const points: CustomerPoints = {
                 value: 10,
                 lastDate: new Date(),
-                user: { mobile: Number(this.auth.getUser().mobile) }
+                user: this.auth.getUser()
             };
             this.customerPointsSubject.next(points);
         }
     }
 
-    refreshCustomerPoints(): void {
-        this.setCurrentCustomerPoints();
+    setCurrentCustomerPointsForClient(client: any): void {
+        const points: CustomerPoints = {
+            value: 10,
+            lastDate: new Date(),
+            user: client
+        };
+        this.customerPointsSubject.next(points);
     }
 
     getCurrentPoints(): CustomerPoints {
+        if (this.auth.isAuthenticated()) {
+            const authUser = this.auth.getUser();
+            const current = this.customerPointsSubject.getValue();
+            if (!current || !current.user || current.user.mobile !== authUser.mobile) {
+                this.setCurrentCustomerPoints();
+            }
+        }
         return this.customerPointsSubject.getValue();
     }
 
