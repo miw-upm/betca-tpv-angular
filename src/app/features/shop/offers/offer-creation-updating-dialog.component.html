@@ -1,0 +1,34 @@
+<h4 mat-dialog-title>{{ title }}</h4>
+<mat-dialog-content>
+    <mat-form-field class="full-width">
+        <mat-label>Reference</mat-label>
+        <input [(ngModel)]="offer.reference" id="company" matInput required type="text"/>
+    </mat-form-field>
+    <mat-form-field class="full-width">
+        <mat-label>Description</mat-label>
+        <input [(ngModel)]="offer.description" matInput required type="text"/>
+    </mat-form-field>
+    <mat-form-field class="full-width">
+        <mat-label>Creation date</mat-label>
+        <input [(ngModel)]="offer.creationDate" matInput required type="date">
+        <mat-hint>9 digits</mat-hint>
+    </mat-form-field>
+    <mat-form-field class="full-width">
+        <mat-label>Expiry date</mat-label>
+        <input [(ngModel)]="offer.expiryDate" matInput required type="date">
+    </mat-form-field>
+    <mat-form-field class="full-width">
+        <mat-label>Discount</mat-label>
+        <input [(ngModel)]="offer.discount" matInput required type="number"/>
+    </mat-form-field>
+    <!-- Añadir articulos de forma dinamica -->
+    <!-- TODO: Implementar -->
+    <!--<app-search-by-company [(company)]="article.providerCompany" class="full-width"></app-search-by-company> -->
+</mat-dialog-content>
+<mat-dialog-actions>
+    <button mat-dialog-close mat-raised-button>Close</button>
+    <button (click)="create()" *ngIf="isCreate()" [disabled]=invalid() color="primary" mat-raised-button>Create
+    </button>
+    <button (click)="update()" *ngIf="!isCreate()" [disabled]=invalid() color="primary" mat-raised-button>Update
+    </button>
+</mat-dialog-actions>
