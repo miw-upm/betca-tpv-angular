@@ -1,0 +1,10 @@
+.container {
+    display: flex;
+    flex-direction: row;
+    max-height: 500px;
+    min-width: 300px;
+}
+
+.spacer {
+    width: 1em;
+}

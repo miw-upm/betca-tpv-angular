@@ -84,6 +84,7 @@ export class ShoppingCartService {
     }
 
     createDataProtectionActAndPrint(ticket): Observable<void> {
+        alert('Data protection act creation not implemented');
         return EMPTY; // TODO change EMPTY
     }
 }

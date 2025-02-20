@@ -1,0 +1,29 @@
+.dialog-content {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+.file-upload {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.file-upload label {
+  font-weight: bold;
+  cursor: pointer;
+  background-color: #f0f0f0;
+  padding: 8px;
+  border-radius: 5px;
+  text-align: center;
+  display: inline-block;
+}
+
+.file-upload input {
+  display: none;
+}
