@@ -1,0 +1,24 @@
+.filter-container {
+  background: #f4f4f4;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 8px;
+}
+
+.filter-content {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.filter-field {
+  flex: 1;
+  min-width: 200px;
+}
+
+.clear-filters {
+  color: #d32f2f;
+  background: rgba(211, 47, 47, 0.1);
+  border-radius: 50%;
+}
