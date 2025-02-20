@@ -1,0 +1,37 @@
+<mat-card>
+    <mat-card-title>Display cashier closure history of:</mat-card-title>
+    <mat-card-content>
+        <div class="container">
+            <app-year-picker (valueChanged)="updateDataset($event)"></app-year-picker>
+            <div class="spacer"></div>
+            <app-month-picker (valueChanged)="updateDataset($event)"></app-month-picker>
+        </div>
+    </mat-card-content>
+</mat-card>
+<mat-card>
+    <mat-card-title>
+        Total of period: {{ total | currency:'EUR':'symbol' }}
+    </mat-card-title>
+    <mat-card-content>
+        <mat-table [dataSource]="cashierClosures" class="mat-elevation-z8">
+            <ng-container matColumnDef="finalCash">
+                <mat-header-cell *matHeaderCellDef> Final cash</mat-header-cell>
+                <mat-cell *matCellDef="let item"> {{ item.finalCash | currency:'EUR':'symbol' }}</mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="finalCard">
+                <mat-header-cell *matHeaderCellDef> Final card</mat-header-cell>
+                <mat-cell *matCellDef="let item"> {{ item.finalCard | currency:'EUR':'symbol' }}</mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="total">
+                <mat-header-cell *matHeaderCellDef> Total</mat-header-cell>
+                <mat-cell *matCellDef="let item"> {{ item.finalCash + item.finalCard | currency:'EUR':'symbol' }}</mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="comment">
+                <mat-header-cell *matHeaderCellDef> Comment</mat-header-cell>
+                <mat-cell *matCellDef="let item">{{ item.comment }}</mat-cell>
+            </ng-container>
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+        </mat-table>
+    </mat-card-content>
+</mat-card>
