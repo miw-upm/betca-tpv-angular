@@ -14,11 +14,11 @@ import {ComplaintHomeService} from "./complaint-home.service";
     standalone: true,
     imports: [MatDialogContent, MatFormField, MatLabel, FormsModule, MatDialogActions, MatDialogTitle, MatInput,
         MatDialogClose, MatButton],
-    templateUrl: 'complaint-update-dialog.component.html',
-    styleUrls: ['complaint-dialog.component.css']
+    templateUrl: 'complaint-update-home-dialog.component.html',
+    styleUrls: ['complaint-home-dialog.component.css']
 })
 
-export class ComplaintUpdateDialogComponent {
+export class ComplaintUpdateHomeDialogComponent {
     complaint: Complaint;
 
     constructor(private readonly complaintHomeService: ComplaintHomeService, private readonly dialog: MatDialog, private readonly authService: AuthService) {

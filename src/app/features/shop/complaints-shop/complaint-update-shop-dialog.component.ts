@@ -4,28 +4,34 @@ import {MatDialog, MatDialogActions, MatDialogClose, MatDialogContent, MatDialog
 import {MatFormField, MatLabel} from '@angular/material/form-field';
 import {MatInput} from '@angular/material/input';
 import {MatButton} from '@angular/material/button';
-
+import { CommonModule } from '@angular/common';
 import {AuthService} from '@core/services/auth.service';
 
 import {Complaint} from '../../shared/models/complaint.model';
-import {ComplaintHomeService} from "./complaint-home.service";
+import {ComplaintShopService} from "./complaint-shop.service";
+import {MatOption, MatSelect} from "@angular/material/select";
 
 @Component({
     standalone: true,
     imports: [MatDialogContent, MatFormField, MatLabel, FormsModule, MatDialogActions, MatDialogTitle, MatInput,
-        MatDialogClose, MatButton],
-    templateUrl: 'complaint-creation-dialog.component.html',
-    styleUrls: ['complaint-home-dialog.component.css']
+        MatDialogClose, MatButton, MatSelect, MatOption,CommonModule],
+    templateUrl: 'complaint-update-shop-dialog.component.html',
+    styleUrls: ['complaint-shop-dialog.component.css']
 })
 
-export class ComplaintCreationDialogComponent {
+export class ComplaintUpdateShopDialogComponent {
     complaint: Complaint;
+    states : string[] = ["Abierto","Cerrado"];
 
-    constructor(private readonly complaintHomeService: ComplaintHomeService, private readonly dialog: MatDialog, private readonly authService: AuthService) {
-        this.complaint = {barcode: undefined, description: undefined};
+    constructor(private readonly complaintShopService: ComplaintShopService, private readonly dialog: MatDialog, private readonly authService: AuthService) {
+        this.complaint = {barcode: "232435543", description: "dsfdfd",
+            mobile:722256532, registrationDate:new Date(2025, 1, 2),
+            reply:"Respuesta determinada",
+            state: "Abierto"
+        };
     }
 
-    create(): void {
+    update(): void {
         this.dialog.closeAll();
         /*this.complaintHomeService
             .create(this.complaint)

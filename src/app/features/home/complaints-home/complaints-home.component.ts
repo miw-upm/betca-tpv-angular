@@ -11,7 +11,7 @@ import {CrudComponent} from '../../../common/components/crud.component';
 import {Complaint} from '../../shared/models/complaint.model';
 import {MatIconButton} from "@angular/material/button";
 import {ComplaintHomeService} from "./complaint-home.service";
-import {ComplaintUpdateDialogComponent} from "./complaint-update-dialog.component";
+import {ComplaintUpdateHomeDialogComponent} from "./complaint-update-home-dialog.component";
 
 @Component({
     standalone: true,
@@ -65,7 +65,7 @@ export class ComplaintsHomeComponent {
     }
     update(complaint: Complaint){
         this.dialog
-            .open(ComplaintUpdateDialogComponent)
+            .open(ComplaintUpdateHomeDialogComponent)
             .afterClosed()
             .subscribe(() => this.searchAll());
     }
