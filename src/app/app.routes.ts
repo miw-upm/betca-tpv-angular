@@ -12,6 +12,7 @@ import {ProvidersComponent} from './features/shop/providers/providers.component'
 import {ShopComponent} from "./features/shop/shop.component";
 import {TicketsComponent} from './features/shop/cashier-opened/tickets/tickets.component';
 import {OffersComponent} from "./features/shop/offers/offers.component";
+import {OrdersComponent} from "./features/shop/orders/orders.component";
 
 export const routes: Routes = [
     {path: '', pathMatch: 'full', redirectTo: 'home/adviser'},
@@ -38,6 +39,7 @@ export const routes: Routes = [
             {path: 'cashier-opened', component: CashierOpenedComponent},
             {path: 'providers', component: ProvidersComponent},
             {path: 'tickets', component: TicketsComponent},
+            {path: 'orders', component: OrdersComponent},
         ]
     }
 ];
