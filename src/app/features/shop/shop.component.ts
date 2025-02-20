@@ -14,6 +14,9 @@ import {DateComponent} from '@common/components/date.component';
 import {FooterComponent} from '@common/components/footer.component';
 import {SharedCashierService} from './shared/services/shared.cashier.service';
 import {CashierDialogComponent} from './cashier-opened/cashier-closure/cashier-dialog.component';
+import {
+    CashMovementDialogComponent
+} from "./cashier-opened/cash-movement-dialog/cash-movement-dialog.component";
 
 @Component({
     standalone: true,
@@ -71,5 +74,10 @@ export class ShopComponent {
             .subscribe(() => this.cashier());
     }
 
-
+    openCashMovementDialog(): void {
+        this.dialog
+            .open(CashMovementDialogComponent)
+            .afterClosed()
+            .subscribe(() => this.cashier());
+    }
 }

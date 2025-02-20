@@ -15,9 +15,10 @@ import {MatIcon} from '@angular/material/icon';
 import {MatFormField, MatLabel} from '@angular/material/form-field';
 import {Observable} from 'rxjs';
 
-import {CashierClosureService} from './cashier-closure.service';
 import {CashierState} from './cashier-state.model';
 import {CashierClosure} from './cashier-closure.model';
+import {CashMovementDialogComponent} from "../cash-movement-dialog/cash-movement-dialog.component";
+import {CashierClosureService} from "./cashier-closure.service";
 
 @Component({
     standalone: true,
@@ -48,8 +49,12 @@ export class CashierDialogComponent {
     }
 
     cashMovement(): void {
-        // TODO ...
-        console.log('In construction!!!');
+        this.dialog.open(CashMovementDialogComponent)
+            .afterClosed()
+            .subscribe(() => {
+                //TODO: Return updated state from CashMovementDialog? (if so, we'd avoid to call readState() again)
+                this.cashierState = this.cashierService.readState();
+            });
     }
 
 }

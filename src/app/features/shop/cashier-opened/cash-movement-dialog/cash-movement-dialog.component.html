@@ -1,0 +1,14 @@
+<h3 mat-dialog-title>Cash movement</h3>
+<mat-dialog-content class="vertical-content">
+    <mat-form-field>
+        <mat-label>Amount</mat-label>
+        <input [(ngModel)]="amount" matInput required type="number"/>
+    </mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions>
+    <button mat-dialog-close mat-raised-button>Cancel</button>
+    <button (click)="close()" color="primary" mat-raised-button [disabled]="invalid()">
+        <mat-icon>account_balance_wallet</mat-icon>
+        <span>Cash movement</span>
+    </button>
+</mat-dialog-actions>
