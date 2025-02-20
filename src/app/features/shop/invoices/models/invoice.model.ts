@@ -7,5 +7,14 @@ export interface Invoice {
     baseTax: number;
     taxValue: number;
     user: User;
-    ticketCreation: TicketCreation;
+    ticket: TicketCreation;
+}
+
+export interface InvoiceRowData{
+    identity: number;
+    creationDate: Date;
+    baseTax: number;
+    taxValue: number;
+    user: string;
+    ticket: number;
 }
