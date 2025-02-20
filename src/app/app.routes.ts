@@ -13,6 +13,7 @@ import { ShopComponent } from "./features/shop/shop.component";
 import { TicketsComponent } from "./features/shop/cashier-opened/tickets/tickets.component";
 import { OffersComponent } from "./features/shop/offers/offers.component";
 import { BudgetsComponent } from "./features/shop/budgets/budgets.component";
+import { InvoicesComponent } from "./features/shop/invoices/invoices.component";
 
 export const routes: Routes = [
   { path: "", pathMatch: "full", redirectTo: "home/adviser" },
@@ -43,6 +44,7 @@ export const routes: Routes = [
       { path: "providers", component: ProvidersComponent },
       { path: "tickets", component: TicketsComponent },
       { path: "budgets", component: BudgetsComponent },
+      { path: "invoices", component: InvoicesComponent },
     ],
   },
 ];
