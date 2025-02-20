@@ -1,4 +1,4 @@
-import {User} from "./user.models";
+import {User} from '@core/models/user.model';
 
 export interface CustomerPoints {
     value: number;
@@ -7,5 +7,6 @@ export interface CustomerPoints {
 }
 
 export const CustomerPointsConstants = {
-    DISCOUNT_POINTS_BARCODE: "Points Discount"
+    DISCOUNT_POINTS_BARCODE: "Points Discount",
+    MINIMUM_POINTS_TO_REDEEM: 10
 };

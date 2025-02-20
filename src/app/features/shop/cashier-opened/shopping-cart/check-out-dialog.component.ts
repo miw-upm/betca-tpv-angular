@@ -1,5 +1,4 @@
 import {Component, Inject} from '@angular/core';
-
 import {TicketCreation} from './ticket-creation.model';
 import {ShoppingCartService} from './shopping-cart.service';
 import {
@@ -17,7 +16,7 @@ import {MatInput} from '@angular/material/input';
 import {MatButton, MatIconButton} from '@angular/material/button';
 import {FormsModule} from '@angular/forms';
 import {MatCheckbox} from '@angular/material/checkbox';
-import {CustomerPointsConstants} from "./customer-points.model";
+import {CustomerPointsConstants} from "./customer-points/customer-points.model";
 
 @Component({
     standalone: true,
