@@ -1,0 +1,20 @@
+<mat-card>
+    <mat-card-title>
+        <mat-icon>search</mat-icon>
+        Filters
+    </mat-card-title>
+    <mat-card-content>
+        <app-filter-input [(value)]="orderSearch.reference" title="Reference"></app-filter-input>
+        <app-filter-input [(value)]="orderSearch.description" title="Description"></app-filter-input>
+        <app-filter-input [(value)]="orderSearch.providerCompany" title="Provider Company" type="text"></app-filter-input>
+        <app-filter-input [(value)]="orderSearch.openingDate" title="Opening Date" type="date"></app-filter-input>
+        <app-filter-input [(value)]="orderSearch.closingDate" title="Closing Date" type="date"></app-filter-input>
+        <button (click)="search()" mat-stroked-button>
+            <mat-icon>search</mat-icon>
+            Find
+        </button>
+    </mat-card-content>
+</mat-card>
+
+<app-crud (create)="create()" (read)="read($event)" (update)="update($event)"
+          [data]="orders" [deleteAction]="false" [title]="title"></app-crud>
