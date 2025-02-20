@@ -11,6 +11,7 @@ import {HomeComponent} from "./features/home/home.component";
 import {ProvidersComponent} from './features/shop/providers/providers.component';
 import {ShopComponent} from "./features/shop/shop.component";
 import {TicketsComponent} from './features/shop/cashier-opened/tickets/tickets.component';
+import { DataProtectionComponent } from './features/data-protection/data-protection.component';
 
 export const routes: Routes = [
     {path: '', pathMatch: 'full', redirectTo: 'home/adviser'},
@@ -36,6 +37,7 @@ export const routes: Routes = [
             {path: 'cashier-opened', component: CashierOpenedComponent},
             {path: 'providers', component: ProvidersComponent},
             {path: 'tickets', component: TicketsComponent},
+            {path: 'data-protection', component: DataProtectionComponent}
         ]
     }
 ];

@@ -1,0 +1,51 @@
+<mat-card class="filter-container">
+  <mat-card-content class="filter-content">
+    <mat-label class="filter-title"><strong>Filters:</strong></mat-label>
+
+    <mat-form-field class="filter-field" appearance="outline">
+      <mat-label>User Name</mat-label>
+      <mat-icon matPrefix>person</mat-icon>
+      <input matInput [(ngModel)]="rgpdFilter.user" (input)="refreshList()" />
+      <button mat-button *ngIf="rgpdFilter.user" matSuffix (click)="clearField('user')">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
+
+    <mat-form-field class="filter-field" appearance="outline">
+      <mat-label>Mobile</mat-label>
+      <mat-icon matPrefix>phone</mat-icon>
+      <input matInput type="number" [(ngModel)]="rgpdFilter.mobile" (input)="refreshList()" />
+      <button mat-button *ngIf="rgpdFilter.mobile" matSuffix (click)="clearField('mobile')">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
+
+    <mat-form-field class="filter-field" appearance="outline">
+      <mat-label>Agreement Type</mat-label>
+      <mat-icon matPrefix>assignment</mat-icon>
+      <mat-select [(ngModel)]="rgpdFilter.type" (selectionChange)="refreshList()">
+        <mat-option [value]="">All</mat-option>
+        <mat-option *ngFor="let type of rgpdTypes" [value]="type">
+          {{ type }}
+        </mat-option>
+      </mat-select>
+      <button mat-button *ngIf="rgpdFilter.type" matSuffix (click)="clearField('type')">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-form-field>
+
+    <button (click)="clearAllFilters()" mat-icon-button class="clear-filters">
+      <mat-icon>delete_sweep</mat-icon>
+    </button>
+  </mat-card-content>
+</mat-card>
+
+<app-crud
+  [data]="filteredRgpds$"
+  (create)="create()"
+  (read)="read($event)"
+  (update)="update($event)"
+  (delete)="delete($event)"
+  [deleteAction]="true"
+  [title]="title"
+></app-crud>
