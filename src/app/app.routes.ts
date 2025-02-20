@@ -15,6 +15,7 @@ import { OffersComponent } from './features/shop/offers/offers.component';
 import { BudgetsComponent } from './features/shop/budgets/budgets.component';
 import { InvoicesComponent } from './features/shop/invoices/invoices.component';
 import { DataProtectionComponent } from './features/data-protection/data-protection.component';
+import {OrdersComponent} from "./features/shop/orders/orders.component";
 
 export const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'home/adviser' },
@@ -47,6 +48,7 @@ export const routes: Routes = [
       { path: 'budgets', component: BudgetsComponent },
       { path: 'invoices', component: InvoicesComponent },
       { path: 'data-protection', component: DataProtectionComponent },
+      { path: 'orders', component: OrdersComponent},
     ],
   },
 ];
