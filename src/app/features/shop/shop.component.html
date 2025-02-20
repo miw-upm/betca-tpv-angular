@@ -59,12 +59,7 @@
       <mat-icon>lock_open</mat-icon>
       <span>Open Cashier</span>
     </button>
-    <button
-      *ngIf="!cashierClosed"
-      disabled="disabled"
-      mat-menu-item
-      routerLink=""
-    >
+    <button *ngIf="!cashierClosed" disabled="disabled" mat-menu-item routerLink="">
       <mat-icon>account_balance_wallet</mat-icon>
       <span>Cash Movement</span>
     </button>
@@ -116,12 +111,7 @@
       <mat-icon>local_shipping</mat-icon>
       <span>Providers</span>
     </button>
-    <button
-      *ngIf="untilManager()"
-      disabled="disabled"
-      mat-menu-item
-      routerLink=""
-    >
+    <button *ngIf="untilManager()" disabled="disabled" mat-menu-item routerLink="">
       <mat-icon>storage</mat-icon>
       <span>Orders</span>
     </button>
@@ -139,19 +129,11 @@
       <mat-icon>alarm</mat-icon>
       <span>Stock Alarm</span>
     </button>
-    <button
-      disabled="disabled"
-      mat-menu-item
-      routerLink="/home/stock-management"
-    >
+    <button disabled="disabled" mat-menu-item routerLink="/home/stock-management">
       <mat-icon>equalizer</mat-icon>
       <span>Stock Management</span>
     </button>
-    <button
-      disabled="disabled"
-      mat-menu-item
-      routerLink="/home/stock-management"
-    >
+    <button disabled="disabled" mat-menu-item routerLink="/home/stock-management">
       <mat-icon>assessment</mat-icon>
       <span>Stock Audit</span>
     </button>
@@ -165,7 +147,7 @@
       <mat-icon>assignment_ind</mat-icon>
       <span>Salespeople</span>
     </button>
-    <button disabled="disabled" mat-menu-item>
+    <button mat-menu-item routerLink="/shop/data-protection">
       <mat-icon>gavel</mat-icon>
       <span>Data Protection Act</span>
     </button>
@@ -183,19 +165,11 @@
     </button>
   </mat-menu>
   <mat-menu #vat="matMenu">
-    <button
-      disabled="disabled"
-      mat-menu-item
-      routerLink="/home/stock-management"
-    >
+    <button disabled="disabled" mat-menu-item routerLink="/home/stock-management">
       <mat-icon>money</mat-icon>
       <span>Quarter VAT</span>
     </button>
-    <button
-      disabled="disabled"
-      mat-menu-item
-      routerLink="/home/stock-management"
-    >
+    <button disabled="disabled" mat-menu-item routerLink="/home/stock-management">
       <mat-icon>local_shipping</mat-icon>
       <span>Provider Invoice</span>
     </button>
