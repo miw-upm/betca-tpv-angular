@@ -16,11 +16,11 @@
         <mat-datepicker #picker></mat-datepicker>
     </mat-form-field>
     <app-search-by-company [(company)]="order.providerCompany" (companyChange)="onCompanyChange()" class="full-width"></app-search-by-company>
-    <div *ngIf="articles.length > 0">
-        <div *ngFor="let article of articles">
+    <div *ngIf="order.orderLines.length > 0">
+        <div *ngFor="let orderLine of order.orderLines">
             <mat-form-field class="full-width">
-                <mat-label>{{ article.barcode }}</mat-label>
-                <input [(ngModel)]="article.amount" matInput type="number" min="0" step="1"/>
+                <mat-label>{{ orderLine.articleBarcode }}</mat-label>
+                <input [(ngModel)]="orderLine.requiredAmount" matInput type="number" min="0" step="1"/>
             </mat-form-field>
         </div>
     </div>

@@ -1,7 +1,6 @@
 import {Component} from "@angular/core";
 import {MatCard, MatCardContent, MatCardTitle} from "@angular/material/card";
 import {FormsModule} from "@angular/forms";
-import {MatSlideToggle} from "@angular/material/slide-toggle";
 import {MatIcon} from "@angular/material/icon";
 import {CrudComponent} from "@common/components/crud.component";
 import {FilterInputComponent} from "@common/components/filter-input.component";
@@ -16,7 +15,7 @@ import {OrdersCreationUpdatingDialogComponent} from "./orders-creation-updating-
 
 @Component({
     standalone: true,
-    imports: [MatCard, MatCardContent, FormsModule, MatSlideToggle, MatIcon, CrudComponent,
+    imports: [MatCard, MatCardContent, FormsModule, MatIcon, CrudComponent,
         FilterInputComponent, MatButton, MatCardTitle],
     templateUrl: 'orders.component.html'
 })
