@@ -9,13 +9,30 @@ import {InvoiceCreationComponent} from "./components/invoice-creation/invoice-cr
 import {InvoiceUpdatingComponent} from "./components/invoice-updating/invoice-updating.component";
 import {CrudComponent} from "@common/components/crud.component";
 import {map} from "rxjs/operators";
+import {MatCard, MatCardContent} from "@angular/material/card";
+import {MatFormField, MatLabel, MatSuffix} from "@angular/material/form-field";
+import {MatIcon} from "@angular/material/icon";
+import {MatDivider} from "@angular/material/divider";
+import {MatInput} from "@angular/material/input";
+import {MatToolbar} from "@angular/material/toolbar";
+import {MatButton} from "@angular/material/button";
 
 @Component({
     selector: 'app-invoices',
     templateUrl: './invoices.component.html',
     standalone: true,
     imports: [
-        CrudComponent
+        CrudComponent,
+        MatCard,
+        MatLabel,
+        MatCardContent,
+        MatFormField,
+        MatIcon,
+        MatDivider,
+        MatInput,
+        MatSuffix,
+        MatToolbar,
+        MatButton
     ],
     styleUrls: ['./invoices.component.css']
 })

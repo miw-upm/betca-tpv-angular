@@ -1,7 +1,25 @@
-<app-crud (create)="create()"
-          (read)="read($event)"
-          (update)="update($event)"
-          [deleteAction]="false"
-          [data]="invoiceRowData"
-          [title]="title">
-</app-crud>
+<mat-divider></mat-divider>
+<mat-toolbar>
+    <span>Filters</span>
+    <mat-icon>search</mat-icon>
+</mat-toolbar>
+
+<div class="container">
+    <mat-form-field appearance="outline">
+        <mat-label>Ticket reference</mat-label>
+        <input matInput placeholder="Ticket reference" />
+        <mat-icon matSuffix>delete</mat-icon>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+        <mat-label>Mobile</mat-label>
+        <input matInput placeholder="Mobile" />
+        <mat-icon matSuffix>delete</mat-icon>
+    </mat-form-field>
+
+    <button mat-stroked-button>
+        <mat-icon>search</mat-icon>
+        Find
+    </button>
+</div>
+<app-crud (create)="create()" (read)="read($event)" (update)="update($event)" [deleteAction]="false" [data]="invoiceRowData" [title]="title"></app-crud>
