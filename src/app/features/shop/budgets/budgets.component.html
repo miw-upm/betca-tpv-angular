@@ -1,1 +1,7 @@
-<app-budget-filters></app-budget-filters> <app-budget-list></app-budget-list>
+<app-budget-filters></app-budget-filters>
+<app-budget-list
+  [budgets$]="budgets$"
+  (create)="onCreate()"
+  (read)="onRead($event)"
+  (update)="onUpdate($event)"
+></app-budget-list>
