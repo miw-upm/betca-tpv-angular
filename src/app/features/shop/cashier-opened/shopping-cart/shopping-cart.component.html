@@ -7,7 +7,7 @@
             <app-input-data (action)="addBudge($event)" icon="description" title="Budge"></app-input-data>
             <app-input-data (action)="addDiscount($event)" icon="money_off" title="Customer Discount"></app-input-data>
             <app-input-data (action)="addOffer($event)" icon="local_atm" title="Offers"></app-input-data>
-            <app-input-data (action)="addPoints($event)" icon="star" title="Use Points"></app-input-data>
+            <customer-points-search (usePoints)="useCustomerPoints($event)"></customer-points-search>
         </div>
     </mat-card-content>
 </mat-card>
