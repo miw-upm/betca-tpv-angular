@@ -13,6 +13,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { Observable } from 'rxjs';
 import { ColumnData } from '../column-data.model';
+import { Rgpd } from '@core/models/rgpd.model';
 
 @Component({
   selector: 'app-data-protection-update',
@@ -41,19 +42,33 @@ export class DataProtectionUpdateComponent {
   users$: Observable<User[]>;
   fileName: string = '';
   existingFileName: string = '';
+  existingUser: User;
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: ColumnData | null) {
     this.title = data ? 'Update Data Protection' : 'Create Data Protection';
     this.columnData = data ? { ...data } : this.createNewColumnData();
-    if (data) this.existingFileName = this.extractFileName(data.agreement);
-    else this.users$ = this._dataProtectionService.getUsers();
+
+    if (data) {
+      this.existingFileName = this.extractFileName(data.agreement);
+
+      this._dataProtectionService.getUserByMobile(data.userMobile).subscribe((user) => {
+        if (user) {
+          this.existingUser = user;
+        } else {
+          console.error('No se encontró el usuario con móvil', data.userMobile);
+        }
+      });
+    } else {
+      this.users$ = this._dataProtectionService.getAllUserWithoutRgpdSigned();
+    }
   }
 
   onFileSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files.length > 0) {
       const file = input.files[0];
-      this.fileName = file.name;
+      const userNameFormatted = this.columnData.userName.replace(/\s+/g, '_');
+      this.fileName = `rgpd_${userNameFormatted}.pdf`;
       const reader = new FileReader();
       reader.onload = () => {
         if (reader.result instanceof ArrayBuffer) {
@@ -64,14 +79,47 @@ export class DataProtectionUpdateComponent {
     }
   }
 
-  save(): void {
-    if (!this.columnData.userName || !this.columnData.userMobile) return;
+  createOrUpdate(): void {
     this.data ? this.updateRgpd() : this.createRgpd();
-    this._dialogRef.close(true);
   }
 
   close(): void {
-    this._dialogRef.close();
+    this._dialogRef.close(true);
+  }
+
+  isSaveEnabled(): boolean {
+    return !!this.columnData.userName && !!this.columnData.userMobile && this.columnData.agreement?.length > 0;
+  }
+
+  private updateRgpd(): void {
+    if (!this.existingUser) {
+      console.error('Error: No se encontró el usuario antes de actualizar.');
+      return;
+    }
+
+    const updatedRgpd: Rgpd = {
+      type: this.columnData.type as RgpdType,
+      agreement: this.columnData.agreement,
+      user: this.existingUser,
+    };
+
+    this._dataProtectionService.update(updatedRgpd).subscribe(() => {
+      this.close();
+    });
+  }
+
+  private createRgpd(): void {
+    if (!this.isSaveEnabled()) return;
+
+    this._dataProtectionService
+      .create({
+        type: this.columnData.type as RgpdType,
+        agreement: this.columnData.agreement,
+        user: { name: this.columnData.userName, mobile: this.columnData.userMobile, token: '', role: undefined },
+      })
+      .subscribe(() => {
+        this.close();
+      });
   }
 
   private extractFileName(data: Uint8Array): string {
@@ -85,21 +133,5 @@ export class DataProtectionUpdateComponent {
       userName: '',
       userMobile: 0,
     };
-  }
-
-  private updateRgpd(): void {
-    this._dataProtectionService.update(this.columnData.userMobile, {
-      type: this.columnData.type as RgpdType,
-      agreement: this.columnData.agreement,
-      user: { name: this.columnData.userName, mobile: this.columnData.userMobile, token: '', role: undefined },
-    });
-  }
-
-  private createRgpd(): void {
-    this._dataProtectionService.create({
-      type: this.columnData.type as RgpdType,
-      agreement: this.columnData.agreement,
-      user: { name: this.columnData.userName, mobile: this.columnData.userMobile, token: '', role: undefined },
-    });
   }
 }
