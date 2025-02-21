@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { CustomerPointsService } from '../../shop/cashier-opened/shopping-cart/customer-points/customer-points.service';
-import { CustomerPoints } from '../../shop/cashier-opened/shopping-cart/customer-points/customer-points.model';
+import { CustomerPointsService } from '../../../features/shop/cashier-opened/shopping-cart/customer-points/customer-points.service';
+import { CustomerPoints } from '../../../features/shop/cashier-opened/shopping-cart/customer-points/customer-points.model';
 import { MatDividerModule } from '@angular/material/divider';
 
 @Component({
@@ -12,8 +12,8 @@ import { MatDividerModule } from '@angular/material/divider';
     styleUrls: ['./customer-points-profile.component.css']
 })
 export class CustomerPointsProfileComponent implements OnInit {
-    points: number = 0;
-    lastUpdated: Date | null = null;
+    points: number = 33;
+    lastUpdated: Date | null = new Date('2025-01-02T10:00:00Z');
 
     constructor(private customerPointsService: CustomerPointsService) {}
 
