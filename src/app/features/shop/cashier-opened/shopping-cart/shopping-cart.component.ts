@@ -241,7 +241,18 @@ export class ShoppingCartComponent implements OnInit {
         }
 
         this.customerPointsService.getPointDiscountShopping(pointsToUse).subscribe(discountShopping => {
-            this.shoppingCart.push(discountShopping);
+            const discountProduct: Shopping = {
+                barcode: CustomerPointsConstants.DISCOUNT_POINTS_BARCODE,
+                description: 'Customer Points Discount',
+                retailPrice: -pointsToUse,
+                amount: 1,
+                discount: 0,
+                total: -pointsToUse,
+                state: ShoppingState.NOT_COMMITTED,
+                updateTotal: function() { },
+                updateDiscount: function() { }
+            };
+            this.shoppingCart.push(discountProduct);
             this.synchronizeShoppingCart();
         });
     }
