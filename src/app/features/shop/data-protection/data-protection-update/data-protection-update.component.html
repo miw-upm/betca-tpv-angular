@@ -23,7 +23,12 @@
 
   <div class="file-upload">
     <label for="fileInput">Upload Agreement</label>
-    <input type="file" id="fileInput" (change)="onFileSelected($event)" />
+    <input
+      type="file"
+      id="fileInput"
+      (change)="onFileSelected($event)"
+      [disabled]="!columnData.userName || !columnData.userMobile"
+    />
 
     <div *ngIf="fileName || existingFileName" class="file-info">
       <mat-icon>attach_file</mat-icon> {{ fileName || existingFileName }}
@@ -33,7 +38,5 @@
 
 <mat-dialog-actions align="end">
   <button mat-button (click)="close()">Cancel</button>
-  <button mat-button color="primary" (click)="save()" [disabled]="!columnData.userName || !columnData.userMobile">
-    Save
-  </button>
+  <button mat-button color="primary" (click)="createOrUpdate()" [disabled]="!isSaveEnabled()">Save</button>
 </mat-dialog-actions>
