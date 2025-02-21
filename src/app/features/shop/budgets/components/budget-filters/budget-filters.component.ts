@@ -1,4 +1,5 @@
 import { Component } from "@angular/core";
+import { MatButton } from "@angular/material/button";
 import { MatDividerModule } from "@angular/material/divider";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatIconModule } from "@angular/material/icon";
@@ -13,6 +14,7 @@ import { MatToolbarModule } from "@angular/material/toolbar";
     MatIconModule,
     MatToolbarModule,
     MatDividerModule,
+    MatButton,
   ],
   templateUrl: "./budget-filters.component.html",
   styleUrl: "./budget-filters.component.css",
