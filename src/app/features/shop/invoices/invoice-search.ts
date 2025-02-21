@@ -1,5 +1,4 @@
-import {TicketCreation} from "../cashier-opened/shopping-cart/ticket-creation.model";
 export class InvoiceSearch {
     mobile: number;
-    ticketCreation: TicketCreation;
+    ticketReference: string;
 }
