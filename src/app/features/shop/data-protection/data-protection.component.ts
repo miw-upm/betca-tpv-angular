@@ -14,7 +14,7 @@ import { Rgpd } from '@core/models/rgpd.model';
 import { RgpdFilter } from './rgpd-filter.model';
 import { DataProtectionService } from './data-protection.service';
 import { DataProtectionUpdateComponent } from './data-protection-update/data-protection-update.component';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { RgpdType } from '@core/models/rgpd-type.model';
 import { ColumnData } from './column-data.model';
 
@@ -53,6 +53,7 @@ export class DataProtectionComponent {
   filteredRgpds$: Observable<ColumnData[]> = this._dataProtectionService.getFilteredRgpdList(this.rgpdFilter);
 
   create(): void {
+    this.downloadRGPD();
     this._dialog
       .open(DataProtectionUpdateComponent)
       .afterClosed()
@@ -72,7 +73,15 @@ export class DataProtectionComponent {
 
   update(columnData: ColumnData): void {
     this._dataProtectionService.read(columnData.userMobile).subscribe((fullColumnData) => {
-      this._dialog.open(DataProtectionUpdateComponent, { data: fullColumnData });
+      if (!this._dialog.openDialogs.length) {
+        this._dialog
+          .open(DataProtectionUpdateComponent, { data: fullColumnData })
+          .afterClosed()
+          .subscribe(() => {
+            console.log('CIERRO');
+            this.refreshList();
+          });
+      }
     });
   }
 
@@ -82,7 +91,9 @@ export class DataProtectionComponent {
   }
 
   refreshList(): void {
-    this.filteredRgpds$ = this._dataProtectionService.getFilteredRgpdList(this.rgpdFilter);
+    this._dataProtectionService.getFilteredRgpdList(this.rgpdFilter).subscribe((filteredList) => {
+      this.filteredRgpds$ = new BehaviorSubject(filteredList).asObservable();
+    });
   }
 
   clearField(field: keyof RgpdFilter): void {
@@ -93,5 +104,15 @@ export class DataProtectionComponent {
   clearAllFilters(): void {
     this.rgpdFilter = { user: '', mobile: '', type: '' };
     this.refreshList();
+  }
+
+  private downloadRGPD() {
+    const pdfUrl = 'assets/rgpd/rgpd_document.pdf';
+    const link = document.createElement('a');
+    link.href = pdfUrl;
+    link.download = 'rgpd_document.pdf';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   }
 }

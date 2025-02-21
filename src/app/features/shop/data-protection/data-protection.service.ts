@@ -25,7 +25,18 @@ export class DataProtectionService {
   private rgpdListSubject = new BehaviorSubject<Rgpd[]>(this.mockRgpdList);
   rgpdList$: Observable<Rgpd[]> = this.rgpdListSubject.asObservable();
 
-  // ✅ Método para aplicar filtros en el servicio
+  getAllUserWithoutRgpdSigned(): Observable<User[]> {
+    return this.rgpdList$.pipe(
+      map((rgpds) => {
+        const usersWithSignedRgpd = new Set(
+          rgpds.filter((rgpd) => rgpd.agreement !== null && rgpd.agreement.length > 0).map((rgpd) => rgpd.user.mobile),
+        );
+
+        return this.mockUsers.filter((user) => !usersWithSignedRgpd.has(user.mobile));
+      }),
+    );
+  }
+
   getFilteredRgpdList(filter: RgpdFilter): Observable<ColumnData[]> {
     return this.rgpdList$.pipe(
       map((rgpds) =>
@@ -50,10 +61,15 @@ export class DataProtectionService {
     );
   }
 
-  // ✅ Métodos CRUD
-  create(rgpd: Rgpd): void {
-    const updatedList = [...this.rgpdListSubject.value, rgpd];
-    this.rgpdListSubject.next(updatedList);
+  create(rgpd: Rgpd): Observable<void> {
+    return new Observable<void>((observer) => {
+      const updatedList = [...this.rgpdListSubject.value, rgpd];
+      this.rgpdListSubject.next(updatedList);
+
+      // Notificar que la operación ha terminado
+      observer.next();
+      observer.complete();
+    });
   }
 
   read(userMobile: number): Observable<ColumnData | undefined> {
@@ -72,9 +88,15 @@ export class DataProtectionService {
     );
   }
 
-  update(userMobile: number, rgpd: Rgpd): void {
-    const updatedList = this.rgpdListSubject.value.map((r) => (r.user.mobile === userMobile ? rgpd : r));
-    this.rgpdListSubject.next(updatedList);
+  update(rgpd: Rgpd): Observable<void> {
+    return new Observable<void>((observer) => {
+      const updatedList = this.rgpdListSubject.value.map((r) => (r.user.mobile === rgpd.user.mobile ? rgpd : r));
+
+      this.rgpdListSubject.next(updatedList);
+
+      observer.next();
+      observer.complete();
+    });
   }
 
   delete(userMobile: number): void {
@@ -84,6 +106,15 @@ export class DataProtectionService {
 
   getUsers(): Observable<User[]> {
     return new BehaviorSubject<User[]>(this.mockUsers).asObservable();
+  }
+
+  getUserByMobile(userMobile: number): Observable<User | undefined> {
+    return new Observable((observer) => {
+      const foundUser = this.mockUsers.find((user) => user.mobile === userMobile);
+
+      observer.next(foundUser);
+      observer.complete();
+    });
   }
 
   private mapToColumnData(rgpd: Rgpd): ColumnData {
