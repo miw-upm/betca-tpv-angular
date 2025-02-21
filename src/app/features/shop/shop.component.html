@@ -48,6 +48,10 @@
       <mat-icon>local_atm</mat-icon>
       <span>VAT Management</span>
     </button>
+    <button [matMenuTriggerFor]="slack" mat-menu-item>
+      <mat-icon>local_atm</mat-icon>
+      <span>Slack-Publish</span>
+    </button>
   </mat-menu>
   <!--   Menus  -->
   <mat-menu #cashiers="matMenu">
@@ -181,6 +185,14 @@
       <span>Provider Invoice</span>
     </button>
   </mat-menu>
+
+  <mat-menu #slack="matMenu">
+    <button mat-menu-item routerLink="/shop/slack-publish">
+      <mat-icon>money</mat-icon>
+      <span>Slack-Publish</span>
+    </button>
+</mat-menu>
+
 </div>
 <div>
   <router-outlet></router-outlet>
