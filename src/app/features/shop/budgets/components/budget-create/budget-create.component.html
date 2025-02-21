@@ -1,1 +1,9 @@
-<p>budget-create works!</p>
+<mat-dialog-content>
+  <mat-form-field>
+    <input matInput placeholder="Reference" type="text" />
+  </mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button (click)="onCreate()" mat-button>Submit</button>
+</mat-dialog-actions>
