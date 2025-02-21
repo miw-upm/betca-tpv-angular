@@ -3,18 +3,13 @@ import {Observable} from 'rxjs';
 
 import {HttpService} from '@core/services/http.service';
 import {EndPoints} from '@core/end-points';
-import {Complaint} from './complaint.model';
+import {Complaint} from '../models/complaint.model';
 
 @Injectable({providedIn: 'root'})
 export class ComplaintService {
     private static readonly SEARCH = '/search';
 
     constructor(private readonly httpService: HttpService) {
-    }
-
-    create(complaint: Complaint): Observable<Complaint> {
-        return this.httpService
-            .post(EndPoints.COMPLAINTS, complaint);
     }
 
     searchAll(): Observable<Complaint[]> {
@@ -32,4 +27,8 @@ export class ComplaintService {
             .delete(EndPoints.COMPLAINTS + '/' + id);
     }
 
+    update(complaint: Complaint){
+        return this.httpService
+            .put(EndPoints.COMPLAINTS + '/' + complaint.id,complaint);
+    }
 }

@@ -63,8 +63,8 @@ export class VoucherCreationUpdatingDialogComponent {
         return this.check(this.voucher.reference) || this.check(this.voucher.value);
     }
 
-    check(attr: string): boolean {
-        return attr === undefined || null || attr === '';
+    check(attr: string | number): boolean {
+        return attr === undefined || attr === null || attr === '';
     }
 
 }
