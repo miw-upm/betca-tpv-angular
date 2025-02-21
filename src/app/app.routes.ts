@@ -15,8 +15,9 @@ import { OffersComponent } from './features/shop/offers/offers.component';
 import { BudgetsComponent } from './features/shop/budgets/budgets.component';
 import { InvoicesComponent } from './features/shop/invoices/invoices.component';
 import { DataProtectionComponent } from './features/data-protection/data-protection.component';
-import {OrdersComponent} from "./features/shop/orders/orders.component";
-import {CashierClosureHistoryComponent} from "./features/shop/cashier-opened/cashier-closure-history/cashier-closure-history.component";
+import { OrdersComponent } from "./features/shop/orders/orders.component";
+import { CashierClosureHistoryComponent } from "./features/shop/cashier-opened/cashier-closure-history/cashier-closure-history.component";
+import { VouchersComponent } from './features/shop/vouchers/vouchers.component';
 
 export const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'home/adviser' },
@@ -50,6 +51,7 @@ export const routes: Routes = [
       { path: 'invoices', component: InvoicesComponent },
       { path: 'data-protection', component: DataProtectionComponent },
       { path: 'orders', component: OrdersComponent },
+      { path: 'vouchers', component: VouchersComponent },
       { path: 'cashier-closure-history', component: CashierClosureHistoryComponent },
     ],
   },

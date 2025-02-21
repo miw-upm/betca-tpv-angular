@@ -33,7 +33,7 @@
         </button>
     </mat-form-field>
     <mat-form-field>
-        <input [(ngModel)]="ticketCreation.voucher" [disabled]="true" matInput placeholder="Voucher" type="number"/>
+        <input [(ngModel)]="ticketCreation.voucher" matInput placeholder="Voucher" type="number"/>
         <button (click)="consumeVoucher()" aria-label="Voucher" mat-icon-button matSuffix>
             <mat-icon color="warn">local_offer</mat-icon>
         </button>
