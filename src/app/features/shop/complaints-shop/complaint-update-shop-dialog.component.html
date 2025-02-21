@@ -1,0 +1,28 @@
+<h2 mat-dialog-title>Update Complaint</h2>
+<mat-dialog-content>
+    <div class="row">
+        <mat-form-field class="full-width" >
+            <mat-label>Reply</mat-label>
+            <input [(ngModel)]="complaint.reply" matInput required type="text"/>
+        </mat-form-field>
+    </div>
+
+    <div class="row">
+        <mat-form-field class="full-width">
+            <mat-label>State</mat-label>
+            <mat-select [(ngModel)]="complaint.state" required>
+                <mat-option *ngFor="let state of states" [value]="state">
+                    {{ state }}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+
+
+
+</mat-dialog-content>
+<mat-dialog-actions>
+    <button mat-dialog-close mat-raised-button>Close</button>
+    <button (click)="update()" [disabled]=invalid() color="primary" mat-raised-button>Update
+    </button>
+</mat-dialog-actions>

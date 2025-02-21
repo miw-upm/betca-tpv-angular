@@ -4,4 +4,6 @@ export interface Complaint {
     barcode: string;
     description: string;
     registrationDate?: Date;
+    reply?:string;
+    state?:string;
 }

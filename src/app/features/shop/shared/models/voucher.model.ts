@@ -1,0 +1,10 @@
+import { User } from '@core/models/user.model';
+import BigDecimal from 'big.js';
+
+export interface Voucher {
+    reference: string;
+    value: BigDecimal;
+    creationDate: Date;
+    dateOfUse: Date;
+    user: User;
+}
