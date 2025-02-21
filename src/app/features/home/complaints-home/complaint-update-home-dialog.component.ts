@@ -6,28 +6,30 @@ import {MatInput} from '@angular/material/input';
 import {MatButton} from '@angular/material/button';
 
 import {AuthService} from '@core/services/auth.service';
-import {ComplaintService} from './complaint.service';
-import {Complaint} from './complaint.model';
+
+import {Complaint} from '../../shared/models/complaint.model';
+import {ComplaintHomeService} from "./complaint-home.service";
 
 @Component({
     standalone: true,
     imports: [MatDialogContent, MatFormField, MatLabel, FormsModule, MatDialogActions, MatDialogTitle, MatInput,
         MatDialogClose, MatButton],
-    templateUrl: 'complaint-creation-dialog.component.html',
-    styleUrls: ['complaint-dialog.component.css']
+    templateUrl: 'complaint-update-home-dialog.component.html',
+    styleUrls: ['complaint-home-dialog.component.css']
 })
 
-export class ComplaintCreationDialogComponent {
+export class ComplaintUpdateHomeDialogComponent {
     complaint: Complaint;
 
-    constructor(private readonly complaintService: ComplaintService, private readonly dialog: MatDialog, private readonly authService: AuthService) {
-        this.complaint = {barcode: undefined, description: undefined};
+    constructor(private readonly complaintHomeService: ComplaintHomeService, private readonly dialog: MatDialog, private readonly authService: AuthService) {
+        this.complaint = {barcode: "232435543", description: "dsfdfd",mobile:722256532, registrationDate:new Date(2025, 1, 2)};
     }
 
-    create(): void {
-        this.complaintService
+    update(): void {
+        this.dialog.closeAll();
+        /*this.complaintHomeService
             .create(this.complaint)
-            .subscribe(() => this.dialog.closeAll());
+            .subscribe(() => this.dialog.closeAll());*/
     }
 
     invalid(): boolean {
