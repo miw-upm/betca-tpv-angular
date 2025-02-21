@@ -13,7 +13,6 @@ import { VoucherSearch } from "./vouchers-search.model";
 import { VoucherService } from "./vouchers.service";
 import { Voucher } from "../shared/models/voucher.model";
 import { VoucherCreationUpdatingDialogComponent } from "./vouchers-creation-updating-dialog.component";
-import BigDecimal from 'big.js';
 
 @Component({
     standalone: true,
@@ -35,7 +34,7 @@ export class VouchersComponent {
     }
 
     resetSearch(): void {
-        this.voucherSearch = { creationDate: undefined, value: new BigDecimal(0), user: undefined, dateOfUse: undefined, reference: "" };
+        this.voucherSearch = { creationDate: undefined, value: 0, user: undefined, dateOfUse: undefined, reference: "" };
     }
 
     create(): void {
