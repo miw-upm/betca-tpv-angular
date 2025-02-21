@@ -1,0 +1,24 @@
+<!-- <mat-dialog-content>
+  <mat-label
+    ><strong>{{ "Reference" | uppercaseWords }}: </strong
+    >{{ budget.reference }}</mat-label
+  >
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-dialog-close mat-raised-button>Close</button>
+</mat-dialog-actions> -->
+
+<mat-dialog-content>
+  <mat-form-field>
+    <input
+      matInput
+      placeholder="Reference"
+      type="text"
+      [value]="budget.reference"
+    />
+  </mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button mat-dialog-close>Cancel</button>
+  <!-- <button (click)="onCreate()" mat-button>Submit</button> -->
+</mat-dialog-actions>

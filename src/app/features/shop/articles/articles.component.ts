@@ -22,7 +22,6 @@ import {FilterInputComponent} from "@common/components/filter-input.component";
     templateUrl: 'articles.component.html'
 })
 export class ArticlesComponent {
-    barcode: string;
     articleSearch: ArticleSearch;
     title = 'Articles management';
     articles = of([]);
