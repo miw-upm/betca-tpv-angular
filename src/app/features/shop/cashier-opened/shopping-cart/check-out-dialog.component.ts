@@ -48,7 +48,7 @@ export class CheckOutDialogComponent {
 
     constructor(@Inject(MAT_DIALOG_DATA) data, private readonly dialogRef: MatDialogRef<CheckOutDialogComponent>,
                 private readonly shoppingCartService: ShoppingCartService) {
-        this.ticketCreation = {cash: 0, card: 0, voucher: 0, shoppingList: data, note: ''};
+        this.ticketCreation = {cash: 0, card: 0, voucher: 0, shoppingList: data, note: '', messageGift: ''};
         this.total();
     }
 
@@ -186,6 +186,9 @@ export class CheckOutDialogComponent {
         if (returned > 0) {
             this.ticketCreation.note += ' Return: ' + this.round(returned) + '.';
         }
+        if (!this.ticketCreation.messageGift.trim()) {
+            this.ticketCreation.messageGift = 'Congratulations';
+        }
         this.shoppingCartService.createTicketAndPrintReceipts(this.ticketCreation, voucher,
             this.requestedInvoice, this.requestedGiftTicket, this.requestedDataProtectionAct)
             .subscribe(() => this.dialogRef.close(true));
@@ -196,4 +199,9 @@ export class CheckOutDialogComponent {
         return true;
     }
 
+    onGiftTicketChange(): void {
+        if (!this.requestedGiftTicket) {
+            this.ticketCreation.messageGift = '';
+        }
+    }
 }
