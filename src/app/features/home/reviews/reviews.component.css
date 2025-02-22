@@ -1,0 +1,33 @@
+.reviews-container {
+    width: 60%;
+    margin: 30px auto;
+    text-align: center;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+}
+
+th, td {
+    padding: 12px;
+    border: 1px solid #ddd;
+    text-align: center;
+}
+
+th {
+    background-color: #f4f4f4;
+}
+
+
+mat-icon {
+    cursor: pointer;
+    color: #fc2803;
+    transition: color 0.3s;
+}
+
+
+mat-icon.selected {
+    color: gold;
+}
