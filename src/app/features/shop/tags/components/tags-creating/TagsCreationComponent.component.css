@@ -1,4 +1,54 @@
-:host {
-  display: block;
+/* Estilo general del diálogo */
+mat-dialog-container {
+  border-radius: 12px;
+  padding: 24px;
+  max-width: 400px; /* Ajusta el ancho según necesidad */
 }
 
+/* Contenido del diálogo */
+mat-dialog-content {
+  padding: 16px;
+  font-family: 'Arial', sans-serif;
+}
+
+/* Campos de formulario con estilo uniforme */
+mat-form-field.full-width {
+  width: 100%;
+  margin-bottom: 16px;
+}
+
+/* Etiquetas de los campos */
+mat-label {
+  font-weight: bold;
+  color: #d32f2f; /* Color rojo para los campos requeridos */
+  font-size: 14px;
+}
+
+/* Inputs */
+input[matInput], textarea[matInput] {
+  padding: 10px;
+  font-size: 14px;
+  background-color: #f5f5f5; /* Color de fondo similar */
+  border-radius: 4px;
+}
+
+/* Botones de acción */
+mat-dialog-actions {
+  padding: 16px;
+  display: flex;
+  justify-content: space-between;
+}
+
+/* Botón de cerrar */
+button[mat-dialog-close] {
+  background-color: #d32f2f; /* Rojo para el botón de cerrar */
+  color: white;
+  border-radius: 6px;
+  padding: 8px 16px;
+}
+
+/* Botón de crear (deshabilitado por defecto) */
+button[color="primary"]:disabled {
+  background-color: #ccc; /* Gris cuando está deshabilitado */
+  color: #888;
+}

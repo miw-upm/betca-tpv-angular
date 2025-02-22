@@ -1,2 +1,30 @@
-<p>Tags
-     create worddddddks!</p>
+<h2 mat-dialog-title>Create Tag</h2>
+<mat-dialog-content>
+  <mat-form-field class="full-width">
+    <mat-label>Id</mat-label>
+    <input matInput placeholder="Enter the tag ID" required type="text" />
+  </mat-form-field>
+
+  <mat-form-field class="full-width">
+    <mat-label>Name</mat-label>
+    <input matInput placeholder="Enter the tag name" required type="text" />
+  </mat-form-field>
+
+  <mat-form-field class="full-width">
+    <mat-label>Group</mat-label>
+    <input matInput placeholder="Enter the group" required type="text" />
+  </mat-form-field>
+
+  <mat-form-field class="full-width">
+    <mat-label>Description</mat-label>
+    <input matInput placeholder="Enter a brief description" required type="text" />
+  </mat-form-field>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-dialog-close mat-raised-button color="warn">Close</button>
+  <button (click)="create()" [disabled]="invalid()" color="primary" mat-raised-button>
+    Create
+  </button>
+</mat-dialog-actions>
+
