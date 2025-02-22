@@ -4,6 +4,7 @@ import {Observable, of} from "rxjs";
 import {OfferSearch} from "./offer-search.model";
 import {Offer} from "../shared/models/offer.model";
 import {Article} from "../shared/models/article.model";
+import {EndPoints} from "@core/end-points";
 
 @Injectable({providedIn: 'root'})
 export class OfferService {
@@ -11,9 +12,9 @@ export class OfferService {
 
     constructor(private readonly httpService: HttpService) {}
 
-    // Método de creación con mock (sin cambios)
     create(offer: Offer): Observable<Offer> {
-        return of({ ...offer, id: 'mock-id' });
+        return this.httpService
+            .post(EndPoints.OFFERS, offer);
     }
 
     // Método de lectura (mock de oferta)
