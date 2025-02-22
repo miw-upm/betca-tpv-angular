@@ -1,33 +1,33 @@
-/* 让外层依旧是卡片式布局 */
+
 .filter-container {
   margin: 0 16px;
 }
 
-/* 纵向排列每一行，并在行与行之间留间距 */
+
 .filter-content {
   display: flex;
   flex-direction: column;
   gap: 1rem;
 }
 
-/* row: 每一行内部再用 flex 布局, 并排元素 */
+
 .row {
   display: flex;
   gap: 1rem;
   width: 100%;
 }
 
-/* 让 mat-form-field 自适应宽度，以变大输入框 */
+
 .filter-field {
-  flex: 1;  /* 或者 width: 100%; */
+  flex: 1;
 }
 
-/* 标题间距 (可选) */
+
 .filter-title {
   margin-bottom: 0.5rem;
 }
 
-/* 第三行按钮靠右 */
+
 .end-row {
   justify-content: flex-end;
 }
