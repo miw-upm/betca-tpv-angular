@@ -5,7 +5,7 @@ import {catchError, concatMap, map} from 'rxjs/operators';
 
 import {HttpService} from '@core/services/http.service';
 import {EndPoints} from '@core/end-points';
-import {SharedArticleService} from '../../shared/services/shared.article.service';
+import {SharedShopArticleService} from '../../shared/services/shared-shop.article.service';
 import {ArticleQuickCreationDialogComponent} from './article-quick-creation-dialog.component';
 import {Shopping} from './shopping.model';
 import {TicketCreation} from './ticket-creation.model';
@@ -17,7 +17,7 @@ export class ShoppingCartService {
     static readonly VARIOUS_BARCODE = '1';
     static readonly VARIOUS_LENGTH = 5;
 
-    constructor(private readonly dialog: MatDialog, private readonly articleService: SharedArticleService, private readonly httpService: HttpService) {
+    constructor(private readonly dialog: MatDialog, private readonly articleShopService: SharedShopArticleService, private readonly httpService: HttpService) {
     }
 
     read(newBarcode: string): Observable<Shopping> {
@@ -25,7 +25,7 @@ export class ShoppingCartService {
         if (!Number.isNaN(price) && newBarcode.length <= ShoppingCartService.VARIOUS_LENGTH) {
             newBarcode = ShoppingCartService.VARIOUS_BARCODE;
         }
-        return this.articleService
+        return this.articleShopService
             .read(newBarcode)
             .pipe(
                 map(article => {
