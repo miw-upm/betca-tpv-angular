@@ -1,0 +1,22 @@
+<h2 mat-dialog-title>{{ title }}</h2>
+<mat-dialog-content>
+    <ng-container *ngIf="(object | async) as data">
+        <mat-label><strong>Reference:</strong> {{ data.reference }}</mat-label>
+        <mat-label><strong>Description:</strong> {{ data.description }}</mat-label>
+        <mat-label><strong>Provider Company:</strong> {{ data.providerCompany }}</mat-label>
+        <mat-label><strong>Opening Date:</strong> {{ data.openingDate}}</mat-label>
+        <mat-label><strong>Closing Date:</strong> {{ data.closingDate}}</mat-label>
+        <div *ngIf="data.orderLines.length > 0">
+            <h3>Order Lines</h3>
+            <div *ngFor="let orderLine of data.orderLines">
+                <mat-label><strong>Article Barcode:</strong> {{ orderLine.articleBarcode }}</mat-label>
+                <mat-label><strong>Required Amount:</strong> {{ orderLine.requiredAmount }}</mat-label>
+                <mat-label><strong>Final Amount:</strong> {{ orderLine.finalAmount }}</mat-label>
+                <br>
+            </div>
+        </div>
+    </ng-container>
+</mat-dialog-content>
+<mat-dialog-actions>
+    <button mat-dialog-close mat-raised-button>Close</button>
+</mat-dialog-actions>

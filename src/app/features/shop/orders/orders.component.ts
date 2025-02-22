@@ -7,18 +7,20 @@ import {FilterInputComponent} from "@common/components/filter-input.component";
 import {MatButton} from "@angular/material/button";
 import {of} from "rxjs";
 import {MatDialog} from "@angular/material/dialog";
-import {ReadDetailDialogComponent} from "@common/dialogs/read-detail.dialog.component";
 import {OrderSearch} from "./order-search.model";
 import {OrderService} from "./orders.service";
 import {Order} from "../shared/models/order.model";
-import {OrdersCreationUpdatingDialogComponent} from "./orders-creation-updating-dialog.component";
 
+import {OrdersCreationDialogComponent} from "./orders-creation-dialog/orders-creation-dialog.component";
+import {OrdersUpdatingDialogComponent} from "./orders-updating-dialog/orders-updating-dialog.component";
+import {ReadOrderDetailDialogComponent} from "./orders-reading-dialog/read-order-detail.dialog.component";
 @Component({
     standalone: true,
     imports: [MatCard, MatCardContent, FormsModule, MatIcon, CrudComponent,
         FilterInputComponent, MatButton, MatCardTitle],
     templateUrl: 'orders.component.html'
 })
+
 export class OrdersComponent {
     orderSearch: OrderSearch;
     title = 'Orders management';
@@ -37,11 +39,11 @@ export class OrdersComponent {
     }
 
     create(): void {
-        this.dialog.open(OrdersCreationUpdatingDialogComponent);
+        this.dialog.open(OrdersCreationDialogComponent);
     }
 
     read(order: Order): void {
-        this.dialog.open(ReadDetailDialogComponent, {
+        this.dialog.open(ReadOrderDetailDialogComponent, {
             data: {
                 title: 'Order Details',
                 object: this.orderService.read(order.reference)
@@ -51,6 +53,6 @@ export class OrdersComponent {
 
     update(order: Order): void {
         this.orderService.read(order.reference)
-            .subscribe(fullOrder => this.dialog.open(OrdersCreationUpdatingDialogComponent, {data: fullOrder}));
+            .subscribe(fullOrder => this.dialog.open(OrdersUpdatingDialogComponent, {data: fullOrder}));
     }
 }
