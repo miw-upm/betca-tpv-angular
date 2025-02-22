@@ -1,1 +1,37 @@
-<p>ticket works!</p>
+<mat-card>
+    <mat-card-content>
+        <div class="search-container">
+            <mat-form-field appearance="outline">
+                <mat-card>Buscar por referencia</mat-card>
+                <input matInput [(ngModel)]="searchReference">
+            </mat-form-field>
+            <button mat-raised-button color="primary" (click)="filterTicketsByReference()">Buscar</button>
+        </div>
+        <button mat-raised-button color="accent" (click)="printTicket()" [disabled]="!selectedTicket">
+            Imprimir Ticket
+        </button>
+    </mat-card-content>
+</mat-card>
+
+<!----------------------------------------------------------------------------------------------------------->
+
+<mat-card>
+    <mat-card-content>
+        <mat-table [dataSource]="filteredTickets" class="mat-elevation-z8">
+            <ng-container matColumnDef="id">
+                <mat-header-cell *matHeaderCellDef> # </mat-header-cell>
+                <mat-cell *matCellDef="let i = index"> {{ i + 1 }}</mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="reference">
+                <mat-header-cell *matHeaderCellDef> Reference </mat-header-cell>
+                <mat-cell *matCellDef="let item" [matTooltip]="item.reference"> {{ item.reference }}</mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="expireDate">
+                <mat-header-cell *matHeaderCellDef> Expire Date </mat-header-cell>
+                <mat-cell *matCellDef="let item" [matTooltip]="item.expireDate"> {{ item.expireDate }}</mat-cell>
+            </ng-container>
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selectTicket(row)"></mat-row>
+        </mat-table>
+    </mat-card-content>
+</mat-card>

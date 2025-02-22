@@ -19,7 +19,7 @@ export class CustomerPointsService {
     private setCurrentCustomerPoints(): void {
         if (this.auth.isAuthenticated()) {
             const points: CustomerPoints = {
-                value: 10,
+                value: 0,
                 lastDate: new Date(),
                 user: this.auth.getUser()
             };
@@ -27,13 +27,15 @@ export class CustomerPointsService {
         }
     }
 
-    setCurrentCustomerPointsForClient(client: any): void {
+    searchCustomerPointsByMobile(mobile: number): Observable<CustomerPoints> {
+        const client = { mobile, name: 'Test' };
         const points: CustomerPoints = {
-            value: 10,
+            value: 20,
             lastDate: new Date(),
-            user: client
+            user: this.auth.getUser(),
         };
         this.customerPointsSubject.next(points);
+        return of(points);
     }
 
     getCurrentPoints(): CustomerPoints {

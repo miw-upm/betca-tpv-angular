@@ -14,11 +14,15 @@ import {DateComponent} from '@common/components/date.component';
 import {FooterComponent} from '@common/components/footer.component';
 import {SharedCashierService} from './shared/services/shared.cashier.service';
 import {CashierDialogComponent} from './cashier-opened/cashier-closure/cashier-dialog.component';
+import {
+    CashMovementDialogComponent
+} from "./cashier-opened/cash-movement-dialog/cash-movement-dialog.component";
+import {CustomerPointsProfileComponent} from "@common/components/customer-points-profile/customer-points-profile.component";
 
 @Component({
     standalone: true,
     imports: [MatToolbar, DateComponent, MatIcon, MatMenuTrigger, MatButton, NgOptimizedImage, MatIconButton,
-        MatMenu, MatMenuItem, RouterLink, NgIf, RouterOutlet, FooterComponent],
+        MatMenu, MatMenuItem, RouterLink, NgIf, RouterOutlet, FooterComponent, CustomerPointsProfileComponent],
     templateUrl: 'shop.component.html',
     styleUrls: ['shop.component.css']
 })
@@ -71,5 +75,10 @@ export class ShopComponent {
             .subscribe(() => this.cashier());
     }
 
-
+    openCashMovementDialog(): void {
+        this.dialog
+            .open(CashMovementDialogComponent)
+            .afterClosed()
+            .subscribe(() => this.cashier());
+    }
 }

@@ -16,7 +16,6 @@ import {MatInput} from '@angular/material/input';
 import {MatButton, MatIconButton} from '@angular/material/button';
 import {FormsModule} from '@angular/forms';
 import {MatCheckbox} from '@angular/material/checkbox';
-import {CustomerPointsConstants} from "./customer-points/customer-points.model";
 
 @Component({
     standalone: true,
@@ -48,7 +47,7 @@ export class CheckOutDialogComponent {
 
     constructor(@Inject(MAT_DIALOG_DATA) data, private readonly dialogRef: MatDialogRef<CheckOutDialogComponent>,
                 private readonly shoppingCartService: ShoppingCartService) {
-        this.ticketCreation = {cash: 0, card: 0, voucher: 0, shoppingList: data, note: ''};
+        this.ticketCreation = {cash: 0, card: 0, voucher: 0, shoppingList: data, note: '', messageGift: ''};
         this.total();
     }
 
@@ -154,10 +153,6 @@ export class CheckOutDialogComponent {
     }
 
     pay(): any {
-        this.ticketCreation.shoppingList = this.ticketCreation.shoppingList.filter(
-            item => item.barcode !== CustomerPointsConstants.DISCOUNT_POINTS_BARCODE
-        );
-
         const returned = this.returnedAmount();
         const cash = this.ticketCreation.cash;
         let voucher = 0;
@@ -186,6 +181,9 @@ export class CheckOutDialogComponent {
         if (returned > 0) {
             this.ticketCreation.note += ' Return: ' + this.round(returned) + '.';
         }
+        if (!this.ticketCreation.messageGift.trim()) {
+            this.ticketCreation.messageGift = 'Congratulations';
+        }
         this.shoppingCartService.createTicketAndPrintReceipts(this.ticketCreation, voucher,
             this.requestedInvoice, this.requestedGiftTicket, this.requestedDataProtectionAct)
             .subscribe(() => this.dialogRef.close(true));
@@ -196,4 +194,9 @@ export class CheckOutDialogComponent {
         return true;
     }
 
+    onGiftTicketChange(): void {
+        if (!this.requestedGiftTicket) {
+            this.ticketCreation.messageGift = '';
+        }
+    }
 }

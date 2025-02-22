@@ -1,0 +1,33 @@
+
+.filter-container {
+  margin: 0 16px;
+}
+
+
+.filter-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+
+.row {
+  display: flex;
+  gap: 1rem;
+  width: 100%;
+}
+
+
+.filter-field {
+  flex: 1;
+}
+
+
+.filter-title {
+  margin-bottom: 0.5rem;
+}
+
+
+.end-row {
+  justify-content: flex-end;
+}

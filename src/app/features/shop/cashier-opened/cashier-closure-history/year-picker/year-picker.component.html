@@ -1,0 +1,15 @@
+<div class="container">
+    <button mat-fab extended (click)="setCurrentYear()">Current year</button>
+    <mat-form-field>
+        <mat-label>Select a year</mat-label>
+        <input matInput [matDatepicker]="datepicker" [formControl]="date">
+        <mat-datepicker-toggle mat-icon-button matSuffix [for]="datepicker">
+            <mat-icon>calendar</mat-icon>
+        </mat-datepicker-toggle>
+        <mat-datepicker #datepicker
+                        startView="multi-year"
+                        (yearSelected)="setYear($event, datepicker)"
+                        panelClass="example-month-picker">
+        </mat-datepicker>
+    </mat-form-field>
+</div>
