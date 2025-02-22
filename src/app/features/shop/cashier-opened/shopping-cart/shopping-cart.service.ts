@@ -10,6 +10,7 @@ import {ArticleQuickCreationDialogComponent} from './article-quick-creation-dial
 import {Shopping} from './shopping.model';
 import {TicketCreation} from './ticket-creation.model';
 import {ShoppingState} from './shopping-state.model';
+import { CustomerPointsConstants } from './customer-points/customer-points.model';
 
 @Injectable({providedIn: 'root'})
 export class ShoppingCartService {
@@ -86,5 +87,36 @@ export class ShoppingCartService {
     createDataProtectionActAndPrint(ticket): Observable<void> {
         alert('Data protection act creation not implemented');
         return EMPTY; // TODO change EMPTY
+    }
+
+    createDiscountPointsArticle(pointsToUse: number): Observable<Shopping> {
+        const pointsArticle = {
+            barcode: CustomerPointsConstants.DISCOUNT_POINTS_BARCODE,
+            description: 'Customer Points Discount',
+            retailPrice: pointsToUse,
+            providerCompany: 'Various'
+        };
+
+        return this.articleService.read(pointsArticle.barcode).pipe(
+            concatMap(existingArticle => {
+                if (existingArticle) {
+                    return this.articleService.update(pointsArticle);
+                } else {
+                    return this.articleService.create(pointsArticle);
+                }
+            }),
+            map(article => new Shopping(
+                article.barcode,
+                article.description,
+                article.retailPrice,
+            )),
+            catchError(() => this.articleService.create(pointsArticle).pipe(
+                map(article => new Shopping(
+                    article.barcode,
+                    article.description,
+                    article.retailPrice
+                ))
+            ))
+        );
     }
 }
