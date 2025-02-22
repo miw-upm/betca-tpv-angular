@@ -1,0 +1,30 @@
+<div class="reviews-container">
+    <h2>My Purchased Products</h2>
+    <table>
+        <thead>
+        <tr>
+            <th>Product</th>
+            <th>Stars</th>
+            <th>Opinion</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let review of reviews">
+
+            <td>{{ review.article.name }}</td>
+
+            <td>
+                <mat-icon *ngFor="let star of [1, 2, 3, 4, 5]"
+                          (click)="rateProduct(review, star)"
+                          [ngClass]="{ 'selected': star <= review.stars }">
+                    star
+                </mat-icon>
+            </td>
+
+            <td>
+                <input [(ngModel)]="review.opinion" placeholder="Write your review..." />
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>

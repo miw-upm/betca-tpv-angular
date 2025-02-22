@@ -19,6 +19,7 @@ import { CashierClosureHistoryComponent } from './features/shop/cashier-opened/c
 import { VouchersComponent } from './features/shop/vouchers/vouchers.component';
 import { ComplaintsShopComponent } from './features/shop/complaints-shop/complaints-shop.component';
 import { SlackPublishComponent } from './features/shop/slack-publish/slack-publish.component';
+import { ReviewsComponent } from './features/home/reviews/reviews.component';
 
 export const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'home/adviser' },
@@ -30,6 +31,12 @@ export const routes: Routes = [
       {
         path: 'complaints',
         component: ComplaintsHomeComponent,
+        canActivate: [RoleGuardService],
+        data: { roles: [Role.CUSTOMER] },
+      },
+      {
+        path: 'reviews',
+        component: ReviewsComponent,
         canActivate: [RoleGuardService],
         data: { roles: [Role.CUSTOMER] },
       },
