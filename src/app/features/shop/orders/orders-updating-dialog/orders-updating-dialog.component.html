@@ -1,0 +1,23 @@
+<h4 mat-dialog-title>{{ title }}</h4>
+<mat-dialog-content>
+    <div>
+        <mat-label><strong>Reference :</strong> {{ order.reference }}</mat-label><br>
+        <mat-label><strong>Description:</strong>{{ order.description }}</mat-label><br>
+        <mat-label><strong>Provider Company:</strong> {{ order.providerCompany }}</mat-label><br>
+        <mat-label><strong>Opening Date:</strong> {{ order.openingDate }}</mat-label><br><br>
+    </div>
+    <div *ngIf="order.orderLines.length > 0">
+        <div *ngFor="let orderLine of order.orderLines">
+            <mat-form-field class="full-width">
+                <mat-label>{{ orderLine.articleBarcode }}</mat-label>
+                <input [(ngModel)]="orderLine.requiredAmount" matInput type="number" min="0" step="1"/>
+            </mat-form-field>
+        </div>
+    </div>
+</mat-dialog-content>
+<mat-dialog-actions>
+    <button mat-dialog-close mat-raised-button>Close</button>
+    <button (click)="update()" [disabled]=invalid() color="primary" mat-raised-button>Update</button>
+    <button (click)="closeOrder()" [disabled]=invalid() color="primary" mat-raised-button>Close Order
+    </button>
+</mat-dialog-actions>
