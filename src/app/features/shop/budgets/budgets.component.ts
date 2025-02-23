@@ -1,33 +1,22 @@
-import { Component, Inject, OnInit } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { BudgetFiltersComponent } from "./components/budget-filters/budget-filters.component";
 import { BudgetListComponent } from "./components/budget-list/budget-list.component";
-import {
-  BUDGET_SERVICE,
-  IBudgetService,
-} from "./services/interfaces/budget.interface";
-import { Observable } from "rxjs";
-import { Budget } from "./models/budget";
+import { map, Observable } from "rxjs";
+import { BudgetRowData } from "./models/budget";
 import { BudgetService } from "./services/budget.service";
 import { MatDialog } from "@angular/material/dialog";
-import { BudgetCreateComponent } from "./components/budget-create/budget-create.component";
-import { BudgetUpdateComponent } from "./components/budget-update/budget-update.component";
-import { BudgetDetailsComponent } from "./components/budget-details/budget-details.component";
+import { BudgetUpdateDialogComponent } from "./components/budget-update-dialog/budget-update-dialog.component";
+import { BudgetDetailsDialogComponent } from "./components/budget-details-dialog/budget-details-dialog.component";
 
 @Component({
   selector: "app-budgets",
   imports: [BudgetFiltersComponent, BudgetListComponent],
-  providers: [
-    {
-      provide: BUDGET_SERVICE,
-      useClass: BudgetService,
-    },
-  ],
   templateUrl: "./budgets.component.html",
   styleUrl: "./budgets.component.css",
   standalone: true,
 })
 export class BudgetsComponent implements OnInit {
-  budgets$: Observable<Budget[]>;
+  budgetRowData$: Observable<BudgetRowData[]>;
 
   constructor(
     private readonly budgetService: BudgetService,
@@ -35,22 +24,29 @@ export class BudgetsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.budgets$ = this.budgetService.search({ reference: "0001" });
+    this.budgetRowData$ = this.budgetService.search({ reference: "0001" }).pipe(
+      map((budgets) =>
+        budgets.map((budget) => ({
+          reference: budget.reference,
+          creationDate: budget.creationDate,
+          total: budget.shoppings.reduce(
+            (acc, shopping) => acc + shopping.total,
+            0
+          ),
+        }))
+      )
+    );
   }
 
-  onUpdate(budget: Budget) {
-    this.dialogService.open(BudgetUpdateComponent, {
+  onUpdate(budget: BudgetRowData) {
+    this.dialogService.open(BudgetUpdateDialogComponent, {
       data: budget,
     });
   }
 
-  onRead(budget: Budget) {
-    this.dialogService.open(BudgetDetailsComponent, {
+  onRead(budget: BudgetRowData) {
+    this.dialogService.open(BudgetDetailsDialogComponent, {
       data: budget,
     });
-  }
-
-  onCreate() {
-    this.dialogService.open(BudgetCreateComponent);
   }
 }

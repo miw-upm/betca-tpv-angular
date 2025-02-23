@@ -1,87 +1,135 @@
 <mat-card>
-    <mat-card-content>
-        <div class="container">
-            <app-input-data (action)="addBarcode($event)" title="Barcode"></app-input-data>
-            <app-search-by-barcode (add)="addBarcode($event)"></app-search-by-barcode>
-            <app-input-data icon="category" title="Article Family"></app-input-data>
-            <app-input-data (action)="addBudge($event)" icon="description" title="Budge"></app-input-data>
-            <app-input-data (action)="addDiscount($event)" icon="money_off" title="Customer Discount"></app-input-data>
-            <app-input-data (action)="addOffer($event)" icon="local_atm" title="Offers"></app-input-data>
-            <customer-points-search (usePoints)="useCustomerPoints($event)"></customer-points-search>
-        </div>
-    </mat-card-content>
+  <mat-card-content>
+    <div class="container">
+      <app-input-data
+        (action)="addBarcode($event)"
+        title="Barcode"
+      ></app-input-data>
+      <app-search-by-barcode (add)="addBarcode($event)"></app-search-by-barcode>
+      <app-input-data icon="category" title="Article Family"></app-input-data>
+      <app-input-data
+        (action)="addBudge($event)"
+        icon="description"
+        title="Budge"
+      ></app-input-data>
+      <app-input-data
+        (action)="addDiscount($event)"
+        icon="money_off"
+        title="Customer Discount"
+      ></app-input-data>
+      <app-input-data
+        (action)="addOffer($event)"
+        icon="local_atm"
+        title="Offers"
+      ></app-input-data>
+      <customer-points-search
+        (usePoints)="useCustomerPoints($event)"
+      ></customer-points-search>
+    </div>
+  </mat-card-content>
 </mat-card>
 <!----------------------------------------------------------------------------------------------------------->
 <mat-card>
-    <mat-card-title>
-        <mat-icon color="primary">shopping_cart</mat-icon>
-        Shopping Cart {{totalShoppingCart | currency:'EUR':'symbol'}}
-    </mat-card-title>
-    <mat-card-content>
-        <mat-table [dataSource]="shoppingCart" class="mat-elevation-z8">
-            <ng-container matColumnDef="id">
-                <mat-header-cell *matHeaderCellDef>{{ indexShoppingCart + 1 }} #</mat-header-cell>
-                <mat-cell *matCellDef="let i = index"> {{ i + 1 }}</mat-cell>
-            </ng-container>
-            <ng-container matColumnDef="description">
-                <mat-header-cell *matHeaderCellDef> Description</mat-header-cell>
-                <mat-cell *matCellDef="let item" [matTooltip]="item.barcode"> {{ item.description }}</mat-cell>
-            </ng-container>
-            <ng-container matColumnDef="retailPrice">
-                <mat-header-cell *matHeaderCellDef> Retail Price</mat-header-cell>
-                <mat-cell *matCellDef="let item">{{ item.retailPrice }}</mat-cell>
-            </ng-container>
-            <ng-container matColumnDef="amount">
-                <mat-header-cell *matHeaderCellDef> Nº</mat-header-cell>
-                <mat-cell *matCellDef="let item">
-                    <button (click)="decreaseAmount(item)" color="accent" mat-icon-button [disabled]="item.barcode === discountBarcode">
-                        <mat-icon>remove_circle_outline</mat-icon>
-                    </button>
-                    {{ item.amount }}
-                    <button (click)="incrementAmount(item)" color="accent" mat-icon-button [disabled]="item.barcode === discountBarcode">
-                        <mat-icon>add_circle_outline</mat-icon>
-                    </button>
-                </mat-cell>
-            </ng-container>
-            <ng-container matColumnDef="discount">
-                <mat-header-cell *matHeaderCellDef> %</mat-header-cell>
-                <mat-cell *matCellDef="let item">
-                    <button (click)="updateDiscount(item)" mat-button>{{ item.discount }}</button>
-                </mat-cell>
-            </ng-container>
-            <ng-container matColumnDef="total">
-                <mat-header-cell *matHeaderCellDef> Total</mat-header-cell>
-                <mat-cell *matCellDef="let item">
-                    <button (click)="updateTotal(item)" mat-button>{{ item.total }}</button>
-                </mat-cell>
-            </ng-container>
-            <ng-container matColumnDef="actions">
-                <mat-header-cell *matHeaderCellDef>
-                    <button (click)="exchangeShoppingCart()" mat-icon-button matSuffix>
-                        <mat-icon color="primary">autorenew</mat-icon>
-                    </button>
-                </mat-header-cell>
-                <mat-cell *matCellDef="let item">
-                    <mat-checkbox (change)="changeCommitted(item)" [checked]="checkboxState(item.state)"
-                                  [disabled]="item.amount<0"></mat-checkbox>
-                    <button (click)="delete(item)" mat-icon-button matSuffix>
-                        <mat-icon color="warn">close</mat-icon>
-                    </button>
-                </mat-cell>
-            </ng-container>
-            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-            <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
-        </mat-table>
-    </mat-card-content>
-    <mat-card-content>
-        <button (click)="checkOut()" [disabled]="isEmpty()" color="accent" mat-raised-button>
-            <mat-icon>credit_card</mat-icon>
-            Checkout
-            <mat-icon>euro_symbol</mat-icon>
-        </button>
-        <button (click)="createBudget()" color="primary" disabled="disabled" mat-raised-button>
-            <mat-icon>description</mat-icon>
-            Budget
-        </button>
-    </mat-card-content>
+  <mat-card-title>
+    <mat-icon color="primary">shopping_cart</mat-icon>
+    Shopping Cart {{ totalShoppingCart | currency : "EUR" : "symbol" }}
+  </mat-card-title>
+  <mat-card-content>
+    <mat-table [dataSource]="shoppingCart" class="mat-elevation-z8">
+      <ng-container matColumnDef="id">
+        <mat-header-cell *matHeaderCellDef
+          >{{ indexShoppingCart + 1 }} #</mat-header-cell
+        >
+        <mat-cell *matCellDef="let i = index"> {{ i + 1 }}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="description">
+        <mat-header-cell *matHeaderCellDef> Description</mat-header-cell>
+        <mat-cell *matCellDef="let item" [matTooltip]="item.barcode">
+          {{ item.description }}</mat-cell
+        >
+      </ng-container>
+      <ng-container matColumnDef="retailPrice">
+        <mat-header-cell *matHeaderCellDef> Retail Price</mat-header-cell>
+        <mat-cell *matCellDef="let item">{{ item.retailPrice }}</mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="amount">
+        <mat-header-cell *matHeaderCellDef> Nº</mat-header-cell>
+        <mat-cell *matCellDef="let item">
+          <button
+            (click)="decreaseAmount(item)"
+            color="accent"
+            mat-icon-button
+            [disabled]="item.barcode === discountBarcode"
+          >
+            <mat-icon>remove_circle_outline</mat-icon>
+          </button>
+          {{ item.amount }}
+          <button
+            (click)="incrementAmount(item)"
+            color="accent"
+            mat-icon-button
+            [disabled]="item.barcode === discountBarcode"
+          >
+            <mat-icon>add_circle_outline</mat-icon>
+          </button>
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="discount">
+        <mat-header-cell *matHeaderCellDef> %</mat-header-cell>
+        <mat-cell *matCellDef="let item">
+          <button (click)="updateDiscount(item)" mat-button>
+            {{ item.discount }}
+          </button>
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="total">
+        <mat-header-cell *matHeaderCellDef> Total</mat-header-cell>
+        <mat-cell *matCellDef="let item">
+          <button (click)="updateTotal(item)" mat-button>
+            {{ item.total }}
+          </button>
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="actions">
+        <mat-header-cell *matHeaderCellDef>
+          <button (click)="exchangeShoppingCart()" mat-icon-button matSuffix>
+            <mat-icon color="primary">autorenew</mat-icon>
+          </button>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let item">
+          <mat-checkbox
+            (change)="changeCommitted(item)"
+            [checked]="checkboxState(item.state)"
+            [disabled]="item.amount < 0"
+          ></mat-checkbox>
+          <button (click)="delete(item)" mat-icon-button matSuffix>
+            <mat-icon color="warn">close</mat-icon>
+          </button>
+        </mat-cell>
+      </ng-container>
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+    </mat-table>
+  </mat-card-content>
+  <mat-card-content>
+    <button
+      (click)="checkOut()"
+      [disabled]="isEmpty()"
+      color="accent"
+      mat-raised-button
+    >
+      <mat-icon>credit_card</mat-icon>
+      Checkout
+      <mat-icon>euro_symbol</mat-icon>
+    </button>
+    <button
+      (click)="createBudget()"
+      color="primary"
+      [disabled]="isEmpty()"
+      mat-raised-button
+    >
+      <mat-icon>description</mat-icon>
+      Budget
+    </button>
+  </mat-card-content>
 </mat-card>

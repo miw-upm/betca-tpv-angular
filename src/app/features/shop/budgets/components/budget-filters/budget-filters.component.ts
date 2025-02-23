@@ -1,23 +1,23 @@
-import { Component } from "@angular/core";
+import { Component, EventEmitter, Output } from "@angular/core";
 import { MatButton } from "@angular/material/button";
-import { MatDividerModule } from "@angular/material/divider";
-import { MatFormFieldModule } from "@angular/material/form-field";
-import { MatIconModule } from "@angular/material/icon";
-import { MatInputModule } from "@angular/material/input";
-import { MatToolbarModule } from "@angular/material/toolbar";
+import { MatDivider } from "@angular/material/divider";
+import { MatIcon } from "@angular/material/icon";
+import { MatToolbar } from "@angular/material/toolbar";
+import { FilterInputComponent } from "@common/components/filter-input.component";
 
 @Component({
   selector: "app-budget-filters",
-  imports: [
-    MatFormFieldModule,
-    MatInputModule,
-    MatIconModule,
-    MatToolbarModule,
-    MatDividerModule,
-    MatButton,
-  ],
+  imports: [MatIcon, MatDivider, MatButton, FilterInputComponent, MatToolbar],
   templateUrl: "./budget-filters.component.html",
   styleUrl: "./budget-filters.component.css",
   standalone: true,
 })
-export class BudgetFiltersComponent {}
+export class BudgetFiltersComponent {
+  @Output() search = new EventEmitter<string>();
+
+  public reference: string;
+
+  onSearch() {
+    this.search.emit(this.reference);
+  }
+}
