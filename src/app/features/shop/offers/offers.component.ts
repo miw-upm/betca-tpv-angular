@@ -34,7 +34,7 @@ export class OffersComponent {
     }
 
     resetSearch(): void {
-        this.offerSearch = {creationDate: undefined, description: "", discount: 0, expiryDate: undefined, reference: ""};
+        this.offerSearch = {description: "", reference: ""};
     }
 
     create(): void {

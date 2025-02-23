@@ -9,4 +9,5 @@ export class EndPoints {
     static readonly CASHIERS_CASH_MOVEMENT = EndPoints.CASHIERS + '/cash-movement';
     static readonly TICKETS = environment.REST_CORE + '/tickets';
     static readonly COMPLAINTS = environment.REST_CORE + '/complaints';
+    static readonly OFFERS = environment.REST_CORE + '/offers';
 }
