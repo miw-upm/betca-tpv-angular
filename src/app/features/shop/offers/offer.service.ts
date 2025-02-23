@@ -13,11 +13,18 @@ export class OfferService {
     constructor(private readonly httpService: HttpService) {}
 
     create(offer: Offer): Observable<Offer> {
+
+        const formattedOffer = {
+            ...offer,
+            creationDate: this.formatDate(offer.creationDate),
+            expiryDate: this.formatDate(offer.expiryDate),
+        };
+        console.log(formattedOffer);
         return this.httpService
-            .post(EndPoints.OFFERS, offer);
+            .post(EndPoints.OFFERS, formattedOffer);
     }
 
-    // Método de lectura (mock de oferta)
+    // TODO: Implementar método de lectura
     read(reference: string): Observable<Offer> {
         return of({
             reference,
@@ -25,16 +32,16 @@ export class OfferService {
             creationDate: new Date(),
             expiryDate: new Date(),
             discount: 15,
-            articles: this.getMockArticles()  // Incluimos artículos mock aquí
+            articles: this.getMockArticles()
         });
     }
 
-    // Método de actualización (mock de oferta con artículos)
+    // TODO: Implementar método de actualización
     update(oldReference: string, offer: Offer): Observable<Offer> {
         return of({
             ...offer,
             reference: oldReference,
-            articles: this.getMockArticles()  // Agregamos artículos mock al hacer un update
+            articles: this.getMockArticles()
         });
     }
 
@@ -44,6 +51,15 @@ export class OfferService {
             .get(EndPoints.OFFERS + OfferService.SEARCH);
     }
 
+    private formatDate(dateStr: Date | null) {
+        if (!dateStr) return null;
+        const date = new Date(dateStr);
+        if (isNaN(date.getTime())) return null;
+        const pad = (num: number) => num.toString().padStart(2, '0');
+        return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())} 00:00:00`;
+    }
+
+    // TODO: Eliminar este método y sustituirlo por el servicio de artículos
     private getMockArticles(): Article[] {
         return [
             {
