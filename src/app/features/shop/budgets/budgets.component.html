@@ -1,7 +1,6 @@
 <app-budget-filters></app-budget-filters>
 <app-budget-list
-  [budgets$]="budgets$"
-  (create)="onCreate()"
+  [budgetRowData$]="budgetRowData$"
   (read)="onRead($event)"
   (update)="onUpdate($event)"
 ></app-budget-list>

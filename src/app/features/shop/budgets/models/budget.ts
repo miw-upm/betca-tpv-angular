@@ -6,4 +6,8 @@ export type Budget = {
   shoppings: Shopping[];
 };
 
-export type BudgetSearch = Partial<Pick<Budget, "reference" | "creationDate">>;
+export type BudgetRowData = Pick<Budget, "reference" | "creationDate"> & {
+  total: number;
+};
+
+export type BudgetSearch = Partial<Pick<Budget, "reference">>;

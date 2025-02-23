@@ -5,36 +5,9 @@
 </mat-toolbar>
 
 <div class="container">
-  <mat-form-field appearance="outline">
-    <mat-label>Reference</mat-label>
-    <input matInput placeholder="Reference" />
-    <mat-icon matSuffix>delete</mat-icon>
-  </mat-form-field>
-
-  <mat-form-field appearance="outline">
-    <mat-label>Outline form field</mat-label>
-    <input matInput placeholder="Placeholder" />
-    <mat-icon matSuffix>delete</mat-icon>
-  </mat-form-field>
-
-  <mat-form-field appearance="outline">
-    <mat-label>Outline form field</mat-label>
-    <input matInput placeholder="Placeholder" />
-    <mat-icon matSuffix>delete</mat-icon>
-  </mat-form-field>
-
-  <mat-form-field appearance="outline">
-    <mat-label>Outline form field</mat-label>
-    <input matInput placeholder="Placeholder" />
-    <mat-icon matSuffix>delete</mat-icon>
-  </mat-form-field>
-
-  <mat-form-field appearance="outline">
-    <mat-label>Outline form field</mat-label>
-    <input matInput placeholder="Placeholder" />
-    <mat-icon matSuffix>delete</mat-icon>
-  </mat-form-field>
-
-  <button mat-raised-button>Search</button>
-  <button mat-raised-button>Reset</button>
+  <app-filter-input [(value)]="reference" title="Reference"></app-filter-input>
+  <button mat-stroked-button color="primary" (click)="onSearch()">
+    <mat-icon>search</mat-icon>
+    Search
+  </button>
 </div>
