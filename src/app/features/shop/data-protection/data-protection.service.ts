@@ -3,10 +3,13 @@ import { RgpdType } from '@core/models/rgpd-type.model';
 import { Rgpd } from '@core/models/rgpd.model';
 import { Role } from '@core/models/role.model';
 import { User } from '@core/models/user.model';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { BehaviorSubject, from, Observable } from 'rxjs';
+import { map, switchMap } from 'rxjs/operators';
 import { RgpdFilter } from './rgpd-filter.model';
 import { ColumnData } from './column-data.model';
+import { HttpClient } from '@angular/common/http';
+import { EndPoints } from '@core/end-points';
+import { HttpService } from '@core/services/http.service';
 
 @Injectable({
   providedIn: 'root',
@@ -24,6 +27,9 @@ export class DataProtectionService {
 
   private rgpdListSubject = new BehaviorSubject<Rgpd[]>(this.mockRgpdList);
   rgpdList$: Observable<Rgpd[]> = this.rgpdListSubject.asObservable();
+
+  constructor(private httpService: HttpService) {
+  }
 
   getAllUserWithoutRgpdSigned(): Observable<User[]> {
     return this.rgpdList$.pipe(
@@ -61,16 +67,7 @@ export class DataProtectionService {
     );
   }
 
-  create(rgpd: Rgpd): Observable<void> {
-    return new Observable<void>((observer) => {
-      const updatedList = [...this.rgpdListSubject.value, rgpd];
-      this.rgpdListSubject.next(updatedList);
-
-      // Notificar que la operación ha terminado
-      observer.next();
-      observer.complete();
-    });
-  }
+ 
 
   read(userMobile: number): Observable<ColumnData | undefined> {
     return this.rgpdList$.pipe(
@@ -124,5 +121,21 @@ export class DataProtectionService {
       userName: rgpd.user.name,
       userMobile: rgpd.user.mobile,
     };
+  }
+
+  create(rgpd: Rgpd): Observable<Rgpd> {
+    const base64Agreement = this.encodeBase64(rgpd.agreement);
+
+    const rgpdToSend = {
+      rgpdType: rgpd.type,  // Asegurar que "type" coincide con el backend
+      agreement: base64Agreement,  // Enviar el acuerdo en Base64
+      userMobile: rgpd.user.mobile,  // Incluir el móvil del usuario
+    };
+
+    return this.httpService.post(EndPoints.RGPDS, rgpdToSend);
+  }
+
+  private encodeBase64(buffer: Uint8Array): string {
+    return btoa(String.fromCharCode(...buffer));
   }
 }
