@@ -38,26 +38,10 @@ export class OfferService {
         });
     }
 
-    // Método de búsqueda (mock de búsqueda de ofertas)
     search(offerSearch: OfferSearch): Observable<Offer[]> {
-        return of([
-            {
-                reference: 'mock-ref-1',
-                description: 'Mock Description 1',
-                creationDate: new Date(),
-                expiryDate: new Date(),
-                discount: 10,
-                articles: this.getMockArticles()  // También añadimos artículos aquí
-            },
-            {
-                reference: 'mock-ref-2',
-                description: 'Mock Description 2',
-                creationDate: new Date(),
-                expiryDate: new Date(),
-                discount: 20,
-                articles: this.getMockArticles()  // Agregamos artículos
-            }
-        ]);
+        return this.httpService
+            .paramsFrom(offerSearch)
+            .get(EndPoints.OFFERS + OfferService.SEARCH);
     }
 
     private getMockArticles(): Article[] {
