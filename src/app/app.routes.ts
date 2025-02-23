@@ -20,6 +20,7 @@ import { VouchersComponent } from './features/shop/vouchers/vouchers.component';
 import { ComplaintsShopComponent } from './features/shop/complaints-shop/complaints-shop.component';
 import { SlackPublishComponent } from './features/shop/slack-publish/slack-publish.component';
 import { ReviewsComponent } from './features/home/reviews/reviews.component';
+import {StockAlarmComponent} from "./features/shop/stock-alarm/stock-alarm.component";
 
 export const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'home/adviser' },
@@ -63,6 +64,7 @@ export const routes: Routes = [
       { path: 'cashier-closure-history', component: CashierClosureHistoryComponent },
       { path: 'slack-publish', component: SlackPublishComponent },
       { path: 'complaints', component: ComplaintsShopComponent },
+      { path: 'stock-alarm', component: StockAlarmComponent },
     ],
   },
 ];
