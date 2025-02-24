@@ -97,12 +97,12 @@ export class ShoppingCartService {
             providerCompany: 'Various'
         };
 
-        return this.articleService.read(pointsArticle.barcode).pipe(
+        return this.articleShopService.read(pointsArticle.barcode).pipe(
             concatMap(existingArticle => {
                 if (existingArticle) {
-                    return this.articleService.update(pointsArticle);
+                    return this.articleShopService.update(pointsArticle);
                 } else {
-                    return this.articleService.create(pointsArticle);
+                    return this.articleShopService.create(pointsArticle);
                 }
             }),
             map(article => new Shopping(
@@ -110,7 +110,7 @@ export class ShoppingCartService {
                 article.description,
                 article.retailPrice,
             )),
-            catchError(() => this.articleService.create(pointsArticle).pipe(
+            catchError(() => this.articleShopService.create(pointsArticle).pipe(
                 map(article => new Shopping(
                     article.barcode,
                     article.description,

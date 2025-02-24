@@ -12,24 +12,7 @@ export class SharedArticleService {
     constructor(private readonly httpService: HttpService) {
     }
 
-<<<<<<< HEAD:src/app/features/shared/services/shared.article.service.ts
-=======
-    read(barcode: string): Observable<Article> {
-        return this.httpService
-            .get(EndPoints.ARTICLES + '/' + barcode);
-    }
 
-    create(article: Article): Observable<Article> {
-        return this.httpService
-            .post(EndPoints.ARTICLES, article);
-    }
-
-    update(article: Article): Observable<Article> {
-        return this.httpService
-            .put(EndPoints.ARTICLES + '/' + article.barcode, article);
-    }
-
->>>>>>> develop:src/app/features/shop/shared/services/shared.article.service.ts
     searchBarcode(barcode: string): Observable<number[]> {
         return this.httpService
             .param('barcode', barcode)
