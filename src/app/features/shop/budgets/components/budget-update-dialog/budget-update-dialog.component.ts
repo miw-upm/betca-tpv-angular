@@ -14,7 +14,7 @@ import { MatFormField } from "@angular/material/form-field";
 import { MatInput } from "@angular/material/input";
 
 @Component({
-  selector: "app-budget-update",
+  selector: "app-budget-update-dialog",
   imports: [
     MatDialogContent,
     FormsModule,
@@ -24,10 +24,10 @@ import { MatInput } from "@angular/material/input";
     MatDialogActions,
     MatDialogClose,
   ],
-  templateUrl: "./budget-update.component.html",
-  styleUrl: "./budget-update.component.css",
+  templateUrl: "./budget-update-dialog.component.html",
+  styleUrl: "./budget-update-dialog.component.css",
 })
-export class BudgetUpdateComponent {
+export class BudgetUpdateDialogComponent {
   constructor(
     @Inject(MAT_DIALOG_DATA) private data: Budget,
     private readonly budgetService: BudgetService,

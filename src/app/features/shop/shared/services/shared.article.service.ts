@@ -23,6 +23,11 @@ export class SharedArticleService {
             .post(EndPoints.ARTICLES, article);
     }
 
+    update(article: Article): Observable<Article> {
+        return this.httpService
+            .put(EndPoints.ARTICLES + '/' + article.barcode, article);
+    }
+
     searchBarcode(barcode: string): Observable<number[]> {
         return this.httpService
             .param('barcode', barcode)

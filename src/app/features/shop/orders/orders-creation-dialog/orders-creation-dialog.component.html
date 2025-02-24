@@ -8,13 +8,6 @@
         <mat-label>Description</mat-label>
         <input [(ngModel)]="order.description" matInput required type="text"/>
     </mat-form-field> 
-    <mat-form-field class="full-width" *ngIf="!isCreate()">
-        <mat-label>Opening Date</mat-label>
-        <input [(ngModel)]="order.openingDate" matInput [matDatepicker]="picker">
-        <mat-hint>MM/DD/YYYY</mat-hint>
-        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-        <mat-datepicker #picker></mat-datepicker>
-    </mat-form-field>
     <app-search-by-company [(company)]="order.providerCompany" (companyChange)="onCompanyChange()" class="full-width"></app-search-by-company>
     <div *ngIf="order.orderLines.length > 0">
         <div *ngFor="let orderLine of order.orderLines">
@@ -27,8 +20,8 @@
 </mat-dialog-content>
 <mat-dialog-actions>
     <button mat-dialog-close mat-raised-button>Close</button>
-    <button (click)="create()" *ngIf="isCreate()" [disabled]=invalid() color="primary" mat-raised-button>Create
+    <button (click)="create()" [disabled]=invalid() color="primary" mat-raised-button>Create
     </button>
-    <button (click)="update()" *ngIf="!isCreate()" [disabled]=invalid() color="primary" mat-raised-button>Update
-    </button>
+<!--     <button (click)="update()" *ngIf="!isCreate()" [disabled]=invalid() color="primary" mat-raised-button>Update
+    </button> -->
 </mat-dialog-actions>

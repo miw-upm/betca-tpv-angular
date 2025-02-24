@@ -12,7 +12,7 @@ export class OrderService {
     }
 
     create(order: Order): Observable<Order> {
-        return of({ ...order, id: 'mock-id' });
+        return of({ ...order});
     }
 
     read(reference: string): Observable<Order> {
@@ -21,8 +21,17 @@ export class OrderService {
             description: 'Mock Description',
             providerCompany: 'pro1',
             openingDate: new Date(),
-            closingDate: new Date(),
-            orderLines: []
+            closingDate: undefined,
+            orderLines: [{
+                articleBarcode: 'mock-barcode',
+                requiredAmount: 4,
+                finalAmount: 2
+            },
+            {
+                articleBarcode: 'mock-2',
+                requiredAmount: 3,
+                finalAmount: 1
+            }]
         });
     }
 
@@ -34,19 +43,37 @@ export class OrderService {
         return of([
             {
                 reference: 'mock-ref-1',
-                description: 'Mock Description',
+                description: 'Mock ggg',
                 providerCompany: 'pro1',
                 openingDate: new Date(),
-                closingDate: new Date(),
-                orderLines: []
+                closingDate: undefined,
+                orderLines: [{
+                    articleBarcode: 'mock-barcode',
+                    requiredAmount: 4,
+                    finalAmount: 2
+                },
+                {
+                    articleBarcode: 'mock-2',
+                    requiredAmount: 3,
+                    finalAmount: 1
+                }]
             },
             {
                 reference: 'mock-ref-2',
                 description: 'Mock Description',
                 providerCompany: 'pro2',
                 openingDate: new Date(),
-                closingDate: new Date(),
-                orderLines: []
+                closingDate: undefined,
+                orderLines: [{
+                    articleBarcode: 'mock-barcode',
+                    requiredAmount: 4,
+                    finalAmount: 2
+                },
+                {
+                    articleBarcode: 'mock-2',
+                    requiredAmount: 3,
+                    finalAmount: 1
+                }]
             }
         ]);
     }

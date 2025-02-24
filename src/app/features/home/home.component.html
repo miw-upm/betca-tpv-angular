@@ -23,6 +23,12 @@
         <mat-icon>person_outline</mat-icon>
         <span>Logout</span>
       </button>
+        <button
+            *ngIf="isAuthenticated()"
+            mat-button
+        >
+            <customer-points-profile></customer-points-profile>
+        </button>
       <button
         *ngIf="isAuthenticated()"
         [matMenuTriggerFor]="profile"
@@ -48,10 +54,10 @@
       <mat-icon>settings</mat-icon>
       <span>Settings</span>
     </button>
-    <button mat-menu-item>
-      <mat-icon>grade</mat-icon>
-      <span>Reviews</span>
-    </button>
+      <button mat-menu-item routerLink="/home/reviews">
+          <mat-icon>grade</mat-icon>
+          <span>Reviews</span>
+      </button>
     <button mat-menu-item>
       <mat-icon>shopping_basket</mat-icon>
       <span>Online Orders</span>
@@ -68,7 +74,6 @@
       <mat-icon>build</mat-icon>
       <span>Technical Support</span>
     </button>
-      <customer-points-profile></customer-points-profile>
   </mat-menu>
   <mat-toolbar class="center">
     <button [matMenuTriggerFor]="adviser" mat-button>Adviser</button>

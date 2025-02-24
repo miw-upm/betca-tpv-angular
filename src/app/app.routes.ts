@@ -18,6 +18,9 @@ import { OrdersComponent } from './features/shop/orders/orders.component';
 import { CashierClosureHistoryComponent } from './features/shop/cashier-opened/cashier-closure-history/cashier-closure-history.component';
 import { VouchersComponent } from './features/shop/vouchers/vouchers.component';
 import { ComplaintsShopComponent } from './features/shop/complaints-shop/complaints-shop.component';
+import { SlackPublishComponent } from './features/shop/slack-publish/slack-publish.component';
+import { ReviewsComponent } from './features/home/reviews/reviews.component';
+import {StockAlarmComponent} from "./features/shop/stock-alarm/stock-alarm.component";
 
 export const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'home/adviser' },
@@ -29,6 +32,12 @@ export const routes: Routes = [
       {
         path: 'complaints',
         component: ComplaintsHomeComponent,
+        canActivate: [RoleGuardService],
+        data: { roles: [Role.CUSTOMER] },
+      },
+      {
+        path: 'reviews',
+        component: ReviewsComponent,
         canActivate: [RoleGuardService],
         data: { roles: [Role.CUSTOMER] },
       },
@@ -53,7 +62,9 @@ export const routes: Routes = [
       { path: 'orders', component: OrdersComponent },
       { path: 'vouchers', component: VouchersComponent },
       { path: 'cashier-closure-history', component: CashierClosureHistoryComponent },
+      { path: 'slack-publish', component: SlackPublishComponent },
       { path: 'complaints', component: ComplaintsShopComponent },
+      { path: 'stock-alarm', component: StockAlarmComponent },
     ],
   },
 ];

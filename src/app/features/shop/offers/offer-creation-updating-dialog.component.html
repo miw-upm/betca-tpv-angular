@@ -10,20 +10,31 @@
     </mat-form-field>
     <mat-form-field class="full-width">
         <mat-label>Creation date</mat-label>
-        <input [(ngModel)]="offer.creationDate" matInput required type="date">
-        <mat-hint>9 digits</mat-hint>
+        <input [(ngModel)]="offer.creationDate" matInput type="date">
     </mat-form-field>
     <mat-form-field class="full-width">
         <mat-label>Expiry date</mat-label>
-        <input [(ngModel)]="offer.expiryDate" matInput required type="date">
+        <input [(ngModel)]="offer.expiryDate" matInput type="date">
     </mat-form-field>
     <mat-form-field class="full-width">
         <mat-label>Discount</mat-label>
         <input [(ngModel)]="offer.discount" matInput required type="number"/>
     </mat-form-field>
-    <!-- Añadir articulos de forma dinamica -->
-    <!-- TODO: Implementar -->
-    <!--<app-search-by-company [(company)]="article.providerCompany" class="full-width"></app-search-by-company> -->
+    <div class="dialog-container">
+        <app-search-by-barcode (add)="addArticle($event)"></app-search-by-barcode>
+        <mat-card>
+            <mat-card-content>
+                <mat-list>
+                    <mat-list-item *ngFor="let article of offer.articles">
+                        {{ article.barcode }} - {{ article.description }}
+                        <button mat-icon-button color="warn" (click)="removeArticle(article)">
+                            <mat-icon>delete</mat-icon>
+                        </button>
+                    </mat-list-item>
+                </mat-list>
+            </mat-card-content>
+        </mat-card>
+    </div>
 </mat-dialog-content>
 <mat-dialog-actions>
     <button mat-dialog-close mat-raised-button>Close</button>
