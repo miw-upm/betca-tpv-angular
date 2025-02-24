@@ -1,8 +1,8 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {Observable, of} from 'rxjs';
 
-import {SharedArticleService} from '../services/shared.article.service';
 import {SearchComponent} from '@common/components/search.component';
+import {SharedArticleService} from "../services/shared.article.service";
 
 @Component({
     standalone: true,

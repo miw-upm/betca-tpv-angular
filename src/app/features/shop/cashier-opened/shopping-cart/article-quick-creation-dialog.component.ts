@@ -11,8 +11,8 @@ import {
 import {MatError, MatFormField, MatInput} from '@angular/material/input';
 import {MatButton} from '@angular/material/button';
 
-import {Article} from '../../shared/models/article.model';
-import {SharedArticleService} from '../../shared/services/shared.article.service';
+import {Article} from '../../../shared/models/article.model';
+import {SharedShopArticleService} from '../../shared/services/shared-shop.article.service';
 
 @Component({
     standalone: true,
@@ -24,7 +24,7 @@ import {SharedArticleService} from '../../shared/services/shared.article.service
 export class ArticleQuickCreationDialogComponent {
     article: Article;
 
-    constructor(@Inject(MAT_DIALOG_DATA) data: any, private readonly articleService: SharedArticleService,
+    constructor(@Inject(MAT_DIALOG_DATA) data: any, private readonly articleShopService: SharedShopArticleService,
                 private readonly dialogRef: MatDialogRef<ArticleQuickCreationDialogComponent>) {
         this.article = data;
     }
@@ -34,7 +34,7 @@ export class ArticleQuickCreationDialogComponent {
     }
 
     create(): void {
-        this.articleService
+        this.articleShopService
             .create(this.article)
             .subscribe(newArticle => this.dialogRef.close(newArticle));
     }

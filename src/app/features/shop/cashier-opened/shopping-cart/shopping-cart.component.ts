@@ -27,7 +27,7 @@ import {ShoppingCartService} from './shopping-cart.service';
 import {NumberDialogComponent} from '@common/dialogs/number-dialog.component';
 import {InputData} from "@common/components/input-data.component";
 import {CheckOutDialogComponent} from './check-out-dialog.component';
-import {SearchByBarcodeComponent} from '../../shared/components/search-by-barcode.component';
+import {SearchByBarcodeComponent} from '../../../shared/components/search-by-barcode.component';
 import {Shopping} from './shopping.model';
 import {ShoppingState} from './shopping-state.model';
 import {CustomerPoints, CustomerPointsConstants} from "./customer-points/customer-points.model";

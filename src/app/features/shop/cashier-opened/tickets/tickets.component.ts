@@ -19,7 +19,7 @@ import {
     MatRowDef,
     MatTable
 } from "@angular/material/table";
-import { SearchByBarcodeComponent } from "../../shared/components/search-by-barcode.component";
+import { SearchByBarcodeComponent } from "../../../shared/components/search-by-barcode.component";
 import { TicketsService } from "./tickets.service";
 import {MatTooltip} from "@angular/material/tooltip";
 import {Tickets} from "./models/tickets.model";

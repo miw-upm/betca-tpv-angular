@@ -1,4 +1,4 @@
-import {Article} from "../../shared/models/article.model";
+import {Article} from "../../../shared/models/article.model";
 
 export interface StockAlarmLine {
     article: Article;
