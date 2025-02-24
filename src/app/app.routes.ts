@@ -1,4 +1,4 @@
-import {Routes} from "@angular/router";
+import { Routes } from '@angular/router';
 import { RoleGuardService } from '@core/services/role-guard.service';
 import { Role } from '@core/models/role.model';
 import { AdviserComponent } from './features/home/adviser/adviser.component';
@@ -13,11 +13,14 @@ import { TicketsComponent } from './features/shop/cashier-opened/tickets/tickets
 import { OffersComponent } from './features/shop/offers/offers.component';
 import { BudgetsComponent } from './features/shop/budgets/budgets.component';
 import { InvoicesComponent } from './features/shop/invoices/invoices.component';
-import { DataProtectionComponent } from './features/data-protection/data-protection.component';
-import { OrdersComponent } from "./features/shop/orders/orders.component";
-import { CashierClosureHistoryComponent } from "./features/shop/cashier-opened/cashier-closure-history/cashier-closure-history.component";
+import { DataProtectionComponent } from './features/shop/data-protection/data-protection.component';
+import { OrdersComponent } from './features/shop/orders/orders.component';
+import { CashierClosureHistoryComponent } from './features/shop/cashier-opened/cashier-closure-history/cashier-closure-history.component';
 import { VouchersComponent } from './features/shop/vouchers/vouchers.component';
-import {ComplaintsShopComponent} from "./features/shop/complaints-shop/complaints-shop.component";
+import { ComplaintsShopComponent } from './features/shop/complaints-shop/complaints-shop.component';
+import { SlackPublishComponent } from './features/shop/slack-publish/slack-publish.component';
+import { ReviewsComponent } from './features/home/reviews/reviews.component';
+import {StockAlarmComponent} from "./features/shop/stock-alarm/stock-alarm.component";
 
 export const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'home/adviser' },
@@ -29,6 +32,12 @@ export const routes: Routes = [
       {
         path: 'complaints',
         component: ComplaintsHomeComponent,
+        canActivate: [RoleGuardService],
+        data: { roles: [Role.CUSTOMER] },
+      },
+      {
+        path: 'reviews',
+        component: ReviewsComponent,
         canActivate: [RoleGuardService],
         data: { roles: [Role.CUSTOMER] },
       },
@@ -53,7 +62,9 @@ export const routes: Routes = [
       { path: 'orders', component: OrdersComponent },
       { path: 'vouchers', component: VouchersComponent },
       { path: 'cashier-closure-history', component: CashierClosureHistoryComponent },
-        {path: 'complaints', component: ComplaintsShopComponent},
+      { path: 'slack-publish', component: SlackPublishComponent },
+      { path: 'complaints', component: ComplaintsShopComponent },
+      { path: 'stock-alarm', component: StockAlarmComponent },
     ],
   },
 ];

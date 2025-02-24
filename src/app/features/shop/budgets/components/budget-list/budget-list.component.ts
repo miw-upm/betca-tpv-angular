@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, Output } from "@angular/core";
 import { CrudComponent } from "@common/components/crud.component";
 import { Observable } from "rxjs";
-import { Budget } from "../../models/budget";
+import { Budget, BudgetRowData } from "../../models/budget";
 
 @Component({
   selector: "app-budget-list",
@@ -11,21 +11,21 @@ import { Budget } from "../../models/budget";
   standalone: true,
 })
 export class BudgetListComponent {
-  @Input() budgets$: Observable<Budget[]>;
+  @Input() budgetRowData$: Observable<BudgetRowData[]>;
 
   @Output() create: EventEmitter<void> = new EventEmitter();
-  @Output() read: EventEmitter<Budget> = new EventEmitter();
-  @Output() update: EventEmitter<Budget> = new EventEmitter();
+  @Output() read: EventEmitter<BudgetRowData> = new EventEmitter();
+  @Output() update: EventEmitter<BudgetRowData> = new EventEmitter();
 
   onCreate() {
     this.create.emit();
   }
 
-  onRead(budget: Budget) {
+  onRead(budget: BudgetRowData) {
     this.read.emit(budget);
   }
 
-  onUpdate(budget: Budget) {
+  onUpdate(budget: BudgetRowData) {
     this.update.emit(budget);
   }
 }

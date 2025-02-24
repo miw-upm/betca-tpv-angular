@@ -13,7 +13,7 @@ import {MatInput} from '@angular/material/input';
 import {AuthService} from "@core/services/auth.service";
 import {FooterComponent} from '../../common/components/footer.component';
 import {LoginDialogComponent} from "../../common/dialogs/login-dialog.component";
-import {CustomerPointsProfileComponent} from "./customer-points-profile/customer-points-profile.component";
+import {CustomerPointsProfileComponent} from "@common/components/customer-points-profile/customer-points-profile.component";
 
 @Component({
     standalone: true,

@@ -1,0 +1,11 @@
+<div class="container">
+    <span>Stock Alarm</span>
+</div>
+<app-crud
+        (create)="create()"
+        (read)="read($event)"
+        (update)="update($event)"
+        [data]="stockAlarmLines"
+        [deleteAction]="false"
+        [title]="title"
+></app-crud>

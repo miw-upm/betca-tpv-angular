@@ -6,9 +6,6 @@
     <mat-card-content>
         <app-filter-input [(value)]="offerSearch.reference" title="Reference"></app-filter-input>
         <app-filter-input [(value)]="offerSearch.description" title="Description"></app-filter-input>
-        <app-filter-input [(value)]="offerSearch.creationDate" title="Creation Date" type="date"></app-filter-input>
-        <app-filter-input [(value)]="offerSearch.expiryDate" title="Expiry Date" type="date"></app-filter-input>
-        <app-filter-input [(value)]="offerSearch.discount" title="Discount" type="number"></app-filter-input>
         <button (click)="search()" mat-stroked-button>
             <mat-icon>search</mat-icon>
             Find

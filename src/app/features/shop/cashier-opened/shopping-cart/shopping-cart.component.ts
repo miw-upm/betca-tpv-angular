@@ -30,14 +30,15 @@ import {CheckOutDialogComponent} from './check-out-dialog.component';
 import {SearchByBarcodeComponent} from '../../../shared/components/search-by-barcode.component';
 import {Shopping} from './shopping.model';
 import {ShoppingState} from './shopping-state.model';
-import {CustomerPointsConstants} from "./customer-points/customer-points.model";
+import {CustomerPoints, CustomerPointsConstants} from "./customer-points/customer-points.model";
+import {CustomerPointsSearchComponent} from "./customer-points/customer-points-search.component";
 
 @Component({
     standalone: true,
     imports: [MatCard, MatCardContent, MatIconButton, MatIcon, SearchByBarcodeComponent,
         MatCardTitle, CurrencyPipe, MatTable, MatHeaderCell, MatCell, MatCellDef, MatHeaderCellDef, MatTooltip,
         MatColumnDef, MatButton, MatSuffix, MatCheckbox, MatHeaderRow, MatRow, MatHeaderRowDef, MatRowDef,
-        FormsModule, ReactiveFormsModule, InputData],
+        FormsModule, ReactiveFormsModule, InputData, CustomerPointsSearchComponent],
     selector: 'app-shopping-cart',
     styleUrls: ['shopping-cart.component.css'],
     templateUrl: 'shopping-cart.component.html'
@@ -217,44 +218,34 @@ export class ShoppingCartComponent implements OnInit {
         // TODO add offer
     }
 
-    addPoints(pointsInput: string): void {
-        let pointsToUse = Number(pointsInput);
+    useCustomerPoints(points: CustomerPoints): void {
+        this.shoppingCart = this.shoppingCart.filter(item => item.barcode !== CustomerPointsConstants.DISCOUNT_POINTS_BARCODE);
 
-        if (isNaN(pointsToUse)) {
+        let pointsToUse = points.value;
+
+        if (pointsToUse < CustomerPointsConstants.MINIMUM_POINTS_TO_REDEEM) {
+            console.error("Customer does not have enough points");
             return;
         }
 
-        if (pointsToUse < 0) {
-            pointsToUse = 0;
+        let purchaseTotal = 0;
+        for (const item of this.shoppingCart) {
+            if (item.barcode !== CustomerPointsConstants.DISCOUNT_POINTS_BARCODE) {
+                purchaseTotal += item.total;
+            }
+        }
+        purchaseTotal = Math.round(purchaseTotal * 100) / 100;
+        const maxDiscountAllowed = purchaseTotal * 0.5;
+        if (pointsToUse > maxDiscountAllowed) {
+            pointsToUse = maxDiscountAllowed;
         }
 
-        this.shoppingCart = this.shoppingCart.filter(item => item.barcode !== CustomerPointsConstants.DISCOUNT_POINTS_BARCODE);
-
-        if (pointsToUse > 0) {
-            if (pointsToUse < CustomerPointsConstants.MINIMUM_POINTS_TO_REDEEM) {
-                console.error("No minimum points reached.");
-                return;
-            }
-
-            let purchaseTotal = 0;
-            for (const item of this.shoppingCart) {
-                if (item.barcode !== CustomerPointsConstants.DISCOUNT_POINTS_BARCODE) {
-                    purchaseTotal += item.total;
-                }
-            }
-            purchaseTotal = Math.round(purchaseTotal * 100) / 100;
-            const maxDiscountAllowed = purchaseTotal * 0.5;
-            if (pointsToUse > maxDiscountAllowed) {
-                pointsToUse = maxDiscountAllowed;
-            }
-
-            this.customerPointsService.getPointDiscountShopping(pointsToUse).subscribe(discountShopping => {
-                this.shoppingCart.push(discountShopping);
-                this.synchronizeShoppingCart();
-            });
-        } else {
+        this.shoppingCartService.createDiscountPointsArticle(pointsToUse).subscribe(discountProduct => {
+            discountProduct.amount = -1;
+            discountProduct.total = -pointsToUse;
+            this.shoppingCart.push(discountProduct);
             this.synchronizeShoppingCart();
-        }
+        });
     }
 
 }
