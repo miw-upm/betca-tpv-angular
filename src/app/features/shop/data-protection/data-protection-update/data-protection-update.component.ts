@@ -111,16 +111,20 @@ export class DataProtectionUpdateComponent {
   private createRgpd(): void {
     if (!this.isSaveEnabled()) return;
 
-    this._dataProtectionService
-      .create({
+    this._dataProtectionService.create({
         type: this.columnData.type as RgpdType,
         agreement: this.columnData.agreement,
         user: { name: this.columnData.userName, mobile: this.columnData.userMobile, token: '', role: undefined },
       })
-      .subscribe(() => {
-        this.close();
+      .subscribe({
+        next: () => {
+          this.close();
+        },
+        error: (err) => {
+          console.error(`Error al crear RGPD: `, err);
+        }
       });
-  }
+}
 
   private extractFileName(data: Uint8Array): string {
     return data.length ? 'existing_agreement.pdf' : '';
