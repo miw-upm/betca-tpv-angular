@@ -9,11 +9,12 @@ import {AuthService} from '@core/services/auth.service';
 
 import {Complaint} from '../../shared/models/complaint.model';
 import {ComplaintHomeService} from "./complaint-home.service";
+import {SearchByBarcodeComponent} from "../../shared/components/search-by-barcode.component";
 
 @Component({
     standalone: true,
     imports: [MatDialogContent, MatFormField, MatLabel, FormsModule, MatDialogActions, MatDialogTitle, MatInput,
-        MatDialogClose, MatButton],
+        MatDialogClose, MatButton, SearchByBarcodeComponent],
     templateUrl: 'complaint-creation-dialog.component.html',
     styleUrls: ['complaint-home-dialog.component.css']
 })

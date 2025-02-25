@@ -1,5 +1,5 @@
 
-import {Article} from "./article.model";
+import {Article} from "../../../shared/models/article.model";
 
 export interface Offer {
     reference: string;
@@ -7,5 +7,5 @@ export interface Offer {
     creationDate: Date;
     expiryDate: Date;
     discount: number;
-    articles: Article[];
+    articleList: Article[];
 }

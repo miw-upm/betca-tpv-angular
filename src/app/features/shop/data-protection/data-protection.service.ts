@@ -3,10 +3,13 @@ import { RgpdType } from '@core/models/rgpd-type.model';
 import { Rgpd } from '@core/models/rgpd.model';
 import { Role } from '@core/models/role.model';
 import { User } from '@core/models/user.model';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { BehaviorSubject, from, Observable } from 'rxjs';
+import { map, switchMap } from 'rxjs/operators';
 import { RgpdFilter } from './rgpd-filter.model';
-import { ColumnData } from './column-data.model';
+import { HttpClient } from '@angular/common/http';
+import { EndPoints } from '@core/end-points';
+import { HttpService } from '@core/services/http.service';
+import { RgpdDto } from './column-data.model';
 
 @Injectable({
   providedIn: 'root',
@@ -25,6 +28,9 @@ export class DataProtectionService {
   private rgpdListSubject = new BehaviorSubject<Rgpd[]>(this.mockRgpdList);
   rgpdList$: Observable<Rgpd[]> = this.rgpdListSubject.asObservable();
 
+  constructor(private httpService: HttpService) {
+  }
+
   getAllUserWithoutRgpdSigned(): Observable<User[]> {
     return this.rgpdList$.pipe(
       map((rgpds) => {
@@ -37,7 +43,7 @@ export class DataProtectionService {
     );
   }
 
-  getFilteredRgpdList(filter: RgpdFilter): Observable<ColumnData[]> {
+  getFilteredRgpdList(filter: RgpdFilter): Observable<RgpdDto[]> {
     return this.rgpdList$.pipe(
       map((rgpds) =>
         this.applyFilter(
@@ -48,31 +54,8 @@ export class DataProtectionService {
     );
   }
 
-  private applyFilter(data: ColumnData[], filter: RgpdFilter): ColumnData[] {
-    const normalizedUserFilter = filter.user?.toLowerCase().trim() || '';
-    const normalizedMobileFilter = filter.mobile ? filter.mobile.toString() : '';
-    const normalizedTypeFilter = filter.type ? filter.type : null;
 
-    return data.filter(
-      (column) =>
-        column.userName?.toLowerCase().includes(normalizedUserFilter) &&
-        column.userMobile.toString().startsWith(normalizedMobileFilter) &&
-        (normalizedTypeFilter === null || column.type === normalizedTypeFilter),
-    );
-  }
-
-  create(rgpd: Rgpd): Observable<void> {
-    return new Observable<void>((observer) => {
-      const updatedList = [...this.rgpdListSubject.value, rgpd];
-      this.rgpdListSubject.next(updatedList);
-
-      // Notificar que la operación ha terminado
-      observer.next();
-      observer.complete();
-    });
-  }
-
-  read(userMobile: number): Observable<ColumnData | undefined> {
+  read(userMobile: number): Observable<RgpdDto | undefined> {
     return this.rgpdList$.pipe(
       map((rgpds) => {
         const rgpd = rgpds.find((r) => r.user.mobile === userMobile);
@@ -117,12 +100,47 @@ export class DataProtectionService {
     });
   }
 
-  private mapToColumnData(rgpd: Rgpd): ColumnData {
+  private mapToColumnData(rgpd: Rgpd): RgpdDto {
     return {
       type: rgpd.type,
       agreement: rgpd.agreement,
       userName: rgpd.user.name,
       userMobile: rgpd.user.mobile,
     };
+  }
+
+  getAllRgpd(): Observable<RgpdDto[]> {
+    return this.httpService.get(EndPoints.RGPDS)
+  }
+  
+
+  create(rgpd: Rgpd): Observable<Rgpd> {
+    const base64Agreement = this.encodeBase64(rgpd.agreement);
+
+    const rgpdToSend = {
+      rgpdType: rgpd.type,
+      agreement: base64Agreement,
+      userMobile: rgpd.user.mobile,
+      userName: rgpd.user.name,
+    };
+
+    return this.httpService.post(EndPoints.RGPDS, rgpdToSend);
+  }
+
+  private encodeBase64(buffer: Uint8Array): string {
+    return btoa(String.fromCharCode(...buffer));
+  }
+
+  private applyFilter(data: RgpdDto[], filter: RgpdFilter): RgpdDto[] {
+    const normalizedUserFilter = filter.user?.toLowerCase().trim() || '';
+    const normalizedMobileFilter = filter.mobile ? filter.mobile.toString() : '';
+    const normalizedTypeFilter = filter.type ? filter.type : null;
+
+    return data.filter(
+      (column) =>
+        column.userName?.toLowerCase().includes(normalizedUserFilter) &&
+        column.userMobile.toString().startsWith(normalizedMobileFilter) &&
+        (normalizedTypeFilter === null || column.type === normalizedTypeFilter),
+    );
   }
 }

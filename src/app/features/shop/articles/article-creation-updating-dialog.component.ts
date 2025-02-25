@@ -18,7 +18,7 @@ import {Observable, of} from 'rxjs';
 
 import {ArticleService} from './article.service';
 import {SearchByCompanyComponent} from '../shared/components/search-by-company.component';
-import {Article} from '../shared/models/article.model';
+import {Article} from '../../shared/models/article.model';
 import {Tax} from '../shared/models/Tax';
 
 @Component({
