@@ -1,9 +1,8 @@
 import {Injectable} from "@angular/core";
 import {HttpService} from "@core/services/http.service";
-import {Observable, of} from "rxjs";
+import {Observable} from "rxjs";
 import {OfferSearch} from "./offer-search.model";
 import {Offer} from "../shared/models/offer.model";
-import {Article} from "../../shared/models/article.model";
 import {EndPoints} from "@core/end-points";
 
 @Injectable({providedIn: 'root'})
@@ -18,7 +17,6 @@ export class OfferService {
             creationDate: this.formatDate(offer.creationDate),
             expiryDate: this.formatDate(offer.expiryDate),
         };
-        console.log(formattedOffer);
         return this.httpService
             .post(EndPoints.OFFERS, formattedOffer);
     }
@@ -28,13 +26,15 @@ export class OfferService {
             .get(EndPoints.OFFERS + '/' + reference);
     }
 
-    // TODO: Implementar método de actualización
     update(oldReference: string, offer: Offer): Observable<Offer> {
-        return of({
+        const formattedOffer = {
             ...offer,
-            reference: oldReference,
-            articles: this.getMockArticles()
-        });
+            creationDate: this.formatDate(offer.creationDate),
+            expiryDate: this.formatDate(offer.expiryDate),
+        };
+        return this.httpService
+            .successful()
+            .put(EndPoints.OFFERS + '/' + oldReference, formattedOffer);
     }
 
     search(offerSearch: OfferSearch): Observable<Offer[]> {
@@ -49,33 +49,5 @@ export class OfferService {
         if (isNaN(date.getTime())) return null;
         const pad = (num: number) => num.toString().padStart(2, '0');
         return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())} 00:00:00`;
-    }
-
-    // TODO: Eliminar este método y sustituirlo por el servicio de artículos
-    private getMockArticles(): Article[] {
-        return [
-            {
-                barcode: '1234567890',
-                description: 'Article 1',
-                retailPrice: 100,
-                providerCompany: 'Provider A',
-                reference: 'article-1',
-                stock: 50,
-                tax: 0,  // Si tienes un tipo `Tax` puedes añadirlo aquí
-                discontinued: false,
-                registrationDate: new Date()
-            },
-            {
-                barcode: '0987654321',
-                description: 'Article 2',
-                retailPrice: 150,
-                providerCompany: 'Provider B',
-                reference: 'article-2',
-                stock: 30,
-                tax: 1,
-                discontinued: false,
-                registrationDate: new Date()
-            }
-        ];
     }
 }
