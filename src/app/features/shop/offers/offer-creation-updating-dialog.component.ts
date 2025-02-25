@@ -50,6 +50,7 @@ export class OfferCreationUpdatingDialogComponent {
             reference: undefined, description: undefined, creationDate: undefined, expiryDate: undefined,
             discount: undefined, articleList: []
         };
+        this.offer.articleList = this.offer.articleList || [];
         this.oldReference = data ? data.reference : undefined;
     }
 
