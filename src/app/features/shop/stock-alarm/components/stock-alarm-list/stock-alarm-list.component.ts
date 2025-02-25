@@ -1,7 +1,11 @@
 import {Component} from '@angular/core';
 import {CrudComponent} from "@common/components/crud.component";
-import {Observable, of} from "rxjs";
+import {Observable} from "rxjs";
 import {StockAlarm} from "../../models/stock-alarm.model";
+import {MatDialog} from "@angular/material/dialog";
+import {StockAlarmService} from "../../services/stock-alarm-service";
+import {StockAlarmDetailsComponent} from "../stock-alarm-details/stock-alarm-details.component";
+import {StockAlarmCreateComponent} from "../stock-alarm-create/stock-alarm-create.component";
 
 @Component({
     selector: 'app-stock-alarm-list',
@@ -13,21 +17,21 @@ import {StockAlarm} from "../../models/stock-alarm.model";
     standalone: true
 })
 export class StockAlarmListComponent {
-    stockAlarms:Observable<StockAlarm[]> = of([{
-        name: "Alarm 1",
-        description: "Important Alarm",
-        warning: 6,
-        critical: 9,
-        stockAlarmLines: []
-    }]);
+    stockAlarms: Observable<StockAlarm[]>;
     title = "Stock Alarms";
 
-    create() {
-        throw new Error("Method not implemented.");
+    constructor(private dialog: MatDialog, private stockAlarmService: StockAlarmService) {
+        this.stockAlarms = stockAlarmService.getAllStockAlarms();
     }
 
-    read($event: any) {
-        throw new Error("Method not implemented.");
+    create() {
+        this.dialog.open(StockAlarmCreateComponent);
+    }
+
+    read(stockAlarm: StockAlarm) {
+        this.dialog.open(StockAlarmDetailsComponent, {
+            data: stockAlarm
+        });
     }
 
     update($event: any) {
