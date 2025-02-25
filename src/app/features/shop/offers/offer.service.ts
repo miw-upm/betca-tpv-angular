@@ -3,7 +3,7 @@ import {HttpService} from "@core/services/http.service";
 import {Observable, of} from "rxjs";
 import {OfferSearch} from "./offer-search.model";
 import {Offer} from "../shared/models/offer.model";
-import {Article} from "../shared/models/article.model";
+import {Article} from "../../shared/models/article.model";
 import {EndPoints} from "@core/end-points";
 
 @Injectable({providedIn: 'root'})
