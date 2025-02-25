@@ -7,5 +7,5 @@ export interface Offer {
     creationDate: Date;
     expiryDate: Date;
     discount: number;
-    articles: Article[];
+    articleList: Article[];
 }

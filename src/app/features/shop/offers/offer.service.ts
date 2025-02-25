@@ -13,7 +13,6 @@ export class OfferService {
     constructor(private readonly httpService: HttpService) {}
 
     create(offer: Offer): Observable<Offer> {
-
         const formattedOffer = {
             ...offer,
             creationDate: this.formatDate(offer.creationDate),
@@ -24,16 +23,9 @@ export class OfferService {
             .post(EndPoints.OFFERS, formattedOffer);
     }
 
-    // TODO: Implementar método de lectura
     read(reference: string): Observable<Offer> {
-        return of({
-            reference,
-            description: 'Mock Description for Update',
-            creationDate: new Date(),
-            expiryDate: new Date(),
-            discount: 15,
-            articles: this.getMockArticles()
-        });
+        return this.httpService
+            .get(EndPoints.OFFERS + '/' + reference);
     }
 
     // TODO: Implementar método de actualización
