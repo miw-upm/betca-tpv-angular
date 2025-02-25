@@ -14,9 +14,9 @@ import { Rgpd } from '@core/models/rgpd.model';
 import { RgpdFilter } from './rgpd-filter.model';
 import { DataProtectionService } from './data-protection.service';
 import { DataProtectionUpdateComponent } from './data-protection-update/data-protection-update.component';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, map, Observable } from 'rxjs';
 import { RgpdType } from '@core/models/rgpd-type.model';
-import { ColumnData } from './column-data.model';
+import { RgpdDto } from './column-data.model';
 
 @Component({
   selector: 'app-data-protection',
@@ -50,7 +50,9 @@ export class DataProtectionComponent {
     type: '',
   };
 
-  filteredRgpds$: Observable<ColumnData[]> = this._dataProtectionService.getFilteredRgpdList(this.rgpdFilter);
+  filteredRgpds$: Observable<Partial<RgpdDto>[]> = this._dataProtectionService.getAllRgpd().pipe(
+    map((rgpds: RgpdDto[]) => rgpds.map(({ agreement, ...rest }) => rest))
+  );
 
   create(): void {
     this.downloadRGPD();
@@ -71,7 +73,7 @@ export class DataProtectionComponent {
     });
   }
 
-  update(columnData: ColumnData): void {
+  update(columnData: RgpdDto): void {
     this._dataProtectionService.read(columnData.userMobile).subscribe((fullColumnData) => {
       if (!this._dialog.openDialogs.length) {
         this._dialog
@@ -85,15 +87,15 @@ export class DataProtectionComponent {
     });
   }
 
-  delete(columnData: ColumnData): void {
+  delete(columnData: RgpdDto): void {
     this._dataProtectionService.delete(columnData.userMobile);
     this.refreshList();
   }
 
   refreshList(): void {
-    this._dataProtectionService.getFilteredRgpdList(this.rgpdFilter).subscribe((filteredList) => {
-      this.filteredRgpds$ = new BehaviorSubject(filteredList).asObservable();
-    });
+    // this._dataProtectionService.getFilteredRgpdList(this.rgpdFilter).subscribe((filteredList) => {
+    //   this.filteredRgpds$ = new BehaviorSubject(filteredList).asObservable();
+    // });
   }
 
   clearField(field: keyof RgpdFilter): void {

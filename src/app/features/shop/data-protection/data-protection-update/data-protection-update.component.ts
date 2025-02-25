@@ -12,7 +12,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { Observable } from 'rxjs';
-import { ColumnData } from '../column-data.model';
+import { RgpdDto } from '../column-data.model';
 import { Rgpd } from '@core/models/rgpd.model';
 
 @Component({
@@ -37,16 +37,16 @@ export class DataProtectionUpdateComponent {
   private _dialogRef = inject(MatDialogRef<DataProtectionUpdateComponent>);
 
   title: string;
-  columnData: ColumnData;
+  RgpdDto: RgpdDto;
   rgpdTypes = Object.values(RgpdType);
   users$: Observable<User[]>;
   fileName: string = '';
   existingFileName: string = '';
   existingUser: User;
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: ColumnData | null) {
+  constructor(@Inject(MAT_DIALOG_DATA) public data: RgpdDto | null) {
     this.title = data ? 'Update Data Protection' : 'Create Data Protection';
-    this.columnData = data ? { ...data } : this.createNewColumnData();
+    this.RgpdDto = data ? { ...data } : this.createNewRgpdDto();
 
     if (data) {
       this.existingFileName = this.extractFileName(data.agreement);
@@ -67,12 +67,12 @@ export class DataProtectionUpdateComponent {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files.length > 0) {
       const file = input.files[0];
-      const userNameFormatted = this.columnData.userName.replace(/\s+/g, '_');
+      const userNameFormatted = this.RgpdDto.userName.replace(/\s+/g, '_');
       this.fileName = `rgpd_${userNameFormatted}.pdf`;
       const reader = new FileReader();
       reader.onload = () => {
         if (reader.result instanceof ArrayBuffer) {
-          this.columnData.agreement = new Uint8Array(reader.result);
+          this.RgpdDto.agreement = new Uint8Array(reader.result);
         }
       };
       reader.readAsArrayBuffer(file);
@@ -88,7 +88,7 @@ export class DataProtectionUpdateComponent {
   }
 
   isSaveEnabled(): boolean {
-    return !!this.columnData.userName && !!this.columnData.userMobile && this.columnData.agreement?.length > 0;
+    return !!this.RgpdDto.userName && !!this.RgpdDto.userMobile && this.RgpdDto.agreement?.length > 0;
   }
 
   private updateRgpd(): void {
@@ -98,8 +98,8 @@ export class DataProtectionUpdateComponent {
     }
 
     const updatedRgpd: Rgpd = {
-      type: this.columnData.type as RgpdType,
-      agreement: this.columnData.agreement,
+      type: this.RgpdDto.type as RgpdType,
+      agreement: this.RgpdDto.agreement,
       user: this.existingUser,
     };
 
@@ -112,9 +112,9 @@ export class DataProtectionUpdateComponent {
     if (!this.isSaveEnabled()) return;
 
     this._dataProtectionService.create({
-        type: this.columnData.type as RgpdType,
-        agreement: this.columnData.agreement,
-        user: { name: this.columnData.userName, mobile: this.columnData.userMobile, token: '', role: undefined },
+        type: this.RgpdDto.type as RgpdType,
+        agreement: this.RgpdDto.agreement,
+        user: { name: this.RgpdDto.userName, mobile: this.RgpdDto.userMobile, token: '', role: undefined },
       })
       .subscribe({
         next: () => {
@@ -130,7 +130,7 @@ export class DataProtectionUpdateComponent {
     return data.length ? 'existing_agreement.pdf' : '';
   }
 
-  private createNewColumnData(): ColumnData {
+  private createNewRgpdDto(): RgpdDto {
     return {
       type: RgpdType.BASIC,
       agreement: new Uint8Array(),

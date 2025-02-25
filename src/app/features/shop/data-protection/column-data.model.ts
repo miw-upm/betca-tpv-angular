@@ -1,4 +1,4 @@
-export interface ColumnData {
+export interface RgpdDto {
   type: string;
   agreement: Uint8Array;
   userName: string;

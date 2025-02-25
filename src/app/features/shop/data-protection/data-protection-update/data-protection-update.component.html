@@ -4,11 +4,11 @@
   <mat-form-field appearance="outline" class="full-width">
     <mat-label>User</mat-label>
     <mat-icon matPrefix>person</mat-icon>
-    <mat-select [(ngModel)]="columnData.userName" required panelClass="mat-select-dropdown" [disabled]="!!data">
-      <mat-option *ngIf="!!data" [value]="columnData.userName">
-        {{ columnData.userName }} ({{ columnData.userMobile }})
+    <mat-select [(ngModel)]="RgpdDto.userName" required panelClass="mat-select-dropdown" [disabled]="!!data">
+      <mat-option *ngIf="!!data" [value]="RgpdDto.userName">
+        {{ RgpdDto.userName }} ({{ RgpdDto.userMobile }})
       </mat-option>
-      <mat-option *ngFor="let user of users$ | async" [value]="user.name" (click)="columnData.userMobile = user.mobile">
+      <mat-option *ngFor="let user of users$ | async" [value]="user.name" (click)="RgpdDto.userMobile = user.mobile">
         {{ user.name }} ({{ user.mobile }})
       </mat-option>
     </mat-select>
@@ -16,7 +16,7 @@
 
   <mat-form-field appearance="outline">
     <mat-label>Agreement Type</mat-label>
-    <mat-select [(ngModel)]="columnData.type">
+    <mat-select [(ngModel)]="RgpdDto.type">
       <mat-option *ngFor="let type of rgpdTypes" [value]="type">{{ type }}</mat-option>
     </mat-select>
   </mat-form-field>
@@ -27,7 +27,7 @@
       type="file"
       id="fileInput"
       (change)="onFileSelected($event)"
-      [disabled]="!columnData.userName || !columnData.userMobile"
+      [disabled]="!RgpdDto.userName || !RgpdDto.userMobile"
     />
 
     <div *ngIf="fileName || existingFileName" class="file-info">
