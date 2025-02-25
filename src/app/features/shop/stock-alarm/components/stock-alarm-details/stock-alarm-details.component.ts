@@ -1,8 +1,10 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {CrudComponent} from "@common/components/crud.component";
 import {Observable, of} from "rxjs";
 import {StockAlarmLine} from "../../models/stock-alarm-line.model";
 import {StockAlarm} from "../../models/stock-alarm.model";
+import {MAT_DIALOG_DATA} from "@angular/material/dialog";
+import {map} from "rxjs/operators";
 
 @Component({
     selector: 'app-stock-alarm-details',
@@ -16,10 +18,22 @@ import {StockAlarm} from "../../models/stock-alarm.model";
 export class StockAlarmDetailsComponent implements OnInit {
     stockAlarm: StockAlarm;
     stockAlarmLines:Observable<StockAlarmLine[]>;
-    title = "Stock Alarm";
+    formattedStockAlarmLines:Observable<{ article: string; warning: number; critical: number }[]>;
+    title = "Lines";
+    constructor(
+        @Inject(MAT_DIALOG_DATA) private data: StockAlarm
+    ) {
+        this.stockAlarm = data;
+    }
 
     ngOnInit() {
         this.stockAlarmLines = of(this.stockAlarm.stockAlarmLines)
+        this.formattedStockAlarmLines = this.stockAlarmLines.pipe(
+            map(items => items.map(item => ({
+                ...item,
+                article: item.article?.barcode || 'N/A'
+            })))
+        );
     }
 
     create() {

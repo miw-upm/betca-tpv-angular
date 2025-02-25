@@ -48,8 +48,9 @@ export class OfferCreationUpdatingDialogComponent {
         this.title = data ? 'Update Offer' : 'Create Offer';
         this.offer = data || {
             reference: undefined, description: undefined, creationDate: undefined, expiryDate: undefined,
-            discount: undefined, articles: []
+            discount: undefined, articleList: []
         };
+        this.offer.articleList = this.offer.articleList || [];
         this.oldReference = data ? data.reference : undefined;
     }
 
@@ -81,13 +82,13 @@ export class OfferCreationUpdatingDialogComponent {
         this.sharedshopArticleService
             .read(barcode)
             .subscribe(article => {
-                if(!this.offer.articles.some(a => a.barcode === article.barcode)) {
-                    this.offer.articles.push(article);
+                if(!this.offer.articleList.some(a => a.barcode === article.barcode)) {
+                    this.offer.articleList.push(article);
                 }
             });
     }
 
     removeArticle(article: Article): void {
-        this.offer.articles = this.offer.articles.filter(a => a.barcode !== article.barcode);
+        this.offer.articleList = this.offer.articleList.filter(a => a.barcode !== article.barcode);
     }
 }
