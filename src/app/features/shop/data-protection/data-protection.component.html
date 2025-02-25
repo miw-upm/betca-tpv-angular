@@ -5,7 +5,7 @@
     <mat-form-field class="filter-field" appearance="outline">
       <mat-label>User Name</mat-label>
       <mat-icon matPrefix>person</mat-icon>
-      <input matInput [(ngModel)]="rgpdFilter.user" (input)="refreshList()" />
+      <input matInput [(ngModel)]="rgpdFilter.user" (input)="applyFilters()" />
       <button mat-button *ngIf="rgpdFilter.user" matSuffix (click)="clearField('user')">
         <mat-icon>close</mat-icon>
       </button>
@@ -14,7 +14,7 @@
     <mat-form-field class="filter-field" appearance="outline">
       <mat-label>Mobile</mat-label>
       <mat-icon matPrefix>phone</mat-icon>
-      <input matInput type="number" [(ngModel)]="rgpdFilter.mobile" (input)="refreshList()" />
+      <input matInput type="number" [(ngModel)]="rgpdFilter.mobile" (input)="applyFilters()" />
       <button mat-button *ngIf="rgpdFilter.mobile" matSuffix (click)="clearField('mobile')">
         <mat-icon>close</mat-icon>
       </button>
@@ -23,7 +23,7 @@
     <mat-form-field class="filter-field" appearance="outline">
       <mat-label>Agreement Type</mat-label>
       <mat-icon matPrefix>assignment</mat-icon>
-      <mat-select [(ngModel)]="rgpdFilter.type" (selectionChange)="refreshList()">
+      <mat-select [(ngModel)]="rgpdFilter.type" (selectionChange)="applyFilters()">
         <mat-option [value]="">All</mat-option>
         <mat-option *ngFor="let type of rgpdTypes" [value]="type">
           {{ type }}
