@@ -11,6 +11,7 @@ import {Shopping} from './shopping.model';
 import {TicketCreation} from './ticket-creation.model';
 import {ShoppingState} from './shopping-state.model';
 import { CustomerPointsConstants } from './customer-points/customer-points.model';
+import {Offer} from "../../shared/models/offer.model";
 
 @Injectable({providedIn: 'root'})
 export class ShoppingCartService {
@@ -118,5 +119,10 @@ export class ShoppingCartService {
                 ))
             ))
         );
+    }
+
+    readOffer(reference: string): Observable<Offer> {
+        return this.httpService
+            .get(EndPoints.OFFERS + '/' + reference);
     }
 }
