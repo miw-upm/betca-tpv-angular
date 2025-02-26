@@ -1,0 +1,21 @@
+<mat-grid-list cols="1" rowHeight="40:1">
+    <br><br>
+    <mat-grid-tile>
+        <strong style="text-decoration: underline;">OFFER DETAILS - {{offer.reference}}</strong>
+    </mat-grid-tile>
+    <br>
+    <mat-grid-tile><strong>Description</strong>: {{offer.description}}</mat-grid-tile>
+    <mat-grid-tile><strong>Creation date</strong>: {{offer.creationDate}}</mat-grid-tile>
+    <mat-grid-tile><strong>Expiry date</strong>: {{offer.expiryDate}}</mat-grid-tile>
+    <mat-grid-tile><strong>Discount</strong>: {{offer.discount}} %</mat-grid-tile>
+    <mat-grid-tile *ngIf="offer.articleList && offer.articleList.length > 0">
+        <strong style="text-decoration: underline;">Associted articles</strong>
+    </mat-grid-tile>
+    <mat-grid-tile *ngIf="offer.articleList && offer.articleList.length > 0">
+        <ul>
+            <li *ngFor="let article of offer.articleList">
+                <strong>Barcode</strong>: {{ article.barcode }} - <strong>Description</strong>: {{ article.description }}
+            </li>
+        </ul>
+    </mat-grid-tile>
+</mat-grid-list>

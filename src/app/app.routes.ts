@@ -21,6 +21,7 @@ import { ComplaintsShopComponent } from './features/shop/complaints-shop/complai
 import { SlackPublishComponent } from './features/shop/slack-publish/slack-publish.component';
 import { ReviewsComponent } from './features/home/reviews/reviews.component';
 import {StockAlarmComponent} from "./features/shop/stock-alarm/stock-alarm.component";
+import {OfferDetailsComponent} from "./features/home/offers/offer-details.component";
 
 export const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'home/adviser' },
@@ -29,6 +30,7 @@ export const routes: Routes = [
     component: HomeComponent,
     children: [
       { path: 'adviser', component: AdviserComponent }, // PUBLIC
+      { path: 'offers/:reference', component: OfferDetailsComponent },
       {
         path: 'complaints',
         component: ComplaintsHomeComponent,
