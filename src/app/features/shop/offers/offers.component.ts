@@ -63,7 +63,7 @@ export class OffersComponent {
     }
 
     print (item: any): void {
-        console.log('Imprimiendo:', item);
+        this.offerService.printPdf(item.reference).subscribe();
     }
 
     private formatDate(date: string | Date): string {

@@ -8,6 +8,7 @@ import {EndPoints} from "@core/end-points";
 @Injectable({providedIn: 'root'})
 export class OfferService {
     static readonly SEARCH = '/search';
+    static readonly PDF = '/pdf';
 
     constructor(private readonly httpService: HttpService) {}
 
@@ -41,6 +42,10 @@ export class OfferService {
         return this.httpService
             .paramsFrom(offerSearch)
             .get(EndPoints.OFFERS + OfferService.SEARCH);
+    }
+
+    printPdf(reference: string): Observable<any> {
+        return this.httpService.pdf().get(EndPoints.OFFERS + '/' + reference + OfferService.PDF);
     }
 
     private formatDate(dateStr: Date | null) {
