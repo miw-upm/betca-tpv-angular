@@ -32,10 +32,6 @@ export class DataProtectionService {
     return this.rgpdList$.pipe(map((rgpds) => rgpds.find((r) => r.userMobile === userMobile)));
   }
 
-  delete(userMobile: number) {
-    // TODO
-  }
-
   update(userMobile: string, rgpdDto: RgpdDto): Observable<void> {
     return this.httpService.put(`${EndPoints.RGPDS}/${userMobile}`, rgpdDto).pipe(
       take(1),
@@ -68,16 +64,15 @@ export class DataProtectionService {
     };
   }
 
-  private applyFilter(data: RgpdDto[], filter: RgpdFilter): RgpdDto[] {
-    const normalizedUserFilter = filter.user?.toLowerCase().trim() || '';
-    const normalizedMobileFilter = filter.mobile ? filter.mobile.toString() : '';
-    const normalizedTypeFilter = filter.type ? filter.type : null;
-
-    return data.filter(
-      (column) =>
-        column.userName?.toLowerCase().includes(normalizedUserFilter) &&
-        column.userMobile.toString().startsWith(normalizedMobileFilter) &&
-        (normalizedTypeFilter === null || column.rgpdType === normalizedTypeFilter),
+  search(filter: RgpdFilter): Observable<Partial<RgpdDto>[]> {
+    return this.getAllRgpd().pipe(
+      map((rgpds: RgpdDto[]) =>
+        rgpds
+          .filter(rgpd =>
+            (!filter.userMobile || rgpd.userMobile.startsWith(filter.userMobile)) &&
+            (!filter.userName || rgpd.userName?.toLowerCase().startsWith(filter.userName.toLowerCase())))
+          .map(({ agreement, ...rest }) => rest)
+      )
     );
   }
 }
