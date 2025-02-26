@@ -16,6 +16,7 @@ import { DataProtectionUpdateComponent } from './data-protection-update/data-pro
 import { map, Observable, take } from 'rxjs';
 import { RgpdType } from '@core/models/rgpd-type.model';
 import { RgpdDto } from './rgpd-dto.model';
+import { FilterInputComponent } from '@common/components/filter-input.component';
 
 @Component({
   selector: 'app-data-protection',
@@ -31,6 +32,7 @@ import { RgpdDto } from './rgpd-dto.model';
     MatIconModule,
     MatButtonModule,
     CrudComponent,
+    FilterInputComponent,
   ],
   templateUrl: 'data-protection.component.html',
   styleUrls: ['data-protection.component.css'],
@@ -42,24 +44,31 @@ export class DataProtectionComponent {
   title = 'Data protection management';
 
   rgpdTypes = Object.values(RgpdType);
-
-  rgpdFilter: RgpdFilter = {
-    user: '',
-    mobile: '',
-    type: '',
-  };
+  rgpdFilter: RgpdFilter
 
   filteredRgpds$: Observable<Partial<RgpdDto>[]> = this._dataProtectionService
     .getAllRgpd()
     .pipe(map((rgpds: RgpdDto[]) => rgpds.map(({ agreement, ...rest }) => rest)));
 
-  read(rgpd: any): void {
+    constructor() {
+      this.resetSearch();
+    }
+
+  read(rgpd: RgpdDto): void {
     this._dialog.open(ReadDetailDialogComponent, {
       data: {
         title: 'Data protection Details',
-        object: this._dataProtectionService.read(rgpd.mobile),
+        object: this._dataProtectionService.read(rgpd.userMobile).pipe(map(({ agreement, ...rest }) => rest)),
       },
     });
+  }
+
+  search(): void {
+    this.filteredRgpds$ = this._dataProtectionService.search(this.rgpdFilter)
+  }
+
+  resetSearch() {
+    this.rgpdFilter = { userMobile: '', userName: '' };
   }
 
   create(): void {
@@ -76,6 +85,20 @@ export class DataProtectionComponent {
           }
         });
     }
+  }
+
+  print(rgpdDto: RgpdDto): void {
+    this._dataProtectionService
+      .read(rgpdDto.userMobile)
+      .pipe(take(1))
+      .subscribe((existingRgpd) => {
+        if (existingRgpd?.agreement) {
+          const blob = this.base64ToBlob(existingRgpd.agreement, 'application/pdf');
+          const url = URL.createObjectURL(blob);
+          window.open(url, '_blank');
+          URL.revokeObjectURL(url);
+        }
+      });
   }
 
   update(rgpdDto: RgpdDto): void {
@@ -130,29 +153,18 @@ export class DataProtectionComponent {
     document.body.removeChild(link);
   }
 
+  private base64ToBlob(base64: string, mimeType: string): Blob {
+    const byteCharacters = atob(base64);
+    const byteNumbers = new Uint8Array(byteCharacters.length);
+    for (let i = 0; i < byteCharacters.length; i++) {
+      byteNumbers[i] = byteCharacters.charCodeAt(i)
+    }
+    return new Blob([byteNumbers], { type: mimeType });
+  }
+
   private refreshRgpds(): void {
     this.filteredRgpds$ = this._dataProtectionService
       .getAllRgpd()
       .pipe(map((rgpds: RgpdDto[]) => rgpds.map(({ agreement, ...rest }) => rest)));
-  }
-
-  // TODO
-
-  delete(columnData: RgpdDto): void {
-    // TODO
-  }
-
-  clearField(field: keyof RgpdFilter): void {
-    this.rgpdFilter[field] = '';
-    this.applyFilters();
-  }
-
-  clearAllFilters(): void {
-    this.rgpdFilter = { user: '', mobile: '', type: '' };
-    this.applyFilters();
-  }
-
-  applyFilters() {
-    // TODO
   }
 }
