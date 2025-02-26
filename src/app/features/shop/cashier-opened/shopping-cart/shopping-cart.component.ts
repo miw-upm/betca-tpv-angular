@@ -214,8 +214,21 @@ export class ShoppingCartComponent implements OnInit {
     }
 
     addOffer(offer): void {
-        this.offerControl.reset();
-        // TODO add offer
+        this.shoppingCartService
+            .readOffer(offer)
+            .subscribe(offer => {
+                if (offer.articleList && offer.articleList.length > 0) {
+                    this.shoppingCart.forEach(shopping => {
+                        const matchedArticle = offer.articleList.find(article => article.barcode === shopping.barcode);
+                        if (matchedArticle) {
+                            shopping.discount = offer.discount;
+                            shopping.updateTotal();
+                        }
+                    });
+                    this.synchronizeShoppingCart();
+                    this.offerControl.reset();
+                }
+            });
     }
 
     useCustomerPoints(points: CustomerPoints): void {
