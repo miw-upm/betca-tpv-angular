@@ -1,5 +1,5 @@
 import {OfferService} from "../../shop/offers/offer.service";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {Offer} from "../../shop/shared/models/offer.model";
 import {Component, OnInit} from "@angular/core";
 import {NgForOf, NgIf} from "@angular/common";
@@ -33,7 +33,11 @@ export class OfferDetailsComponent implements OnInit{
     title = 'Offer details';
     offer?: Offer;
 
-    constructor(private route: ActivatedRoute, private offerService: OfferService) { }
+    constructor(
+        private route: ActivatedRoute,
+        private offerService: OfferService,
+        private router: Router
+    ) { }
 
     ngOnInit(): void {
         this.getOfferDetails();
@@ -41,9 +45,13 @@ export class OfferDetailsComponent implements OnInit{
 
     getOfferDetails(): void {
         const reference = this.route.snapshot.paramMap.get('reference');
-        this.offerService.read(reference).subscribe(offer => {
-            console.log(offer);
-            this.offer = offer;
+        this.offerService.read(reference).subscribe({
+            next: (offer) => {
+                this.offer = offer;
+            },
+            error: () => {
+                this.router.navigate(['/home/adviser']);
+            }
         });
     }
 }
