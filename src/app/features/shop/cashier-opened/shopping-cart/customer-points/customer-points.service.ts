@@ -4,6 +4,8 @@ import { map } from 'rxjs/operators';
 import { AuthService } from '@core/services/auth.service';
 import { CustomerPoints, CustomerPointsConstants } from './customer-points.model';
 import { Shopping } from '../shopping.model';
+import { HttpService } from '@core/services/http.service';
+import { EndPoints } from '@core/end-points';
 
 @Injectable({
     providedIn: 'root'
@@ -12,7 +14,7 @@ export class CustomerPointsService {
     private customerPointsSubject = new BehaviorSubject<CustomerPoints>(null);
     customerPoints$ = this.customerPointsSubject.asObservable();
 
-    constructor(private auth: AuthService) {
+    constructor(private auth: AuthService, private httpService: HttpService) {
         this.setCurrentCustomerPoints();
     }
 
@@ -28,14 +30,19 @@ export class CustomerPointsService {
     }
 
     searchCustomerPointsByMobile(mobile: number): Observable<CustomerPoints> {
-        const client = { mobile, name: 'Test' };
-        const points: CustomerPoints = {
-            value: 20,
-            lastDate: new Date(),
-            user: this.auth.getUser(),
-        };
-        this.customerPointsSubject.next(points);
-        return of(points);
+        return this.httpService
+            .get(`${EndPoints.CUSTOMER_POINTS}/${mobile}`)
+            .pipe(
+                map((response: any) => {
+                    const points: CustomerPoints = {
+                        value: response.value,
+                        lastDate: new Date(response.lastDate),
+                        user: this.auth.getUser(),
+                    };
+                    this.customerPointsSubject.next(points);
+                    return points;
+                })
+            );
     }
 
     getCurrentPoints(): CustomerPoints {
