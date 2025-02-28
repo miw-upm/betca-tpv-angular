@@ -1,0 +1,14 @@
+<div class="container">
+    <div>{{stockAlarm.name}}</div>
+    <div>{{stockAlarm.description}}</div>
+    <div>{{stockAlarm.warning}}</div>
+    <div>{{stockAlarm.critical}}</div>
+</div>
+<app-crud
+        (create)="create()"
+        (read)="read($event)"
+        (update)="update($event)"
+        [data]="formattedStockAlarmLines"
+        [deleteAction]="false"
+        [title]="title"
+></app-crud>

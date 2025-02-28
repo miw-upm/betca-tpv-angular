@@ -4,39 +4,39 @@
   <mat-form-field appearance="outline" class="full-width">
     <mat-label>User</mat-label>
     <mat-icon matPrefix>person</mat-icon>
-    <mat-select [(ngModel)]="columnData.userName" required panelClass="mat-select-dropdown" [disabled]="!!data">
-      <mat-option *ngIf="!!data" [value]="columnData.userName">
-        {{ columnData.userName }} ({{ columnData.userMobile }})
+    <mat-select [(ngModel)]="rgpdDto.userName" required panelClass="mat-select-dropdown" [disabled]="!!data">
+      <mat-option *ngIf="!!data" [value]="rgpdDto.userName">
+        {{ rgpdDto.userName }} ({{ rgpdDto.userMobile }})
       </mat-option>
-      <mat-option *ngFor="let user of users$ | async" [value]="user.name" (click)="columnData.userMobile = user.mobile">
+      <mat-option
+        *ngFor="let user of users$ | async"
+        [value]="user.name"
+        (click)="rgpdDto.userMobile = user.mobile.toString()"
+      >
         {{ user.name }} ({{ user.mobile }})
       </mat-option>
     </mat-select>
   </mat-form-field>
 
-  <mat-form-field appearance="outline">
+  <mat-form-field appearance="outline" class="full-width">
     <mat-label>Agreement Type</mat-label>
-    <mat-select [(ngModel)]="columnData.type">
-      <mat-option *ngFor="let type of rgpdTypes" [value]="type">{{ type }}</mat-option>
+    <mat-select [(ngModel)]="rgpdDto.rgpdType">
+      <mat-option *ngFor="let type of rgpdTypes" [value]="type">
+        {{ type }}
+      </mat-option>
     </mat-select>
   </mat-form-field>
 
   <div class="file-upload">
-    <label for="fileInput">Upload Agreement</label>
-    <input
-      type="file"
-      id="fileInput"
-      (change)="onFileSelected($event)"
-      [disabled]="!columnData.userName || !columnData.userMobile"
-    />
+    <label for="fileInput" class="file-label"> <mat-icon>attach_file</mat-icon> Upload Agreement </label>
+    <input type="file" id="fileInput" (change)="onFileSelected($event)" accept=".pdf" />
+    <!-- [disabled]="!rgpdDto.userName || !rgpdDto.userMobile" -->
 
-    <div *ngIf="fileName || existingFileName" class="file-info">
-      <mat-icon>attach_file</mat-icon> {{ fileName || existingFileName }}
-    </div>
+    <div *ngIf="fileName" class="file-info"><mat-icon>description</mat-icon> {{ fileName }}</div>
   </div>
 </mat-dialog-content>
 
 <mat-dialog-actions align="end">
   <button mat-button (click)="close()">Cancel</button>
-  <button mat-button color="primary" (click)="createOrUpdate()" [disabled]="!isSaveEnabled()">Save</button>
+  <button mat-button color="primary" (click)="save()" [disabled]="!isSaveEnabled()">Save</button>
 </mat-dialog-actions>

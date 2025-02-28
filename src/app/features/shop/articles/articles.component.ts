@@ -11,7 +11,7 @@ import {ArticleService} from './article.service';
 import {ReadDetailDialogComponent} from '@common/dialogs/read-detail.dialog.component';
 import {CrudComponent} from '@common/components/crud.component';
 import {ArticleCreationUpdatingDialogComponent} from './article-creation-updating-dialog.component';
-import {Article} from '../shared/models/article.model';
+import {Article} from '../../shared/models/article.model';
 import {ArticleSearch} from './article-search.model';
 import {FilterInputComponent} from "@common/components/filter-input.component";
 

@@ -12,8 +12,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { Observable } from 'rxjs';
-import { ColumnData } from '../column-data.model';
-import { Rgpd } from '@core/models/rgpd.model';
+import { RgpdDto } from '../rgpd-dto.model';
 
 @Component({
   selector: 'app-data-protection-update',
@@ -37,101 +36,56 @@ export class DataProtectionUpdateComponent {
   private _dialogRef = inject(MatDialogRef<DataProtectionUpdateComponent>);
 
   title: string;
-  columnData: ColumnData;
+  rgpdDto: RgpdDto;
   rgpdTypes = Object.values(RgpdType);
   users$: Observable<User[]>;
   fileName: string = '';
-  existingFileName: string = '';
-  existingUser: User;
+  isCreated: boolean;
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: ColumnData | null) {
-    this.title = data ? 'Update Data Protection' : 'Create Data Protection';
-    this.columnData = data ? { ...data } : this.createNewColumnData();
+  constructor(@Inject(MAT_DIALOG_DATA) public data: { isCreated: boolean; rgpdDto: RgpdDto }) {
+    this.isCreated = data.isCreated;
+    this.title = this.isCreated ? 'Create Data Protection' : 'Update Data Protection';
+    this.rgpdDto = { ...data.rgpdDto };
 
-    if (data) {
-      this.existingFileName = this.extractFileName(data.agreement);
-
-      this._dataProtectionService.getUserByMobile(data.userMobile).subscribe((user) => {
-        if (user) {
-          this.existingUser = user;
-        } else {
-          console.error('No se encontró el usuario con móvil', data.userMobile);
-        }
-      });
-    } else {
-      this.users$ = this._dataProtectionService.getAllUserWithoutRgpdSigned();
+    if (this.isCreated) {
+      // TODO this.users$ = this._dataProtectionService.getAllUserWithoutRgpdSigned();
     }
   }
 
   onFileSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
-    if (input.files && input.files.length > 0) {
+    if (input.files?.length) {
       const file = input.files[0];
-      const userNameFormatted = this.columnData.userName.replace(/\s+/g, '_');
-      this.fileName = `rgpd_${userNameFormatted}.pdf`;
+      this.fileName = file.name;
+
       const reader = new FileReader();
       reader.onload = () => {
         if (reader.result instanceof ArrayBuffer) {
-          this.columnData.agreement = new Uint8Array(reader.result);
+          this.rgpdDto.agreement = this.encodeBase64(new Uint8Array(reader.result));
         }
       };
       reader.readAsArrayBuffer(file);
     }
   }
 
-  createOrUpdate(): void {
-    this.data ? this.updateRgpd() : this.createRgpd();
+  save(): void {
+    if (!this.isSaveEnabled()) return;
+    this.closeDialogWithDto(this.rgpdDto);
   }
 
   close(): void {
-    this._dialogRef.close(true);
+    this._dialogRef.close({ isCancel: true });
   }
 
   isSaveEnabled(): boolean {
-    return !!this.columnData.userName && !!this.columnData.userMobile && this.columnData.agreement?.length > 0;
+    return !!this.rgpdDto.userName && !!this.rgpdDto.userMobile && !!this.rgpdDto.agreement;
   }
 
-  private updateRgpd(): void {
-    if (!this.existingUser) {
-      console.error('Error: No se encontró el usuario antes de actualizar.');
-      return;
-    }
-
-    const updatedRgpd: Rgpd = {
-      type: this.columnData.type as RgpdType,
-      agreement: this.columnData.agreement,
-      user: this.existingUser,
-    };
-
-    this._dataProtectionService.update(updatedRgpd).subscribe(() => {
-      this.close();
-    });
+  private closeDialogWithDto(rgpdDto: RgpdDto): void {
+    this._dialogRef.close({ isCancel: false, rgpdDto });
   }
 
-  private createRgpd(): void {
-    if (!this.isSaveEnabled()) return;
-
-    this._dataProtectionService
-      .create({
-        type: this.columnData.type as RgpdType,
-        agreement: this.columnData.agreement,
-        user: { name: this.columnData.userName, mobile: this.columnData.userMobile, token: '', role: undefined },
-      })
-      .subscribe(() => {
-        this.close();
-      });
-  }
-
-  private extractFileName(data: Uint8Array): string {
-    return data.length ? 'existing_agreement.pdf' : '';
-  }
-
-  private createNewColumnData(): ColumnData {
-    return {
-      type: RgpdType.BASIC,
-      agreement: new Uint8Array(),
-      userName: '',
-      userMobile: 0,
-    };
+  private encodeBase64(buffer: Uint8Array): string {
+    return btoa(String.fromCharCode(...buffer));
   }
 }

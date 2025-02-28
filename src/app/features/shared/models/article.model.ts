@@ -1,4 +1,4 @@
-import {Tax} from './Tax';
+import {Tax} from '../../shop/shared/models/Tax';
 
 export interface Article {
     barcode: string;

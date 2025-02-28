@@ -2,7 +2,8 @@
   (create)="onCreate()"
   (read)="onRead($event)"
   (update)="onUpdate($event)"
-  [data]="budgets$"
-  [deleteAction]="false"
+  [data]="budgetRowData$"
+  [createAction]="false"
+  [deleteAction]="true"
   [title]="'Budgets management'"
 ></app-crud>

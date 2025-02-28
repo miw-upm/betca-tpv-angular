@@ -34,7 +34,7 @@ export class OffersComponent {
     }
 
     resetSearch(): void {
-        this.offerSearch = {creationDate: undefined, description: "", discount: 0, expiryDate: undefined, reference: ""};
+        this.offerSearch = {description: "", reference: ""};
     }
 
     create(): void {
@@ -51,11 +51,24 @@ export class OffersComponent {
     }
 
     update(offer: Offer): void {
-        this.offerService.read(offer.reference)
-            .subscribe(fullOffer => this.dialog.open(OfferCreationUpdatingDialogComponent, {data: fullOffer}));
+        this.offerService.read(offer.reference).subscribe(fullOffer => {
+            const formattedOffer = {
+                ...fullOffer,
+                creationDate: this.formatDate(fullOffer.creationDate),
+                expiryDate: this.formatDate(fullOffer.expiryDate)
+            };
+
+            this.dialog.open(OfferCreationUpdatingDialogComponent, { data: formattedOffer });
+        });
     }
 
     print (item: any): void {
-        console.log('Imprimiendo:', item);
+        this.offerService.printPdf(item.reference).subscribe();
+    }
+
+    private formatDate(date: string | Date): string {
+        if (!date) return '';
+        const parsedDate = new Date(date);
+        return parsedDate.toISOString().split('T')[0];
     }
 }
