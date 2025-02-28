@@ -1,0 +1,18 @@
+<h4 mat-dialog-title>{{ "Create Audit" }}</h4>
+<mat-dialog-content>
+  <mat-form-field>
+    <mat-label>Start Date</mat-label>
+    <input
+      [(ngModel)]="audit.creationDate"
+      matInput
+      required
+      type="text"
+      [value]="audit.creationDate | date : 'dd/MM/yyyy HH:mm:ss'"
+      readonly
+    />
+  </mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button (click)="close()" mat-dialog-close mat-raised-button>Close</button>
+  <button (click)="onCreate()" color="primary" mat-raised-button>Create</button>
+</mat-dialog-actions>

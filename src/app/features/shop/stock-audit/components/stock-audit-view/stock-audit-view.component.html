@@ -1,0 +1,70 @@
+<div class="container">
+  <mat-card class="audit-card">
+    <div class="audit-header">
+      <mat-card-title>Stock Audit Details</mat-card-title>
+      <div class="audit-actions">
+        <button mat-flat-button (click)="closeAudit()">Close Audit</button>
+        <button mat-flat-button (click)="updateAudit()">Update Audit</button>
+      </div>
+    </div>
+
+    <mat-card-content>
+      <p><strong>Identity:</strong> {{ stockAudit.identity }}</p>
+      <p>
+        <strong>Creation Date:</strong>
+        {{ stockAudit.creationDate | date : "dd/MM/yyyy HH:mm:ss" }}
+      </p>
+      <p>
+        <strong>Close Date:</strong>
+        {{ stockAudit.closeDate | date : "dd/MM/yyyy HH:mm:ss" }}
+      </p>
+      <p><strong>Loss Value:</strong> {{ stockAudit.lossValue | currency }}</p>
+
+      <h3>Articles Without Audit</h3>
+      <table
+        mat-table
+        [dataSource]="stockAudit.articlesWithoutAudit"
+        class="mat-elevation-z8"
+      >
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef>Barcode</th>
+          <td mat-cell *matCellDef="let article">{{ article.barcode }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="quantity">
+          <th mat-header-cell *matHeaderCellDef>Stock</th>
+          <td mat-cell *matCellDef="let article">{{ article.stock }}</td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="['name', 'quantity']"></tr>
+        <tr mat-row *matRowDef="let row; columns: ['name', 'quantity']"></tr>
+      </table>
+
+      <h3>Losses Article</h3>
+      <table
+        mat-table
+        [dataSource]="stockAudit.losses"
+        class="mat-elevation-z8"
+      >
+        <ng-container matColumnDef="articleName">
+          <th mat-header-cell *matHeaderCellDef>Barcode</th>
+          <td mat-cell *matCellDef="let loss">{{ loss.barcode }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="lostQuantity">
+          <th mat-header-cell *matHeaderCellDef>Amount</th>
+          <td mat-cell *matCellDef="let loss">{{ loss.amount }}</td>
+        </ng-container>
+
+        <tr
+          mat-header-row
+          *matHeaderRowDef="['articleName', 'lostQuantity']"
+        ></tr>
+        <tr
+          mat-row
+          *matRowDef="let row; columns: ['articleName', 'lostQuantity']"
+        ></tr>
+      </table>
+    </mat-card-content>
+  </mat-card>
+</div>
