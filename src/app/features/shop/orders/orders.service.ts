@@ -25,16 +25,16 @@ export class OrderService {
             description: 'Mock Description',
             providerCompany: 'pro1',
             openingDate: new Date(),
-            closingDate: new Date(),
+            closingDate: undefined,
             orderLines: [{
                 articleBarcode: 'mock-barcode',
                 requiredAmount: 4,
-                finalAmount: 2
+                finalAmount: 4
             },
             {
                 articleBarcode: 'mock-2',
                 requiredAmount: 3,
-                finalAmount: 1
+                finalAmount: 3
             }]
         });
     }

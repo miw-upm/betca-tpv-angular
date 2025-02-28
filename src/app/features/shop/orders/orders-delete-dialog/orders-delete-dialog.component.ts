@@ -1,5 +1,4 @@
 import {Component, Inject} from '@angular/core';
-import {NgForOf, NgIf} from '@angular/common';
 import {FormsModule} from '@angular/forms';
 import {
     MAT_DIALOG_DATA,
@@ -9,9 +8,9 @@ import {
     MatDialogContent,
     MatDialogTitle,
 } from '@angular/material/dialog';
-import {MatFormField, MatLabel} from '@angular/material/form-field';
+import {MatLabel} from '@angular/material/form-field';
 import {MatButton} from '@angular/material/button';
-import {MatInput, MatInputModule} from '@angular/material/input';
+import {MatInputModule} from '@angular/material/input';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 
 import {OrderService} from '../orders.service';
@@ -37,15 +36,14 @@ export class OrdersDeleteDialogComponent {
         };
     }
 
-
     invalid(): boolean {
-        console.log(this.check(this.order));
         return this.check(this.order);
     }
 
-    check(order): boolean {
+    check(order: Order): boolean {
         return order.closingDate !== undefined;
     }
+
     delete(): void {
         this.orderService
             .delete(this.order)

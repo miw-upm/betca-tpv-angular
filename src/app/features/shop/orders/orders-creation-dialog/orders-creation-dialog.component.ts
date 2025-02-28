@@ -13,8 +13,6 @@ import {MatFormField, MatLabel} from '@angular/material/form-field';
 import {MatButton} from '@angular/material/button';
 import {MatInput, MatInputModule} from '@angular/material/input';
 import {MatDatepickerModule} from '@angular/material/datepicker';
-import {Observable, of} from 'rxjs';
-
 import {OrderService} from '../orders.service';
 import {SearchByCompanyComponent} from '../../shared/components/search-by-company.component';
 import {Order} from '../../shared/models/order.model';
