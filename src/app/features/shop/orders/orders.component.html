@@ -16,5 +16,5 @@
     </mat-card-content>
 </mat-card>
 
-<app-crud (create)="create()" (read)="read($event)" (update)="update($event)"
+<app-crud (create)="create()" (read)="read($event)" (update)="update($event)" (delete)="delete($event)"
           [data]="orders" [deleteAction]="true" [title]="title"></app-crud>

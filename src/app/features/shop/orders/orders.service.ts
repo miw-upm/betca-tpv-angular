@@ -15,13 +15,17 @@ export class OrderService {
         return of({ ...order});
     }
 
+    delete(order: Order): Observable<Order> {
+        return of({ ...order});
+    }
+
     read(reference: string): Observable<Order> {
         return of({
             reference,
             description: 'Mock Description',
             providerCompany: 'pro1',
             openingDate: new Date(),
-            closingDate: undefined,
+            closingDate: new Date(),
             orderLines: [{
                 articleBarcode: 'mock-barcode',
                 requiredAmount: 4,
@@ -46,7 +50,7 @@ export class OrderService {
                 description: 'Mock ggg',
                 providerCompany: 'pro1',
                 openingDate: new Date(),
-                closingDate: undefined,
+                closingDate: new Date(),
                 orderLines: [{
                     articleBarcode: 'mock-barcode',
                     requiredAmount: 4,

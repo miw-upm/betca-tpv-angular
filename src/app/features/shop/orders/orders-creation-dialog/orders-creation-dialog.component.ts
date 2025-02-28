@@ -32,9 +32,6 @@ export class OrdersCreationDialogComponent {
     order: Order;
     orderLine: OrderLine;
     title: string;
-    oldReference: string;
-    companies: Observable<string[]> = of([]);
-    articles: any[] = [];
 
     constructor(@Inject(MAT_DIALOG_DATA) data: Order, private readonly orderService: OrderService,  private readonly sharedProviderService: SharedProviderService,        
     private readonly dialog: MatDialog) {
