@@ -15,10 +15,13 @@ import {MatFormField, MatSuffix} from '@angular/material/form-field';
 import {MatInput} from '@angular/material/input';
 import {MatButton, MatIconButton} from '@angular/material/button';
 import {FormsModule} from '@angular/forms';
-import {MatCheckbox} from '@angular/material/checkbox';
-import {CustomerPointsConstants} from "./customer-points/customer-points.model";
+import {MatCheckbox, MatCheckboxChange} from '@angular/material/checkbox';
+import {CustomerPoints, CustomerPointsConstants} from "./customer-points/customer-points.model";
 import {CustomerPointsService} from "./customer-points/customer-points.service";
 import { take } from 'rxjs';
+import {
+    CustomerPointsProfileComponent
+} from "@common/components/customer-points-profile/customer-points-profile.component";
 
 @Component({
     standalone: true,
@@ -37,7 +40,8 @@ import { take } from 'rxjs';
         MatCheckbox,
         MatDialogActions,
         MatDialogClose,
-        MatSuffix
+        MatSuffix,
+        CustomerPointsProfileComponent
     ],
     styleUrls: ['check-out-dialog.component.css']
 })
@@ -47,6 +51,8 @@ export class CheckOutDialogComponent {
     requestedInvoice = false;
     requestedGiftTicket = false;
     requestedDataProtectionAct = false;
+    useCustomerPoints = false;
+    customerHasPoints: boolean = false;
 
     constructor(
         @Inject(MAT_DIALOG_DATA) data,
@@ -60,24 +66,10 @@ export class CheckOutDialogComponent {
             voucher: 0,
             shoppingList: data,
             note: '',
-            messageGift: ''
+            messageGift: '',
+            pointsToUse: 0
         };
         this.total();
-    }
-
-    ngOnInit(): void {
-        const discountArticle = this.ticketCreation.shoppingList.find(
-            item => item.barcode === CustomerPointsConstants.DISCOUNT_POINTS_BARCODE
-        );
-        if (discountArticle) {
-            this.customerPointsService.customerPoints$.pipe(take(1)).subscribe(points => {
-                if (points && points.user && points.user.mobile) {
-                    this.ticketCreation.user = points.user;
-                    this.searchUser(points.user.mobile.toString());
-                    console.log('Customer points:', points);
-                }
-            });
-        }
     }
 
     total(): void {
@@ -95,10 +87,14 @@ export class CheckOutDialogComponent {
     searchUser(mobile: string): void {
         if (mobile) {
             this.customerPointsService.searchCustomerPointsByMobile(Number(mobile)).subscribe(points => {
-                if (points) {
-                    this.ticketCreation.user = points.user;
-                }
-            });
+                    if (points) {
+                        this.ticketCreation.user = points.user;
+                        this.customerHasPoints = true;
+                    } else {
+                        this.customerHasPoints = false;
+                    }
+                },
+            );
         }
     }
 
@@ -108,6 +104,9 @@ export class CheckOutDialogComponent {
 
     resetMobile(): void {
         this.ticketCreation.user = undefined;
+        this.customerHasPoints = false;
+        this.useCustomerPoints = false;
+        this.resetTotalPurchase()
     }
 
     unCommitted(): boolean {
@@ -125,6 +124,9 @@ export class CheckOutDialogComponent {
             if (shopping.state) {
                 total += shopping.total;
             }
+        }
+        if (this.useCustomerPoints) {
+            total -= this.ticketCreation.pointsToUse;
         }
         return Math.round(total * 100) / 100;
     }
@@ -217,32 +219,35 @@ export class CheckOutDialogComponent {
             this.ticketCreation.messageGift = 'Congratulations';
         }
 
-        const completePayment = () => {
-            this.shoppingCartService.createTicketAndPrintReceipts(
-                this.ticketCreation,
-                voucher,
-                this.requestedInvoice,
-                this.requestedGiftTicket,
-                this.requestedDataProtectionAct
-            ).subscribe(() => this.dialogRef.close(true));
-        };
+        this.shoppingCartService.createTicketAndPrintReceipts(
+            this.ticketCreation,
+            voucher,
+            this.requestedInvoice,
+            this.requestedGiftTicket,
+            this.requestedDataProtectionAct,
+            this.useCustomerPoints
+        ).subscribe(() => {
+            if (this.useCustomerPoints && this.ticketCreation.user) {
+                this.updateCustomerPoints();
+            } else {
+                this.dialogRef.close(true);
+            }
+        });
+    }
 
-        const discountArticle = this.ticketCreation.shoppingList.find(
-            item => item.barcode === CustomerPointsConstants.DISCOUNT_POINTS_BARCODE
-        );
-        if (discountArticle && this.ticketCreation.user && this.ticketCreation.user.mobile) {
-            const pointsToDeduct = Math.abs(discountArticle.total);
-            this.customerPointsService.finalizeCheckoutPointsUpdate(this.ticketCreation.user, pointsToDeduct, this.totalPurchase)
+    private updateCustomerPoints(): void {
+        if (this.ticketCreation.pointsToUse != null) {
+            const updatePayload = { points: -this.ticketCreation.pointsToUse };
+            this.customerPointsService.updateCustomerPoints(this.ticketCreation.user, updatePayload)
                 .subscribe({
-                    next: updatedPoints => {
-                        completePayment();
-                    },
-                    error: err => {
-                        console.error('Error al actualizar los puntos del cliente:', err);
+                    next: () => this.dialogRef.close(true),
+                    error: (err) => {
+                        console.error("Failed to update customer points", err);
+                        this.dialogRef.close(true);
                     }
                 });
         } else {
-            completePayment();
+            this.dialogRef.close(true);
         }
     }
 
@@ -255,5 +260,39 @@ export class CheckOutDialogComponent {
         if (!this.requestedGiftTicket) {
             this.ticketCreation.messageGift = '';
         }
+    }
+
+    useCustomerPointsOnTotal(points: CustomerPoints): void {
+        let pointsToUse = points.value;
+
+        if (pointsToUse < CustomerPointsConstants.MINIMUM_POINTS_TO_REDEEM) {
+            console.error("Customer does not have enough points");
+            return;
+        }
+
+        const maxDiscountAllowed = this.totalPurchase * 0.5;
+        if (pointsToUse > maxDiscountAllowed) {
+            pointsToUse = maxDiscountAllowed;
+        }
+
+        this.ticketCreation.pointsToUse = pointsToUse;
+
+        this.totalPurchase -= pointsToUse;
+        this.totalPurchase = Math.round(this.totalPurchase * 100) / 100;
+        this.useCustomerPoints = true;
+    }
+
+    onUseCustomerPointsChange(event: MatCheckboxChange): void {
+        if (event.checked) {
+            this.customerPointsService.customerPoints$.pipe(take(1)).subscribe(points => {
+                this.useCustomerPointsOnTotal(points);
+            });
+        } else {
+            this.resetTotalPurchase();
+        }
+    }
+
+    resetTotalPurchase(): void {
+        this.total();
     }
 }

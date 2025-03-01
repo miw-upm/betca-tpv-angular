@@ -1,7 +1,6 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {CurrencyPipe} from '@angular/common';
 import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {CustomerPointsService} from './customer-points/customer-points.service';
 import {
     MatCell,
     MatCellDef,
@@ -30,15 +29,13 @@ import {CheckOutDialogComponent} from './check-out-dialog.component';
 import {SearchByBarcodeComponent} from '../../../shared/components/search-by-barcode.component';
 import {Shopping} from './shopping.model';
 import {ShoppingState} from './shopping-state.model';
-import {CustomerPoints, CustomerPointsConstants} from "./customer-points/customer-points.model";
-import {CustomerPointsSearchComponent} from "./customer-points/customer-points-search.component";
 
 @Component({
     standalone: true,
     imports: [MatCard, MatCardContent, MatIconButton, MatIcon, SearchByBarcodeComponent,
         MatCardTitle, CurrencyPipe, MatTable, MatHeaderCell, MatCell, MatCellDef, MatHeaderCellDef, MatTooltip,
         MatColumnDef, MatButton, MatSuffix, MatCheckbox, MatHeaderRow, MatRow, MatHeaderRowDef, MatRowDef,
-        FormsModule, ReactiveFormsModule, InputData, CustomerPointsSearchComponent],
+        FormsModule, ReactiveFormsModule, InputData],
     selector: 'app-shopping-cart',
     styleUrls: ['shopping-cart.component.css'],
     templateUrl: 'shopping-cart.component.html'
@@ -57,9 +54,6 @@ export class ShoppingCartComponent implements OnInit {
     budgeControl = new FormControl('');
     discountControl = new FormControl('');
     offerControl = new FormControl('');
-    canUsePoints: boolean = false;
-
-    public discountBarcode = CustomerPointsConstants.DISCOUNT_POINTS_BARCODE;
 
     private shoppingCartList: Array<Array<Shopping>> = [];
     @ViewChild('code', {static: true}) private readonly elementRef: ElementRef;
@@ -67,7 +61,6 @@ export class ShoppingCartComponent implements OnInit {
     constructor(
         private readonly dialog: MatDialog,
         private readonly shoppingCartService: ShoppingCartService,
-        private readonly customerPointsService: CustomerPointsService
     ) {
         for (let i = 0; i < ShoppingCartComponent.SHOPPING_CART_NUM; i++) {
             this.shoppingCartList.push([]);
@@ -78,9 +71,6 @@ export class ShoppingCartComponent implements OnInit {
     ngOnInit(): void {
         this.shoppingCart = [];
         this.synchronizeShoppingCart();
-        this.customerPointsService.customerHasPoints().subscribe(hasPoints => {
-            this.canUsePoints = hasPoints;
-        });
     }
 
     synchronizeShoppingCart(): void {
@@ -229,36 +219,6 @@ export class ShoppingCartComponent implements OnInit {
                     this.offerControl.reset();
                 }
             });
-    }
-
-    useCustomerPoints(points: CustomerPoints): void {
-        this.shoppingCart = this.shoppingCart.filter(item => item.barcode !== CustomerPointsConstants.DISCOUNT_POINTS_BARCODE);
-
-        let pointsToUse = points.value;
-
-        if (pointsToUse < CustomerPointsConstants.MINIMUM_POINTS_TO_REDEEM) {
-            console.error("Customer does not have enough points");
-            return;
-        }
-
-        let purchaseTotal = 0;
-        for (const item of this.shoppingCart) {
-            if (item.barcode !== CustomerPointsConstants.DISCOUNT_POINTS_BARCODE) {
-                purchaseTotal += item.total;
-            }
-        }
-        purchaseTotal = Math.round(purchaseTotal * 100) / 100;
-        const maxDiscountAllowed = purchaseTotal * 0.5;
-        if (pointsToUse > maxDiscountAllowed) {
-            pointsToUse = maxDiscountAllowed;
-        }
-
-        this.shoppingCartService.createDiscountPointsArticle(pointsToUse).subscribe(discountProduct => {
-            discountProduct.amount = -1;
-            discountProduct.total = -pointsToUse;
-            this.shoppingCart.push(discountProduct);
-            this.synchronizeShoppingCart();
-        });
     }
 
 }

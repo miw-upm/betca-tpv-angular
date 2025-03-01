@@ -7,6 +7,5 @@ export interface CustomerPoints {
 }
 
 export const CustomerPointsConstants = {
-    DISCOUNT_POINTS_BARCODE: "Points Discount",
     MINIMUM_POINTS_TO_REDEEM: 10
 };
