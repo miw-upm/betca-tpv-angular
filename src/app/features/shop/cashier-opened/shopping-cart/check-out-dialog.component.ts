@@ -22,6 +22,7 @@ import { take } from 'rxjs';
 import {
     CustomerPointsProfileComponent
 } from "@common/components/customer-points-profile/customer-points-profile.component";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
     standalone: true,
@@ -53,12 +54,14 @@ export class CheckOutDialogComponent {
     requestedDataProtectionAct = false;
     useCustomerPoints = false;
     customerHasPoints: boolean = false;
+    customerHasMinimumPoints: boolean = false;
 
     constructor(
         @Inject(MAT_DIALOG_DATA) data,
         private readonly dialogRef: MatDialogRef<CheckOutDialogComponent>,
         private readonly shoppingCartService: ShoppingCartService,
-        private readonly customerPointsService: CustomerPointsService
+        private readonly customerPointsService: CustomerPointsService,
+        private readonly snackBar: MatSnackBar
     ) {
         this.ticketCreation = {
             cash: 0,
@@ -86,15 +89,29 @@ export class CheckOutDialogComponent {
 
     searchUser(mobile: string): void {
         if (mobile) {
-            this.customerPointsService.searchCustomerPointsByMobile(Number(mobile)).subscribe(points => {
-                    if (points) {
-                        this.ticketCreation.user = points.user;
-                        this.customerHasPoints = true;
-                    } else {
+            this.customerPointsService.searchCustomerPointsByMobile(Number(mobile))
+                .subscribe(
+                    points => {
+                        if (points) {
+                            this.ticketCreation.user = points.user;
+                            this.customerHasPoints = true;
+                            if (points.value < CustomerPointsConstants.MINIMUM_POINTS_TO_REDEEM) {
+                                this.customerHasMinimumPoints = false;
+                            } else {
+                                this.customerHasMinimumPoints = true;
+                            }
+                        } else {
+                            this.customerHasPoints = false;
+                        }
+                    },
+                    error => {
+                        this.snackBar.open("User mobile not found", "Close", {
+                            duration: 5000,
+                            panelClass: ['snackbar-error']
+                        });
                         this.customerHasPoints = false;
                     }
-                },
-            );
+                );
         }
     }
 
@@ -237,7 +254,10 @@ export class CheckOutDialogComponent {
                     .subscribe({
                         next: () => this.dialogRef.close(true),
                         error: (err) => {
-                            console.error("Failed to update customer points", err);
+                            this.snackBar.open("Failed to update customer points", "Close", {
+                                duration: 5000,
+                                panelClass: ['snackbar-error']
+                            });
                             this.dialogRef.close(true);
                         }
                     });
@@ -262,8 +282,14 @@ export class CheckOutDialogComponent {
         let pointsToUse = points.value;
 
         if (pointsToUse < CustomerPointsConstants.MINIMUM_POINTS_TO_REDEEM) {
-            console.error("Customer does not have enough points");
+            this.customerHasMinimumPoints = false;
+            this.snackBar.open("Customer does not have enough points", "Close", {
+                duration: 5000,
+                panelClass: ['snackbar-error']
+            });
             return;
+        } else {
+            this.customerHasMinimumPoints = true;
         }
 
         const maxDiscountAllowed = this.totalPurchase * 0.5;

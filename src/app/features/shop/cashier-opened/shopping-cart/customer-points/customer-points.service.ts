@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { map, switchMap } from 'rxjs/operators';
+import { BehaviorSubject, Observable, throwError } from 'rxjs';
+import { map, switchMap, catchError } from 'rxjs/operators';
 import { AuthService } from '@core/services/auth.service';
 import { CustomerPoints, CustomerPointsConstants } from './customer-points.model';
 import { HttpService } from '@core/services/http.service';
@@ -37,7 +37,36 @@ export class CustomerPointsService {
                     const points: CustomerPoints = {
                         value: response.value,
                         lastDate: new Date(response.lastDate),
-                        user: { mobile },
+                        user: { mobile }
+                    };
+                    this.customerPointsSubject.next(points);
+                    return points;
+                }),
+                catchError(err => {
+                    const errorStatus = err.status || err.code;
+                    if (errorStatus === 404) {
+                        return this.createCustomerPoints({ mobile });
+                    } else {
+                        return throwError(err);
+                    }
+                })
+            );
+    }
+
+    createCustomerPoints(user: { mobile: number }): Observable<CustomerPoints> {
+        const payload = {
+            value: 0,
+            user: {
+                mobile: user.mobile
+            }
+        };
+        return this.httpService.post(`${EndPoints.CUSTOMER_POINTS}`, payload)
+            .pipe(
+                map((response: any) => {
+                    const points: CustomerPoints = {
+                        value: response.value,
+                        lastDate: new Date(response.lastDate),
+                        user: { mobile: user.mobile }
                     };
                     this.customerPointsSubject.next(points);
                     return points;
