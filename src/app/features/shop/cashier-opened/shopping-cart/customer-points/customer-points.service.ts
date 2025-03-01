@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, of } from 'rxjs';
+import {BehaviorSubject, Observable, of, switchMap} from 'rxjs';
 import { map } from 'rxjs/operators';
 import { AuthService } from '@core/services/auth.service';
 import { CustomerPoints, CustomerPointsConstants } from './customer-points.model';
@@ -37,7 +37,7 @@ export class CustomerPointsService {
                     const points: CustomerPoints = {
                         value: response.value,
                         lastDate: new Date(response.lastDate),
-                        user: this.auth.getUser(),
+                        user: { mobile },
                     };
                     this.customerPointsSubject.next(points);
                     return points;
@@ -65,5 +65,34 @@ export class CustomerPointsService {
     getPointDiscountShopping(pointsToUse: number): Observable<Shopping> {
         const discountValue = -pointsToUse;
         return of(new Shopping(CustomerPointsConstants.DISCOUNT_POINTS_BARCODE, "Points Discount", discountValue));
+    }
+
+    finalizeCheckoutPointsUpdate(user: any, pointsUsed: number, totalPurchase: number): Observable<CustomerPoints> {
+        const targetUser = user;
+        const currentPoints = (this.customerPointsSubject.getValue() &&
+            this.customerPointsSubject.getValue().user.mobile === targetUser.mobile)
+            ? this.customerPointsSubject.getValue().value
+            : 0;
+        const rewardedPoints = Math.floor(totalPurchase / 10);
+        const newValue = currentPoints - pointsUsed + rewardedPoints;
+
+        const updatePayload = {
+            value: newValue,
+            user: { mobile: targetUser.mobile }
+        };
+
+        return this.httpService.put(`${EndPoints.CUSTOMER_POINTS}/${targetUser.mobile}`, updatePayload)
+            .pipe(
+                map((response: any) => {
+                    const updatedPoints: CustomerPoints = {
+                        value: response.value,
+                        lastDate: new Date(response.lastDate),
+                        user: targetUser
+                    };
+                    this.customerPointsSubject.next(updatedPoints);
+                    return updatedPoints;
+                }),
+                switchMap(() => this.searchCustomerPointsByMobile(targetUser.mobile))
+            );
     }
 }

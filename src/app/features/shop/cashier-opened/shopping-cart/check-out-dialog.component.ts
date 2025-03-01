@@ -1,4 +1,4 @@
-import {Component, Inject} from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {TicketCreation} from './ticket-creation.model';
 import {ShoppingCartService} from './shopping-cart.service';
 import {
@@ -16,6 +16,9 @@ import {MatInput} from '@angular/material/input';
 import {MatButton, MatIconButton} from '@angular/material/button';
 import {FormsModule} from '@angular/forms';
 import {MatCheckbox} from '@angular/material/checkbox';
+import {CustomerPointsConstants} from "./customer-points/customer-points.model";
+import {CustomerPointsService} from "./customer-points/customer-points.service";
+import { take } from 'rxjs';
 
 @Component({
     standalone: true,
@@ -45,10 +48,36 @@ export class CheckOutDialogComponent {
     requestedGiftTicket = false;
     requestedDataProtectionAct = false;
 
-    constructor(@Inject(MAT_DIALOG_DATA) data, private readonly dialogRef: MatDialogRef<CheckOutDialogComponent>,
-                private readonly shoppingCartService: ShoppingCartService) {
-        this.ticketCreation = {cash: 0, card: 0, voucher: 0, shoppingList: data, note: '', messageGift: ''};
+    constructor(
+        @Inject(MAT_DIALOG_DATA) data,
+        private readonly dialogRef: MatDialogRef<CheckOutDialogComponent>,
+        private readonly shoppingCartService: ShoppingCartService,
+        private readonly customerPointsService: CustomerPointsService
+    ) {
+        this.ticketCreation = {
+            cash: 0,
+            card: 0,
+            voucher: 0,
+            shoppingList: data,
+            note: '',
+            messageGift: ''
+        };
         this.total();
+    }
+
+    ngOnInit(): void {
+        const discountArticle = this.ticketCreation.shoppingList.find(
+            item => item.barcode === CustomerPointsConstants.DISCOUNT_POINTS_BARCODE
+        );
+        if (discountArticle) {
+            this.customerPointsService.customerPoints$.pipe(take(1)).subscribe(points => {
+                if (points && points.user && points.user.mobile) {
+                    this.ticketCreation.user = points.user;
+                    this.searchUser(points.user.mobile.toString());
+                    console.log('Customer points:', points);
+                }
+            });
+        }
     }
 
     total(): void {
@@ -65,8 +94,11 @@ export class CheckOutDialogComponent {
 
     searchUser(mobile: string): void {
         if (mobile) {
-            // TODO falta buscar el user en BD, si no existe, debe sacar un dialogo para crearlo
-            this.ticketCreation.user = {mobile: Number(mobile)};
+            this.customerPointsService.searchCustomerPointsByMobile(Number(mobile)).subscribe(points => {
+                if (points) {
+                    this.ticketCreation.user = points.user;
+                }
+            });
         }
     }
 
@@ -184,9 +216,34 @@ export class CheckOutDialogComponent {
         if (!this.ticketCreation.messageGift.trim()) {
             this.ticketCreation.messageGift = 'Congratulations';
         }
-        this.shoppingCartService.createTicketAndPrintReceipts(this.ticketCreation, voucher,
-            this.requestedInvoice, this.requestedGiftTicket, this.requestedDataProtectionAct)
-            .subscribe(() => this.dialogRef.close(true));
+
+        const completePayment = () => {
+            this.shoppingCartService.createTicketAndPrintReceipts(
+                this.ticketCreation,
+                voucher,
+                this.requestedInvoice,
+                this.requestedGiftTicket,
+                this.requestedDataProtectionAct
+            ).subscribe(() => this.dialogRef.close(true));
+        };
+
+        const discountArticle = this.ticketCreation.shoppingList.find(
+            item => item.barcode === CustomerPointsConstants.DISCOUNT_POINTS_BARCODE
+        );
+        if (discountArticle && this.ticketCreation.user && this.ticketCreation.user.mobile) {
+            const pointsToDeduct = Math.abs(discountArticle.total);
+            this.customerPointsService.finalizeCheckoutPointsUpdate(this.ticketCreation.user, pointsToDeduct, this.totalPurchase)
+                .subscribe({
+                    next: updatedPoints => {
+                        completePayment();
+                    },
+                    error: err => {
+                        console.error('Error al actualizar los puntos del cliente:', err);
+                    }
+                });
+        } else {
+            completePayment();
+        }
     }
 
     invalidInvoice(): boolean {

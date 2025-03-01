@@ -1,4 +1,4 @@
-import {User} from '@core/models/user.model';
+import {User} from '../user.models';
 
 export interface CustomerPoints {
     value: number;
