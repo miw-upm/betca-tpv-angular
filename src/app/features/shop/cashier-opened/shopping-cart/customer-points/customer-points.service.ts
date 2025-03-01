@@ -60,7 +60,7 @@ export class CustomerPointsService {
                 map((response: any) => {
                     const updatedPoints: CustomerPoints = {
                         value: response.value,
-                        lastDate: new Date(response.lastDate),
+                        lastDate: new Date(),
                         user: targetUser
                     };
                     this.customerPointsSubject.next(updatedPoints);

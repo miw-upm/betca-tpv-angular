@@ -186,7 +186,12 @@ export class CheckOutDialogComponent {
         return Math.round(value * 100) / 100;
     }
 
-    pay(): any {
+    pay(): void {
+        const originalTotal = this.ticketCreation.shoppingList.reduce((sum, s) => sum + s.total, 0);
+        const pointsEarned = Math.round(originalTotal * 0.05);
+        const pointsUsed = this.useCustomerPoints ? this.ticketCreation.pointsToUse : 0;
+        const netDelta = pointsEarned - pointsUsed;
+
         const returned = this.returnedAmount();
         const cash = this.ticketCreation.cash;
         let voucher = 0;
@@ -227,28 +232,19 @@ export class CheckOutDialogComponent {
             this.requestedDataProtectionAct,
             this.useCustomerPoints
         ).subscribe(() => {
-            if (this.useCustomerPoints && this.ticketCreation.user) {
-                this.updateCustomerPoints();
+            if (this.ticketCreation.user) {
+                this.customerPointsService.updateCustomerPoints(this.ticketCreation.user, { points: netDelta })
+                    .subscribe({
+                        next: () => this.dialogRef.close(true),
+                        error: (err) => {
+                            console.error("Failed to update customer points", err);
+                            this.dialogRef.close(true);
+                        }
+                    });
             } else {
                 this.dialogRef.close(true);
             }
         });
-    }
-
-    private updateCustomerPoints(): void {
-        if (this.ticketCreation.pointsToUse != null) {
-            const updatePayload = { points: -this.ticketCreation.pointsToUse };
-            this.customerPointsService.updateCustomerPoints(this.ticketCreation.user, updatePayload)
-                .subscribe({
-                    next: () => this.dialogRef.close(true),
-                    error: (err) => {
-                        console.error("Failed to update customer points", err);
-                        this.dialogRef.close(true);
-                    }
-                });
-        } else {
-            this.dialogRef.close(true);
-        }
     }
 
     invalidInvoice(): boolean {
