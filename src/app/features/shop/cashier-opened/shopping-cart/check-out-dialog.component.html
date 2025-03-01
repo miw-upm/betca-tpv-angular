@@ -44,6 +44,12 @@
         <textarea [(ngModel)]="ticketCreation.messageGift" matInput rows="4"></textarea>
     </mat-form-field>
 
+    <mat-checkbox [(ngModel)]="useCustomerPoints" [disabled]="!customerHasPoints || !customerHasMinimumPoints" (change)="onUseCustomerPointsChange($event)">
+        <div style="display: flex; align-items: center;">
+            <span>Use: </span>
+            <customer-points-profile></customer-points-profile>
+        </div>
+    </mat-checkbox>
     <mat-checkbox [(ngModel)]="requestedInvoice" [disabled]="invalidInvoice()">
         <span> Create Invoice</span>
     </mat-checkbox>

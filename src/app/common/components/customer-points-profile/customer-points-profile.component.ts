@@ -17,9 +17,11 @@ export class CustomerPointsProfileComponent implements OnInit, OnDestroy {
     lastUpdated: Date | null = null;
     private subscription: Subscription;
 
-    constructor(private customerPointsService: CustomerPointsService) {}
+    constructor(protected customerPointsService: CustomerPointsService) {}
 
     ngOnInit(): void {
+        this.customerPointsService.setCurrentCustomerPoints()
+
         this.subscription = this.customerPointsService.customerPoints$.subscribe((cp: CustomerPoints) => {
             if (cp) {
                 this.points = cp.value;

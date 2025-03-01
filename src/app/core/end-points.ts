@@ -11,4 +11,5 @@ export class EndPoints {
     static readonly COMPLAINTS = environment.REST_CORE + '/complaints';
     static readonly RGPDS = environment.REST_CORE + '/rgpds';
     static readonly OFFERS = environment.REST_CORE + '/offers';
+    static readonly CUSTOMER_POINTS = environment.REST_CORE + '/customer-points';
 }
