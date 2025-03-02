@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Observable} from 'rxjs';
+import {Observable, of} from 'rxjs';
 import {map} from 'rxjs/operators';
 
 import {HttpService} from '@core/services/http.service';
@@ -23,12 +23,22 @@ export class SharedShopArticleService {
         return this.httpService
             .post(EndPoints.ARTICLES, article);
     }
+
     update(article: Article): Observable<Article> {
         return this.httpService
             .put(EndPoints.ARTICLES + '/' + article.barcode, article);
     }
+
     searchBarcode(barcode: string): Observable<number[]> {
         return this.sharedArticleService.searchBarcode(barcode);
     }
 
+    getArticlesByCompany(company: string): Observable<any[]> {
+        // TO DO
+        return of([
+            { barcode: 'Article 1' },
+            { barcode: 'Article 2' },
+            { barcode: 'Article 3' }
+        ]);
+    }
 }

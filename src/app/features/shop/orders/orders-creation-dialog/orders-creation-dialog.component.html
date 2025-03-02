@@ -1,10 +1,6 @@
 <h4 mat-dialog-title>{{ title }}</h4>
 <mat-dialog-content>
     <mat-form-field class="full-width">
-        <mat-label>Reference</mat-label>
-        <input [(ngModel)]="order.reference" matInput type="text">
-    </mat-form-field>
-    <mat-form-field class="full-width">
         <mat-label>Description</mat-label>
         <input [(ngModel)]="order.description" matInput required type="text"/>
     </mat-form-field> 
@@ -22,6 +18,4 @@
     <button mat-dialog-close mat-raised-button>Close</button>
     <button (click)="create()" [disabled]=invalid() color="primary" mat-raised-button>Create
     </button>
-<!--     <button (click)="update()" *ngIf="!isCreate()" [disabled]=invalid() color="primary" mat-raised-button>Update
-    </button> -->
 </mat-dialog-actions>
