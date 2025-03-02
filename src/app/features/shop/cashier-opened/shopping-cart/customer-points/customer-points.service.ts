@@ -53,6 +53,31 @@ export class CustomerPointsService {
             );
     }
 
+    searchCustomerPointsForCurrentUser(): Observable<CustomerPoints> {
+        const mobile = this.auth.getUser().mobile;
+        return this.httpService
+            .get(`${EndPoints.CUSTOMER_POINTS}/${mobile}`)
+            .pipe(
+                map((response: any) => {
+                    const points: CustomerPoints = {
+                        value: response.value,
+                        lastDate: new Date(response.lastDate),
+                        user: { mobile }
+                    };
+                    this.customerPointsSubject.next(points);
+                    return points;
+                }),
+                catchError(err => {
+                    const errorStatus = err.status || err.code;
+                    if (errorStatus === 404) {
+                        return this.createCustomerPoints({ mobile });
+                    } else {
+                        return throwError(err);
+                    }
+                })
+            );
+    }
+
     createCustomerPoints(user: { mobile: number }): Observable<CustomerPoints> {
         const payload = {
             value: 0,
