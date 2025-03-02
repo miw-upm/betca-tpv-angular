@@ -15,6 +15,10 @@ export class OrderService {
         return of({ ...order});
     }
 
+    delete(order: Order): Observable<Order> {
+        return of({ ...order});
+    }
+
     read(reference: string): Observable<Order> {
         return of({
             reference,
@@ -25,12 +29,12 @@ export class OrderService {
             orderLines: [{
                 articleBarcode: 'mock-barcode',
                 requiredAmount: 4,
-                finalAmount: 2
+                finalAmount: 4
             },
             {
                 articleBarcode: 'mock-2',
                 requiredAmount: 3,
-                finalAmount: 1
+                finalAmount: 3
             }]
         });
     }
@@ -46,7 +50,7 @@ export class OrderService {
                 description: 'Mock ggg',
                 providerCompany: 'pro1',
                 openingDate: new Date(),
-                closingDate: undefined,
+                closingDate: new Date(),
                 orderLines: [{
                     articleBarcode: 'mock-barcode',
                     requiredAmount: 4,

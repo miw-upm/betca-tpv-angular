@@ -14,6 +14,8 @@ import {Order} from "../shared/models/order.model";
 import {OrdersCreationDialogComponent} from "./orders-creation-dialog/orders-creation-dialog.component";
 import {OrdersUpdatingDialogComponent} from "./orders-updating-dialog/orders-updating-dialog.component";
 import {ReadOrderDetailDialogComponent} from "./orders-reading-dialog/read-order-detail.dialog.component";
+
+import {OrdersDeleteDialogComponent} from "./orders-delete-dialog/orders-delete-dialog.component";
 @Component({
     standalone: true,
     imports: [MatCard, MatCardContent, FormsModule, MatIcon, CrudComponent,
@@ -54,5 +56,10 @@ export class OrdersComponent {
     update(order: Order): void {
         this.orderService.read(order.reference)
             .subscribe(fullOrder => this.dialog.open(OrdersUpdatingDialogComponent, {data: fullOrder}));
+    }
+
+    delete(order: Order): void {
+        this.orderService.read(order.reference)
+            .subscribe(fullOrder => this.dialog.open(OrdersDeleteDialogComponent, {data: fullOrder}));
     }
 }
