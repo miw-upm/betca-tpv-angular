@@ -18,7 +18,7 @@ import {FormsModule} from '@angular/forms';
 import {MatCheckbox, MatCheckboxChange} from '@angular/material/checkbox';
 import {CustomerPoints, CustomerPointsConstants} from "./customer-points/customer-points.model";
 import {CustomerPointsService} from "./customer-points/customer-points.service";
-import { take } from 'rxjs';
+import {switchMap, take } from 'rxjs';
 import {
     CustomerPointsProfileComponent
 } from "@common/components/customer-points-profile/customer-points-profile.component";
@@ -55,6 +55,7 @@ export class CheckOutDialogComponent {
     useCustomerPoints = false;
     customerHasPoints: boolean = false;
     customerHasMinimumPoints: boolean = false;
+    pointsToUse: number = 0;
 
     constructor(
         @Inject(MAT_DIALOG_DATA) data,
@@ -70,7 +71,7 @@ export class CheckOutDialogComponent {
             shoppingList: data,
             note: '',
             messageGift: '',
-            pointsToUse: 0
+            pointsDiscount: 0
         };
         this.total();
     }
@@ -143,7 +144,7 @@ export class CheckOutDialogComponent {
             }
         }
         if (this.useCustomerPoints) {
-            total -= this.ticketCreation.pointsToUse;
+            total -= this.pointsToUse;
         }
         return Math.round(total * 100) / 100;
     }
@@ -206,8 +207,9 @@ export class CheckOutDialogComponent {
     pay(): void {
         const originalTotal = this.ticketCreation.shoppingList.reduce((sum, s) => sum + s.total, 0);
         const pointsEarned = Math.round(originalTotal * 0.05);
-        const pointsUsed = this.useCustomerPoints ? this.ticketCreation.pointsToUse : 0;
+        const pointsUsed = this.useCustomerPoints ? this.pointsToUse : 0;
         const netDelta = pointsEarned - pointsUsed;
+        this.ticketCreation.pointsDiscount = pointsUsed;
 
         const returned = this.returnedAmount();
         const cash = this.ticketCreation.cash;
@@ -241,30 +243,40 @@ export class CheckOutDialogComponent {
             this.ticketCreation.messageGift = 'Congratulations';
         }
 
-        this.shoppingCartService.createTicketAndPrintReceipts(
-            this.ticketCreation,
-            voucher,
-            this.requestedInvoice,
-            this.requestedGiftTicket,
-            this.requestedDataProtectionAct,
-            this.useCustomerPoints
-        ).subscribe(() => {
-            if (this.ticketCreation.user) {
-                this.customerPointsService.updateCustomerPoints(this.ticketCreation.user, { points: netDelta })
-                    .subscribe({
-                        next: () => this.dialogRef.close(true),
-                        error: (err) => {
-                            this.snackBar.open("Failed to update customer points", "Close", {
-                                duration: 5000,
-                                panelClass: ['snackbar-error']
-                            });
-                            this.dialogRef.close(true);
-                        }
-                    });
-            } else {
-                this.dialogRef.close(true);
-            }
-        });
+        if (this.ticketCreation.user) {
+            this.customerPointsService.updateCustomerPoints(this.ticketCreation.user, { points: netDelta })
+                .pipe(
+                    switchMap(() =>
+                        this.shoppingCartService.createTicketAndPrintReceipts(
+                            this.ticketCreation,
+                            voucher,
+                            this.requestedInvoice,
+                            this.requestedGiftTicket,
+                            this.requestedDataProtectionAct,
+                            this.useCustomerPoints
+                        )
+                    )
+                )
+                .subscribe({
+                    next: () => this.dialogRef.close(true),
+                    error: (err) => {
+                        this.snackBar.open("Failed to update customer points", "Close", {
+                            duration: 5000,
+                            panelClass: ['snackbar-error']
+                        });
+                        this.dialogRef.close(true);
+                    }
+                });
+        } else {
+            this.shoppingCartService.createTicketAndPrintReceipts(
+                this.ticketCreation,
+                voucher,
+                this.requestedInvoice,
+                this.requestedGiftTicket,
+                this.requestedDataProtectionAct,
+                this.useCustomerPoints
+            ).subscribe(() => this.dialogRef.close(true));
+        }
     }
 
     invalidInvoice(): boolean {
@@ -297,8 +309,7 @@ export class CheckOutDialogComponent {
             pointsToUse = maxDiscountAllowed;
         }
 
-        this.ticketCreation.pointsToUse = pointsToUse;
-
+        this.pointsToUse = pointsToUse;
         this.totalPurchase -= pointsToUse;
         this.totalPurchase = Math.round(this.totalPurchase * 100) / 100;
         this.useCustomerPoints = true;
