@@ -8,7 +8,7 @@ export interface TicketCreation {
     voucher: number;
     note: string;
     shoppingList: Shopping[];
-    pointsToUse?: number;
+    pointsDiscount: number;
 
     messageGift: string;
 }
