@@ -22,9 +22,6 @@
         icon="local_atm"
         title="Offers"
       ></app-input-data>
-      <customer-points-search
-        (usePoints)="useCustomerPoints($event)"
-      ></customer-points-search>
     </div>
   </mat-card-content>
 </mat-card>
@@ -59,7 +56,6 @@
             (click)="decreaseAmount(item)"
             color="accent"
             mat-icon-button
-            [disabled]="item.barcode === discountBarcode"
           >
             <mat-icon>remove_circle_outline</mat-icon>
           </button>
@@ -68,7 +64,6 @@
             (click)="incrementAmount(item)"
             color="accent"
             mat-icon-button
-            [disabled]="item.barcode === discountBarcode"
           >
             <mat-icon>add_circle_outline</mat-icon>
           </button>
