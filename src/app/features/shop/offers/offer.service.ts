@@ -4,19 +4,20 @@ import {Observable} from "rxjs";
 import {OfferSearch} from "./offer-search.model";
 import {Offer} from "../shared/models/offer.model";
 import {EndPoints} from "@core/end-points";
+import {SharedDateFormatterService} from "../shared/services/shared.date-formatter.service";
 
 @Injectable({providedIn: 'root'})
 export class OfferService {
     static readonly SEARCH = '/search';
     static readonly PDF = '/pdf';
 
-    constructor(private readonly httpService: HttpService) {}
+    constructor(private readonly httpService: HttpService, private readonly SharedDateFormatterService: SharedDateFormatterService) {}
 
     create(offer: Offer): Observable<Offer> {
         const formattedOffer = {
             ...offer,
-            creationDate: this.formatDate(offer.creationDate),
-            expiryDate: this.formatDate(offer.expiryDate),
+            creationDate: this.SharedDateFormatterService.formatDate(offer.creationDate),
+            expiryDate: this.SharedDateFormatterService.formatDate(offer.expiryDate),
         };
         return this.httpService
             .successful("Offer created successfully.")
@@ -26,14 +27,15 @@ export class OfferService {
 
     read(reference: string): Observable<Offer> {
         return this.httpService
+            .error("Offer not found.")
             .get(EndPoints.OFFERS + '/' + reference);
     }
 
     update(oldReference: string, offer: Offer): Observable<Offer> {
         const formattedOffer = {
             ...offer,
-            creationDate: this.formatDate(offer.creationDate),
-            expiryDate: this.formatDate(offer.expiryDate),
+            creationDate: this.SharedDateFormatterService.formatDate(offer.creationDate),
+            expiryDate: this.SharedDateFormatterService.formatDate(offer.expiryDate),
         };
         return this.httpService
             .successful("Offer updated successfully.")
@@ -51,11 +53,4 @@ export class OfferService {
         return this.httpService.pdf().get(EndPoints.OFFERS + '/' + reference + OfferService.PDF);
     }
 
-    private formatDate(dateStr: Date | null) {
-        if (!dateStr) return null;
-        const date = new Date(dateStr);
-        if (isNaN(date.getTime())) return null;
-        const pad = (num: number) => num.toString().padStart(2, '0');
-        return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())} 00:00:00`;
-    }
 }

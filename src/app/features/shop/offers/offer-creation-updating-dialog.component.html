@@ -1,9 +1,7 @@
 <h4 mat-dialog-title>{{ title }}</h4>
+<p mat-dialog-content *ngIf="isCreate()">The reference will be generated automatically</p>
+<p mat-dialog-content *ngIf="!isCreate()"><strong>Reference: {{ offer.reference }}</strong></p>
 <mat-dialog-content>
-    <mat-form-field class="full-width">
-        <mat-label>Reference</mat-label>
-        <input [(ngModel)]="offer.reference" id="company" matInput required type="text"/>
-    </mat-form-field>
     <mat-form-field class="full-width">
         <mat-label>Description</mat-label>
         <input [(ngModel)]="offer.description" matInput required type="text"/>
