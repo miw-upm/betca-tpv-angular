@@ -91,6 +91,8 @@ export class ShoppingCartService {
 
     readOffer(reference: string): Observable<Offer> {
         return this.httpService
+            .successful("Offer applied.")
+            .error("Offer not found.")
             .get(EndPoints.OFFERS + '/' + reference);
     }
 }
