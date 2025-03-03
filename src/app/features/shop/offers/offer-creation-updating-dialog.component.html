@@ -26,10 +26,10 @@
             <mat-card-content>
                 <mat-list>
                     <mat-list-item *ngFor="let article of offer.articleList">
-                        {{ article.barcode }} - {{ article.description }}
                         <button mat-icon-button color="warn" (click)="removeArticle(article)">
                             <mat-icon>delete</mat-icon>
                         </button>
+                        {{ article.barcode }} - {{ article.description }}
                     </mat-list-item>
                 </mat-list>
             </mat-card-content>
