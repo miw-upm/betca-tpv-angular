@@ -11,7 +11,6 @@
     <mat-form-field class="full-width">
         <mat-label>Creation date</mat-label>
         <input [(ngModel)]="voucher.creationDate" matInput required type="date">
-        <mat-hint>9 digits</mat-hint>
     </mat-form-field>
     <mat-form-field class="full-width">
         <mat-label>Date of use</mat-label>
@@ -19,7 +18,8 @@
     </mat-form-field>
     <mat-form-field class="full-width">
         <mat-label>Phone number</mat-label>
-        <input [(ngModel)]="voucher.user" matInput type="text"/>
+        <input [(ngModel)]="voucher.user.mobile" matInput type="text"/>
+        <mat-hint>9 digits</mat-hint>
     </mat-form-field>
 </mat-dialog-content>
 <mat-dialog-actions>

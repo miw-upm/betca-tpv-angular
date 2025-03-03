@@ -34,7 +34,7 @@ export class VouchersComponent {
     }
 
     resetSearch(): void {
-        this.voucherSearch = { creationDate: undefined, value: 0, user: undefined, dateOfUse: undefined, reference: "" };
+        this.voucherSearch = { creationDate: undefined, value: 0, dateOfUse: undefined, reference: "" };
     }
 
     create(): void {

@@ -37,7 +37,10 @@ export class VoucherCreationDialogComponent {
         this.title = 'Create Voucher';
         this.voucher = {
             reference: undefined, value: undefined, creationDate: undefined, dateOfUse: undefined,
-            user: undefined
+            user: {
+                mobile: 0,
+                token: ''
+            }
         };
         this.oldReference = undefined;
     }
