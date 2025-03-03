@@ -19,6 +19,8 @@ export class OfferService {
             expiryDate: this.formatDate(offer.expiryDate),
         };
         return this.httpService
+            .successful("Offer created successfully.")
+            .error('Offer creation failed. Please check the values and try again.')
             .post(EndPoints.OFFERS, formattedOffer);
     }
 
@@ -34,7 +36,8 @@ export class OfferService {
             expiryDate: this.formatDate(offer.expiryDate),
         };
         return this.httpService
-            .successful()
+            .successful("Offer updated successfully.")
+            .error('Offer update failed. Please check the values and try again.')
             .put(EndPoints.OFFERS + '/' + oldReference, formattedOffer);
     }
 
