@@ -9,6 +9,14 @@ import {ComplaintService} from "../../shared/services/complaint.service";
 @Injectable({providedIn: 'root'})
 export class ComplaintHomeService {
 
+    private static readonly SEARCH = '/search';
+
+    searchByUserMobile(): Observable<Complaint[]> {
+        return this.httpService
+            .param('userMobile', "66")
+            .get(EndPoints.COMPLAINTS + ComplaintHomeService.SEARCH)
+    }
+
     constructor(private readonly httpService: HttpService,private readonly complaintService: ComplaintService) {
     }
 
