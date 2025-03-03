@@ -1,26 +1,27 @@
 import {Component} from '@angular/core';
 import {MatCard, MatCardContent, MatCardTitle} from "@angular/material/card";
-import {MatButton, MatFabButton, MatIconButton} from "@angular/material/button";
 import {ReactiveFormsModule} from "@angular/forms";
 import {MatNativeDateModule} from "@angular/material/core";
 import {MonthPickerComponent} from "./month-picker/month-picker.component";
 import {YearPickerComponent} from "./year-picker/year-picker.component";
-import {CurrencyPipe} from "@angular/common";
-import {MatIcon} from "@angular/material/icon";
+import {AsyncPipe, CurrencyPipe} from "@angular/common";
 import {
     MatCell,
     MatCellDef,
     MatColumnDef,
-    MatHeaderCell, MatHeaderCellDef,
+    MatHeaderCell,
+    MatHeaderCellDef,
     MatHeaderRow,
     MatHeaderRowDef,
-    MatRow, MatRowDef, MatTable
+    MatRow,
+    MatRowDef,
+    MatTable
 } from "@angular/material/table";
-import {MatCheckbox} from "@angular/material/checkbox";
-import {MatSuffix} from "@angular/material/form-field";
-import {CashierClosure} from "../cashier-closure/cashier-closure.model";
-import moment from "moment";
-import {SearchCriteria} from "./search-criteria.model";
+import {DateInterval} from "./date-interval.model";
+import {CashierClosureHistoryService} from "./cashier-closure-history.service";
+import {Observable, scan, startWith, Subject} from "rxjs";
+import {DetailedCashierClosure} from "./detailed-cashier-closure";
+import {tap} from "rxjs/operators";
 
 
 @Component({
@@ -44,6 +45,7 @@ import {SearchCriteria} from "./search-criteria.model";
         MatRowDef,
         MatTable,
         MatHeaderCellDef,
+        AsyncPipe,
     ],
     templateUrl: './cashier-closure-history.component.html',
     standalone: true,
@@ -51,29 +53,21 @@ import {SearchCriteria} from "./search-criteria.model";
 })
 export class CashierClosureHistoryComponent {
 
-    protected cashierClosures : CashierClosure[] = [
-        { finalCash: 119.27, finalCard: 213.27, comment: 'Cierre de caja: 2025-02-11 19:03:44' },
-        { finalCash: 479.11, finalCard: 647.9, comment: 'Cierre de caja: 2025-02-06 19:03:44' },
-        { finalCash: 358.31, finalCard: 512.16, comment: 'Cierre de caja: 2025-01-28 19:03:44' },
-        { finalCash: 67.09, finalCard: 744.32, comment: 'Cierre de caja: 2025-01-24 19:03:44' },
-        { finalCash: 129.99, finalCard: 284.15, comment: 'Cierre de caja: 2025-02-09 19:03:44' },
-        { finalCash: 102.03, finalCard: 703.7, comment: 'Cierre de caja: 2025-02-15 19:03:44' },
-        { finalCash: 324.24, finalCard: 104.21, comment: 'Cierre de caja: 2025-02-08 19:03:44' },
-        { finalCash: 444.48, finalCard: 768.77, comment: 'Cierre de caja: 2025-02-13 19:03:44' },
-        { finalCash: 92.18, finalCard: 885.59, comment: 'Cierre de caja: 2025-01-26 19:03:44' },
-        { finalCash: 316.82, finalCard: 350.06, comment: 'Cierre de caja: 2025-02-04 19:03:44' },
-        { finalCash: 487.48, finalCard: 266.76, comment: 'Cierre de caja: 2025-02-06 19:03:44' },
-        { finalCash: 166.41, finalCard: 543.92, comment: 'Cierre de caja: 2025-02-13 19:03:44' },
-        { finalCash: 375.6, finalCard: 640.24, comment: 'Cierre de caja: 2025-01-29 19:03:44' },
-        { finalCash: 241.87, finalCard: 853.66, comment: 'Cierre de caja: 2025-01-25 19:03:44' },
-        { finalCash: 319.75, finalCard: 462.69, comment: 'Cierre de caja: 2025-02-01 19:03:44' }
-    ];
+    constructor(private readonly cashierClosureHistoryService: CashierClosureHistoryService) {
+    }
 
-    protected total = this.cashierClosures.reduce((prv, cur) => prv + cur.finalCard + cur.finalCard, 0);
+    protected cashierClosures: Observable<DetailedCashierClosure[]>;
 
-    public displayedColumns = ['finalCash', 'finalCard', 'total', 'comment'];
+    protected total: Observable<number>;
 
-    updateDataset($event: SearchCriteria) {
-        console.log("Retrieve cashier closures searching by: "+JSON.stringify($event))
+    protected displayedColumns = ['cardSales', 'cashSales', 'deposit', 'withdrawal', 'finalCash', 'comment'];
+
+    updateDataset($event: DateInterval) {
+        let runningSum = new Subject<number>()
+        this.cashierClosures = this.cashierClosureHistoryService.findCahierClosuresByDateBetween($event.start, $event.end)
+            .pipe(tap(array => array.forEach(item => runningSum.next(item.cashSales + item.cardSales))));
+        this.total = runningSum
+            .pipe(startWith(0)) //Start with zero to avoid empty scan if search doesn't return any result
+            .pipe(scan((acc, cur) => acc + cur, 0));
     }
 }
