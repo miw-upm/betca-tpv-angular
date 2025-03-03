@@ -22,11 +22,6 @@ export class ComplaintService {
             .get(EndPoints.COMPLAINTS + '/' + id);
     }
 
-    delete(id: string): Observable<void> {
-        return this.httpService
-            .delete(EndPoints.COMPLAINTS + '/' + id);
-    }
-
     update(complaint: Complaint){
         return this.httpService
             .put(EndPoints.COMPLAINTS + '/' + complaint.id,complaint);
