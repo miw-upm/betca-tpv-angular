@@ -14,7 +14,7 @@ export class ComplaintShopService {
     constructor(private readonly httpService: HttpService,private readonly complaintService: ComplaintService) {
     }
 
-    search(): Observable<Complaint[]> {
+    searchAll(): Observable<Complaint[]> {
         return this.httpService
             .get(EndPoints.COMPLAINTS + ComplaintShopService.SEARCH);
     }
