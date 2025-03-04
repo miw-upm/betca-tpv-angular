@@ -23,28 +23,18 @@ export class ComplaintsHomeComponent {
     complaints = of([]);
 
     constructor(private readonly dialog: MatDialog, private readonly complaintHomeService: ComplaintHomeService) {
-        this.searchAll();
+        this.searchByUserMobile();
     }
 
     create(): void {
         this.dialog
             .open(ComplaintCreationDialogComponent)
             .afterClosed()
-            .subscribe(() => this.searchAll());
+            .subscribe(() => this.searchByUserMobile());
     }
 
-    searchAll(): void {
-        //this.complaints = this.complaintService.searchAll();
-        this.complaints = of([{id:"1",registrationDate:"14/02/2024",mobile: 722255454
-            , barcode: 434533, description: "Queja San Valentín", state: "finalizado",
-            reply: ""},
-            {id:"2",registrationDate:"01/02/2024",mobile: 652542525
-                , barcode: 434531, description: "Queja Febrero", state: false,
-                reply: ""},
-            {id:"3",registrationDate:"07/02/2024",mobile: 555555555
-                , barcode: 434553, description: "Queja tienda", state: false,
-                reply: ""},
-        ]);
+    searchByUserMobile(): void {
+        this.complaints = this.complaintHomeService.searchByUserMobile();
     }
 
     read(complaint: Complaint): void {
@@ -67,12 +57,12 @@ export class ComplaintsHomeComponent {
         this.dialog
             .open(ComplaintUpdateHomeDialogComponent)
             .afterClosed()
-            .subscribe(() => this.searchAll());
+            .subscribe(() => this.searchByUserMobile());
     }
     delete(complaint: Complaint): void {
 
         this.complaintHomeService
             .delete(complaint.id)
-            .subscribe(() => this.searchAll());
+            .subscribe(() => this.searchByUserMobile());
     }
 }

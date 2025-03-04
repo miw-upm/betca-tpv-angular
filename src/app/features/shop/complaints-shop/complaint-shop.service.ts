@@ -9,11 +9,14 @@ import {ComplaintService} from "../../shared/services/complaint.service";
 @Injectable({providedIn: 'root'})
 export class ComplaintShopService {
 
+    private static readonly SEARCH = '/search';
+
     constructor(private readonly httpService: HttpService,private readonly complaintService: ComplaintService) {
     }
 
     searchAll(): Observable<Complaint[]> {
-        return this.complaintService.searchAll();
+        return this.httpService
+            .get(EndPoints.COMPLAINTS + ComplaintShopService.SEARCH);
     }
 
     read(id:string): Observable<Complaint> {
@@ -23,8 +26,4 @@ export class ComplaintShopService {
     update(complaint:Complaint): Observable<Complaint> {
         return this.complaintService.update(complaint);
     }
-    delete(id: string): Observable<void> {
-        return this.complaintService.delete(id);
-    }
-
 }
