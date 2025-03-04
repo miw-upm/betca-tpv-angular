@@ -5,18 +5,19 @@ import {HttpService} from '@core/services/http.service';
 import {EndPoints} from '@core/end-points';
 import {Complaint} from '../../shared/models/complaint.model';
 import {ComplaintService} from "../../shared/services/complaint.service";
+import {AuthService} from "@core/services/auth.service";
 
 @Injectable({providedIn: 'root'})
 export class ComplaintHomeService {
 
     private static readonly SEARCH = '/search';
 
-    constructor(private readonly httpService: HttpService,private readonly complaintService: ComplaintService) {
+    constructor(private readonly httpService: HttpService,private readonly complaintService: ComplaintService,private readonly authService:AuthService) {
     }
 
     searchByUserMobile(): Observable<Complaint[]> {
         return this.httpService
-            .param('userMobile', "66")
+            .param('userMobile', this.authService.getMobile().toString())
             .get(EndPoints.COMPLAINTS + ComplaintHomeService.SEARCH)
     }
 
