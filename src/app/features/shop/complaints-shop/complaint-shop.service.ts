@@ -26,8 +26,4 @@ export class ComplaintShopService {
     update(complaint:Complaint): Observable<Complaint> {
         return this.complaintService.update(complaint);
     }
-    delete(id: string): Observable<void> {
-        return this.complaintService.delete(id);
-    }
-
 }

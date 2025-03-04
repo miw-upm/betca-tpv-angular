@@ -47,12 +47,6 @@ export class ComplaintsShopComponent {
         });
     }
 
-    delete(complaint: Complaint): void {
-        this.complaintShopService
-            .delete(complaint.id)
-            .subscribe(() => this.searchAll());
-    }
-
     update(complaint: Complaint){
         this.dialog
             .open(ComplaintUpdateShopDialogComponent)

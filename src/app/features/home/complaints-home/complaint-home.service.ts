@@ -11,22 +11,18 @@ export class ComplaintHomeService {
 
     private static readonly SEARCH = '/search';
 
+    constructor(private readonly httpService: HttpService,private readonly complaintService: ComplaintService) {
+    }
+
     searchByUserMobile(): Observable<Complaint[]> {
         return this.httpService
             .param('userMobile', "66")
             .get(EndPoints.COMPLAINTS + ComplaintHomeService.SEARCH)
     }
 
-    constructor(private readonly httpService: HttpService,private readonly complaintService: ComplaintService) {
-    }
-
     create(complaint: Complaint): Observable<Complaint> {
         return this.httpService
             .post(EndPoints.COMPLAINTS, complaint);
-    }
-
-    searchAll(): Observable<Complaint[]> {
-        return this.complaintService.searchAll();
     }
 
     read(id:string): Observable<Complaint> {

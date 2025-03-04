@@ -30,7 +30,7 @@ export class ComplaintsHomeComponent {
         this.dialog
             .open(ComplaintCreationDialogComponent)
             .afterClosed()
-            .subscribe(() => this.searchAll());
+            .subscribe(() => this.searchByUserMobile());
     }
 
     searchByUserMobile(): void {
@@ -57,12 +57,12 @@ export class ComplaintsHomeComponent {
         this.dialog
             .open(ComplaintUpdateHomeDialogComponent)
             .afterClosed()
-            .subscribe(() => this.searchAll());
+            .subscribe(() => this.searchByUserMobile());
     }
     delete(complaint: Complaint): void {
 
         this.complaintHomeService
             .delete(complaint.id)
-            .subscribe(() => this.searchAll());
+            .subscribe(() => this.searchByUserMobile());
     }
 }
