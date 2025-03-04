@@ -1,0 +1,49 @@
+<div>
+    <button mat-flat-button (click)="createAudit()">Create Audit</button>
+    <table mat-table [dataSource]="stockAudits" class="mat-elevation-z8">
+
+        <ng-container matColumnDef="identity">
+            <th mat-header-cell *matHeaderCellDef>No.</th>
+            <td mat-cell *matCellDef="let element">{{ element.identity }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="creationDate">
+            <th mat-header-cell *matHeaderCellDef>Creation Date</th>
+            <td mat-cell *matCellDef="let element">
+                {{ element.creationDate | date }}
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="closeDate">
+            <th mat-header-cell *matHeaderCellDef>Close Date</th>
+            <td mat-cell *matCellDef="let element">{{ element.closeDate | date }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="articlesWithoutAudit">
+            <th mat-header-cell *matHeaderCellDef>Articles Without Audit</th>
+            <td mat-cell *matCellDef="let element">
+                {{ element.articlesWithoutAudit.length }}
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="lossValue">
+            <th mat-header-cell *matHeaderCellDef>Loss Value</th>
+            <td mat-cell *matCellDef="let element">{{ element.lossValue }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="losses">
+            <th mat-header-cell *matHeaderCellDef>Losses</th>
+            <td mat-cell *matCellDef="let element">{{ element.losses.length }}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="action">
+            <th mat-header-cell *matHeaderCellDef>Actions</th>
+            <td mat-cell *matCellDef="let element">
+                <button mat-flat-button (click)="ver(element.identity)">View</button>
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+</div>

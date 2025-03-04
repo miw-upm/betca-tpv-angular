@@ -1,0 +1,20 @@
+.container {
+    display: flex;
+    justify-content: center;
+    height: 100%; /* Ocupa toda la altura de la pantalla */
+    background-color: #f5f5f5; /* Fondo suave */
+    padding: 20px; /* Espaciado alrededor del card */
+    box-sizing: border-box; /* Incluye el padding en el tamaño total */
+  }
+  
+  .audit-card {
+    max-width: 900px; /* Limitar el ancho máximo */
+    width: 100%; /* Asegura que ocupe el ancho disponible */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    border-radius: 16px; /* Esquinas redondeadas */
+    padding: 24px; /* Espaciado interno */
+  }
+  
+  mat-card-header {
+    margin-bottom: 16px; /* Espacio entre el header y el contenido */
+  }
