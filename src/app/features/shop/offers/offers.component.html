@@ -6,6 +6,7 @@
     <mat-card-content>
         <app-filter-input [(value)]="offerSearch.reference" title="Reference"></app-filter-input>
         <app-filter-input [(value)]="offerSearch.description" title="Description"></app-filter-input>
+        <app-filter-input [(value)]="offerSearch.discount" title="Discount less than"></app-filter-input>
         <button (click)="search()" mat-stroked-button>
             <mat-icon>search</mat-icon>
             Find

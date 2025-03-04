@@ -13,13 +13,11 @@ import {MatFormField, MatLabel} from '@angular/material/form-field';
 import {MatButton} from '@angular/material/button';
 import {MatInput, MatInputModule} from '@angular/material/input';
 import {MatDatepickerModule} from '@angular/material/datepicker';
-import {Observable, of} from 'rxjs';
-
 import {OrderService} from '../orders.service';
 import {SearchByCompanyComponent} from '../../shared/components/search-by-company.component';
 import {Order} from '../../shared/models/order.model';
 import {OrderLine} from '../../shared/models/order-line.model';
-import {SharedProviderService} from '../../shared/services/shared.provider.service';
+import {SharedShopArticleService} from "../../shared/services/shared-shop.article.service";
 @Component({
     standalone: true,
     imports: [MatDialogTitle, MatDialogContent, MatFormField, FormsModule, MatLabel, MatInput,
@@ -32,11 +30,8 @@ export class OrdersCreationDialogComponent {
     order: Order;
     orderLine: OrderLine;
     title: string;
-    oldReference: string;
-    companies: Observable<string[]> = of([]);
-    articles: any[] = [];
 
-    constructor(@Inject(MAT_DIALOG_DATA) data: Order, private readonly orderService: OrderService,  private readonly sharedProviderService: SharedProviderService,        
+    constructor(@Inject(MAT_DIALOG_DATA) data: Order, private readonly orderService: OrderService,  private readonly sharedArticleService: SharedShopArticleService,
     private readonly dialog: MatDialog) {
         this.title = 'Create Order';
         this.order = data || {
@@ -46,7 +41,7 @@ export class OrdersCreationDialogComponent {
     }
 
     onCompanyChange(): void {
-        this.sharedProviderService.getArticlesByCompany(this.order.providerCompany).subscribe(articles => {
+        this.sharedArticleService.getArticlesByCompany(this.order.providerCompany).subscribe(articles => {
             this.order.orderLines = articles.map(article => {
                 return {
                     articleBarcode: article.barcode,

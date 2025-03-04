@@ -1,0 +1,14 @@
+<h4 mat-dialog-title>{{ title }}</h4>
+<mat-dialog-content>
+    @if(invalid()){
+        <mat-label>No puedes borrar el pedido. El pedido ya está cerrado.</mat-label>
+    }@else{
+        <mat-label>¿Estás seguro de borrar este pedido?</mat-label>
+        <mat-label>Reference: {{order.reference}}</mat-label>
+    }
+</mat-dialog-content>
+<mat-dialog-actions>
+    <button mat-dialog-close mat-raised-button>Close</button>
+    <button (click)="delete()" [disabled]=invalid() color="primary" mat-raised-button>Delete
+    </button>
+</mat-dialog-actions>

@@ -1,10 +1,10 @@
-<div class="customer-points-profile">
+<div class="customer-points-profile" *ngIf="customerPointsService.customerPoints$ | async as cp">
     <mat-divider></mat-divider>
     <div class="points-info">
         <span>Available Points:</span>
-        <strong>{{ points }}</strong>
+        <strong>{{ cp.value }}</strong>
     </div>
-    <div class="last-updated" *ngIf="lastUpdated">
-        <small>Updated: {{ lastUpdated | date:'short' }}</small>
+    <div class="last-updated" *ngIf="cp.lastDate">
+        <small>Updated: {{ cp.lastDate | date:'short' }}</small>
     </div>
 </div>

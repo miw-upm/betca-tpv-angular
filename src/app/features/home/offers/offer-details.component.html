@@ -11,11 +11,7 @@
     <mat-grid-tile *ngIf="offer.articleList && offer.articleList.length > 0">
         <strong style="text-decoration: underline;">Associted articles</strong>
     </mat-grid-tile>
-    <mat-grid-tile *ngIf="offer.articleList && offer.articleList.length > 0">
-        <ul>
-            <li *ngFor="let article of offer.articleList">
-                <strong>Barcode</strong>: {{ article.barcode }} - <strong>Description</strong>: {{ article.description }}
-            </li>
-        </ul>
+    <mat-grid-tile *ngFor="let article of offer.articleList">
+        <strong>Barcode</strong>: {{ article.barcode }} - <strong> Description</strong>: {{ article.description }}
     </mat-grid-tile>
 </mat-grid-list>

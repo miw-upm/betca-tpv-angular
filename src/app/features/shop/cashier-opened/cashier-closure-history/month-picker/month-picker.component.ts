@@ -8,7 +8,8 @@ import {MatIcon} from "@angular/material/icon";
 import {MatFormField, MatLabel, MatSuffix} from "@angular/material/form-field";
 import {MatInput} from "@angular/material/input";
 import {MatFabButton, MatIconButton} from "@angular/material/button";
-import {SEARCH_PERIOD, SearchCriteria} from "../search-criteria.model";
+import {DateInterval} from "../date-interval.model";
+import {AnimationDurations} from "@angular/material/core";
 
 const moment = _rollupMoment || _moment;
 export const MY_FORMATS = {
@@ -45,24 +46,26 @@ export const MY_FORMATS = {
   styleUrl: './month-picker.component.css'
 })
 export class MonthPickerComponent {
-  @Output() valueChanged = new EventEmitter<SearchCriteria>();
+  @Output() valueChanged = new EventEmitter<DateInterval>();
   protected date = new FormControl(moment());
 
   setMonthAndYear(normalizedMonthAndYear: Moment, datepicker: MatDatepicker<Moment>) {
     const newValue = this.date.value ?? moment();
-    newValue.month(normalizedMonthAndYear.month());
-    newValue.year(normalizedMonthAndYear.year());
+    newValue.set('y', normalizedMonthAndYear.year());
+    newValue.set('M', normalizedMonthAndYear.month());
     this.date.setValue(newValue);
     datepicker.close();
-    this.valueChanged.emit({period: SEARCH_PERIOD.MONTH, start_date: newValue});
+    this.emitValueChanged(newValue);
   }
 
   setCurrentMonth() {
     const newValue = moment();
-    const now = moment();
-    newValue.year = now.year;
-    newValue.month = now.month;
     this.date.setValue(newValue);
-    this.valueChanged.emit({period: SEARCH_PERIOD.MONTH, start_date: newValue});
+    this.emitValueChanged(newValue);
+  }
+
+  emitValueChanged(date: Moment) {
+    date.set('D',1);
+    this.valueChanged.emit({start: date, end: date.clone().add(1, 'months')});
   }
 }

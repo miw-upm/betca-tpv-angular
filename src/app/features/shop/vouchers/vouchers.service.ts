@@ -1,54 +1,37 @@
 import { Injectable } from "@angular/core";
 import { HttpService } from "@core/services/http.service";
-import { Observable, of } from "rxjs";
+import { Observable } from "rxjs";
 import { VoucherSearch } from "./vouchers-search.model";
 import { Voucher } from "../shared/models/voucher.model";
+import {EndPoints} from "@core/end-points";
+import {SharedDateFormatterService} from "../shared/services/shared.date-formatter.service";
 
 @Injectable({ providedIn: 'root' })
 export class VoucherService {
     static readonly SEARCH = '/search';
 
-    constructor(private readonly httpService: HttpService) {
+    constructor(private readonly httpService: HttpService, private readonly SharedDateFormatterService: SharedDateFormatterService) {
     }
 
     create(voucher: Voucher): Observable<Voucher> {
-        //TODO: Implement this method and remove mock
-        return of({ ...voucher, id: 'mock-id' });
+        const formattedVoucher = {
+            ...voucher,
+            creationDate: this.SharedDateFormatterService.formatDate(voucher.creationDate),
+            dateOfUse: this.SharedDateFormatterService.formatDate(voucher.dateOfUse),
+        };
+        return this.httpService
+            .post(EndPoints.VOUCHERS, formattedVoucher);
     }
 
     read(reference: string): Observable<Voucher> {
-        //TODO: Implement this method and remove mock
-        return of({
-            reference,
-            value: 0,
-            creationDate: new Date(),
-            dateOfUse: new Date(),
-            user: null
-        });
-    }
-
-    update(oldReference: string, voucher: Voucher): Observable<Voucher> {
-        //TODO: Implement this method and remove mock
-        return of({ ...voucher, reference: oldReference });
+        return this.httpService
+            .error("Voucher not found.")
+            .get(EndPoints.VOUCHERS+"/"+reference)
     }
 
     search(voucherSearch: VoucherSearch): Observable<Voucher[]> {
-        //TODO: Implement this method and remove mock
-        return of([
-            {
-                reference: 'mock-reference-1',
-                value: 0,
-                creationDate: new Date(),
-                dateOfUse: new Date(),
-                user: null
-            },
-            {
-                reference: 'mock-reference-2',
-                value: 0,
-                creationDate: new Date(),
-                dateOfUse: new Date(),
-                user: null
-            }
-        ]);
+        return this.httpService
+            .paramsFrom(voucherSearch)
+            .get(EndPoints.VOUCHERS + VoucherService.SEARCH);
     }
 }

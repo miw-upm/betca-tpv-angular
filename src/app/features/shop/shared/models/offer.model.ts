@@ -2,7 +2,7 @@
 import {Article} from "../../../shared/models/article.model";
 
 export interface Offer {
-    reference: string;
+    reference?: string;
     description: string;
     creationDate: Date;
     expiryDate: Date;

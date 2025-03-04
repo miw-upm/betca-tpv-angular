@@ -22,25 +22,27 @@ import { Voucher } from "../shared/models/voucher.model";
 
 @Component({
     standalone: true,
-    imports: [MatDialogTitle, MatDialogContent, MatFormField, FormsModule, MatLabel, MatHint, MatInput, MatSelect,
-        MatOption, MatSlideToggle, SearchByCompanyComponent, NgIf, MatDialogActions, MatDialogClose, MatButton,
-        NgForOf],
-    templateUrl: 'vouchers-creation-updating-dialog.component.html',
-    styleUrls: ['vouchers-creation-updating-dialog.component.css']
+    imports: [MatDialogTitle, MatDialogContent, MatFormField, FormsModule, MatLabel, MatHint, MatInput,
+        NgIf, MatDialogActions, MatDialogClose, MatButton],
+    templateUrl: 'vouchers-creation-dialog.component.html',
+    styleUrls: ['vouchers-creation-dialog.component.css']
 })
-export class VoucherCreationUpdatingDialogComponent {
+export class VoucherCreationDialogComponent {
     voucher: Voucher;
     title: string;
     oldReference: string;
     companies: Observable<string[]> = of([]);
 
     constructor(@Inject(MAT_DIALOG_DATA) data: Voucher, private readonly voucherService: VoucherService, private readonly dialog: MatDialog) {
-        this.title = data ? 'Update Voucher' : 'Create Voucher';
-        this.voucher = data || {
+        this.title = 'Create Voucher';
+        this.voucher = {
             reference: undefined, value: undefined, creationDate: undefined, dateOfUse: undefined,
-            user: undefined
+            user: {
+                mobile: 0,
+                token: ''
+            }
         };
-        this.oldReference = data ? data.reference : undefined;
+        this.oldReference = undefined;
     }
 
     isCreate(): boolean {
@@ -50,12 +52,6 @@ export class VoucherCreationUpdatingDialogComponent {
     create(): void {
         this.voucherService
             .create(this.voucher)
-            .subscribe(() => this.dialog.closeAll());
-    }
-
-    update(): void {
-        this.voucherService
-            .update(this.oldReference, this.voucher)
             .subscribe(() => this.dialog.closeAll());
     }
 
