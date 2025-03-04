@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { HttpService } from "@core/services/http.service";
-import { Observable, of } from "rxjs";
+import { Observable } from "rxjs";
 import { VoucherSearch } from "./vouchers-search.model";
 import { Voucher } from "../shared/models/voucher.model";
 import {EndPoints} from "@core/end-points";
@@ -30,21 +30,8 @@ export class VoucherService {
     }
 
     search(voucherSearch: VoucherSearch): Observable<Voucher[]> {
-        return of([
-            {
-                reference: 'mock-reference-1',
-                value: 0,
-                creationDate: new Date(),
-                dateOfUse: new Date(),
-                user: null
-            },
-            {
-                reference: 'mock-reference-2',
-                value: 0,
-                creationDate: new Date(),
-                dateOfUse: new Date(),
-                user: null
-            }
-        ]);
+        return this.httpService
+            .paramsFrom(voucherSearch)
+            .get(EndPoints.VOUCHERS + VoucherService.SEARCH);
     }
 }
