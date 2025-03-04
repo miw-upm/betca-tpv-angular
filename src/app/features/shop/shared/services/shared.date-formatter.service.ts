@@ -7,6 +7,6 @@ export class SharedDateFormatterService {
         const date = new Date(dateStr);
         if (isNaN(date.getTime())) return null;
         const pad = (num: number) => num.toString().padStart(2, '0');
-        return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())} 00:00:00`;
+        return `${date.getUTCFullYear()}-${pad(date.getUTCMonth() + 1)}-${pad(date.getUTCDate())} 00:00:00`;
     }
 }

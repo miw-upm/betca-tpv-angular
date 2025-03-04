@@ -69,6 +69,6 @@ export class OffersComponent {
     private formatDate(date: string | Date): string {
         if (!date) return '';
         const parsedDate = new Date(date);
-        return parsedDate.toISOString().split('T')[0];
+        return `${parsedDate.getFullYear()}-${(parsedDate.getMonth() + 1).toString().padStart(2, '0')}-${parsedDate.getDate().toString().padStart(2, '0')}`;
     }
 }
