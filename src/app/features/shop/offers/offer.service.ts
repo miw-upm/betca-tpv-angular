@@ -1,48 +1,46 @@
 import {Injectable} from "@angular/core";
 import {HttpService} from "@core/services/http.service";
-import {Observable, of} from "rxjs";
+import {Observable} from "rxjs";
 import {OfferSearch} from "./offer-search.model";
 import {Offer} from "../shared/models/offer.model";
-import {Article} from "../../shared/models/article.model";
 import {EndPoints} from "@core/end-points";
+import {SharedDateFormatterService} from "../shared/services/shared.date-formatter.service";
 
 @Injectable({providedIn: 'root'})
 export class OfferService {
     static readonly SEARCH = '/search';
+    static readonly PDF = '/pdf';
 
-    constructor(private readonly httpService: HttpService) {}
+    constructor(private readonly httpService: HttpService, private readonly SharedDateFormatterService: SharedDateFormatterService) {}
 
     create(offer: Offer): Observable<Offer> {
-
         const formattedOffer = {
             ...offer,
-            creationDate: this.formatDate(offer.creationDate),
-            expiryDate: this.formatDate(offer.expiryDate),
+            creationDate: this.SharedDateFormatterService.formatDate(offer.creationDate),
+            expiryDate: this.SharedDateFormatterService.formatDate(offer.expiryDate),
         };
-        console.log(formattedOffer);
         return this.httpService
+            .successful("Offer created successfully.")
+            .error('Offer creation failed. Please check the values and try again.')
             .post(EndPoints.OFFERS, formattedOffer);
     }
 
-    // TODO: Implementar método de lectura
     read(reference: string): Observable<Offer> {
-        return of({
-            reference,
-            description: 'Mock Description for Update',
-            creationDate: new Date(),
-            expiryDate: new Date(),
-            discount: 15,
-            articles: this.getMockArticles()
-        });
+        return this.httpService
+            .error("Offer not found.")
+            .get(EndPoints.OFFERS + '/' + reference);
     }
 
-    // TODO: Implementar método de actualización
     update(oldReference: string, offer: Offer): Observable<Offer> {
-        return of({
+        const formattedOffer = {
             ...offer,
-            reference: oldReference,
-            articles: this.getMockArticles()
-        });
+            creationDate: this.SharedDateFormatterService.formatDate(offer.creationDate),
+            expiryDate: this.SharedDateFormatterService.formatDate(offer.expiryDate),
+        };
+        return this.httpService
+            .successful("Offer updated successfully.")
+            .error('Offer update failed. Please check the values and try again.')
+            .put(EndPoints.OFFERS + '/' + oldReference, formattedOffer);
     }
 
     search(offerSearch: OfferSearch): Observable<Offer[]> {
@@ -51,39 +49,8 @@ export class OfferService {
             .get(EndPoints.OFFERS + OfferService.SEARCH);
     }
 
-    private formatDate(dateStr: Date | null) {
-        if (!dateStr) return null;
-        const date = new Date(dateStr);
-        if (isNaN(date.getTime())) return null;
-        const pad = (num: number) => num.toString().padStart(2, '0');
-        return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())} 00:00:00`;
+    printPdf(reference: string): Observable<any> {
+        return this.httpService.pdf().get(EndPoints.OFFERS + '/' + reference + OfferService.PDF);
     }
 
-    // TODO: Eliminar este método y sustituirlo por el servicio de artículos
-    private getMockArticles(): Article[] {
-        return [
-            {
-                barcode: '1234567890',
-                description: 'Article 1',
-                retailPrice: 100,
-                providerCompany: 'Provider A',
-                reference: 'article-1',
-                stock: 50,
-                tax: 0,  // Si tienes un tipo `Tax` puedes añadirlo aquí
-                discontinued: false,
-                registrationDate: new Date()
-            },
-            {
-                barcode: '0987654321',
-                description: 'Article 2',
-                retailPrice: 150,
-                providerCompany: 'Provider B',
-                reference: 'article-2',
-                stock: 30,
-                tax: 1,
-                discontinued: false,
-                registrationDate: new Date()
-            }
-        ];
-    }
 }

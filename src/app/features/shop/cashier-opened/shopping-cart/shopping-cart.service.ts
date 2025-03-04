@@ -11,6 +11,7 @@ import {Shopping} from './shopping.model';
 import {TicketCreation} from './ticket-creation.model';
 import {ShoppingState} from './shopping-state.model';
 import { CustomerPointsConstants } from './customer-points/customer-points.model';
+import {Offer} from "../../shared/models/offer.model";
 
 @Injectable({providedIn: 'root'})
 export class ShoppingCartService {
@@ -52,8 +53,7 @@ export class ShoppingCartService {
             );
     }
 
-    createTicketAndPrintReceipts(ticketCreation: TicketCreation, voucher: number, requestedInvoice: boolean, requestedGiftTicket: boolean,
-                                 requestDataProtectionAct: boolean): Observable<void> {
+    createTicketAndPrintReceipts(ticketCreation: TicketCreation, voucher: number, requestedInvoice: boolean, requestedGiftTicket: boolean, requestDataProtectionAct: boolean, useCustomerPoints: boolean): Observable<void> {
         return this.httpService
             .post(EndPoints.TICKETS, ticketCreation)
             .pipe(
@@ -89,34 +89,10 @@ export class ShoppingCartService {
         return EMPTY; // TODO change EMPTY
     }
 
-    createDiscountPointsArticle(pointsToUse: number): Observable<Shopping> {
-        const pointsArticle = {
-            barcode: CustomerPointsConstants.DISCOUNT_POINTS_BARCODE,
-            description: 'Customer Points Discount',
-            retailPrice: pointsToUse,
-            providerCompany: 'Various'
-        };
-
-        return this.articleShopService.read(pointsArticle.barcode).pipe(
-            concatMap(existingArticle => {
-                if (existingArticle) {
-                    return this.articleShopService.update(pointsArticle);
-                } else {
-                    return this.articleShopService.create(pointsArticle);
-                }
-            }),
-            map(article => new Shopping(
-                article.barcode,
-                article.description,
-                article.retailPrice,
-            )),
-            catchError(() => this.articleShopService.create(pointsArticle).pipe(
-                map(article => new Shopping(
-                    article.barcode,
-                    article.description,
-                    article.retailPrice
-                ))
-            ))
-        );
+    readOffer(reference: string): Observable<Offer> {
+        return this.httpService
+            .successful("Offer applied.")
+            .error("Offer not found.")
+            .get(EndPoints.OFFERS + '/' + reference);
     }
 }

@@ -6,6 +6,7 @@
     <mat-card-content>
         <app-filter-input [(value)]="offerSearch.reference" title="Reference"></app-filter-input>
         <app-filter-input [(value)]="offerSearch.description" title="Description"></app-filter-input>
+        <app-filter-input [(value)]="offerSearch.discount" title="Discount less than"></app-filter-input>
         <button (click)="search()" mat-stroked-button>
             <mat-icon>search</mat-icon>
             Find
@@ -14,4 +15,4 @@
 </mat-card>
 
 <app-crud (create)="create()" (read)="read($event)" (update)="update($event)" (print)="print($event)"
-          [data]="offers" [deleteAction]="false" [title]="title"></app-crud>
+          [data]="offers" [deleteAction]="false" [printAction]="true" [title]="title"></app-crud>

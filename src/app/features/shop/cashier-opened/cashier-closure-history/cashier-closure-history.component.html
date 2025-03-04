@@ -10,21 +10,29 @@
 </mat-card>
 <mat-card>
     <mat-card-title>
-        Total of period: {{ total | currency:'EUR':'symbol' }}
+        Total sales of period: {{ total | async | currency:'EUR':'symbol' }}
     </mat-card-title>
     <mat-card-content>
         <mat-table [dataSource]="cashierClosures" class="mat-elevation-z8">
+            <ng-container matColumnDef="cardSales">
+                <mat-header-cell *matHeaderCellDef> Card sales</mat-header-cell>
+                <mat-cell *matCellDef="let item"> {{ item.cardSales | currency:'EUR':'symbol' }}</mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="cashSales">
+                <mat-header-cell *matHeaderCellDef> Cash sales</mat-header-cell>
+                <mat-cell *matCellDef="let item"> {{ item.cashSales | currency:'EUR':'symbol' }}</mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="deposit">
+                <mat-header-cell *matHeaderCellDef> Deposit</mat-header-cell>
+                <mat-cell *matCellDef="let item"> {{ item.deposit | currency:'EUR':'symbol' }}</mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="withdrawal">
+                <mat-header-cell *matHeaderCellDef> Withdrawal</mat-header-cell>
+                <mat-cell *matCellDef="let item"> {{ item.withdrawal | currency:'EUR':'symbol' }}</mat-cell>
+            </ng-container>
             <ng-container matColumnDef="finalCash">
                 <mat-header-cell *matHeaderCellDef> Final cash</mat-header-cell>
                 <mat-cell *matCellDef="let item"> {{ item.finalCash | currency:'EUR':'symbol' }}</mat-cell>
-            </ng-container>
-            <ng-container matColumnDef="finalCard">
-                <mat-header-cell *matHeaderCellDef> Final card</mat-header-cell>
-                <mat-cell *matCellDef="let item"> {{ item.finalCard | currency:'EUR':'symbol' }}</mat-cell>
-            </ng-container>
-            <ng-container matColumnDef="total">
-                <mat-header-cell *matHeaderCellDef> Total</mat-header-cell>
-                <mat-cell *matCellDef="let item"> {{ item.finalCash + item.finalCard | currency:'EUR':'symbol' }}</mat-cell>
             </ng-container>
             <ng-container matColumnDef="comment">
                 <mat-header-cell *matHeaderCellDef> Comment</mat-header-cell>

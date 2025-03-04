@@ -17,12 +17,11 @@ import {CashierDialogComponent} from './cashier-opened/cashier-closure/cashier-d
 import {
     CashMovementDialogComponent
 } from "./cashier-opened/cash-movement-dialog/cash-movement-dialog.component";
-import {CustomerPointsProfileComponent} from "@common/components/customer-points-profile/customer-points-profile.component";
 
 @Component({
     standalone: true,
     imports: [MatToolbar, DateComponent, MatIcon, MatMenuTrigger, MatButton, NgOptimizedImage, MatIconButton,
-        MatMenu, MatMenuItem, RouterLink, NgIf, RouterOutlet, FooterComponent, CustomerPointsProfileComponent],
+        MatMenu, MatMenuItem, RouterLink, NgIf, RouterOutlet, FooterComponent],
     templateUrl: 'shop.component.html',
     styleUrls: ['shop.component.css']
 })

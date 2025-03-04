@@ -12,11 +12,11 @@ import { ReadDetailDialogComponent } from "@common/dialogs/read-detail.dialog.co
 import { VoucherSearch } from "./vouchers-search.model";
 import { VoucherService } from "./vouchers.service";
 import { Voucher } from "../shared/models/voucher.model";
-import { VoucherCreationUpdatingDialogComponent } from "./vouchers-creation-updating-dialog.component";
+import { VoucherCreationDialogComponent } from "./vouchers-creation-dialog.component";
 
 @Component({
     standalone: true,
-    imports: [MatCard, MatCardContent, FormsModule, MatSlideToggle, MatIcon, CrudComponent,
+    imports: [MatCard, MatCardContent, FormsModule, MatIcon, CrudComponent,
         FilterInputComponent, MatButton, MatCardTitle],
     templateUrl: 'vouchers.component.html'
 })
@@ -34,11 +34,11 @@ export class VouchersComponent {
     }
 
     resetSearch(): void {
-        this.voucherSearch = { creationDate: undefined, value: 0, user: undefined, dateOfUse: undefined, reference: "" };
+        this.voucherSearch = { value: null, reference: "" };
     }
 
     create(): void {
-        this.dialog.open(VoucherCreationUpdatingDialogComponent);
+        this.dialog.open(VoucherCreationDialogComponent);
     }
 
     read(voucher: Voucher): void {
@@ -48,11 +48,6 @@ export class VouchersComponent {
                 object: this.voucherService.read(voucher.reference)
             }
         });
-    }
-
-    update(voucher: Voucher): void {
-        this.voucherService.read(voucher.reference)
-            .subscribe(fullVoucher => this.dialog.open(VoucherCreationUpdatingDialogComponent, { data: fullVoucher }));
     }
 
     print(item: any): void {

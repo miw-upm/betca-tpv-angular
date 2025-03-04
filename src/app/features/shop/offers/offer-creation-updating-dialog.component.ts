@@ -43,13 +43,17 @@ export class OfferCreationUpdatingDialogComponent {
     constructor(@Inject(MAT_DIALOG_DATA) data: Offer,
                 private readonly offerService: OfferService,
                 private readonly dialog: MatDialog,
-                private readonly sharedshopArticleService: SharedShopArticleService
+                private readonly sharedShopArticleService: SharedShopArticleService
     ) {
         this.title = data ? 'Update Offer' : 'Create Offer';
         this.offer = data || {
-            reference: undefined, description: undefined, creationDate: undefined, expiryDate: undefined,
-            discount: undefined, articles: []
+            description: undefined,
+            creationDate: undefined,
+            expiryDate: undefined,
+            discount: undefined,
+            articleList: []
         };
+        this.offer.articleList = this.offer.articleList || [];
         this.oldReference = data ? data.reference : undefined;
     }
 
@@ -70,7 +74,7 @@ export class OfferCreationUpdatingDialogComponent {
     }
 
     invalid(): boolean {
-        return this.check(this.offer.reference) || this.check(this.offer.description) || (this.offer.discount === undefined || null);
+        return this.check(this.offer.description) || (this.offer.discount === undefined || null);
     }
 
     check(attr: string): boolean {
@@ -78,16 +82,16 @@ export class OfferCreationUpdatingDialogComponent {
     }
 
     addArticle(barcode: string): void {
-        this.sharedshopArticleService
+        this.sharedShopArticleService
             .read(barcode)
             .subscribe(article => {
-                if(!this.offer.articles.some(a => a.barcode === article.barcode)) {
-                    this.offer.articles.push(article);
+                if(!this.offer.articleList.some(a => a.barcode === article.barcode)) {
+                    this.offer.articleList.push(article);
                 }
             });
     }
 
     removeArticle(article: Article): void {
-        this.offer.articles = this.offer.articles.filter(a => a.barcode !== article.barcode);
+        this.offer.articleList = this.offer.articleList.filter(a => a.barcode !== article.barcode);
     }
 }

@@ -10,13 +10,13 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDialog } from '@angular/material/dialog';
 import { ReadDetailDialogComponent } from '@common/dialogs/read-detail.dialog.component';
-import { Rgpd } from '@core/models/rgpd.model';
 import { RgpdFilter } from './rgpd-filter.model';
 import { DataProtectionService } from './data-protection.service';
 import { DataProtectionUpdateComponent } from './data-protection-update/data-protection-update.component';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { map, Observable, take } from 'rxjs';
 import { RgpdType } from '@core/models/rgpd-type.model';
-import { ColumnData } from './column-data.model';
+import { RgpdDto } from './rgpd-dto.model';
+import { FilterInputComponent } from '@common/components/filter-input.component';
 
 @Component({
   selector: 'app-data-protection',
@@ -32,6 +32,7 @@ import { ColumnData } from './column-data.model';
     MatIconModule,
     MatButtonModule,
     CrudComponent,
+    FilterInputComponent,
   ],
   templateUrl: 'data-protection.component.html',
   styleUrls: ['data-protection.component.css'],
@@ -43,67 +44,103 @@ export class DataProtectionComponent {
   title = 'Data protection management';
 
   rgpdTypes = Object.values(RgpdType);
+  rgpdFilter: RgpdFilter
 
-  rgpdFilter: RgpdFilter = {
-    user: '',
-    mobile: '',
-    type: '',
-  };
+  filteredRgpds$: Observable<Partial<RgpdDto>[]> = this._dataProtectionService
+    .getAllRgpd()
+    .pipe(map((rgpds: RgpdDto[]) => rgpds.map(({ agreement, ...rest }) => rest)));
 
-  filteredRgpds$: Observable<ColumnData[]> = this._dataProtectionService.getFilteredRgpdList(this.rgpdFilter);
+    constructor() {
+      this.resetSearch();
+    }
 
-  create(): void {
-    this.downloadRGPD();
-    this._dialog
-      .open(DataProtectionUpdateComponent)
-      .afterClosed()
-      .subscribe(() => {
-        this.refreshList();
-      });
-  }
-
-  read(rgpd: any): void {
+  read(rgpd: RgpdDto): void {
     this._dialog.open(ReadDetailDialogComponent, {
       data: {
         title: 'Data protection Details',
-        object: this._dataProtectionService.read(rgpd.mobile),
+        object: this._dataProtectionService.read(rgpd.userMobile).pipe(map(({ agreement, ...rest }) => rest)),
       },
     });
   }
 
-  update(columnData: ColumnData): void {
-    this._dataProtectionService.read(columnData.userMobile).subscribe((fullColumnData) => {
-      if (!this._dialog.openDialogs.length) {
-        this._dialog
-          .open(DataProtectionUpdateComponent, { data: fullColumnData })
-          .afterClosed()
-          .subscribe(() => {
-            console.log('CIERRO');
-            this.refreshList();
-          });
-      }
+  search(): void {
+    this.filteredRgpds$ = this._dataProtectionService.search(this.rgpdFilter)
+  }
+
+  resetSearch() {
+    this.rgpdFilter = { userMobile: '', userName: '' };
+  }
+
+  create(): void {
+    this.downloadRGPD();
+    if (!this._dialog.openDialogs.length) {
+      this._dialog
+        .open(DataProtectionUpdateComponent, {
+          data: { isCreated: true, rgpdDto: this._dataProtectionService.createNewRgpdDtoEmpty() },
+        })
+        .afterClosed()
+        .subscribe((result: { isCancel: boolean; rgpdDto?: RgpdDto }) => {
+          if (result && !result.isCancel && result.rgpdDto) {
+            this.createRgpd(result.rgpdDto);
+          }
+        });
+    }
+  }
+
+  print(rgpdDto: RgpdDto): void {
+    this._dataProtectionService
+      .read(rgpdDto.userMobile)
+      .pipe(take(1))
+      .subscribe((existingRgpd) => {
+        if (existingRgpd?.agreement) {
+          const blob = this.base64ToBlob(existingRgpd.agreement, 'application/pdf');
+          const url = URL.createObjectURL(blob);
+          window.open(url, '_blank');
+          URL.revokeObjectURL(url);
+        }
+      });
+  }
+
+  update(rgpdDto: RgpdDto): void {
+    if (!this._dialog.openDialogs.length) {
+      this._dataProtectionService
+        .read(rgpdDto.userMobile)
+        .pipe(take(1))
+        .subscribe((existingRgpd) => {
+          if (existingRgpd) {
+            this._dialog
+              .open(DataProtectionUpdateComponent, { data: { isCreated: false, rgpdDto: existingRgpd } })
+              .afterClosed()
+              .subscribe((result: { isCancel: boolean; rgpdDto?: RgpdDto }) => {
+                if (result && !result.isCancel && result.rgpdDto) {
+                  this.updateRgpd(result.rgpdDto);
+                }
+              });
+          }
+        });
+    }
+  }
+
+  private createRgpd(rgpdDto: RgpdDto): void {
+    this._dataProtectionService.create(rgpdDto).subscribe({
+      next: () => {
+        this.refreshRgpds();
+      },
+      error: (err) => {
+        console.error('Error al crear RGPD:', err);
+      },
     });
   }
 
-  delete(columnData: ColumnData): void {
-    this._dataProtectionService.delete(columnData.userMobile);
-    this.refreshList();
-  }
-
-  refreshList(): void {
-    this._dataProtectionService.getFilteredRgpdList(this.rgpdFilter).subscribe((filteredList) => {
-      this.filteredRgpds$ = new BehaviorSubject(filteredList).asObservable();
+  private updateRgpd(rgpdDto: RgpdDto): void {
+    this._dataProtectionService.update(rgpdDto.userMobile, rgpdDto).subscribe({
+      next: () => {
+        this.refreshRgpds();
+      },
+      error: (err) => {
+        console.error('Error al actualizar RGPD:', err);
+      },
     });
-  }
-
-  clearField(field: keyof RgpdFilter): void {
-    this.rgpdFilter[field] = '';
-    this.refreshList();
-  }
-
-  clearAllFilters(): void {
-    this.rgpdFilter = { user: '', mobile: '', type: '' };
-    this.refreshList();
   }
 
   private downloadRGPD() {
@@ -114,5 +151,20 @@ export class DataProtectionComponent {
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
+  }
+
+  private base64ToBlob(base64: string, mimeType: string): Blob {
+    const byteCharacters = atob(base64);
+    const byteNumbers = new Uint8Array(byteCharacters.length);
+    for (let i = 0; i < byteCharacters.length; i++) {
+      byteNumbers[i] = byteCharacters.charCodeAt(i)
+    }
+    return new Blob([byteNumbers], { type: mimeType });
+  }
+
+  private refreshRgpds(): void {
+    this.filteredRgpds$ = this._dataProtectionService
+      .getAllRgpd()
+      .pipe(map((rgpds: RgpdDto[]) => rgpds.map(({ agreement, ...rest }) => rest)));
   }
 }

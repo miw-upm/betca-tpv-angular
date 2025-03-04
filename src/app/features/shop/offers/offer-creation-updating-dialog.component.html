@@ -1,9 +1,7 @@
 <h4 mat-dialog-title>{{ title }}</h4>
+<p mat-dialog-content *ngIf="isCreate()">The reference will be generated automatically</p>
+<p mat-dialog-content *ngIf="!isCreate()"><strong>Reference: {{ offer.reference }}</strong></p>
 <mat-dialog-content>
-    <mat-form-field class="full-width">
-        <mat-label>Reference</mat-label>
-        <input [(ngModel)]="offer.reference" id="company" matInput required type="text"/>
-    </mat-form-field>
     <mat-form-field class="full-width">
         <mat-label>Description</mat-label>
         <input [(ngModel)]="offer.description" matInput required type="text"/>
@@ -15,21 +13,23 @@
     <mat-form-field class="full-width">
         <mat-label>Expiry date</mat-label>
         <input [(ngModel)]="offer.expiryDate" matInput type="date">
+        <mat-hint>Expiry date must be later than creation date</mat-hint>
     </mat-form-field>
     <mat-form-field class="full-width">
         <mat-label>Discount</mat-label>
-        <input [(ngModel)]="offer.discount" matInput required type="number"/>
+        <mat-hint>Value between 0 and 100</mat-hint>
+        <input [(ngModel)]="offer.discount" matInput required type="number" min="0" max="100"/>
     </mat-form-field>
     <div class="dialog-container">
         <app-search-by-barcode (add)="addArticle($event)"></app-search-by-barcode>
         <mat-card>
             <mat-card-content>
                 <mat-list>
-                    <mat-list-item *ngFor="let article of offer.articles">
-                        {{ article.barcode }} - {{ article.description }}
+                    <mat-list-item *ngFor="let article of offer.articleList">
                         <button mat-icon-button color="warn" (click)="removeArticle(article)">
                             <mat-icon>delete</mat-icon>
                         </button>
+                        {{ article.barcode }} - {{ article.description }}
                     </mat-list-item>
                 </mat-list>
             </mat-card-content>
