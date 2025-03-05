@@ -51,6 +51,6 @@ export class VouchersComponent {
     }
 
     print(item: any): void {
-        console.log('Imprimiendo:', item);
+        this.voucherService.printPdf(item.reference).subscribe();
     }
 }
