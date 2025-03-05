@@ -18,6 +18,8 @@ import {FormsModule} from '@angular/forms';
 import {MatCheckbox, MatCheckboxChange} from '@angular/material/checkbox';
 import {CustomerPoints, CustomerPointsConstants} from "./customer-points/customer-points.model";
 import {CustomerPointsService} from "./customer-points/customer-points.service";
+import {VoucherService} from "../../vouchers/vouchers.service"
+import {Voucher} from "../../shared/models/voucher.model";
 import {switchMap, take } from 'rxjs';
 import {
     CustomerPointsProfileComponent
@@ -56,12 +58,14 @@ export class CheckOutDialogComponent {
     customerHasPoints: boolean = false;
     customerHasMinimumPoints: boolean = false;
     pointsToUse: number = 0;
+    consumedVoucher: Voucher = null;
 
     constructor(
         @Inject(MAT_DIALOG_DATA) data,
         private readonly dialogRef: MatDialogRef<CheckOutDialogComponent>,
         private readonly shoppingCartService: ShoppingCartService,
         private readonly customerPointsService: CustomerPointsService,
+        private readonly voucherService: VoucherService,
         private readonly snackBar: MatSnackBar
     ) {
         this.ticketCreation = {
@@ -73,6 +77,7 @@ export class CheckOutDialogComponent {
             messageGift: '',
             pointsDiscount: 0
         };
+        let consumedVoucher:Voucher = null;
         this.total();
     }
 
@@ -193,7 +198,35 @@ export class CheckOutDialogComponent {
     }
 
     consumeVoucher(): void {
-        // TODO consumir un vale que se entrega como parte del pago
+        if (typeof this.ticketCreation.voucher == "string") {
+            this.voucherService.read(this.ticketCreation.voucher)
+                .subscribe(
+                    voucher => {
+                        if (voucher) {
+                            if (voucher.value <= 0 || voucher.dateOfUse !=null ) {
+                                this.snackBar.open("Voucher unusable", "Close", {
+                                    duration: 5000,
+                                    panelClass: ['snackbar-error']
+                                });
+                                this.ticketCreation.voucher = null;
+                            } else {
+                                this.consumedVoucher = voucher;
+                                this.ticketCreation.voucher = voucher.value;
+                            }
+                        }
+                        else {
+                            this.ticketCreation.voucher = null;
+                        }
+                    },
+                    error => {
+                        this.snackBar.open("Voucher not found", "Close", {
+                            duration: 5000,
+                            panelClass: ['snackbar-error']
+                        });
+                        this.ticketCreation.voucher = null;
+                    }
+                );
+        }
     }
 
     invalidCheckOut(): boolean {
@@ -242,7 +275,58 @@ export class CheckOutDialogComponent {
         if (!this.ticketCreation.messageGift.trim()) {
             this.ticketCreation.messageGift = 'Congratulations';
         }
+        if(this.consumedVoucher != null){
+            this.voucherService.update(this.consumedVoucher, new Date(), returned)
+                .subscribe(
+                    voucher => {
+                        if (voucher) {
+                            this.snackBar.open("Voucher updated:", "Close", {
+                                duration: 5000,
+                                panelClass: ['snackbar-error']
+                            });
+                        }
+                    },
+                    error => {
+                        this.snackBar.open("Voucher not updated", "Close", {
+                            duration: 5000,
+                            panelClass: ['snackbar-error']
+                        });
+                        this.ticketCreation.voucher = null;
+                    }
+                );
+            if(returned>0){
+                let newVoucher: Voucher = {
+                    reference: this.consumedVoucher.reference,
+                    value: returned,
+                    creationDate: new Date(),
+                    dateOfUse: null,
+                    user: {
+                        mobile: this.consumedVoucher.user.mobile,
+                        token: ''
+                    }
+                };
+                this.voucherService.create(newVoucher)
+                    .subscribe(
+                        voucher => {
+                            if (voucher) {
+                                this.snackBar.open("Voucher created: ", "Close", {
+                                    duration: 5000,
+                                    panelClass: ['snackbar-error']
+                                });
+                            }
+                        },
+                        error => {
+                            this.snackBar.open("Voucher not created", "Close", {
+                                duration: 5000,
+                                panelClass: ['snackbar-error']
+                            });
+                            this.ticketCreation.voucher = null;
+                        }
+                    );
+            }
+            this.consumedVoucher = null;
 
+        }
         if (this.ticketCreation.user) {
             this.customerPointsService.updateCustomerPoints(this.ticketCreation.user, { points: netDelta })
                 .pipe(
