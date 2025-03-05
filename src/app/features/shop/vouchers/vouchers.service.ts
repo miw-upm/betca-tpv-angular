@@ -9,6 +9,7 @@ import {SharedDateFormatterService} from "../shared/services/shared.date-formatt
 @Injectable({ providedIn: 'root' })
 export class VoucherService {
     static readonly SEARCH = '/search';
+    static readonly PDF = '/pdf';
 
     constructor(private readonly httpService: HttpService, private readonly SharedDateFormatterService: SharedDateFormatterService) {
     }
@@ -33,5 +34,9 @@ export class VoucherService {
         return this.httpService
             .paramsFrom(voucherSearch)
             .get(EndPoints.VOUCHERS + VoucherService.SEARCH);
+    }
+
+    printPdf(reference: string): Observable<any> {
+        return this.httpService.pdf().get(EndPoints.VOUCHERS + '/' + reference + VoucherService.PDF);
     }
 }
