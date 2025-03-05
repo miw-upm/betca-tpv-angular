@@ -30,6 +30,19 @@ export class VoucherService {
             .get(EndPoints.VOUCHERS+"/"+reference)
     }
 
+    update(voucher: Voucher, dateOfUse: Date, value: number): Observable<Voucher>{
+        voucher.user.token=''
+        const formatedVoucher = {
+            ...voucher,
+            dateOfUse: this.SharedDateFormatterService.formatDate(dateOfUse),
+            value: value,
+        }
+        return this.httpService
+            .successful("Voucher updated successfully.")
+            .error('Voucher update failed. Please check the values and try again.')
+            .put(EndPoints.VOUCHERS + '/' + voucher.reference, formatedVoucher);
+    }
+
     search(voucherSearch: VoucherSearch): Observable<Voucher[]> {
         return this.httpService
             .paramsFrom(voucherSearch)
