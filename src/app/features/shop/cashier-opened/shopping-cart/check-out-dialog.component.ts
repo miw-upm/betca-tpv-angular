@@ -89,8 +89,8 @@ export class CheckOutDialogComponent {
         this.totalPurchase = Math.round(this.totalPurchase * 100) / 100;
     }
 
-    format(value: number): number {
-        return value || 0; // empty string,NaN,false,undefined,null,0 is: false
+    format(value: any): number {
+        return typeof value === 'number' ? value || 0 : 0; // empty string,NaN,false,undefined,null,0 is: false
     }
 
     searchUser(mobile: string): void {
@@ -280,7 +280,7 @@ export class CheckOutDialogComponent {
                 .subscribe(
                     voucher => {
                         if (voucher) {
-                            this.snackBar.open("Voucher updated:", "Close", {
+                            this.snackBar.open("Voucher updated", "Close", {
                                 duration: 5000,
                                 panelClass: ['snackbar-error']
                             });
@@ -309,10 +309,7 @@ export class CheckOutDialogComponent {
                     .subscribe(
                         voucher => {
                             if (voucher) {
-                                this.snackBar.open("Voucher created: ", "Close", {
-                                    duration: 5000,
-                                    panelClass: ['snackbar-error']
-                                });
+                                this.voucherService.printPdf(voucher.reference).subscribe()
                             }
                         },
                         error => {
