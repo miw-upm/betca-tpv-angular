@@ -2,21 +2,21 @@
     <button mat-flat-button (click)="createAudit()">Create Audit</button>
     <table mat-table [dataSource]="stockAudits" class="mat-elevation-z8">
 
-        <ng-container matColumnDef="identity">
+        <ng-container matColumnDef="id">
             <th mat-header-cell *matHeaderCellDef>No.</th>
-            <td mat-cell *matCellDef="let element">{{ element.identity }}</td>
+            <td mat-cell *matCellDef="let element">{{ element.id }}</td>
         </ng-container>
 
         <ng-container matColumnDef="creationDate">
             <th mat-header-cell *matHeaderCellDef>Creation Date</th>
             <td mat-cell *matCellDef="let element">
-                {{ element.creationDate | date }}
+                {{ element.creationDate}}
             </td>
         </ng-container>
 
         <ng-container matColumnDef="closeDate">
             <th mat-header-cell *matHeaderCellDef>Close Date</th>
-            <td mat-cell *matCellDef="let element">{{ element.closeDate | date }}</td>
+            <td mat-cell *matCellDef="let element">{{ element.closeDate}}</td>
         </ng-container>
 
         <ng-container matColumnDef="articlesWithoutAudit">
