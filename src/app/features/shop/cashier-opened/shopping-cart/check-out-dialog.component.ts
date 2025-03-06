@@ -20,6 +20,7 @@ import {CustomerPoints, CustomerPointsConstants} from "./customer-points/custome
 import {CustomerPointsService} from "./customer-points/customer-points.service";
 import {VoucherService} from "../../vouchers/vouchers.service"
 import {Voucher} from "../../shared/models/voucher.model";
+import {SharedVoucherService} from "../../../shared/services/shared.voucher.service"
 import {switchMap, take } from 'rxjs';
 import {
     CustomerPointsProfileComponent
@@ -66,6 +67,7 @@ export class CheckOutDialogComponent {
         private readonly shoppingCartService: ShoppingCartService,
         private readonly customerPointsService: CustomerPointsService,
         private readonly voucherService: VoucherService,
+        private readonly sharedVoucherService: SharedVoucherService,
         private readonly snackBar: MatSnackBar
     ) {
         this.ticketCreation = {
@@ -305,21 +307,7 @@ export class CheckOutDialogComponent {
                         token: ''
                     }
                 };
-                this.voucherService.create(newVoucher)
-                    .subscribe(
-                        voucher => {
-                            if (voucher) {
-                                this.voucherService.printPdf(voucher.reference).subscribe()
-                            }
-                        },
-                        error => {
-                            this.snackBar.open("Voucher not created", "Close", {
-                                duration: 5000,
-                                panelClass: ['snackbar-error']
-                            });
-                            this.ticketCreation.voucher = null;
-                        }
-                    );
+                this.sharedVoucherService.createAndPrintVoucher(newVoucher);
             }
             this.consumedVoucher = null;
 
