@@ -14,4 +14,5 @@ export class EndPoints {
     static readonly OFFERS = environment.REST_CORE + '/offers';
     static readonly CUSTOMER_POINTS = environment.REST_CORE + '/customer-points';
     static readonly VOUCHERS = environment.REST_CORE + '/vouchers';
+    static readonly STOCK_AUDITS = environment.REST_CORE + '/stock-audits';
 }
