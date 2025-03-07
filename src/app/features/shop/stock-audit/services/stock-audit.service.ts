@@ -17,4 +17,8 @@ export class StockAuditService {
       .get(EndPoints.STOCK_AUDITS);
   }
 
+  create(): Observable<void>{
+    return this.httpService.post(EndPoints.STOCK_AUDITS); 
+  }
+
 }
