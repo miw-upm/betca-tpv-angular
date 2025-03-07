@@ -1,4 +1,5 @@
 export class VoucherSearch {
-    reference?: string;
-    value?: number;
+    startDate?: string;
+    endDate?: string;
+    consumed?: string;
 }

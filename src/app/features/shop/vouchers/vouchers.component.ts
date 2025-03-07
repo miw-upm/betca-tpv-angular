@@ -30,11 +30,13 @@ export class VouchersComponent {
     }
 
     search(): void {
+        this.voucherSearch.startDate=this.formatDate(this.voucherSearch.startDate);
+        this.voucherSearch.endDate=this.formatDate(this.voucherSearch.endDate);
         this.vouchers = this.voucherService.search(this.voucherSearch);
     }
 
     resetSearch(): void {
-        this.voucherSearch = { value: null, reference: "" };
+        this.voucherSearch = { startDate: null, endDate: null, consumed: "" };
     }
 
     create(): void {
@@ -52,5 +54,10 @@ export class VouchersComponent {
 
     print(item: any): void {
         this.voucherService.printPdf(item.reference).subscribe();
+    }
+
+    private formatDate(date: string): string {
+        if (!date) return '';
+        return new Date(date).toISOString().replace("Z","");
     }
 }
