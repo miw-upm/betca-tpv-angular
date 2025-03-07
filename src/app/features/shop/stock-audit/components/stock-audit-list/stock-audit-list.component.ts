@@ -30,6 +30,10 @@ export class StockAuditListComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.findAll();
+  }
+
+  findAll(){
     this.stockAuditService.findAll()
     .subscribe(data => this.stockAudits = data);
   }
@@ -37,7 +41,12 @@ export class StockAuditListComponent implements OnInit {
   createAudit(): void {
     this.dialog.open(StockAuditCreateComponent, {
       width: '600px'
+    }).afterClosed().subscribe(data => {
+      if(data){
+         this.findAll();
+      }
     });
+
   }
 
   ver(id: string): void {
