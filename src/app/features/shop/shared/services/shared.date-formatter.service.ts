@@ -9,4 +9,9 @@ export class SharedDateFormatterService {
         const pad = (num: number) => num.toString().padStart(2, '0');
         return `${date.getUTCFullYear()}-${pad(date.getUTCMonth() + 1)}-${pad(date.getUTCDate())} 00:00:00`;
     }
+
+    formatDateToStringRemoveZ(date: Date): string {
+        if (!date) return '';
+        return new Date(date).toISOString().replace("Z","");
+    }
 }

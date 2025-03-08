@@ -11,14 +11,14 @@ export class VoucherService {
     static readonly SEARCH = '/search';
     static readonly PDF = '/pdf';
 
-    constructor(private readonly httpService: HttpService, private readonly SharedDateFormatterService: SharedDateFormatterService) {
+    constructor(private readonly httpService: HttpService, private readonly sharedDateFormatterService: SharedDateFormatterService) {
     }
 
     create(voucher: Voucher): Observable<Voucher> {
         const formattedVoucher = {
             ...voucher,
-            creationDate: this.SharedDateFormatterService.formatDate(voucher.creationDate),
-            dateOfUse: this.SharedDateFormatterService.formatDate(voucher.dateOfUse),
+            creationDate: this.sharedDateFormatterService.formatDate(voucher.creationDate),
+            dateOfUse: this.sharedDateFormatterService.formatDate(voucher.dateOfUse),
         };
         return this.httpService
             .post(EndPoints.VOUCHERS, formattedVoucher);
@@ -34,7 +34,7 @@ export class VoucherService {
         voucher.user.token=''
         const formatedVoucher = {
             ...voucher,
-            dateOfUse: this.SharedDateFormatterService.formatDate(dateOfUse),
+            dateOfUse: this.sharedDateFormatterService.formatDate(dateOfUse),
             value: value,
         }
         return this.httpService
@@ -44,8 +44,13 @@ export class VoucherService {
     }
 
     search(voucherSearch: VoucherSearch): Observable<Voucher[]> {
+        const voucherToSearch = {
+            "startDate": this.sharedDateFormatterService.formatDateToStringRemoveZ(voucherSearch.startDate),
+            "endDate" : this.sharedDateFormatterService.formatDateToStringRemoveZ(voucherSearch.endDate),
+            "consumed": voucherSearch.consumed
+        };
         return this.httpService
-            .paramsFrom(voucherSearch)
+            .paramsFrom(voucherToSearch)
             .get(EndPoints.VOUCHERS + VoucherService.SEARCH);
     }
 

@@ -17,7 +17,7 @@ import { VoucherCreationDialogComponent } from "./vouchers-creation-dialog.compo
 @Component({
     standalone: true,
     imports: [MatCard, MatCardContent, FormsModule, MatIcon, CrudComponent,
-        FilterInputComponent, MatButton, MatCardTitle],
+        FilterInputComponent, MatButton, MatCardTitle, MatSlideToggle],
     templateUrl: 'vouchers.component.html'
 })
 export class VouchersComponent {
@@ -30,13 +30,11 @@ export class VouchersComponent {
     }
 
     search(): void {
-        this.voucherSearch.startDate=this.formatDate(this.voucherSearch.startDate);
-        this.voucherSearch.endDate=this.formatDate(this.voucherSearch.endDate);
         this.vouchers = this.voucherService.search(this.voucherSearch);
     }
 
     resetSearch(): void {
-        this.voucherSearch = { startDate: null, endDate: null, consumed: "" };
+        this.voucherSearch = { startDate: null, endDate: null, consumed: false };
     }
 
     create(): void {
@@ -56,8 +54,15 @@ export class VouchersComponent {
         this.voucherService.printPdf(item.reference).subscribe();
     }
 
-    private formatDate(date: string): string {
-        if (!date) return '';
-        return new Date(date).toISOString().replace("Z","");
+    isDateInvalid(): boolean {
+        const { startDate, endDate } = this.voucherSearch;
+
+        if ((startDate && !endDate) || (!startDate && endDate)) {
+            return true;
+        }
+
+        return startDate && endDate && new Date(startDate) > new Date(endDate);
+
+
     }
 }
