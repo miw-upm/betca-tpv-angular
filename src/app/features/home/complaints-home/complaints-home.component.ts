@@ -41,7 +41,7 @@ export class ComplaintsHomeComponent {
         this.dialog.open(ReadDetailDialogComponent, {
             data: {
                 title: 'Complaint Details',
-                object: this.complaintService.read(complaint.id)
+                object: this.complaintHomeService.read(complaint.id)
             }
         });
     }
