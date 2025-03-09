@@ -31,18 +31,10 @@ export class ComplaintsShopComponent {
     }
 
     read(complaint: Complaint): void {
-        /*this.dialog.open(ReadDetailDialogComponent, {
-            data: {
-                title: 'Complaint Details',
-                object: this.complaintShopService.read(complaint.id)
-            }
-        });*/
         this.dialog.open(ReadDetailDialogComponent, {
             data: {
                 title: 'Complaint Details',
-                object: of({id:"1",registrationDate:"14/02/2024",mobile: 722255454
-                    , barcode: 434533, description: "Queja San Valentín", state: "finalizado",
-                    reply: ""})
+                object: this.complaintShopService.read(complaint.id)
             }
         });
     }
