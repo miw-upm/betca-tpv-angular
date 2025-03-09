@@ -29,7 +29,7 @@ export class BudgetsComponent implements OnInit {
         budgets.map((budget) => ({
           reference: budget.reference,
           creationDate: budget.creationDate,
-          total: budget.shoppings.reduce(
+          total: budget.shoppingList.reduce(
             (acc, shopping) => acc + shopping.total,
             0
           ),
