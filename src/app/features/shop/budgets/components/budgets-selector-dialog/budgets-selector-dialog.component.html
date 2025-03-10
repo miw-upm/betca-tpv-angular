@@ -1,0 +1,14 @@
+<h3 mat-dialog-title>Load cart from budget</h3>
+<mat-dialog-content>
+  <app-crud
+    (read)="onRead($event)"
+    [data]="budgets$"
+    [createAction]="false"
+    [deleteAction]="false"
+    [updateAction]="false"
+    [title]="'Budgets management'"
+  ></app-crud>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button mat-dialog-close>Cancel</button>
+</mat-dialog-actions>

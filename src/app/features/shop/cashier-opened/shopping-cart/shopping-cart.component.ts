@@ -31,6 +31,7 @@ import { Shopping } from "./shopping.model";
 import { ShoppingState } from "./shopping-state.model";
 import { BudgetService } from "../../budgets/services/budget.service";
 import { Budget } from "../../budgets/models/budget";
+import { BudgetsSelectorDialogComponent } from "../../budgets/components/budgets-selector-dialog/budgets-selector-dialog.component";
 
 @Component({
   standalone: true,
@@ -222,9 +223,28 @@ export class ShoppingCartComponent implements OnInit {
       });
   }
 
-  addBudge(budge: string) {
+  addBudget(reference: string) {
     this.budgeControl.reset();
-    // TODO create budget
+    this.budgetService.search({ reference }).subscribe((budgets) => {
+      if (budgets && budgets.length > 0) {
+        if (budgets.length > 1) {
+          this.dialog
+            .open(BudgetsSelectorDialogComponent, {
+              data: budgets,
+              maxWidth: "800px",
+              width: "800px",
+            })
+            .afterClosed()
+            .subscribe((selectedBudget: Budget) => {
+              this.shoppingCart = selectedBudget.shoppingList;
+              this.synchronizeShoppingCart();
+            });
+        } else {
+          this.shoppingCart = budgets[0].shoppingList;
+          this.synchronizeShoppingCart();
+        }
+      }
+    });
   }
 
   createBudget(): void {
