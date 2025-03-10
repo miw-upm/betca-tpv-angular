@@ -5,21 +5,21 @@
 </mat-toolbar>
 
 <div class="container">
-    <mat-form-field appearance="outline">
-        <mat-label>Ticket reference</mat-label>
-        <input matInput placeholder="Ticket reference" />
-        <mat-icon matSuffix>delete</mat-icon>
-    </mat-form-field>
-
-    <mat-form-field appearance="outline">
-        <mat-label>Mobile</mat-label>
-        <input matInput placeholder="Mobile" />
-        <mat-icon matSuffix>delete</mat-icon>
-    </mat-form-field>
-
-    <button mat-stroked-button>
+    <app-filter-input [(value)]="invoiceSearch.ticketId" title="Ticket ID"></app-filter-input>
+    <button (click)="searchByTicketId()" mat-stroked-button [disabled]="!invoiceSearch.ticketId">
         <mat-icon>search</mat-icon>
-        Find
+        Find ticket
+    </button>
+
+    <app-filter-input [(value)]="invoiceSearch.mobile"  title="User mobile"></app-filter-input>
+    <button (click)="searchByUserMobile()"  mat-stroked-button [disabled]="!invoiceSearch.mobile">
+        <mat-icon>search</mat-icon>
+        Find mobile
+    </button>
+
+    <button (click)="resetSearch()" mat-stroked-button>
+        <mat-icon>clear</mat-icon>
+        Reset
     </button>
 </div>
-<app-crud (create)="create()" (read)="read($event)" (update)="update($event)" [deleteAction]="false" [data]="invoice" [title]="title"></app-crud>
+<app-crud (create)="create()" (read)="read($event)" (update)="update($event)" (print)="downloadInvoice($event)"  [deleteAction]="false" [data]="invoices" [printAction]="true" [title]="title"></app-crud>
