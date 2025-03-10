@@ -1,20 +1,12 @@
 <h4 mat-dialog-title>{{ title }}</h4>
 <mat-dialog-content>
     <mat-form-field class="full-width">
-        <mat-label>Ticket reference</mat-label>
-        <input matInput type="text">
+        <mat-label>Ticket ID</mat-label>
+        <input [(ngModel)]="invoice.ticket.id" matInput required placeholder="Ex. 898afjaf784rwafhkja890" type="text">
     </mat-form-field>
-<div>
-
-</div>
-    <mat-form-field class="full-width">
-        <mat-label>Mobile</mat-label>
-        <input matInput type="text"/>
-    </mat-form-field>
-
 </mat-dialog-content>
 
 <mat-dialog-actions>
     <button mat-dialog-close mat-raised-button>Close</button>
-    <button color="primary" mat-raised-button>Create</button>
+    <button (click)="create()" [disabled]="!invoice.ticket.id" color="primary" mat-raised-button>Create</button>
 </mat-dialog-actions>

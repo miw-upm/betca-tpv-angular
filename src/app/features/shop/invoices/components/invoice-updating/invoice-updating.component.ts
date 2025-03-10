@@ -1,4 +1,4 @@
-import {Component, Inject} from "@angular/core";
+import {Component, Inject, EventEmitter, Output} from "@angular/core";
 import {Invoice} from "../../models/invoice.model";
 import {
     MAT_DIALOG_DATA,
@@ -9,7 +9,6 @@ import {
     MatDialogTitle
 } from "@angular/material/dialog";
 import {InvoiceService} from "../../services/invoice.service";
-import {AuthService} from "@core/services/auth.service";
 import {MatButton} from "@angular/material/button";
 import {MatFormField, MatLabel} from "@angular/material/form-field";
 import {MatInput} from "@angular/material/input";
@@ -34,17 +33,22 @@ import {FormsModule} from "@angular/forms";
 
 export class InvoiceUpdatingComponent {
     title: string;
-    invoice: Invoice;
+    identity : number;
+    mobile : string;
+    @Output() invoiceEventEmitter: EventEmitter<Invoice> = new EventEmitter<Invoice>();
 
-    constructor(@Inject(MAT_DIALOG_DATA) data: Invoice, private invoiceService: InvoiceService, private dialog: MatDialog, private auth: AuthService) {
+    constructor(@Inject(MAT_DIALOG_DATA) data: number, private invoiceService: InvoiceService, private dialog: MatDialog) {
         this.title = 'Update Invoice';
-        this.invoice = data ? data : {
-            identity: undefined,
-            creationDate: new Date(),
-            baseTax: undefined,
-            taxValue: undefined,
-            user: this.auth.getUser(),
-            ticket: undefined
-        };
+        this.identity = data;
+        this.mobile = "";
+    }
+
+    update(): void {
+        this.invoiceService
+            .updateUser(this.identity, this.mobile)
+            .subscribe((invoice) => {
+                this.invoiceEventEmitter.emit(invoice);
+                this.dialog.closeAll();
+            });
     }
 }

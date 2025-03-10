@@ -1,4 +1,4 @@
 export class InvoiceSearch {
-    mobile: number;
-    ticketReference: string;
+    mobile?: string;
+    ticketId?: string;
 }

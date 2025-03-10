@@ -19,4 +19,5 @@ export class EndPoints {
   static readonly STOCK_AUDITS = environment.REST_CORE + "/stock-audits";
   static readonly BUDGETS = environment.REST_CORE + "/budgets";
   static readonly BUDGETS_SEARCH = EndPoints.BUDGETS + "/search";
+  static readonly INVOICES = environment.REST_CORE + "/invoices";
 }

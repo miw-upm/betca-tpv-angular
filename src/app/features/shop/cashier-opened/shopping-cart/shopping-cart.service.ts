@@ -12,6 +12,8 @@ import {TicketCreation} from './ticket-creation.model';
 import {ShoppingState} from './shopping-state.model';
 import { CustomerPointsConstants } from './customer-points/customer-points.model';
 import {Offer} from "../../shared/models/offer.model";
+import {Tickets} from "../tickets/models/tickets.model";
+import {AuthService} from "@core/services/auth.service";
 
 @Injectable({providedIn: 'root'})
 export class ShoppingCartService {
@@ -19,7 +21,7 @@ export class ShoppingCartService {
     static readonly VARIOUS_BARCODE = '1';
     static readonly VARIOUS_LENGTH = 5;
 
-    constructor(private readonly dialog: MatDialog, private readonly articleShopService: SharedShopArticleService, private readonly httpService: HttpService) {
+    constructor(private readonly dialog: MatDialog, private readonly articleShopService: SharedShopArticleService, private readonly httpService: HttpService, private readonly authService: AuthService) {
     }
 
     read(newBarcode: string): Observable<Shopping> {
@@ -76,8 +78,11 @@ export class ShoppingCartService {
         return EMPTY; // TODO change EMPTY
     }
 
-    createInvoiceAndPrint(ticketId: string): Observable<void> {
-        return EMPTY; // TODO change EMPTY
+    createInvoiceAndPrint(ticket: Tickets): Observable<void> {
+        return this.httpService
+            .post(EndPoints.INVOICES, {ticket: ticket, user: this.authService.getUser()})
+            .pipe(concatMap(invoiceReceipt => {
+                return this.httpService.pdf().get(EndPoints.INVOICES + '/' + invoiceReceipt.identity + ShoppingCartService.RECEIPT);}))
     }
 
     createGiftTicketAndPrint(ticketId: string): Observable<void> {
