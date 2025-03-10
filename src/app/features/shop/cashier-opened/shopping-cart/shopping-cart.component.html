@@ -8,7 +8,7 @@
       <app-search-by-barcode (add)="addBarcode($event)"></app-search-by-barcode>
       <app-input-data icon="category" title="Article Family"></app-input-data>
       <app-input-data
-        (action)="addBudge($event)"
+        (action)="addBudget($event)"
         icon="description"
         title="Budge"
       ></app-input-data>
@@ -52,11 +52,7 @@
       <ng-container matColumnDef="amount">
         <mat-header-cell *matHeaderCellDef> Nº</mat-header-cell>
         <mat-cell *matCellDef="let item">
-          <button
-            (click)="decreaseAmount(item)"
-            color="accent"
-            mat-icon-button
-          >
+          <button (click)="decreaseAmount(item)" color="accent" mat-icon-button>
             <mat-icon>remove_circle_outline</mat-icon>
           </button>
           {{ item.amount }}

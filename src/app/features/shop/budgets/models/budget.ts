@@ -12,4 +12,4 @@ export type BudgetRowData = Pick<Budget, "reference" | "creationDate"> & {
   total: number;
 };
 
-export type BudgetSearch = Partial<Pick<Budget, "reference">>;
+export type BudgetSearch = Pick<Budget, "reference">;
