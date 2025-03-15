@@ -6,6 +6,7 @@ import {EndPoints} from '@core/end-points';
 import {Complaint} from '../../shared/models/complaint.model';
 import {ComplaintService} from "../../shared/services/complaint.service";
 import {AuthService} from "@core/services/auth.service";
+import {ComplaintCreation} from "../../shared/models/complaintCreation.model";
 
 @Injectable({providedIn: 'root'})
 export class ComplaintHomeService {
@@ -21,9 +22,9 @@ export class ComplaintHomeService {
             .get(EndPoints.COMPLAINTS + ComplaintHomeService.SEARCH)
     }
 
-    create(complaint: Complaint): Observable<Complaint> {
+    create(complaintCreation: ComplaintCreation): Observable<Complaint> {
         return this.httpService
-            .post(EndPoints.COMPLAINTS, complaint);
+            .post(EndPoints.COMPLAINTS, complaintCreation);
     }
 
     read(id:string): Observable<Complaint> {

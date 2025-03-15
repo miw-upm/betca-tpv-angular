@@ -1,6 +1,6 @@
 export interface Complaint {
     id?: string;
-    mobile?: number;
+    userMobile?: number;
     barcode: string;
     description: string;
     registrationDate?: Date;

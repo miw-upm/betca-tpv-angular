@@ -10,6 +10,7 @@ import {AuthService} from '@core/services/auth.service';
 import {Complaint} from '../../shared/models/complaint.model';
 import {ComplaintHomeService} from "./complaint-home.service";
 import {SearchByBarcodeComponent} from "../../shared/components/search-by-barcode.component";
+import {ComplaintCreation} from "../../shared/models/complaintCreation.model";
 
 @Component({
     standalone: true,
@@ -20,21 +21,21 @@ import {SearchByBarcodeComponent} from "../../shared/components/search-by-barcod
 })
 
 export class ComplaintCreationDialogComponent {
-    complaint: Complaint;
+    complaintCreation: ComplaintCreation;
 
     constructor(private readonly complaintHomeService: ComplaintHomeService, private readonly dialog: MatDialog, private readonly authService: AuthService) {
-        this.complaint = {barcode: undefined, description: undefined};
+        this.complaintCreation = {barcode: "", description: "",userMobile:0};
     }
 
     create(): void {
         this.dialog.closeAll();
-        /*this.complaintHomeService
-            .create(this.complaint)
-            .subscribe(() => this.dialog.closeAll());*/
+        this.complaintHomeService
+            .create(this.complaintCreation)
+            .subscribe(() => this.dialog.closeAll());
     }
 
     invalid(): boolean {
-        return this.check(this.complaint.barcode) || this.check(this.complaint.description);
+        return this.check(this.complaintCreation.barcode) || this.check(this.complaintCreation.description);
     }
 
     check(attr: string): boolean {
