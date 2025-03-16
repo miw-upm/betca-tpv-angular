@@ -3,29 +3,29 @@
     <div class="audit-header">
       <mat-card-title>Stock Audit Details</mat-card-title>
       <div class="audit-actions">
-        <button mat-flat-button (click)="closeAudit()">Close Audit</button>
-        <button mat-flat-button (click)="updateAudit()">Update Audit</button>
+        @if (stockAudit.closeDate == null) {
+          <button  mat-flat-button (click)="closeAudit()">Close Audit</button>
+        }
+        @else {
+          <button mat-flat-button (click)="updateAudit()">Update Audit</button>
+        }
       </div>
     </div>
 
     <mat-card-content>
-      <p><strong>Identity:</strong> {{ stockAudit.identity }}</p>
+      <p><strong>ID:</strong> {{ stockAudit.id }}</p>
       <p>
         <strong>Creation Date:</strong>
-        {{ stockAudit.creationDate | date : "dd/MM/yyyy HH:mm:ss" }}
+        {{ stockAudit.creationDate}}
       </p>
       <p>
         <strong>Close Date:</strong>
-        {{ stockAudit.closeDate | date : "dd/MM/yyyy HH:mm:ss" }}
+        {{ stockAudit.closeDate}}
       </p>
-      <p><strong>Loss Value:</strong> {{ stockAudit.lossValue | currency }}</p>
-
+      <p><strong>Loss Value:</strong> {{ stockAudit.lossValue | currency: 'EUR' }}</p>
+      @if (stockAudit.closeDate != null) {
       <h3>Articles Without Audit</h3>
-      <table
-        mat-table
-        [dataSource]="stockAudit.articlesWithoutAudit"
-        class="mat-elevation-z8"
-      >
+      <table mat-table [dataSource]="stockAudit.articlesWithoutAudit" class="mat-elevation-z8">
         <ng-container matColumnDef="name">
           <th mat-header-cell *matHeaderCellDef>Barcode</th>
           <td mat-cell *matCellDef="let article">{{ article.barcode }}</td>
@@ -41,11 +41,7 @@
       </table>
 
       <h3>Losses Article</h3>
-      <table
-        mat-table
-        [dataSource]="stockAudit.losses"
-        class="mat-elevation-z8"
-      >
+      <table mat-table [dataSource]="stockAudit.losses" class="mat-elevation-z8">
         <ng-container matColumnDef="articleName">
           <th mat-header-cell *matHeaderCellDef>Barcode</th>
           <td mat-cell *matCellDef="let loss">{{ loss.barcode }}</td>
@@ -56,15 +52,10 @@
           <td mat-cell *matCellDef="let loss">{{ loss.amount }}</td>
         </ng-container>
 
-        <tr
-          mat-header-row
-          *matHeaderRowDef="['articleName', 'lostQuantity']"
-        ></tr>
-        <tr
-          mat-row
-          *matRowDef="let row; columns: ['articleName', 'lostQuantity']"
-        ></tr>
+        <tr mat-header-row *matHeaderRowDef="['articleName', 'lostQuantity']"></tr>
+        <tr mat-row *matRowDef="let row; columns: ['articleName', 'lostQuantity']"></tr>
       </table>
+      }
     </mat-card-content>
   </mat-card>
 </div>
