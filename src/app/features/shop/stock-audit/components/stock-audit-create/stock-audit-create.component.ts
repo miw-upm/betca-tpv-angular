@@ -2,16 +2,17 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
-import { MatDialogActions, MatDialogClose, MatDialogRef, MatDialogTitle } from '@angular/material/dialog';
+import { MatDialogActions, MatDialogClose, MatDialogModule, MatDialogRef, MatDialogTitle } from '@angular/material/dialog';
 import { MatFormFieldModule, MatLabel } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { StockAuditService } from '../../services/stock-audit.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   standalone: true,
   imports: [
-    MatDialogTitle,
+    MatDialogModule,
     MatFormFieldModule,
     FormsModule,
     MatInputModule,
@@ -28,7 +29,8 @@ export class StockAuditCreateComponent implements OnInit {
 
   constructor(
     private readonly dialogRef: MatDialogRef<StockAuditCreateComponent>,
-     private stockAuditService: StockAuditService
+    private stockAuditService: StockAuditService,
+    private readonly snackBar: MatSnackBar
    ) { }
 
   ngOnInit(): void {
@@ -37,6 +39,9 @@ export class StockAuditCreateComponent implements OnInit {
   onCreate(): void {
     this.stockAuditService.create()
     .subscribe(() =>{
+      this.snackBar.open("Stock audit create", "Success", {
+        duration: 5000
+      });
       this.dialogRef.close(true);
     })
   }

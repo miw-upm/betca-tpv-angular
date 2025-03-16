@@ -5,8 +5,6 @@
       <div class="audit-actions">
         @if (stockAudit.closeDate == null) {
           <button  mat-flat-button (click)="closeAudit()">Close Audit</button>
-        }
-        @else {
           <button mat-flat-button (click)="updateAudit()">Update Audit</button>
         }
       </div>
