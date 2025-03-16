@@ -10,7 +10,7 @@ export interface Article {
 }
 
 export interface StockAudit {
-  identity: string;
+  id: string;
   creationDate: Date;
   closeDate: Date;
   articlesWithoutAudit: Article[];
