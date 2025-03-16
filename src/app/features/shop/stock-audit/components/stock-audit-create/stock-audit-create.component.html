@@ -1,6 +1,8 @@
-<h4 mat-dialog-title>{{ "Create Audit" }}</h4>
-<mat-icon color="warn">warning</mat-icon>
+<h4 mat-dialog-title>Create Stock Audit</h4>
+<mat-dialog-content>
+  <p>Are you sure you want to create the audit?</p>
+</mat-dialog-content>
 <mat-dialog-actions>
   <button (click)="close()" mat-dialog-close mat-raised-button>Close</button>
-  <button (click)="onCreate()" color="primary" mat-raised-button>Create</button>
+  <button mat-flat-button (click)="onCreate()" color="primary">Create</button>
 </mat-dialog-actions>

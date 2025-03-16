@@ -21,9 +21,12 @@ export class StockAuditService {
     return this.httpService.post(EndPoints.STOCK_AUDITS); 
   }
 
-
   read(id: string): Observable<StockAudit>{
     return this.httpService.get(EndPoints.STOCK_AUDITS + '/' + id);
+  }
+
+  close(id: string): Observable<void>{
+    return this.httpService.put(EndPoints.STOCK_AUDITS + '/' + id + '/close'); 
   }
 
 }

@@ -7,6 +7,7 @@ import { MatTableModule } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
 import { StockAudit } from '../../models/stock-audit.model';
 import { StockAuditService } from '../../services/stock-audit.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-stock-audit-view',
@@ -27,7 +28,8 @@ export class StockAuditViewComponent {
   stockAudit: StockAudit;
   constructor(
     private _route: ActivatedRoute,
-    private _service: StockAuditService
+    private _service: StockAuditService,
+    private readonly snackBar: MatSnackBar
 
   ) { }
 
@@ -36,13 +38,21 @@ export class StockAuditViewComponent {
     this.read(id);
   }
 
-  read(id:string){
+  read(id: string) {
     this._service.read(id)
-    .subscribe(data => this.stockAudit = data)
+      .subscribe(data => {
+        this.stockAudit = data;
+      })
   }
 
   closeAudit() {
-
+    this._service.close(this.stockAudit.id)
+      .subscribe(() => {
+        this.snackBar.open("Stock audit close", "Success", {
+          duration: 5000
+        });
+        this.read(this.stockAudit.id);
+      });
   }
 
   updateAudit() {
