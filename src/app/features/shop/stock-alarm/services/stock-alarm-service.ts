@@ -15,9 +15,12 @@ export class StockAlarmService {
     }
 
     findAll(): Observable<StockAlarm[]> {
-        this.httpService.get(EndPoints.STOCK_ALARMS).subscribe(data => {
-            console.log(data);
-        })
         return this.httpService.get(EndPoints.STOCK_ALARMS);
+    }
+
+    update(name: String, stockAlarm: StockAlarm): Observable<StockAlarm> {
+        return this.httpService
+            .successful()
+            .put(EndPoints.STOCK_ALARMS + '/' + name, stockAlarm);
     }
 }

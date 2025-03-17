@@ -5,7 +5,7 @@ import {StockAlarm} from "../../models/stock-alarm.model";
 import {MatDialog} from "@angular/material/dialog";
 import {StockAlarmService} from "../../services/stock-alarm-service";
 import {StockAlarmDetailsComponent} from "../stock-alarm-details/stock-alarm-details.component";
-import {StockAlarmCreateComponent} from "../stock-alarm-create/stock-alarm-create.component";
+import {StockAlarmCreateUpdateComponent} from "../stock-alarm-create-update/stock-alarm-create-update.component";
 
 @Component({
     selector: 'app-stock-alarm-list',
@@ -28,7 +28,7 @@ export class StockAlarmListComponent implements OnInit {
     }
 
     create() {
-        this.dialog.open(StockAlarmCreateComponent);
+        this.dialog.open(StockAlarmCreateUpdateComponent);
     }
 
     read(stockAlarm: StockAlarm) {
@@ -37,8 +37,10 @@ export class StockAlarmListComponent implements OnInit {
         });
     }
 
-    update($event: any) {
-        throw new Error("Method not implemented.");
+    update(stockAlarm: StockAlarm) {
+        this.dialog.open(StockAlarmCreateUpdateComponent, {
+            data: stockAlarm
+        });
     }
 
     findAll(): void {
