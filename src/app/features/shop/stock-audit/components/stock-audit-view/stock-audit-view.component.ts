@@ -45,7 +45,7 @@ export class StockAuditViewComponent {
       })
   }
 
-  closeAudit() {
+  close() {
     this._service.close(this.stockAudit.id)
       .subscribe(() => {
         this.snackBar.open("Stock audit close", "Success", {
@@ -55,8 +55,14 @@ export class StockAuditViewComponent {
       });
   }
 
-  updateAudit() {
-
+  update() {
+    this._service.update(this.stockAudit.id)
+      .subscribe(() => {
+        this.snackBar.open("Stock audit update", "Success", {
+          duration: 5000
+        });
+        this.read(this.stockAudit.id);
+      });
   }
 
 }
