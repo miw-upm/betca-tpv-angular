@@ -10,10 +10,12 @@ export interface Article {
 }
 
 export interface StockAudit {
-  identity: string;
+  id: string;
   creationDate: Date;
+  updateDate: Date;
   closeDate: Date;
   articlesWithoutAudit: Article[];
   lossValue: number;
   losses: ArticleLoss[];
+  articlesAudited: Article[];
 }

@@ -1,12 +1,6 @@
 <div>
     <button mat-flat-button (click)="createAudit()">Create Audit</button>
     <table mat-table [dataSource]="stockAudits" class="mat-elevation-z8">
-
-        <ng-container matColumnDef="id">
-            <th mat-header-cell *matHeaderCellDef>No.</th>
-            <td mat-cell *matCellDef="let element">{{ element.id }}</td>
-        </ng-container>
-
         <ng-container matColumnDef="creationDate">
             <th mat-header-cell *matHeaderCellDef>Creation Date</th>
             <td mat-cell *matCellDef="let element">
@@ -28,7 +22,7 @@
 
         <ng-container matColumnDef="lossValue">
             <th mat-header-cell *matHeaderCellDef>Loss Value</th>
-            <td mat-cell *matCellDef="let element">{{ element.lossValue }}</td>
+            <td mat-cell *matCellDef="let element">{{ element.lossValue | currency: 'EUR'}}</td>
         </ng-container>
 
         <ng-container matColumnDef="losses">
@@ -39,7 +33,7 @@
         <ng-container matColumnDef="action">
             <th mat-header-cell *matHeaderCellDef>Actions</th>
             <td mat-cell *matCellDef="let element">
-                <button mat-flat-button (click)="ver(element.identity)">View</button>
+                <button mat-flat-button (click)="ver(element.id)">View</button>
             </td>
         </ng-container>
 

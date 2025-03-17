@@ -21,7 +21,7 @@ import { Router } from '@angular/router';
   ]
 })
 export class StockAuditListComponent implements OnInit {
-  displayedColumns: string[] = ['id', 'creationDate', 'closeDate', 'articlesWithoutAudit', 'lossValue', 'losses', 'action'];
+  displayedColumns: string[] = ['creationDate', 'closeDate', 'articlesWithoutAudit', 'lossValue', 'losses', 'action'];
   stockAudits:StockAudit[]
   constructor(
     private dialog: MatDialog,
