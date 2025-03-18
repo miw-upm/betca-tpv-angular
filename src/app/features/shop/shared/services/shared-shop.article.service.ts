@@ -1,6 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Observable, of} from 'rxjs';
-import {map} from 'rxjs/operators';
+import {Observable} from 'rxjs';
 
 import {HttpService} from '@core/services/http.service';
 import {EndPoints} from '@core/end-points';
@@ -34,11 +33,6 @@ export class SharedShopArticleService {
     }
 
     getArticlesByCompany(company: string): Observable<any[]> {
-        // TO DO
-        return of([
-            { barcode: 'Article 1' },
-            { barcode: 'Article 2' },
-            { barcode: 'Article 3' }
-        ]);
+        return this.sharedArticleService.searchByProviderCompanies(company);
     }
 }
