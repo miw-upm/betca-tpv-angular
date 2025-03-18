@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Observable, of} from 'rxjs';
+import {Observable} from 'rxjs';
 import {OrderSearch} from "./order-search.model";
 import {HttpService} from '@core/services/http.service';
 import {Order} from '../shared/models/order.model';
@@ -33,7 +33,7 @@ export class OrderService {
             ...order,
             openingDate: this.SharedDateFormatterService.formatDate(order.openingDate),
         };
-        console.log(orderFormatted);
+
         return this.httpService
             .successful("Order updated successfully.")
             .error('Order update failed. Please check the values and try again.')
