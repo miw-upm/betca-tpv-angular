@@ -1,11 +1,10 @@
 import {Injectable} from '@angular/core';
-import {Observable, of} from 'rxjs';
+import {Observable} from 'rxjs';
 
 import {HttpService} from '@core/services/http.service';
 import {EndPoints} from '@core/end-points';
 import {CashierState} from './cashier-state.model';
 import {CashierClosure} from './cashier-closure.model';
-import {CashMovement} from "./cash-movement.model";
 
 @Injectable({providedIn: 'root'})
 export class CashierClosureService {
