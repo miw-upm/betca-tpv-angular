@@ -36,13 +36,13 @@ export class OrdersCreationDialogComponent {
         this.title = 'Create Order';
         this.order = data || {
             reference: undefined, description: undefined, providerCompany: undefined, openingDate: undefined,
-            closingDate: undefined, orderLines: []
+            closingDate: undefined, orderLinesList: []
         };
     }
 
     onCompanyChange(): void {
         this.sharedArticleService.getArticlesByCompany(this.order.providerCompany).subscribe(articles => {
-            this.order.orderLines = articles.map(article => {
+            this.order.orderLinesList = articles.map(article => {
                 return {
                     articleBarcode: article.barcode,
                     requiredAmount: 0,
@@ -61,7 +61,7 @@ export class OrdersCreationDialogComponent {
     }
 
     invalid(): boolean {
-        return this.check(this.order.reference) || this.check(this.order.description) || this.check(this.order.providerCompany)
+        return this.check(this.order.description) || this.check(this.order.providerCompany)
     }
 
     check(attr: string): boolean {
