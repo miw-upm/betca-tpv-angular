@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Observable, of} from 'rxjs';
+import {Observable} from 'rxjs';
 
 import {HttpService} from '@core/services/http.service';
 import {EndPoints} from '@core/end-points';
@@ -19,10 +19,5 @@ export class CashierClosureService {
 
     readState(): Observable<CashierState> {
         return this.httpService.get(EndPoints.CASHIERS_LAST + CashierClosureService.STATE);
-    }
-
-    updateState(cashierState: CashierState): Observable<void> {
-        console.log("[SharedCashierService.update] HTTP patch "+EndPoints.CASHIERS_LAST + CashierClosureService.STATE+" data: "+JSON.stringify(cashierState));
-        return of();
     }
 }
