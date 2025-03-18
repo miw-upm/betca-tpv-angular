@@ -43,7 +43,6 @@ export class OrdersUpdatingDialogComponent {
     }
 
     update(): void {
-        this.order.closingDate = new Date();
         this.orderService
             .update(this.oldReference, this.order)
             .subscribe(() => this.dialog.closeAll());

@@ -32,7 +32,7 @@ export class OrdersDeleteDialogComponent {
         this.title = 'Delete Order';
         this.order = data || {
             reference: undefined, description: undefined, providerCompany: undefined, openingDate: undefined,
-            closingDate: undefined, orderLines: []
+            closingDate: undefined, orderLinesList: []
         };
     }
 
@@ -46,7 +46,7 @@ export class OrdersDeleteDialogComponent {
 
     delete(): void {
         this.orderService
-            .delete(this.order)
+            .delete(this.order.reference)
             .subscribe(() => this.dialog.closeAll());
     }
 

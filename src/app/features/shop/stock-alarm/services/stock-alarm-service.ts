@@ -14,6 +14,10 @@ export class StockAlarmService {
         return this.httpService.post(EndPoints.STOCK_ALARMS, stockAlarm);
     }
 
+    read(name: string): Observable<StockAlarm> {
+        return this.httpService.get(EndPoints.STOCK_ALARMS + '/' + name);
+    }
+
     findAll(): Observable<StockAlarm[]> {
         return this.httpService.get(EndPoints.STOCK_ALARMS);
     }

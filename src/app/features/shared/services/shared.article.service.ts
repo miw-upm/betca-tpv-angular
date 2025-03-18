@@ -8,6 +8,7 @@ import {EndPoints} from '@core/end-points';
 @Injectable({providedIn: 'root'})
 export class SharedArticleService {
     private static readonly BARCODE = '/barcode';
+    private static readonly SEARCH_BY_PROVIDER = '/search-by-provider';
 
     constructor(private readonly httpService: HttpService) {
     }
@@ -21,5 +22,10 @@ export class SharedArticleService {
                 map(response => response.barcodes)
             );
     }
-
+    
+    searchByProviderCompanies(company: string): Observable<number[]> {
+        return this.httpService
+            .param('providerCompany', company)
+            .get(EndPoints.ARTICLES + SharedArticleService.SEARCH_BY_PROVIDER)
+    }
 }
