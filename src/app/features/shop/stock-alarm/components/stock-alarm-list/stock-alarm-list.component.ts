@@ -6,6 +6,7 @@ import {MatDialog} from "@angular/material/dialog";
 import {StockAlarmService} from "../../services/stock-alarm-service";
 import {StockAlarmDetailsComponent} from "../stock-alarm-details/stock-alarm-details.component";
 import {StockAlarmCreateUpdateComponent} from "../stock-alarm-create-update/stock-alarm-create-update.component";
+import {map} from "rxjs/operators";
 
 @Component({
     selector: 'app-stock-alarm-list',
@@ -18,6 +19,7 @@ import {StockAlarmCreateUpdateComponent} from "../stock-alarm-create-update/stoc
 })
 export class StockAlarmListComponent implements OnInit {
     stockAlarms: Observable<StockAlarm[]> = of([]);
+    formattedStockAlarms: Observable<{name: string; description: string; warning: number; critical: number}[]>;
     title = "Stock Alarms";
 
     constructor(private dialog: MatDialog, private stockAlarmService: StockAlarmService) {
@@ -32,8 +34,12 @@ export class StockAlarmListComponent implements OnInit {
     }
 
     read(stockAlarm: StockAlarm) {
-        this.dialog.open(StockAlarmDetailsComponent, {
-            data: stockAlarm
+        this.stockAlarmService.read(stockAlarm.name).subscribe((data) => {
+            this.dialog.open(StockAlarmDetailsComponent, {
+                data: data,
+                width: '500px',
+                panelClass: 'custom-dialog-container'
+            });
         });
     }
 
@@ -45,5 +51,14 @@ export class StockAlarmListComponent implements OnInit {
 
     findAll(): void {
         this.stockAlarms = this.stockAlarmService.findAll();
+
+        this.formattedStockAlarms = this.stockAlarms.pipe(
+            map(items => items.map(item => ({
+                name: item.name,
+                description: item.description,
+                warning: item.warning,
+                critical: item.critical
+            })))
+        );
     }
 }
