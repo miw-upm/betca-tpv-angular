@@ -1,14 +1,20 @@
-<div class="container">
-    <div>{{stockAlarm.name}}</div>
-    <div>{{stockAlarm.description}}</div>
-    <div>{{stockAlarm.warning}}</div>
-    <div>{{stockAlarm.critical}}</div>
+<div mat-dialog-content class="dialog-content">
+    <h2 class="title">Stock Alarm Details</h2>
+    <mat-divider></mat-divider>
+
+    <div class="details">
+        <div><strong>Name:</strong> {{ stockAlarm.name }}</div>
+        <div><strong>Description:</strong> {{ stockAlarm.description }}</div>
+        <div><strong>Warning:</strong> {{ stockAlarm.warning }}</div>
+        <div><strong>Critical:</strong> {{ stockAlarm.critical }}</div>
+    </div>
+
+    <app-crud
+            (create)="create()"
+            (read)="read($event)"
+            (update)="update($event)"
+            [data]="formattedStockAlarmLines"
+            [deleteAction]="false"
+            [title]="titleLine"
+    ></app-crud>
 </div>
-<app-crud
-        (create)="create()"
-        (read)="read($event)"
-        (update)="update($event)"
-        [data]="formattedStockAlarmLines"
-        [deleteAction]="false"
-        [title]="title"
-></app-crud>
