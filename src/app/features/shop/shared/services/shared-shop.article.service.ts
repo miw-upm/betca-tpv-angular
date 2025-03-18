@@ -34,11 +34,6 @@ export class SharedShopArticleService {
     }
 
     getArticlesByCompany(company: string): Observable<any[]> {
-        // TO DO
-        return of([
-            { barcode: 'Article 1' },
-            { barcode: 'Article 2' },
-            { barcode: 'Article 3' }
-        ]);
+        return this.sharedArticleService.searchByProviderCompanies(company);
     }
 }
