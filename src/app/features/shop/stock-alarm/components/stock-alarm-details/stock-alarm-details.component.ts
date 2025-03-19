@@ -5,11 +5,13 @@ import {StockAlarmLine} from "../../models/stock-alarm-line.model";
 import {StockAlarm} from "../../models/stock-alarm.model";
 import {MAT_DIALOG_DATA} from "@angular/material/dialog";
 import {map} from "rxjs/operators";
+import {MatDivider} from "@angular/material/divider";
 
 @Component({
     selector: 'app-stock-alarm-details',
     imports: [
-        CrudComponent
+        CrudComponent,
+        MatDivider
     ],
     templateUrl: './stock-alarm-details.component.html',
     styleUrl: './stock-alarm-details.component.css',
@@ -19,7 +21,8 @@ export class StockAlarmDetailsComponent implements OnInit {
     stockAlarm: StockAlarm;
     stockAlarmLines:Observable<StockAlarmLine[]>;
     formattedStockAlarmLines:Observable<{ article: string; warning: number; critical: number }[]>;
-    title = "Lines";
+    title = "Stock Alarm Details";
+    titleLine = "Lines";
     constructor(
         @Inject(MAT_DIALOG_DATA) private data: StockAlarm
     ) {

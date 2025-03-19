@@ -1,11 +1,12 @@
-import {Component} from '@angular/core';
+import {Component,OnInit} from '@angular/core';
 import {CrudComponent} from "@common/components/crud.component";
-import {Observable} from "rxjs";
+import {Observable, of} from "rxjs";
 import {StockAlarm} from "../../models/stock-alarm.model";
 import {MatDialog} from "@angular/material/dialog";
 import {StockAlarmService} from "../../services/stock-alarm-service";
 import {StockAlarmDetailsComponent} from "../stock-alarm-details/stock-alarm-details.component";
-import {StockAlarmCreateComponent} from "../stock-alarm-create/stock-alarm-create.component";
+import {StockAlarmCreateUpdateComponent} from "../stock-alarm-create-update/stock-alarm-create-update.component";
+import {map} from "rxjs/operators";
 
 @Component({
     selector: 'app-stock-alarm-list',
@@ -16,25 +17,48 @@ import {StockAlarmCreateComponent} from "../stock-alarm-create/stock-alarm-creat
     styleUrl: './stock-alarm-list.component.css',
     standalone: true
 })
-export class StockAlarmListComponent {
-    stockAlarms: Observable<StockAlarm[]>;
+export class StockAlarmListComponent implements OnInit {
+    stockAlarms: Observable<StockAlarm[]> = of([]);
+    formattedStockAlarms: Observable<{name: string; description: string; warning: number; critical: number}[]>;
     title = "Stock Alarms";
 
     constructor(private dialog: MatDialog, private stockAlarmService: StockAlarmService) {
-        this.stockAlarms = stockAlarmService.getAllStockAlarms();
+    }
+
+    ngOnInit() {
+        this.findAll();
     }
 
     create() {
-        this.dialog.open(StockAlarmCreateComponent);
+        this.dialog.open(StockAlarmCreateUpdateComponent);
     }
 
     read(stockAlarm: StockAlarm) {
-        this.dialog.open(StockAlarmDetailsComponent, {
+        this.stockAlarmService.read(stockAlarm.name).subscribe((data) => {
+            this.dialog.open(StockAlarmDetailsComponent, {
+                data: data,
+                width: '500px',
+                panelClass: 'custom-dialog-container'
+            });
+        });
+    }
+
+    update(stockAlarm: StockAlarm) {
+        this.dialog.open(StockAlarmCreateUpdateComponent, {
             data: stockAlarm
         });
     }
 
-    update($event: any) {
-        throw new Error("Method not implemented.");
+    findAll(): void {
+        this.stockAlarms = this.stockAlarmService.findAll();
+
+        this.formattedStockAlarms = this.stockAlarms.pipe(
+            map(items => items.map(item => ({
+                name: item.name,
+                description: item.description,
+                warning: item.warning,
+                critical: item.critical
+            })))
+        );
     }
 }

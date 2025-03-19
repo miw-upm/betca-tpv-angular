@@ -6,12 +6,12 @@
         <mat-label><strong>Provider Company:</strong> {{ data.providerCompany }}</mat-label>
         <mat-label><strong>Opening Date:</strong> {{ data.openingDate}}</mat-label>
         <mat-label><strong>Closing Date:</strong> {{ data.closingDate}}</mat-label>
-        <div *ngIf="data.orderLines.length > 0">
+        <div *ngIf="data.orderLinesList.length > 0">
             <h3>Order Lines</h3>
-            <div *ngFor="let orderLine of data.orderLines">
+            <div *ngFor="let orderLine of data.orderLinesList">
                 <mat-label><strong>Article Barcode:</strong> {{ orderLine.articleBarcode }}</mat-label>
                 <mat-label><strong>Required Amount:</strong> {{ orderLine.requiredAmount }}</mat-label>
-                <mat-label><strong>Final Amount:</strong> {{ orderLine.finalAmount }}</mat-label>
+                <mat-label><strong>Final Amount:</strong> {{ data.closingDate ? orderLine.finalAmount : undefined }}</mat-label>
                 <br>
             </div>
         </div>
@@ -19,4 +19,6 @@
 </mat-dialog-content>
 <mat-dialog-actions>
     <button mat-dialog-close mat-raised-button>Close</button>
+    <button (click)="duplicateOrder()" color="primary" mat-raised-button>Duplicate order
+    </button>
 </mat-dialog-actions>

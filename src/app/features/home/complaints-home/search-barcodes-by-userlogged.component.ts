@@ -2,7 +2,7 @@ import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {Observable, of} from 'rxjs';
 
 import {SearchComponent} from '@common/components/search.component';
-import {HomeArticleService} from "./home.article.service";
+import {HomeArticleService, SharedArticleService} from "../../shared/services/shared.article.service";
 
 @Component({
     standalone: true,
@@ -16,7 +16,7 @@ export class SearchBarcodesByUserloggedComponent {
     @Input() barcode: string;
     @Output() add = new EventEmitter<string>();
 
-    constructor(private readonly homeArticleService: HomeArticleService) {
+    constructor(private readonly sharedArticleService: SharedArticleService) {
     }
 
     public onSelect(value): void {
@@ -24,6 +24,6 @@ export class SearchBarcodesByUserloggedComponent {
     }
 
     searchBarcodePurchasedByUserLogged(): void {
-        this.barcodes = this.homeArticleService.searchBarcodePurchasedByUserLogged(this.barcode);
+        this.barcodes = this.sharedArticleService.searchBarcodePurchasedByUserLogged(this.barcode);
     }
 }

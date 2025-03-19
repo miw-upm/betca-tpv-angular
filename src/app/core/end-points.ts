@@ -6,10 +6,8 @@ export class EndPoints {
   static readonly TAGS = environment.REST_CORE + "/tags";
   static readonly CASHIERS = environment.REST_CORE + "/cashiers";
   static readonly CASHIERS_LAST = EndPoints.CASHIERS + "/last";
-  static readonly CASHIERS_CASH_MOVEMENT =
-    EndPoints.CASHIERS + "/cash-movement";
-  static readonly CASHIERS_CLOSED_BETWEEN =
-    EndPoints.CASHIERS + "/closed-between";
+  static readonly CASHIERS_CASH_MOVEMENT = EndPoints.CASHIERS + "/cash-movement";
+  static readonly CASHIERS_CLOSED_BETWEEN = EndPoints.CASHIERS + "/closed-between";
   static readonly TICKETS = environment.REST_CORE + "/tickets";
   static readonly COMPLAINTS = environment.REST_CORE + "/complaints";
   static readonly RGPDS = environment.REST_CORE + "/rgpds";
@@ -20,4 +18,6 @@ export class EndPoints {
   static readonly BUDGETS = environment.REST_CORE + "/budgets";
   static readonly BUDGETS_SEARCH = EndPoints.BUDGETS + "/search";
   static readonly INVOICES = environment.REST_CORE + "/invoices";
+  static readonly STOCK_ALARMS = environment.REST_CORE + "/stock-alarms";
+  static readonly ORDERS = environment.REST_CORE + "/orders";
 }

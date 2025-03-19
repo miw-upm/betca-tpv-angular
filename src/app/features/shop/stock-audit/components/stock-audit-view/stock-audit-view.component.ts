@@ -6,6 +6,8 @@ import { MatListModule } from '@angular/material/list';
 import { MatTableModule } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
 import { StockAudit } from '../../models/stock-audit.model';
+import { StockAuditService } from '../../services/stock-audit.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-stock-audit-view',
@@ -20,40 +22,47 @@ import { StockAudit } from '../../models/stock-audit.model';
   styleUrl: './stock-audit-view.component.css'
 })
 export class StockAuditViewComponent {
-  stockAudit: StockAudit = {
-    identity: 'AUD-2025-001',
-    creationDate: new Date('2025-02-01'),
-    closeDate: new Date('2025-02-15'),
-    articlesWithoutAudit: [
-      { barcode: 'Item A', description: 'test', stock: 100 },
-      { barcode: 'Item B', description: 'test', stock: 50 },
-    ],
-    lossValue: 1500,
-    losses: [
-      { barcode: 'Item A', amount: 5 },
-      { barcode: 'Item B', amount: 2 },
-    ],
-  };
+
   displayedArticleColumns: string[] = ['name', 'quantity'];
   displayedLossColumns: string[] = ['articleName', 'lostQuantity'];
-
+  stockAudit: StockAudit;
   constructor(
     private _route: ActivatedRoute,
+    private _service: StockAuditService,
+    private readonly snackBar: MatSnackBar
 
   ) { }
 
   ngOnInit(): void {
     let id = this._route.snapshot.paramMap.get('id');
-    console.log(id);
-    console.log('Stock audit data:', this.stockAudit);
+    this.read(id);
   }
 
-  closeAudit() {
-
+  read(id: string) {
+    this._service.read(id)
+      .subscribe(data => {
+        this.stockAudit = data;
+      })
   }
 
-  updateAudit() {
+  close() {
+    this._service.close(this.stockAudit.id)
+      .subscribe(() => {
+        this.snackBar.open("Stock audit close", "Success", {
+          duration: 5000
+        });
+        this.read(this.stockAudit.id);
+      });
+  }
 
+  update() {
+    this._service.update(this.stockAudit.id)
+      .subscribe(() => {
+        this.snackBar.open("Stock audit update", "Success", {
+          duration: 5000
+        });
+        this.read(this.stockAudit.id);
+      });
   }
 
 }

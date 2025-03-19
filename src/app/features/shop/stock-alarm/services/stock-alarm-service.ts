@@ -1,66 +1,30 @@
 import {Injectable} from "@angular/core";
 import {StockAlarm} from "../models/stock-alarm.model";
-import {Observable, of} from "rxjs";
+import {Observable} from "rxjs";
+import {HttpService} from "@core/services/http.service";
+import {EndPoints} from "@core/end-points";
 
 @Injectable({providedIn: "root"})
 export class StockAlarmService {
-    private mockStockAlarm: StockAlarm[];
 
-    constructor() {
-        this.mockData();
-    }
-
-    mockData() {
-        this.mockStockAlarm = [
-            {
-                name: 'Alarm 1',
-                description: 'Important alarm',
-                warning: 8,
-                critical: 9,
-                stockAlarmLines: [{
-                    article: {
-                        barcode: '0001',
-                        description: 'It is article 1',
-                        retailPrice: 4,
-                        providerCompany: 'Company'
-                    },
-                    warning: 8,
-                    critical: 7
-                }]
-            },
-            {
-                name: 'Alarm 2',
-                description: 'Non Important alarm',
-                warning: 2,
-                critical: 4,
-                stockAlarmLines: [{
-                    article: {
-                        barcode: '0002',
-                        description: 'It is article 2',
-                        retailPrice: 4,
-                        providerCompany: 'Company'
-                    },
-                    warning: 8,
-                    critical: 7
-                },{
-                    article: {
-                        barcode: '0003',
-                        description: 'It is article 3',
-                        retailPrice: 5,
-                        providerCompany: 'Company'
-                    },
-                    warning: 8,
-                    critical: 7
-                }]
-            }
-        ]
+    constructor(private httpService: HttpService) {
     }
 
     create(stockAlarm: StockAlarm): Observable<StockAlarm> {
-        return of(stockAlarm);
+        return this.httpService.post(EndPoints.STOCK_ALARMS, stockAlarm);
     }
 
-    getAllStockAlarms(): Observable<StockAlarm[]> {
-        return of(this.mockStockAlarm);
+    read(name: string): Observable<StockAlarm> {
+        return this.httpService.get(EndPoints.STOCK_ALARMS + '/' + name);
+    }
+
+    findAll(): Observable<StockAlarm[]> {
+        return this.httpService.get(EndPoints.STOCK_ALARMS);
+    }
+
+    update(name: String, stockAlarm: StockAlarm): Observable<StockAlarm> {
+        return this.httpService
+            .successful()
+            .put(EndPoints.STOCK_ALARMS + '/' + name, stockAlarm);
     }
 }

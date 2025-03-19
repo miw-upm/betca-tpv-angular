@@ -5,5 +5,5 @@ export interface StockAlarm {
     description: string;
     warning: number;
     critical: number;
-    stockAlarmLines: StockAlarmLine[];
+    stockAlarmLines?: StockAlarmLine[];
 }
