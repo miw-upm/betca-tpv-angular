@@ -9,13 +9,14 @@ import {AuthService} from '@core/services/auth.service';
 
 import {Complaint} from '../../shared/models/complaint.model';
 import {ComplaintHomeService} from "./complaint-home.service";
-import {SearchByBarcodeComponent} from "../../shared/components/search-by-barcode.component";
+import {SearchByBarcodeComponent} from "../../shop/shared/components/search-by-barcode.component";
 import {ComplaintCreation} from "../../shared/models/complaintCreation.model";
+import {MatOption, MatSelect} from "@angular/material/select";
 
 @Component({
     standalone: true,
     imports: [MatDialogContent, MatFormField, MatLabel, FormsModule, MatDialogActions, MatDialogTitle, MatInput,
-        MatDialogClose, MatButton, SearchByBarcodeComponent],
+        MatDialogClose, MatButton, SearchByBarcodeComponent, MatSelect, MatOption],
     templateUrl: 'complaint-creation-dialog.component.html',
     styleUrls: ['complaint-home-dialog.component.css']
 })
@@ -24,7 +25,7 @@ export class ComplaintCreationDialogComponent {
     complaintCreation: ComplaintCreation;
 
     constructor(private readonly complaintHomeService: ComplaintHomeService, private readonly dialog: MatDialog, private readonly authService: AuthService) {
-        this.complaintCreation = {barcode: "", description: "",userMobile:0};
+        this.complaintCreation = {barcode: "", description: "",userMobile:authService.getMobile()};
     }
 
     create(): void {
@@ -34,6 +35,9 @@ export class ComplaintCreationDialogComponent {
             .subscribe(() => this.dialog.closeAll());
     }
 
+    addBarcode(barcode:string){
+        this.complaintCreation.barcode = barcode;
+    }
     invalid(): boolean {
         return this.check(this.complaintCreation.barcode) || this.check(this.complaintCreation.description);
     }

@@ -1,7 +1,8 @@
 <h2 mat-dialog-title>Create Complaint</h2>
 
 <mat-dialog-content>
-    <app-search-by-barcode></app-search-by-barcode>
+    <app-search-by-barcode  [barcode]="complaintCreation.barcode" (add)="complaintCreation.barcode = $event">
+    </app-search-by-barcode>
     <mat-form-field class="full-width">
         <mat-label>Description</mat-label>
         <input [(ngModel)]="complaintCreation.description" matInput required type="text"/>

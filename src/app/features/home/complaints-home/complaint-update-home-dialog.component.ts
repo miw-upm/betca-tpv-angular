@@ -9,7 +9,7 @@ import {AuthService} from '@core/services/auth.service';
 
 import {Complaint} from '../../shared/models/complaint.model';
 import {ComplaintHomeService} from "./complaint-home.service";
-import {SearchByBarcodeComponent} from "../../shared/components/search-by-barcode.component";
+import {SearchByBarcodeComponent} from "../../shop/shared/components/search-by-barcode.component";
 
 @Component({
     standalone: true,

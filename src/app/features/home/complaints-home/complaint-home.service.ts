@@ -12,7 +12,6 @@ import {ComplaintCreation} from "../../shared/models/complaintCreation.model";
 export class ComplaintHomeService {
 
     private static readonly SEARCH = '/search';
-
     constructor(private readonly httpService: HttpService,private readonly complaintService: ComplaintService,private readonly authService:AuthService) {
     }
 

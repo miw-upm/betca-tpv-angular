@@ -5,7 +5,6 @@ import {map} from 'rxjs/operators';
 import {HttpService} from '@core/services/http.service';
 import {EndPoints} from '@core/end-points';
 import {Article} from '../../../shared/models/article.model';
-import {SharedArticleService} from "../../../shared/services/shared.article.service";
 
 @Injectable({providedIn: 'root'})
 export class SharedShopArticleService {
@@ -30,8 +29,14 @@ export class SharedShopArticleService {
     }
 
     searchBarcode(barcode: string): Observable<number[]> {
-        return this.sharedArticleService.searchBarcode(barcode);
+        return this.httpService
+            .param('barcode', barcode)
+            .get(EndPoints.ARTICLES + SharedShopArticleService.BARCODE)
+            .pipe(
+                map(response => response.barcodes)
+            );
     }
+
 
     getArticlesByCompany(company: string): Observable<any[]> {
         // TO DO
