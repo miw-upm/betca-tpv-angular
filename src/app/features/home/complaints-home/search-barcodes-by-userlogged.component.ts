@@ -2,7 +2,7 @@ import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {Observable, of} from 'rxjs';
 
 import {SearchComponent} from '@common/components/search.component';
-import {HomeArticleService, SharedArticleService} from "../../shared/services/shared.article.service";
+import {SharedArticleService} from "../../shared/services/shared.article.service";
 
 @Component({
     standalone: true,
