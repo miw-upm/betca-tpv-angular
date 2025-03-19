@@ -2,6 +2,7 @@ import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {Observable, of} from 'rxjs';
 
 import {SearchComponent} from '@common/components/search.component';
+import {HomeArticleService} from "./home.article.service";
 
 @Component({
     standalone: true,
@@ -15,7 +16,7 @@ export class SearchByBarcodeComponent {
     @Input() barcode: string;
     @Output() add = new EventEmitter<string>();
 
-    constructor(private readonly sharedArticleService: SharedArticleService) {
+    constructor(private readonly homeArticleService: HomeArticleService) {
     }
 
     public onSelect(value): void {
@@ -23,6 +24,6 @@ export class SearchByBarcodeComponent {
     }
 
     searchBarcodePurchasedByUserLogged(): void {
-        this.barcodes = this.sharedArticleService.searchBarcodePurchasedByUserLogged(this.barcode);
+        this.barcodes = this.homeArticleService.searchBarcodePurchasedByUserLogged(this.barcode);
     }
 }
