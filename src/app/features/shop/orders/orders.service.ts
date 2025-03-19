@@ -35,7 +35,7 @@ export class OrderService {
         };
 
         return this.httpService
-            .successful("Order updated successfully.")
+            .successful("Order closed successfully.")
             .error('Order update failed. Please check the values and try again.')
             .put(EndPoints.ORDERS + '/' + oldReference, orderFormatted);
     }

@@ -11,7 +11,7 @@
             <div *ngFor="let orderLine of data.orderLinesList">
                 <mat-label><strong>Article Barcode:</strong> {{ orderLine.articleBarcode }}</mat-label>
                 <mat-label><strong>Required Amount:</strong> {{ orderLine.requiredAmount }}</mat-label>
-                <mat-label><strong>Final Amount:</strong> {{ orderLine.finalAmount }}</mat-label>
+                <mat-label><strong>Final Amount:</strong> {{ data.closingDate ? orderLine.finalAmount : undefined }}</mat-label>
                 <br>
             </div>
         </div>

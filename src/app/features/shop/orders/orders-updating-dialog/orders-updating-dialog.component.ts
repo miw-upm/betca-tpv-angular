@@ -33,13 +33,13 @@ export class OrdersUpdatingDialogComponent {
 
     constructor(@Inject(MAT_DIALOG_DATA) data: Order, private readonly orderService: OrderService,        
     private readonly dialog: MatDialog) {
-        this.title = 'Update Order';
+        this.title = 'Close Order';
         this.order = data;
         this.oldReference = data.reference;
     }
 
     invalid(): boolean {
-        return this.order.closingDate ? true : false;
+        return !!this.order.closingDate;
     }
 
     update(): void {
