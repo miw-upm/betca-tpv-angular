@@ -54,7 +54,7 @@ export class OrdersCreationDialogComponent {
     }
 
     create(): void {
-        this.order.openingDate = new Date();
+        this.order.orderLinesList = this.order.orderLinesList.filter(orderLine => orderLine.finalAmount !== 0);
         this.orderService
             .create(this.order)
             .subscribe(() => this.dialog.closeAll());
