@@ -9,7 +9,7 @@ import {AuthService} from '@core/services/auth.service';
 
 import {Complaint} from '../../shared/models/complaint.model';
 import {ComplaintHomeService} from "./complaint-home.service";
-import {SearchByBarcodeComponent} from "../../shared/components/search-by-barcode.component";
+import {SearchByBarcodeComponent} from "../../shop/shared/components/search-by-barcode.component";
 
 @Component({
     standalone: true,
@@ -23,7 +23,7 @@ export class ComplaintUpdateHomeDialogComponent {
     complaint: Complaint;
 
     constructor(private readonly complaintHomeService: ComplaintHomeService, private readonly dialog: MatDialog, private readonly authService: AuthService) {
-        this.complaint = {barcode: "232435543", description: "dsfdfd",mobile:722256532, registrationDate:new Date(2025, 1, 2)};
+        this.complaint = {barcode: "232435543", description: "dsfdfd",userMobile:722256532, registrationDate:new Date(2025, 1, 2)};
     }
 
     update(): void {

@@ -5,12 +5,13 @@ import {HttpService} from '@core/services/http.service';
 import {EndPoints} from '@core/end-points';
 import {Article} from '../../../shared/models/article.model';
 import {SharedArticleService} from "../../../shared/services/shared.article.service";
+import {map} from "rxjs/operators";
 
 @Injectable({providedIn: 'root'})
 export class SharedShopArticleService {
     private static readonly BARCODE = '/barcode';
 
-    constructor(private readonly httpService: HttpService, private readonly sharedArticleService: SharedArticleService) {
+    constructor(private readonly httpService: HttpService,private readonly sharedArticleService:SharedArticleService) {
     }
 
     read(barcode: string): Observable<Article> {
@@ -29,7 +30,12 @@ export class SharedShopArticleService {
     }
 
     searchBarcode(barcode: string): Observable<number[]> {
-        return this.sharedArticleService.searchBarcode(barcode);
+        return this.httpService
+            .param('barcode', barcode)
+            .get(EndPoints.ARTICLES + SharedShopArticleService.BARCODE)
+            .pipe(
+                map(response => response.barcodes)
+            );
     }
 
     getArticlesByCompany(company: string): Observable<any[]> {

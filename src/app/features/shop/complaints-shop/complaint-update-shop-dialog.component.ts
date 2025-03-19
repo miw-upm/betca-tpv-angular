@@ -25,7 +25,7 @@ export class ComplaintUpdateShopDialogComponent {
 
     constructor(private readonly complaintShopService: ComplaintShopService, private readonly dialog: MatDialog, private readonly authService: AuthService) {
         this.complaint = {barcode: "232435543", description: "dsfdfd",
-            mobile:722256532, registrationDate:new Date(2025, 1, 2),
+            userMobile:722256532, registrationDate:new Date(2025, 1, 2),
             reply:"Respuesta determinada",
             state: "Abierto"
         };
