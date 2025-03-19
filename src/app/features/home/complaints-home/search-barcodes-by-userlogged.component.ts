@@ -10,7 +10,7 @@ import {HomeArticleService} from "./home.article.service";
     selector: 'app-barcodes-by-userlogged',
     templateUrl: './search-barcodes-by-userlogged.component.html'
 })
-export class SearchByBarcodeComponent {
+export class SearchBarcodesByUserloggedComponent {
     barcodes: Observable<number[]> = of([]);
 
     @Input() barcode: string;
