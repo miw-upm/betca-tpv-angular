@@ -1,3 +1,14 @@
+<div class="container">
+    <button (click)="searchWarnings()" mat-stroked-button>
+        <mat-icon>search</mat-icon>
+        Find warnings
+    </button>
+    <button (click)="searchCriticals()" mat-stroked-button>
+    <mat-icon>search</mat-icon>
+    Find criticals
+</button>
+</div>
+
 <app-crud
         (create)="create()"
         (read)="read($event)"

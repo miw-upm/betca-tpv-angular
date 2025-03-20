@@ -9,11 +9,16 @@ import {
     StockAlarmCreateUpdateComponent
 } from "./components/stock-alarm-create-update/stock-alarm-create-update.component";
 import {StockAlarmDetailsComponent} from "./components/stock-alarm-details/stock-alarm-details.component";
+import {MatButton} from "@angular/material/button";
+import {MatIcon} from "@angular/material/icon";
+import {StockAlarmSearchComponent} from "./components/stock-alarm-search/stock-alarm-search.component";
 
 @Component({
     selector: 'app-stock-alarm',
     imports: [
-        CrudComponent
+        CrudComponent,
+        MatButton,
+        MatIcon
     ],
     templateUrl: './stock-alarm.component.html',
     styleUrl: './stock-alarm.component.css',
@@ -60,6 +65,30 @@ export class StockAlarmComponent implements OnInit {
     update(stockAlarm: StockAlarm) {
         this.dialog.open(StockAlarmCreateUpdateComponent, {
             data: stockAlarm
+        });
+    }
+
+    searchWarnings() {
+        this.stockAlarmService.searchWarnings().subscribe((data) => {
+            console.log(data);
+            this.dialog.open(StockAlarmSearchComponent, {
+                data: {
+                    stockAlarmLines: data,
+                    search: "warning"
+                }
+            });
+        });
+    }
+
+    searchCriticals() {
+        this.stockAlarmService.searchCriticals().subscribe((data) => {
+            console.log(data);
+            this.dialog.open(StockAlarmSearchComponent, {
+                data: {
+                    stockAlarmLines: data,
+                    search: "critical"
+                }
+            });
         });
     }
 }
