@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { BudgetFiltersComponent } from "./components/budget-filters/budget-filters.component";
 import { BudgetListComponent } from "./components/budget-list/budget-list.component";
-import { map, Observable } from "rxjs";
+import { map, Observable, startWith } from "rxjs";
 import { BudgetRowData } from "./models/budget";
 import { BudgetService } from "./services/budget.service";
 import { MatDialog } from "@angular/material/dialog";
@@ -24,7 +24,8 @@ export class BudgetsComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.budgetRowData$ = this.budgetService.search({ reference: "0001" }).pipe(
+    this.budgetRowData$ = this.budgetService.search({ reference: "" }).pipe(
+      startWith([]),
       map((budgets) =>
         budgets.map((budget) => ({
           reference: budget.reference,
@@ -48,5 +49,20 @@ export class BudgetsComponent implements OnInit {
     this.dialogService.open(BudgetDetailsDialogComponent, {
       data: budget,
     });
+  }
+
+  onSearch(reference: string) {
+    this.budgetRowData$ = this.budgetService.search({ reference }).pipe(
+      map((budgets) =>
+        budgets.map((budget) => ({
+          reference: budget.reference,
+          creationDate: budget.creationDate,
+          total: budget.shoppingList.reduce(
+            (acc, shopping) => acc + shopping.total,
+            0
+          ),
+        }))
+      )
+    );
   }
 }
