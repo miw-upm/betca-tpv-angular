@@ -1,4 +1,4 @@
-<app-budget-filters></app-budget-filters>
+<app-budget-filters (search)="onSearch($event)"></app-budget-filters>
 <app-budget-list
   [budgetRowData$]="budgetRowData$"
   (read)="onRead($event)"
