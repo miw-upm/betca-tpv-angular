@@ -1,1 +1,8 @@
-<app-stock-alarm-list></app-stock-alarm-list>
+<app-crud
+        (create)="create()"
+        (read)="read($event)"
+        (update)="update($event)"
+        [data]="formattedStockAlarms"
+        [deleteAction]="false"
+        [title]="title"
+></app-crud>

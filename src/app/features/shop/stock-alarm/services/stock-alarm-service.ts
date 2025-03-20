@@ -27,4 +27,10 @@ export class StockAlarmService {
             .successful()
             .put(EndPoints.STOCK_ALARMS + '/' + name, stockAlarm);
     }
+
+    updateLines(name: String, stockAlarm: StockAlarm): Observable<StockAlarm> {
+        return this.httpService
+            .successful()
+            .put(EndPoints.STOCK_ALARMS + '/' + name + '/lines', stockAlarm);
+    }
 }

@@ -7,3 +7,10 @@ export interface StockAlarm {
     critical: number;
     stockAlarmLines?: StockAlarmLine[];
 }
+
+export interface LineInterface {
+    barcode: string;
+    stock: number;
+    warning: number;
+    critical: number;
+}
