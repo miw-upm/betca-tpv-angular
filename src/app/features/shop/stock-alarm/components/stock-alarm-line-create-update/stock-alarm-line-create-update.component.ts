@@ -44,7 +44,7 @@ export class StockAlarmLineCreateUpdateComponent {
                 public dialog: MatDialog,
                 private stockAlarmService: StockAlarmService,
                 private articleService: ArticleService) {
-        this.title = 'Create Stock Alarm';
+        this.title = data ? 'Update Stock Alarm Line' : 'Create Stock Alarm Line';
         this.stockAlarm = data.stockAlarm || undefined;
         this.stockAlarmLineInterface = data.stockAlarmLineInterface || {
             barcode: undefined, stock: undefined, warning: undefined, critical: undefined

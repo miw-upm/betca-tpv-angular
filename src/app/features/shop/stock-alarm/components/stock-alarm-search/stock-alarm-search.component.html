@@ -1,0 +1,13 @@
+<div mat-dialog-content class="dialog-content">
+    <h2 class="title">{{ title }}</h2>
+    <mat-divider></mat-divider>
+
+    <app-crud
+            (read)="read($event)"
+            [data]="formattedStockAlarmLines"
+            [createAction]="false"
+            [updateAction]="false"
+            [deleteAction]="false"
+            [title]="titleLine"
+    ></app-crud>
+</div>

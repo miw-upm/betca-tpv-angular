@@ -3,6 +3,7 @@ import {StockAlarm} from "../models/stock-alarm.model";
 import {Observable} from "rxjs";
 import {HttpService} from "@core/services/http.service";
 import {EndPoints} from "@core/end-points";
+import {StockAlarmLine} from "../models/stock-alarm-line.model";
 
 @Injectable({providedIn: "root"})
 export class StockAlarmService {
@@ -32,5 +33,13 @@ export class StockAlarmService {
         return this.httpService
             .successful()
             .put(EndPoints.STOCK_ALARMS + '/' + name + '/lines', stockAlarm);
+    }
+
+    searchWarnings(): Observable<StockAlarmLine[]> {
+        return this.httpService.get(EndPoints.STOCK_ALARMS + '/search/warnings');
+    }
+
+    searchCriticals(): Observable<StockAlarmLine[]> {
+        return this.httpService.get(EndPoints.STOCK_ALARMS + '/search/criticals');
     }
 }
