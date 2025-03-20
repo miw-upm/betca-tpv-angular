@@ -2,15 +2,15 @@ import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {Observable, of} from 'rxjs';
 
 import {SearchComponent} from '@common/components/search.component';
-import {SharedArticleService} from "../services/shared.article.service";
+import {SharedArticleService} from "../../shared/services/shared.article.service";
 
 @Component({
     standalone: true,
     imports: [SearchComponent],
-    selector: 'app-search-by-barcode',
-    templateUrl: './search-by-barcode.component.html'
+    selector: 'app-barcodes-by-userlogged',
+    templateUrl: './search-barcodes-by-userlogged.component.html'
 })
-export class SearchByBarcodeComponent {
+export class SearchBarcodesByUserloggedComponent {
     barcodes: Observable<number[]> = of([]);
 
     @Input() barcode: string;
@@ -23,7 +23,7 @@ export class SearchByBarcodeComponent {
         this.add.emit(value);
     }
 
-    searchByBarcode(): void {
-        this.barcodes = this.sharedArticleService.searchBarcode(this.barcode);
+    searchBarcodePurchasedByUserLogged(): void {
+        this.barcodes = this.sharedArticleService.searchBarcodePurchasedByUserLogged(this.barcode);
     }
 }

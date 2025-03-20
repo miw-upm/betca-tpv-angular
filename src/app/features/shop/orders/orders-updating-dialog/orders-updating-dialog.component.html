@@ -13,7 +13,7 @@
             <div *ngFor="let orderLine of order.orderLinesList">
                 <mat-form-field class="full-width">
                     <mat-label>Final amount [{{ orderLine.articleBarcode }}]</mat-label>
-                    <input [(ngModel)]="orderLine.finalAmount" [value]="orderLine.requiredAmount" matInput type="number" min="0" step="1"/>
+                    <input [(ngModel)]="orderLine.finalAmount" matInput type="number" min="0" step="1"/>
                 </mat-form-field>
             </div>
         </div>

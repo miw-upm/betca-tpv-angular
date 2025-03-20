@@ -6,18 +6,19 @@ import {HttpService} from '@core/services/http.service';
 import {EndPoints} from '@core/end-points';
 
 @Injectable({providedIn: 'root'})
+
 export class SharedArticleService {
     private static readonly BARCODE = '/barcode';
+    private static readonly PURCHASED = '/barcodes/purchased/without-complaints';
     private static readonly SEARCH_BY_PROVIDER = '/search-by-provider';
+
 
     constructor(private readonly httpService: HttpService) {
     }
-
-
-    searchBarcode(barcode: string): Observable<number[]> {
+    searchBarcodePurchasedByUserLogged(barcode: string): Observable<number[]> {
         return this.httpService
             .param('barcode', barcode)
-            .get(EndPoints.ARTICLES + SharedArticleService.BARCODE)
+            .get(EndPoints.ARTICLES + SharedArticleService.PURCHASED)
             .pipe(
                 map(response => response.barcodes)
             );
