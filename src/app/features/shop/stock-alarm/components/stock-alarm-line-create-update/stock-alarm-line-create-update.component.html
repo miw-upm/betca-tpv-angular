@@ -1,20 +1,16 @@
 <h4 mat-dialog-title>{{ title }}</h4>
 <mat-dialog-content>
     <mat-form-field>
-        <mat-label>Name</mat-label>
-        <input [(ngModel)]="stockAlarm.name" [readonly]="!isCreate()" matInput placeholder="Name" type="text">
-    </mat-form-field>
-    <mat-form-field>
-        <mat-label>Description</mat-label>
-        <input [(ngModel)]="stockAlarm.description" matInput placeholder="Descripcion" type="text">
+        <mat-label>Barcode:</mat-label>
+        <input [(ngModel)]="stockAlarmLineInterface.barcode" [readonly]="!isCreate()" matInput placeholder="Name" type="text">
     </mat-form-field>
     <mat-form-field>
         <mat-label>Warning</mat-label>
-        <input [(ngModel)]="stockAlarm.warning" matInput placeholder="Warning" type="number">
+        <input [(ngModel)]="stockAlarmLineInterface.warning" matInput placeholder="Warning" type="number">
     </mat-form-field>
     <mat-form-field>
         <mat-label>Critical</mat-label>
-        <input [(ngModel)]="stockAlarm.critical" matInput placeholder="Critical" type="number">
+        <input [(ngModel)]="stockAlarmLineInterface.critical" matInput placeholder="Critical" type="number">
     </mat-form-field>
 </mat-dialog-content>
 <mat-dialog-actions>
