@@ -20,4 +20,6 @@ export class EndPoints {
   static readonly INVOICES = environment.REST_CORE + "/invoices";
   static readonly STOCK_ALARMS = environment.REST_CORE + "/stock-alarms";
   static readonly ORDERS = environment.REST_CORE + "/orders";
+  static readonly SLACK = environment.REST_CORE + '/slack';
+  static readonly SLACK_PUBLISH = EndPoints.SLACK + '/publish';
 }

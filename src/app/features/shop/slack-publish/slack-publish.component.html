@@ -1,43 +1,38 @@
-<mat-card class="filter-container">
-    <mat-card-content class="filter-content">
+<form (ngSubmit)="publish(slackMessage)" #form="ngForm">
+    <mat-card class="filter-container">
+        <mat-card-content class="filter-content">
+            <mat-label class="filter-title">
+                <strong>Publish on Slack:</strong>
+            </mat-label>
 
-        <mat-label class="filter-title">
-            <strong>Publish on Slack:</strong>
-        </mat-label>
+            <div class="row">
+                <!-- Level -->
+                <mat-form-field class="filter-field" appearance="outline">
+                    <mat-label>Level</mat-label>
+                    <mat-icon matPrefix>flag</mat-icon>
+                    <mat-select name="level" [(ngModel)]="slackMessage.level" required>
+                        <mat-option value="info">Info</mat-option>
+                        <mat-option value="warning">Warning</mat-option>
+                        <mat-option value="critical">Critical</mat-option>
+                        <mat-option value="errors">Errors</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
 
+            <div class="row">
+                <mat-form-field class="filter-field" appearance="outline">
+                    <mat-label>Message</mat-label>
+                    <mat-icon matPrefix>edit</mat-icon>
+                    <textarea matInput name="text" [(ngModel)]="slackMessage.text" required></textarea>
+                </mat-form-field>
+            </div>
 
-        <div class="row">
-            <!-- Level -->
-            <mat-form-field class="filter-field" appearance="outline">
-                <mat-label>Level</mat-label>
-                <mat-icon matPrefix>flag</mat-icon>
-                <mat-select name="level">
-                    <mat-option value="info">Info</mat-option>
-                    <mat-option value="warning">Warning</mat-option>
-                    <mat-option value="critical">Critical</mat-option>
-                    <mat-option value="errors">Errors</mat-option>
-                </mat-select>
-            </mat-form-field>
-        </div>
+            <div class="row end-row">
+                <button type="submit" mat-icon-button matTooltip="Send to Slack">
+                    <mat-icon>send</mat-icon>
+                </button>
+            </div>
+        </mat-card-content>
+    </mat-card>
+</form>
 
-
-        <div class="row">
-            <mat-form-field class="filter-field" appearance="outline">
-                <mat-label>Message</mat-label>
-                <mat-icon matPrefix>edit</mat-icon>
-                <textarea matInput name="text"></textarea>
-            </mat-form-field>
-        </div>
-
-
-        <div class="row end-row">
-            <button
-                    mat-icon-button
-                    matTooltip="Send to Slack"
-
-            >
-                <mat-icon>send</mat-icon>
-            </button>
-        </div>
-    </mat-card-content>
-</mat-card>
