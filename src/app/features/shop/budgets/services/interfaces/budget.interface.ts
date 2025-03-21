@@ -10,6 +10,6 @@ export interface IBudgetService {
   create(budget: CreateBudget): Observable<Budget>;
   read(reference: string): Observable<Budget>;
   update(reference: string, budget: Budget): Observable<Budget>;
-  delete(reference: string): Observable<void>;
+  delete(id: string): Observable<void>;
   search(budgetSearch: BudgetSearch): Observable<Budget[]>;
 }

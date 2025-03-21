@@ -16,6 +16,7 @@ export class BudgetListComponent {
   @Output() create: EventEmitter<void> = new EventEmitter();
   @Output() read: EventEmitter<BudgetRowData> = new EventEmitter();
   @Output() update: EventEmitter<BudgetRowData> = new EventEmitter();
+  @Output() delete: EventEmitter<BudgetRowData> = new EventEmitter();
 
   onCreate() {
     this.create.emit();
@@ -27,5 +28,9 @@ export class BudgetListComponent {
 
   onUpdate(budget: BudgetRowData) {
     this.update.emit(budget);
+  }
+
+  onDelete(budget: BudgetRowData) {
+    this.delete.emit(budget);
   }
 }
