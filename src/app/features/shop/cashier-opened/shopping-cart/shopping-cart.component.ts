@@ -252,9 +252,7 @@ export class ShoppingCartComponent implements OnInit {
       .create({
         shoppingList: this.shoppingCart,
       })
-      .subscribe((createdBudget: Budget) => {
-        console.log("CREATED BUDGET", createdBudget);
-      });
+      .subscribe();
   }
 
   addDiscount(mobile): void {
