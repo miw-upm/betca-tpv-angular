@@ -30,17 +30,7 @@ import { CurrencyPipe, DatePipe } from "@angular/common";
 export class BudgetDetailsDialogComponent {
   budget: BudgetRowData;
 
-  constructor(
-    @Inject(MAT_DIALOG_DATA) private data: BudgetRowData,
-    private readonly budgetService: BudgetService,
-    private readonly dialog: MatDialog
-  ) {
+  constructor(@Inject(MAT_DIALOG_DATA) private data: BudgetRowData) {
     this.budget = data;
-  }
-
-  onRead() {
-    this.budgetService.read(this.data.reference).subscribe(() => {
-      this.dialog.closeAll();
-    });
   }
 }

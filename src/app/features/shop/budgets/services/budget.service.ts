@@ -17,45 +17,20 @@ export class BudgetService implements IBudgetService {
       .successful("Budget created successfully.")
       .error("Budget creation failed. Please check the values and try again.")
       .post(EndPoints.BUDGETS, budget)
-      .pipe(
-        map((budget: Budget) => ({
-          ...budget,
-          shoppingList: budget.shoppingList.map(
-            (shopping) =>
-              new Shopping(
-                shopping.barcode,
-                shopping.description,
-                shopping.retailPrice
-              )
-          ),
-        }))
-      );
+      .pipe(map(this.mapBudget));
   }
 
-  read(reference: string): Observable<Budget> {
-    return of({
-      id: "0001",
-      reference: "0001",
-      creationDate: new Date(),
-      shoppingList: [
-        new Shopping("0001", "Description 1", 1),
-        new Shopping("0001", "Description 1", 1),
-        new Shopping("0001", "Description 1", 1),
-      ],
-    });
+  read(id: string): Observable<Budget> {
+    return this.httpService
+      .get(`${EndPoints.BUDGETS}/${id}`)
+      .pipe(map(this.mapBudget));
   }
 
-  update(reference: string, budget: Budget): Observable<Budget> {
-    return of({
-      id: "0001",
-      reference: "0001",
-      creationDate: new Date(),
-      shoppingList: [
-        new Shopping("0001", "Description 1", 1),
-        new Shopping("0001", "Description 1", 1),
-        new Shopping("0001", "Description 1", 1),
-      ],
-    });
+  update(id: string, budget: Budget): Observable<Budget> {
+    return this.httpService
+      .successful("Budget updated successfully.")
+      .error("Budget update failed. Please check the values and try again.")
+      .put(`${EndPoints.BUDGETS}/${id}`, budget);
   }
 
   delete(id: string): Observable<void> {
@@ -71,19 +46,21 @@ export class BudgetService implements IBudgetService {
       .get(EndPoints.BUDGETS_SEARCH)
       .pipe(
         startWith([]),
-        map((budgets: Budget[]) =>
-          budgets.map((budget) => ({
-            ...budget,
-            shoppingList: budget.shoppingList.map(
-              (shopping) =>
-                new Shopping(
-                  shopping.barcode,
-                  shopping.description,
-                  shopping.retailPrice
-                )
-            ),
-          }))
-        )
+        map((budgets: Budget[]) => budgets.map(this.mapBudget))
       );
+  }
+
+  private mapBudget(budget: Budget): Budget {
+    return {
+      ...budget,
+      shoppingList: budget.shoppingList.map(
+        (shopping) =>
+          new Shopping(
+            shopping.barcode,
+            shopping.description,
+            shopping.retailPrice
+          )
+      ),
+    };
   }
 }

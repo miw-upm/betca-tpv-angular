@@ -30,9 +30,16 @@ export class BudgetsComponent implements OnInit {
   }
 
   onUpdate(budget: BudgetRowData) {
-    this.dialogService.open(BudgetUpdateDialogComponent, {
-      data: budget,
-    });
+    this.dialogService
+      .open(BudgetUpdateDialogComponent, {
+        data: budget,
+      })
+      .afterClosed()
+      .subscribe(() => {
+        this.budgetRowData$ = this.budgetService
+          .search({ reference: "" })
+          .pipe(map(this.transformBudgets));
+      });
   }
 
   onRead(budget: BudgetRowData) {
