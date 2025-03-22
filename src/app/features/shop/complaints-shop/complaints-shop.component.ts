@@ -47,11 +47,13 @@ export class ComplaintsShopComponent {
             .subscribe(() => this.searchAll());
     }
 
-    canDelete(){
+    canDelete():boolean{
         return this.authService.isAdmin();
     }
 
     delete(complaint:Complaint){
-        this.complaintShopService.delete(complaint.id);
+        this.complaintShopService
+            .delete(complaint.id)
+            .subscribe(() => this.searchAll());
     }
 }
