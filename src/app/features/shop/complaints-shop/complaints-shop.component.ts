@@ -50,4 +50,8 @@ export class ComplaintsShopComponent {
     canDelete(){
         return this.authService.isAdmin();
     }
+
+    delete(complaint:Complaint){
+        this.complaintShopService.delete(complaint.id);
+    }
 }

@@ -34,8 +34,7 @@ export class ComplaintHomeService {
         return this.complaintService.update(complaint);
     }
     delete(id: string): Observable<void> {
-        return this.httpService
-            .delete(EndPoints.COMPLAINTS + '/' + id);
+        return this.complaintService.delete(id);
     }
 
 }

@@ -15,8 +15,13 @@ export class ComplaintService {
             .get(EndPoints.COMPLAINTS + '/' + id);
     }
 
-    update(complaint: Complaint){
+    update(complaint: Complaint):Observable<Complaint>{
         return this.httpService
             .put(EndPoints.COMPLAINTS + '/' + complaint.id,complaint);
+    }
+
+    delete(id:String):Observable<void>{
+        return this.httpService
+            .delete(EndPoints.COMPLAINTS+'/'+id);
     }
 }
