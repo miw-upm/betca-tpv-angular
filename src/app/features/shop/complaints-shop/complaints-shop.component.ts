@@ -11,6 +11,7 @@ import {Complaint} from '../../shared/models/complaint.model';
 import {MatIconButton} from "@angular/material/button";
 import {ComplaintShopService} from "./complaint-shop.service";
 import {ComplaintUpdateShopDialogComponent} from "./complaint-update-shop-dialog.component";
+import {AuthService} from "@core/services/auth.service";
 
 
 @Component({
@@ -22,7 +23,7 @@ export class ComplaintsShopComponent {
     title = 'Complaints management';
     complaints = of([]);
 
-    constructor(private readonly dialog: MatDialog, private readonly complaintShopService: ComplaintShopService) {
+    constructor(private readonly dialog: MatDialog, private readonly complaintShopService: ComplaintShopService,private readonly authService:AuthService) {
         this.searchAll();
     }
 
@@ -44,5 +45,9 @@ export class ComplaintsShopComponent {
             .open(ComplaintUpdateShopDialogComponent)
             .afterClosed()
             .subscribe(() => this.searchAll());
+    }
+
+    canDelete(){
+        return this.authService.isAdmin();
     }
 }

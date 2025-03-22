@@ -7,4 +7,4 @@
     </mat-card-content>
 </mat-card>
 <app-crud (read)="read($event)" [createAction]="false" (update)="update($event)"
-           [data]="complaints" [title]="title" [updateAction]="true"></app-crud>
+           [data]="complaints" [title]="title" [updateAction]="true" [deleteAction]="canDelete"></app-crud>
