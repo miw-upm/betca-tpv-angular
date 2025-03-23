@@ -26,15 +26,15 @@ export class ComplaintHomeService {
             .post(EndPoints.COMPLAINTS, complaintCreation);
     }
 
-    read(id:string): Observable<Complaint> {
-        return this.complaintService.read(id);
+    read(trackingCode:string): Observable<Complaint> {
+        return this.complaintService.read(trackingCode);
     }
 
     update(complaint:Complaint): Observable<Complaint> {
         return this.complaintService.update(complaint);
     }
-    delete(id: string): Observable<void> {
-        return this.complaintService.delete(id);
+    delete(trackingCode: string): Observable<void> {
+        return this.complaintService.delete(trackingCode);
     }
 
 }

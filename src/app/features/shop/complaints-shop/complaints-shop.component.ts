@@ -35,7 +35,7 @@ export class ComplaintsShopComponent {
         this.dialog.open(ReadDetailDialogComponent, {
             data: {
                 title: 'Complaint Details',
-                object: this.complaintShopService.read(complaint.id)
+                object: this.complaintShopService.read(complaint.trackingCode)
             }
         });
     }
@@ -53,7 +53,7 @@ export class ComplaintsShopComponent {
 
     delete(complaint:Complaint){
         this.complaintShopService
-            .delete(complaint.id)
+            .delete(complaint.trackingCode)
             .subscribe(() => this.searchAll());
     }
 }

@@ -10,18 +10,18 @@ export class ComplaintService {
     constructor(private readonly httpService: HttpService) {
     }
 
-    read(id: string): Observable<Complaint> {
+    read(trackingCode: string): Observable<Complaint> {
         return this.httpService
-            .get(EndPoints.COMPLAINTS + '/' + id);
+            .get(EndPoints.COMPLAINTS + '/' + trackingCode);
     }
 
     update(complaint: Complaint):Observable<Complaint>{
         return this.httpService
-            .put(EndPoints.COMPLAINTS + '/' + complaint.id,complaint);
+            .put(EndPoints.COMPLAINTS + '/' + complaint.trackingCode,complaint);
     }
 
-    delete(id:String):Observable<void>{
+    delete(trackingCode:String):Observable<void>{
         return this.httpService
-            .delete(EndPoints.COMPLAINTS+'/'+id);
+            .delete(EndPoints.COMPLAINTS+'/'+trackingCode);
     }
 }
