@@ -1,5 +1,5 @@
 export interface Complaint {
-    id?: string;
+    trackingCode?: string;
     userMobile?: number;
     barcode: string;
     description: string;

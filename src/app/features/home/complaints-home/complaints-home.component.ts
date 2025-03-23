@@ -41,7 +41,7 @@ export class ComplaintsHomeComponent {
         this.dialog.open(ReadDetailDialogComponent, {
             data: {
                 title: 'Complaint Details',
-                object: this.complaintHomeService.read(complaint.id)
+                object: this.complaintHomeService.read(complaint.trackingCode)
             }
         });
     }
@@ -52,9 +52,8 @@ export class ComplaintsHomeComponent {
             .subscribe(() => this.searchByUserMobile());
     }
     delete(complaint: Complaint): void {
-
         this.complaintHomeService
-            .delete(complaint.id)
+            .delete(complaint.trackingCode)
             .subscribe(() => this.searchByUserMobile());
     }
 }
