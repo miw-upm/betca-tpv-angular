@@ -3,8 +3,6 @@ import {MatDialog} from '@angular/material/dialog';
 import {MatCard, MatCardContent} from '@angular/material/card';
 import {MatIcon} from '@angular/material/icon';
 import {of} from 'rxjs';
-
-import {ComplaintService} from '../../shared/services/complaint.service';
 import {ComplaintCreationDialogComponent} from './complaint-creation-dialog.component';
 import {ReadDetailDialogComponent} from '../../../common/dialogs/read-detail.dialog.component';
 import {CrudComponent} from '../../../common/components/crud.component';
@@ -12,6 +10,7 @@ import {Complaint} from '../../shared/models/complaint.model';
 import {MatIconButton} from "@angular/material/button";
 import {ComplaintHomeService} from "./complaint-home.service";
 import {ComplaintUpdateHomeDialogComponent} from "./complaint-update-home-dialog.component";
+import {ComplaintState} from "../../shared/models/complaintState.model";
 
 @Component({
     standalone: true,
@@ -55,5 +54,9 @@ export class ComplaintsHomeComponent {
         this.complaintHomeService
             .delete(complaint.trackingCode)
             .subscribe(() => this.searchByUserMobile());
+    }
+
+    canDelete(complaint:Complaint):boolean{
+        return complaint.state!=ComplaintState.CLOSED;
     }
 }

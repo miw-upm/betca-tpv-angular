@@ -10,8 +10,10 @@ import {CrudComponent} from '../../../common/components/crud.component';
 import {Complaint} from '../../shared/models/complaint.model';
 import {MatIconButton} from "@angular/material/button";
 import {ComplaintShopService} from "./complaint-shop.service";
-import {ComplaintUpdateShopDialogComponent} from "./complaint-update-shop-dialog.component";
+import {ComplaintUpdateAdminShopDialogComponent} from "./complaint-update-admin-shop-dialog.component";
 import {AuthService} from "@core/services/auth.service";
+import {ComplaintUpdateAdminModel} from "./complaintUpdateAdmin.model";
+import {ComplaintState} from "../../shared/models/complaintState.model";
 
 
 @Component({
@@ -41,8 +43,23 @@ export class ComplaintsShopComponent {
     }
 
     update(complaint: Complaint){
+        console.log(complaint);
+        const complaintUpdate: ComplaintUpdateAdminModel = {
+            userMobile: complaint.userMobile,
+            barcode: complaint.barcode,
+            description: complaint.description,
+            reply: complaint.reply,
+            state: complaint.state
+        };
+
         this.dialog
-            .open(ComplaintUpdateShopDialogComponent)
+            .open(ComplaintUpdateAdminShopDialogComponent,{
+                data: {
+                    tittle: 'Complaint Update',
+                    trackingCode: complaint.trackingCode,
+                    complaint: complaintUpdate
+                }
+            })
             .afterClosed()
             .subscribe(() => this.searchAll());
     }

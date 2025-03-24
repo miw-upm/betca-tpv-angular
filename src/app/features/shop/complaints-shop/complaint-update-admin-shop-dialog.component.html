@@ -1,5 +1,20 @@
 <h2 mat-dialog-title>Update Complaint</h2>
 <mat-dialog-content>
+
+    <div class="row">
+        <mat-form-field class="full-width" >
+            <mat-label>Barcode</mat-label>
+            <input [(ngModel)]="complaint.barcode" matInput required type="text"/>
+        </mat-form-field>
+    </div>
+
+    <div class="row">
+        <mat-form-field class="full-width" >
+            <mat-label>User Mobile</mat-label>
+            <input [(ngModel)]="complaint.userMobile" matInput required type="text"/>
+        </mat-form-field>
+    </div>
+
     <div class="row">
         <mat-form-field class="full-width" >
             <mat-label>Reply</mat-label>
@@ -11,8 +26,11 @@
         <mat-form-field class="full-width">
             <mat-label>State</mat-label>
             <mat-select [(ngModel)]="complaint.state" required>
-                <mat-option *ngFor="let state of states" [value]="state">
-                    {{ state }}
+                <mat-option  [value]="ComplaintState.CLOSED">
+                    CLOSED
+                </mat-option>
+                <mat-option  [value]="ComplaintState.OPEN">
+                    OPEN
                 </mat-option>
             </mat-select>
         </mat-form-field>
