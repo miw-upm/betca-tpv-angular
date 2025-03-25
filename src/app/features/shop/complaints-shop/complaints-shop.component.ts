@@ -3,8 +3,6 @@ import {MatDialog} from '@angular/material/dialog';
 import {MatCard, MatCardContent} from '@angular/material/card';
 import {MatIcon} from '@angular/material/icon';
 import {of} from 'rxjs';
-
-import {ComplaintService} from '../../shared/services/complaint.service';
 import {ReadDetailDialogComponent} from '../../../common/dialogs/read-detail.dialog.component';
 import {CrudComponent} from '../../../common/components/crud.component';
 import {Complaint} from '../../shared/models/complaint.model';
@@ -43,13 +41,12 @@ export class ComplaintsShopComponent {
     }
 
     update(complaint: Complaint){
-        console.log(complaint);
         const complaintUpdate: ComplaintUpdateAdminModel = {
             userMobile: complaint.userMobile,
             barcode: complaint.barcode,
             description: complaint.description,
             reply: complaint.reply,
-            state: complaint.state
+            state: (complaint.state.toString() == "OPEN" ? ComplaintState.OPEN:ComplaintState.CLOSED)
         };
 
         this.dialog

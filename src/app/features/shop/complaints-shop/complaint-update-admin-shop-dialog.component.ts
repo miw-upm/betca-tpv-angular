@@ -30,8 +30,7 @@ export class ComplaintUpdateAdminShopDialogComponent {
     tittle:string;
     trackingCode:string;
     complaint: ComplaintUpdateAdminModel;
-    states : ComplaintState[] = [ComplaintState.OPEN,ComplaintState.CLOSED];
-
+    complaintStates = ComplaintState;
     constructor(@Inject(MAT_DIALOG_DATA) data: any,private readonly complaintShopService: ComplaintShopService, private readonly dialog: MatDialog) {
         this.tittle = data.title;
         this.complaint=data.complaint;
@@ -41,16 +40,16 @@ export class ComplaintUpdateAdminShopDialogComponent {
     update(): void {
         this.dialog.closeAll();
         this.complaintShopService
-            .updateAdmin(this.trackingCode,this.complaint);
+            .updateAdmin(this.trackingCode,this.complaint)
+            .subscribe(() => this.dialog.closeAll());
     }
 
     invalid(): boolean {
-        return this.check(this.complaint.barcode) || this.check(this.complaint.description);
+        return this.check(this.complaint.barcode) && this.check(this.complaint.description)
+            && this.check(this.complaint.reply) && this.check(this.complaint.userMobile.toString());
     }
 
     check(attr: string): boolean {
         return attr === undefined || null || attr === '';
     }
-
-    protected readonly ComplaintState = ComplaintState;
 }

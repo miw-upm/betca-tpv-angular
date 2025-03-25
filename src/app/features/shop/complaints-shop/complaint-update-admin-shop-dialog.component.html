@@ -26,10 +26,10 @@
         <mat-form-field class="full-width">
             <mat-label>State</mat-label>
             <mat-select [(ngModel)]="complaint.state" required>
-                <mat-option  [value]="ComplaintState.CLOSED">
+                <mat-option [value]="complaintStates.CLOSED">
                     CLOSED
                 </mat-option>
-                <mat-option  [value]="ComplaintState.OPEN">
+                <mat-option [value]="complaintStates.OPEN">
                     OPEN
                 </mat-option>
             </mat-select>
