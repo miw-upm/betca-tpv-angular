@@ -1,3 +1,5 @@
+import {ComplaintState} from "./complaintState.model";
+
 export interface Complaint {
     trackingCode?: string;
     userMobile?: number;
@@ -5,5 +7,5 @@ export interface Complaint {
     description: string;
     registrationDate?: Date;
     reply?:string;
-    state?:string;
+    state?:ComplaintState;
 }

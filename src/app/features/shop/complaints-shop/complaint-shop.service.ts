@@ -5,12 +5,14 @@ import {HttpService} from '@core/services/http.service';
 import {EndPoints} from '@core/end-points';
 import {Complaint} from '../../shared/models/complaint.model';
 import {ComplaintService} from "../../shared/services/complaint.service";
+import {ComplaintUpdateAdminModel} from "./complaintUpdateAdmin.model";
 
 @Injectable({providedIn: 'root'})
 export class ComplaintShopService {
 
     private static readonly SEARCH = '/search';
 
+    private static readonly COMPLAINT_UPDATE_ADMIN = "/admin";
     constructor(private readonly httpService: HttpService,private readonly complaintService: ComplaintService) {
     }
 
@@ -21,6 +23,11 @@ export class ComplaintShopService {
 
     read(trackingCode:string): Observable<Complaint> {
         return this.complaintService.read(trackingCode);
+    }
+
+    updateAdmin(trackingCode:String,complaint:ComplaintUpdateAdminModel): Observable<Complaint> {
+        return this.httpService
+            .put(EndPoints.COMPLAINTS + trackingCode + ComplaintShopService.COMPLAINT_UPDATE_ADMIN)
     }
 
     update(complaint:Complaint): Observable<Complaint> {
