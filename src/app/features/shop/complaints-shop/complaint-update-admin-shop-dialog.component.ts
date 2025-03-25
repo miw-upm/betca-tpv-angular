@@ -44,12 +44,4 @@ export class ComplaintUpdateAdminShopDialogComponent {
             .subscribe(() => this.dialog.closeAll());
     }
 
-    invalid(): boolean {
-        return this.check(this.complaint.barcode) && this.check(this.complaint.description)
-            && this.check(this.complaint.reply) && this.check(this.complaint.userMobile.toString());
-    }
-
-    check(attr: string): boolean {
-        return attr === undefined || null || attr === '';
-    }
 }
