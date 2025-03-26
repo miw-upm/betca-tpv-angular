@@ -7,11 +7,14 @@ import {Complaint} from '../../shared/models/complaint.model';
 import {ComplaintService} from "../../shared/services/complaint.service";
 import {AuthService} from "@core/services/auth.service";
 import {ComplaintCreation} from "../../shared/models/complaintCreation.model";
+import {ComplaintUpdateCustomerModel} from "./complaintUpdateCustomer.model";
 
 @Injectable({providedIn: 'root'})
 export class ComplaintHomeService {
 
     private static readonly SEARCH = '/search';
+
+    private static readonly COMPLAINT_UPDATE_CUSTOMER = "/customer";
     constructor(private readonly httpService: HttpService,private readonly complaintService: ComplaintService,private readonly authService:AuthService) {
     }
 
@@ -29,9 +32,9 @@ export class ComplaintHomeService {
     read(trackingCode:string): Observable<Complaint> {
         return this.complaintService.read(trackingCode);
     }
-
-    update(complaint:Complaint): Observable<Complaint> {
-        return this.complaintService.update(complaint);
+    update(trackingCode:string,complaint:ComplaintUpdateCustomerModel): Observable<Complaint> {
+        return this.httpService
+            .put(EndPoints.COMPLAINTS+"/"+trackingCode+ComplaintHomeService.COMPLAINT_UPDATE_CUSTOMER,complaint);
     }
     delete(trackingCode: string): Observable<void> {
         return this.complaintService.delete(trackingCode);
