@@ -11,6 +11,7 @@ import {MatIconButton} from "@angular/material/button";
 import {ComplaintHomeService} from "./complaint-home.service";
 import {ComplaintUpdateHomeDialogComponent} from "./complaint-update-home-dialog.component";
 import {ComplaintState} from "../../shared/models/complaintState.model";
+import {ComplaintUpdateCustomerModel} from "./complaintUpdateCustomer.model";
 
 @Component({
     standalone: true,
@@ -45,8 +46,17 @@ export class ComplaintsHomeComponent {
         });
     }
     update(complaint: Complaint){
+        const complaintUpdateCustomer: ComplaintUpdateCustomerModel={
+            description: complaint.description
+        };
         this.dialog
-            .open(ComplaintUpdateHomeDialogComponent)
+            .open(ComplaintUpdateHomeDialogComponent, {
+                data:{
+                    tittle: 'Complaint Update',
+                    trackingCode: complaint.trackingCode,
+                    complaint: complaintUpdateCustomer
+                }
+            })
             .afterClosed()
             .subscribe(() => this.searchByUserMobile());
     }

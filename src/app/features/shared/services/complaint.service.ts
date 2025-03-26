@@ -15,11 +15,6 @@ export class ComplaintService {
             .get(EndPoints.COMPLAINTS + '/' + trackingCode);
     }
 
-    update(complaint: Complaint):Observable<Complaint>{
-        return this.httpService
-            .put(EndPoints.COMPLAINTS + '/' + complaint.trackingCode,complaint);
-    }
-
     delete(trackingCode:String):Observable<void>{
         return this.httpService
             .delete(EndPoints.COMPLAINTS+'/'+trackingCode);

@@ -30,10 +30,6 @@ export class ComplaintShopService {
             .put(EndPoints.COMPLAINTS + trackingCode + ComplaintShopService.COMPLAINT_UPDATE_ADMIN)
     }
 
-    update(complaint:Complaint): Observable<Complaint> {
-        return this.complaintService.update(complaint);
-    }
-
     delete(trackingCode:String):Observable<void>{
         return this.complaintService.delete(trackingCode);
     }
