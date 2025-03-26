@@ -9,9 +9,9 @@ import {CrudComponent} from '../../../common/components/crud.component';
 import {Complaint} from '../../shared/models/complaint.model';
 import {MatIconButton} from "@angular/material/button";
 import {ComplaintHomeService} from "./complaint-home.service";
-import {ComplaintUpdateHomeDialogComponent} from "./complaint-update-home-dialog.component";
 import {ComplaintState} from "../../shared/models/complaintState.model";
 import {ComplaintUpdateCustomerModel} from "./complaintUpdateCustomer.model";
+import {ComplaintUpdateCustomerHomeDialogComponent} from "./complaint-update-customer-home-dialog.component";
 
 @Component({
     standalone: true,
@@ -50,7 +50,7 @@ export class ComplaintsHomeComponent {
             description: complaint.description
         };
         this.dialog
-            .open(ComplaintUpdateHomeDialogComponent, {
+            .open(ComplaintUpdateCustomerHomeDialogComponent, {
                 data:{
                     tittle: 'Complaint Update',
                     trackingCode: complaint.trackingCode,

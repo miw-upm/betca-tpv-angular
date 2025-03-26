@@ -13,11 +13,7 @@ import {MatInput} from '@angular/material/input';
 import {MatButton} from '@angular/material/button';
 import {CommonModule} from '@angular/common';
 
-import {ComplaintShopService} from "./complaint-shop.service";
 import {MatOption, MatSelect} from "@angular/material/select";
-import {ComplaintState} from "../../shared/models/complaintState.model";
-import {ComplaintUpdateAdminModel} from "./complaintUpdateAdmin.model";
-import {ComplaintUpdateHomeDialogComponent} from "./complaint-update-home-dialog.component";
 import {ComplaintHomeService} from "./complaint-home.service";
 import {ComplaintUpdateCustomerModel} from "./complaintUpdateCustomer.model";
 
@@ -29,7 +25,7 @@ import {ComplaintUpdateCustomerModel} from "./complaintUpdateCustomer.model";
     styleUrls: ['complaint-home-dialog.component.css']
 })
 
-export class ComplaintUpdateAdminShopDialogComponent {
+export class ComplaintUpdateCustomerHomeDialogComponent {
     tittle:string;
     trackingCode:string;
     complaint: ComplaintUpdateCustomerModel;

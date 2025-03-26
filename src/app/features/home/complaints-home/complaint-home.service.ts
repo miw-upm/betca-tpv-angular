@@ -34,7 +34,7 @@ export class ComplaintHomeService {
     }
     update(trackingCode:string,complaint:ComplaintUpdateCustomerModel): Observable<Complaint> {
         return this.httpService
-            .put(EndPoints.COMPLAINTS+trackingCode+ComplaintHomeService.COMPLAINT_UPDATE_CUSTOMER,complaint);
+            .put(EndPoints.COMPLAINTS+"/"+trackingCode+ComplaintHomeService.COMPLAINT_UPDATE_CUSTOMER,complaint);
     }
     delete(trackingCode: string): Observable<void> {
         return this.complaintService.delete(trackingCode);
