@@ -38,12 +38,10 @@
             <mat-icon color="warn">local_offer</mat-icon>
         </button>
     </mat-form-field>
-
     <mat-form-field *ngIf="requestedGiftTicket">
         <label>Write your personalised message for Gift Ticket.</label>
         <textarea [(ngModel)]="ticketCreation.messageGift" matInput rows="4"></textarea>
     </mat-form-field>
-
     <mat-checkbox [(ngModel)]="useCustomerPoints" [disabled]="!customerHasPoints || !customerHasMinimumPoints" (change)="onUseCustomerPointsChange($event)">
         <div style="display: flex; align-items: center;">
             <span>Use: </span>
