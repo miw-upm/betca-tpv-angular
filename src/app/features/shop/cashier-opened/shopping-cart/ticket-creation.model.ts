@@ -9,6 +9,5 @@ export interface TicketCreation {
     note: string;
     shoppingList: Shopping[];
     pointsDiscount: number;
-
     messageGift: string;
 }
