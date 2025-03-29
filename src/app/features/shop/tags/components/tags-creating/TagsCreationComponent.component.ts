@@ -1,26 +1,59 @@
+import { CommonModule } from "@angular/common";
 import { Component, ChangeDetectionStrategy } from "@angular/core";
-import { FormsModule } from "@angular/forms";
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
+import { MatButtonModule } from "@angular/material/button";
 import { MatCardModule } from "@angular/material/card";
-import { MatDialogModule } from "@angular/material/dialog";
+import { MatDialogModule, MatDialogRef } from "@angular/material/dialog";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatIconModule } from "@angular/material/icon";
-import { MatTableModule } from "@angular/material/table";
-
+import { MatInputModule } from "@angular/material/input";
+import { TagsService } from "../../services/tags.service";
+import { Tag } from "../../models/tags.model";
 
 @Component({
   standalone: true,
-  selector: 'app-tags',
-  imports: [FormsModule, MatIconModule,MatCardModule, MatTableModule, MatIconModule, MatDialogModule,MatFormFieldModule],
+  selector: 'app-tags-creation',
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    MatIconModule,
+    MatCardModule,
+    MatButtonModule,
+    MatDialogModule,
+    MatFormFieldModule,
+    MatInputModule
+  ],
   templateUrl: './TagsCreationComponent.component.html',
   styleUrls: ['./TagsCreationComponent.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TagsCreationComponentComponent {
-invalid: any;
-update() {
-throw new Error('Method not implemented.');
-}
-create() {
-throw new Error('Method not implemented.');
-}
+  tagForm: FormGroup;
+
+  constructor(
+    private formBuilder: FormBuilder,
+    private tagsService: TagsService,
+    private dialogRef: MatDialogRef<TagsCreationComponentComponent>
+  ) {
+    this.tagForm = this.formBuilder.group({
+      name: ['', Validators.required],
+      group: ['', Validators.required],
+      description: ['', Validators.required]
+    });
+  }
+
+  onSubmit(): void {
+    if (this.tagForm.valid) {
+      const tag: Tag = this.tagForm.value;
+      this.tagsService.create(tag).subscribe({
+        next: (createdTag) => {
+          this.dialogRef.close(createdTag);
+        },
+        error: (error) => {
+          console.error('Error creating tag:', error);
+          // Here you could add error handling, like showing a snackbar
+        }
+      });
+    }
+  }
 }

@@ -1,1 +1,41 @@
-<p>Tags update works!</p>
+<h2 mat-dialog-title>
+  <mat-icon>edit</mat-icon>
+  Update Tag
+</h2>
+<mat-dialog-content>
+  <form [formGroup]="tagForm" (ngSubmit)="onSubmit()">
+    <div class="form-container">
+      <mat-form-field class="full-width" appearance="outline">
+        <mat-label>Name</mat-label>
+        <input matInput placeholder="Enter the tag name" formControlName="name" required type="text" />
+        <mat-icon matPrefix>label</mat-icon>
+        <mat-error *ngIf="tagForm.get('name')?.errors">{{getErrorMessage('name')}}</mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="full-width" appearance="outline">
+        <mat-label>Group</mat-label>
+        <input matInput placeholder="Enter the group" formControlName="group" required type="text" />
+        <mat-icon matPrefix>folder</mat-icon>
+        <mat-error *ngIf="tagForm.get('group')?.errors">{{getErrorMessage('group')}}</mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="full-width" appearance="outline">
+        <mat-label>Description</mat-label>
+        <textarea matInput placeholder="Enter a brief description" formControlName="description" required rows="3"></textarea>
+        <mat-icon matPrefix>description</mat-icon>
+        <mat-error *ngIf="tagForm.get('description')?.errors">{{getErrorMessage('description')}}</mat-error>
+      </mat-form-field>
+    </div>
+
+    <mat-dialog-actions align="end">
+      <button type="button" mat-raised-button color="warn" mat-dialog-close>
+        <mat-icon>close</mat-icon>
+        Cancel
+      </button>
+      <button type="submit" mat-raised-button color="primary" [disabled]="tagForm.invalid || !tagForm.dirty">
+        <mat-icon>save</mat-icon>
+        Update
+      </button>
+    </mat-dialog-actions>
+  </form>
+</mat-dialog-content>

@@ -1,35 +1,41 @@
-<h2 mat-dialog-title>Create Tag</h2>
+<h2 mat-dialog-title>
+  <mat-icon>local_offer</mat-icon>
+  Create New Tag
+</h2>
 <mat-dialog-content>
-  <mat-form-field class="full-width">
-    <mat-label>Id</mat-label>
-    <input matInput placeholder="Enter the tag ID" required type="text" />
-  </mat-form-field>
-
-  <mat-form-field class="full-width">
-    <mat-label>Name</mat-label>
-    <input matInput placeholder="Enter the tag name" required type="text" />
-  </mat-form-field>
-
-  <mat-form-field class="full-width">
-    <mat-label>Group</mat-label>
-    <input matInput placeholder="Enter the group" required type="text" />
-  </mat-form-field>
-
-  <mat-form-field class="full-width">
-    <mat-label>Description</mat-label>
-    <input matInput placeholder="Enter a brief description" required type="text" />
-  </mat-form-field>
-
-  
-
- 
+  <form [formGroup]="tagForm" (ngSubmit)="onSubmit()">
 
 
+    <mat-form-field class="full-width" appearance="outline">
+      <mat-label>Name</mat-label>
+      <input matInput placeholder="Enter the tag name" formControlName="name" required type="text" />
+      <mat-icon matPrefix>label</mat-icon>
+      <mat-error *ngIf="tagForm.get('name')?.errors?.['required']">Name is required</mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="full-width" appearance="outline">
+      <mat-label>Group</mat-label>
+      <input matInput placeholder="Enter the group" formControlName="group" required type="text" />
+      <mat-icon matPrefix>folder</mat-icon>
+      <mat-error *ngIf="tagForm.get('group')?.errors?.['required']">Group is required</mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="full-width" appearance="outline">
+      <mat-label>Description</mat-label>
+      <textarea matInput placeholder="Enter a brief description" formControlName="description" required rows="3"></textarea>
+      <mat-icon matPrefix>description</mat-icon>
+      <mat-error *ngIf="tagForm.get('description')?.errors?.['required']">Description is required</mat-error>
+    </mat-form-field>
+
+    <mat-dialog-actions align="end">
+      <button type="button" mat-raised-button color="warn" mat-dialog-close>
+        <mat-icon>close</mat-icon>
+        Cancel
+      </button>
+      <button type="submit" mat-raised-button color="primary" [disabled]="tagForm.invalid">
+        <mat-icon>save</mat-icon>
+        Create
+      </button>
+    </mat-dialog-actions>
+  </form>
 </mat-dialog-content>
-
-<mat-dialog-actions align="end">
-  <button mat-dialog-close mat-raised-button color="warn">Close</button>
-  <button (click)="create()" [disabled]="invalid()" color="primary" mat-raised-button>
-    Create
-  </button>
-</mat-dialog-actions>

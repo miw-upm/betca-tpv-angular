@@ -1,0 +1,73 @@
+.filter-card {
+    margin-bottom: 20px;
+}
+
+.filters-container {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    align-items: center;
+    padding: 16px 0;
+}
+
+.table-card {
+    margin-bottom: 20px;
+}
+
+.table-container {
+    position: relative;
+    min-height: 200px;
+    overflow: auto;
+}
+
+.table-header {
+    padding: 16px;
+    display: flex;
+    justify-content: flex-end;
+    background-color: #fff;
+    border-bottom: 1px solid rgba(0,0,0,.12);
+}
+
+table {
+    width: 100%;
+}
+
+.mat-mdc-table {
+    background: white;
+    width: 100%;
+}
+
+.mat-mdc-header-cell {
+    font-weight: bold;
+    color: rgba(0, 0, 0, 0.87);
+    font-size: 14px;
+    padding: 16px;
+}
+
+.mat-mdc-cell {
+    padding: 16px;
+}
+
+.mat-mdc-row:hover {
+    background-color: rgba(0, 0, 0, 0.04);
+}
+
+.mat-column-actions {
+    width: 150px;
+    text-align: right;
+}
+
+mat-card-title {
+    display: flex;
+    align-items: center;
+    padding: 16px;
+    gap: 8px;
+}
+
+mat-card-title mat-icon {
+    color: #673ab7;
+}
+
+button mat-icon {
+    margin-right: 4px;
+}

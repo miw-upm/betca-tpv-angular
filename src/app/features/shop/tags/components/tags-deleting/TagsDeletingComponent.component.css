@@ -1,0 +1,60 @@
+.delete-message {
+  min-width: 400px;
+  padding: 20px 0;
+}
+
+h2[mat-dialog-title] {
+  margin: 0;
+  padding: 16px 24px;
+  background: #fef2f2;
+  color: #dc2626;
+  font-size: 20px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.tag-details {
+  margin: 16px 0;
+  padding: 16px;
+  background: #f9fafb;
+  border-radius: 4px;
+}
+
+.detail-item {
+  margin-bottom: 8px;
+}
+
+.detail-item:last-child {
+  margin-bottom: 0;
+}
+
+.label {
+  font-weight: 500;
+  color: #666;
+  margin-right: 8px;
+}
+
+.value {
+  color: #333;
+}
+
+.warning {
+  color: #dc2626;
+  font-weight: 500;
+  margin: 16px 0 0;
+}
+
+mat-dialog-actions {
+  padding: 16px 0 0;
+  margin-bottom: 0;
+}
+
+button {
+  min-width: 100px;
+}
+
+mat-icon {
+  margin-right: 8px;
+}

@@ -1,69 +1,111 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
-import { CrudComponent } from '@common/components/crud.component';
 import { MatCardModule } from '@angular/material/card';
 import { MatTableModule } from '@angular/material/table';
+import { MatButtonModule } from '@angular/material/button';
+import { MatPaginatorModule, MatPaginator } from '@angular/material/paginator';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { FilterInputComponent } from '@common/components/filter-input.component';
 import { Tag } from './models/tags.model';
 import { AuthService } from '@core/services/auth.service';
-import { of } from 'rxjs';
-import { ReadDetailDialogComponent } from '@common/dialogs/read-detail.dialog.component';
-import { TagsCreationComponentComponent } from '../tags/components/tags-creating/TagsCreationComponent.component';
-import { TagsUpdatingComponentComponent } from '../tags/components/tags-updating/TagsUpdatingComponent.component';
+import { Observable, of } from 'rxjs';
+import { TagsCreationComponentComponent } from './components/tags-creating/TagsCreationComponent.component';
+import { TagsUpdatingComponentComponent } from './components/tags-updating/TagsUpdatingComponent.component';
+import { TagsViewingComponentComponent } from './components/tags-viewing/TagsViewingComponent.component';
+import { TagsDeletingComponentComponent } from './components/tags-deleting/TagsDeletingComponent.component';
 import { TagsService } from './services/tags.service';
+
+interface TagSearch {
+  name: string;
+  group: string;
+  description: string;
+}
 
 @Component({
   standalone: true,
   selector: 'app-tags',
-  imports: [FormsModule, MatIconModule, CrudComponent, MatCardModule, MatTableModule ],
+  imports: [
+    FormsModule,
+    MatIconModule,
+    MatCardModule,
+    MatTableModule,
+    MatButtonModule,
+    MatPaginatorModule,
+    MatTooltipModule,
+    FilterInputComponent
+  ],
   templateUrl: './tags.component.html',
   styleUrls: ['./tags.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TagsComponent implements OnInit {
-  title = "Tag Management";
-  tags = of<Tag[]>([]);
-
-
-  ngOnInit(): void {
-    this.loadTags();
-  }
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
   
+  title = "Tag Management";
+  tags: Observable<Tag[]>;
+  displayedColumns: string[] = ['name', 'group', 'description', 'actions'];
+  
+  tagSearch: TagSearch = {
+    name: '',
+    group: '',
+    description: ''
+  };
+
   constructor(
     private readonly tagService: TagsService,
     private readonly dialog: MatDialog,
     private readonly authService: AuthService
   ) {
-    this.loadTags()
-  }
-  loadTags(): void {
-    this.tags = this.tagService.searchAll();
+    this.tags = of([]);
+    this.search();
   }
 
- 
+  ngOnInit(): void {
+    this.search();
+  }
+
+  search(): void {
+    this.tags = this.tagService.search();
+  }
+
+  create(): void {
+    const dialogRef = this.dialog.open(TagsCreationComponentComponent);
+    dialogRef.afterClosed().subscribe(() => this.search());
+  }
+
   read(tag: Tag): void {
-    this.dialog.open(ReadDetailDialogComponent, {
-      data: {
-        title: 'Tag Details',
-        object: this.tagService.read(tag.name)
+    this.dialog.open(TagsViewingComponentComponent, {
+      data: tag
+    });
+  }
+
+  update(tag: Tag): void {
+    if (!tag || !tag.id) {
+      console.error('Invalid tag data for update');
+      return;
+    }
+    const dialogRef = this.dialog.open(TagsUpdatingComponentComponent, {
+      data: tag,
+      width: '500px',
+      disableClose: true
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.search();
       }
     });
   }
 
-  create(): void {
-    this.dialog.open(TagsCreationComponentComponent)
-      .afterClosed()
-      .subscribe(() => this.loadTags());
-  }
-
-  update(tag: Tag): void {
-    this.tagService.read(tag.name)
-      .subscribe(fullTag => this.dialog.open(TagsUpdatingComponentComponent, { data: fullTag }));
-  }
-
   delete(tag: Tag): void {
-    this.tagService.delete(tag.name)
-      .subscribe(() => this.loadTags());
+    const dialogRef = this.dialog.open(TagsDeletingComponentComponent, {
+      data: tag
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === true) {
+        this.search(); // Refresh the list after successful deletion
+      }
+    });
   }
 }
