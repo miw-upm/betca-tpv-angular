@@ -12,6 +12,8 @@ import {ComplaintUpdateAdminShopDialogComponent} from "./complaint-update-admin-
 import {AuthService} from "@core/services/auth.service";
 import {ComplaintUpdateAdminModel} from "./complaintUpdateAdmin.model";
 import {ComplaintState} from "../../shared/models/complaintState.model";
+import {ComplaintUpdateManagementModel} from "./complaintUpdateManagement.model";
+import {ComplaintUpdateManagementShopDialogComponent} from "./complaint-update-management-shop-dialog.component";
 
 
 @Component({
@@ -40,7 +42,33 @@ export class ComplaintsShopComponent {
         });
     }
 
-    update(complaint: Complaint){
+    update(complaint:Complaint){
+        if(this.isAdmin()){
+            this.updateAdmin(complaint);
+            return;
+        }
+        this.updateManagement(complaint);
+        return;
+    }
+    updateManagement(complaint: Complaint){
+        const complaintUpdate: ComplaintUpdateManagementModel = {
+            reply: complaint.reply,
+            state: (complaint.state.toString() == "OPEN" ? ComplaintState.OPEN:ComplaintState.CLOSED)
+        };
+
+        this.dialog
+            .open(ComplaintUpdateManagementShopDialogComponent,{
+                data: {
+                    tittle: 'Complaint Update',
+                    trackingCode: complaint.trackingCode,
+                    complaint: complaintUpdate
+                }
+            })
+            .afterClosed()
+            .subscribe(() => this.searchAll());
+    }
+
+    updateAdmin(complaint: Complaint){
         const complaintUpdate: ComplaintUpdateAdminModel = {
             userMobile: complaint.userMobile,
             barcode: complaint.barcode,
@@ -61,7 +89,7 @@ export class ComplaintsShopComponent {
             .subscribe(() => this.searchAll());
     }
 
-    canDelete():boolean{
+    isAdmin():boolean{
         return this.authService.isAdmin();
     }
 
