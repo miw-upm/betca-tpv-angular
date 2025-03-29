@@ -26,6 +26,7 @@ import { StockAuditViewComponent } from './features/shop/stock-audit/components/
 import { StockAuditComponent } from './features/shop/stock-audit/stock-audit.component';
 import { VouchersComponent } from './features/shop/vouchers/vouchers.component';
 import { CustomerDiscountComponent } from "./features/shop/customer-discount/customer-discount.component";
+import {TicketPDFComponent} from "./features/shop/cashier-opened/tickets/ticket-pdf/ticket-pdf.component";
 
 export const routes: Routes = [
     { path: '', pathMatch: 'full', redirectTo: 'home/adviser' },
@@ -80,5 +81,6 @@ export const routes: Routes = [
                 ]
             }
         ]
-    }
+    },
+    { path: 'getTicket', component: TicketPDFComponent },
 ];

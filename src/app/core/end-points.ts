@@ -22,4 +22,5 @@ export class EndPoints {
   static readonly ORDERS = environment.REST_CORE + "/orders";
   static readonly SLACK = environment.REST_CORE + '/slack';
   static readonly SLACK_PUBLISH = EndPoints.SLACK + '/publish';
+  static readonly GIFTTICKETS = environment.REST_CORE + '/gift_tickets';
 }
