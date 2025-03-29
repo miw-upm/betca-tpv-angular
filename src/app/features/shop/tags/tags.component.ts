@@ -12,10 +12,10 @@ import { Tag } from './models/tags.model';
 import { AuthService } from '@core/services/auth.service';
 import { Observable, of } from 'rxjs';
 import { TagsCreationComponentComponent } from './components/tags-creating/TagsCreationComponent.component';
-import { TagsUpdatingComponentComponent } from './components/tags-updating/TagsUpdatingComponent.component';
 import { TagsViewingComponentComponent } from './components/tags-viewing/TagsViewingComponent.component';
-import { TagsDeletingComponentComponent } from './components/tags-deleting/TagsDeletingComponent.component';
+import { TagUpdatedComponent } from './components/tags-updated/TagUpdated/TagUpdated.component';
 import { TagsService } from './services/tags.service';
+import { CommonModule } from '@angular/common';
 
 interface TagSearch {
   name: string;
@@ -27,6 +27,7 @@ interface TagSearch {
   standalone: true,
   selector: 'app-tags',
   imports: [
+    CommonModule,
     FormsModule,
     MatIconModule,
     MatCardModule,
@@ -44,7 +45,7 @@ export class TagsComponent implements OnInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   
   title = "Tag Management";
-  tags: Observable<Tag[]>;
+  tags$: Observable<Tag[]>;
   displayedColumns: string[] = ['name', 'group', 'description', 'actions'];
   
   tagSearch: TagSearch = {
@@ -54,12 +55,11 @@ export class TagsComponent implements OnInit {
   };
 
   constructor(
-    private readonly tagService: TagsService,
     private readonly dialog: MatDialog,
+    private readonly tagsService: TagsService,
     private readonly authService: AuthService
   ) {
-    this.tags = of([]);
-    this.search();
+    this.tags$ = of([]);
   }
 
   ngOnInit(): void {
@@ -67,12 +67,16 @@ export class TagsComponent implements OnInit {
   }
 
   search(): void {
-    this.tags = this.tagService.search();
+    this.tags$ = this.tagsService.search();
   }
 
   create(): void {
     const dialogRef = this.dialog.open(TagsCreationComponentComponent);
-    dialogRef.afterClosed().subscribe(() => this.search());
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.search();
+      }
+    });
   }
 
   read(tag: Tag): void {
@@ -82,15 +86,11 @@ export class TagsComponent implements OnInit {
   }
 
   update(tag: Tag): void {
-    if (!tag || !tag.id) {
-      console.error('Invalid tag data for update');
-      return;
-    }
-    const dialogRef = this.dialog.open(TagsUpdatingComponentComponent, {
-      data: tag,
+    const dialogRef = this.dialog.open(TagUpdatedComponent, {
       width: '500px',
-      disableClose: true
+      data:{ tag }
     });
+    
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.search();
@@ -99,13 +99,21 @@ export class TagsComponent implements OnInit {
   }
 
   delete(tag: Tag): void {
-    const dialogRef = this.dialog.open(TagsDeletingComponentComponent, {
-      data: tag
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      if (result === true) {
-        this.search(); // Refresh the list after successful deletion
-      }
-    });
+    if (!tag || !tag.id) {
+      console.error('Cannot delete tag without ID:', tag);
+      return;
+    }
+
+    if (confirm(`¿Estás seguro de que quieres eliminar el tag "${tag.name}"?`)) {
+      this.tagsService.delete(tag.id).subscribe({
+        next: () => {
+          this.search(); // Recargar la lista después de eliminar
+        },
+        error: (error) => {
+          console.error('Error deleting tag:', error);
+          // Aquí podrías mostrar un mensaje de error al usuario
+        }
+      });
+    }
   }
 }
