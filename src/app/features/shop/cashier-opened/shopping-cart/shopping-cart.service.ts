@@ -89,7 +89,6 @@ export class ShoppingCartService {
 
     createGiftTicketAndPrint(ticketId: number, message: string): Observable<void> {
         localStorage.setItem('tokenGuardar', this.authService.getToken());
-        console.log("tokenGuardar: ", localStorage.getItem('tokenGuardar'));
         return this.httpService
             .post(EndPoints.GIFTTICKETS, { id: ticketId, message: message })
             .pipe(
