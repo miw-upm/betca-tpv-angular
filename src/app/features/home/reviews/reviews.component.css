@@ -20,26 +20,22 @@ th {
     background-color: #f4f4f4;
 }
 
-/* 默认星星颜色（灰色） */
 mat-icon {
     cursor: pointer;
     color: lightgray;
     transition: color 0.3s;
 }
 
-/* 选中的星星变金色 */
 mat-icon.selected {
     color: gold;
 }
 
-/* 图片 + 文本的容器 */
 .pedido-container {
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-/* 图片样式 */
 .pedido-image {
     width: 50px;
     height: 50px;
@@ -49,7 +45,6 @@ mat-icon.selected {
     border: 1px solid #ccc;
 }
 
-/* 文本样式 */
 .pedido-text {
     text-align: left;
 }

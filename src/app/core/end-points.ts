@@ -23,4 +23,5 @@ export class EndPoints {
   static readonly SLACK = environment.REST_CORE + '/slack';
   static readonly SLACK_PUBLISH = EndPoints.SLACK + '/publish';
   static readonly GIFTTICKETS = environment.REST_CORE + '/gift_tickets';
+  static readonly REVIEWS = environment.REST_CORE + '/reviews';
 }
