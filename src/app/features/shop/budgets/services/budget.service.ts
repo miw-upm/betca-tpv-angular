@@ -58,7 +58,8 @@ export class BudgetService implements IBudgetService {
           new Shopping(
             shopping.barcode,
             shopping.description,
-            shopping.retailPrice
+            shopping.retailPrice,
+            shopping.amount
           )
       ),
     };
