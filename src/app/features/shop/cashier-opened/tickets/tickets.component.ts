@@ -1,5 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import {CurrencyPipe, DatePipe, NgIf} from "@angular/common";
+import {CurrencyPipe, DatePipe, NgIf, CommonModule} from "@angular/common";
 import { FormsModule } from "@angular/forms";
 import { MatButton, MatIconButton } from "@angular/material/button";
 import { MatCheckbox } from "@angular/material/checkbox";
@@ -8,8 +8,6 @@ import {MatFormField, MatFormFieldModule, MatSuffix} from "@angular/material/for
 import { MatIcon } from "@angular/material/icon";
 import {MatInput, MatInputModule} from "@angular/material/input";
 import { MatCard, MatCardContent, MatCardTitle } from "@angular/material/card";
-import { CommonModule } from "@angular/common";
-import { MatTableModule } from '@angular/material/table';
 
 import {
     MatCell,
@@ -21,13 +19,12 @@ import {
     MatRow,
     MatRowDef,
     MatTable,
+    MatTableModule
 } from "@angular/material/table";
 import { SearchByBarcodeComponent } from "../../shared/components/search-by-barcode.component";
 import { TicketsService } from "./tickets.service";
 import {MatTooltip} from "@angular/material/tooltip";
 import {Ticket, Tickets} from "./models/tickets.model";
-import {AuthService} from "@core/services/auth.service";
-
 
 @Component({
     standalone: true,
@@ -67,9 +64,8 @@ import {AuthService} from "@core/services/auth.service";
         DatePipe,
         MatTableModule
     ],
-    styleUrls: ['./tickets.component.css']
 })
-export class TicketsComponent implements OnInit {
+export class TicketsComponent {
     tickets: Tickets[] = [];
     searchReference: string = "";
     displayedColumns: string[] = ['barcode', 'description', 'retailPrice', 'amount', 'state'];
@@ -79,24 +75,19 @@ export class TicketsComponent implements OnInit {
 
     constructor(private readonly ticketsService: TicketsService) {}
 
-    ngOnInit(): void {
-        this.synchronizeTickets();
-    }
-
-    synchronizeTickets(): void {
-    }
-
     filterTicketsByReference(): void {
         if (this.searchReference) {
-            this.ticketsService.filterTicketsByReference(this.searchReference).subscribe(
-                (ticket: Ticket) => {
+            this.ticketsService.filterTicketsByReference(this.searchReference).subscribe({
+                next: (ticket: Ticket) => {
                     this.ticket = ticket;
                 },
-                (error) => {
+                error: (error) => {
                     console.error('Error al filtrar los tickets:', error);
+                },
+                complete: () => {
+                    console.log('Filtering complete');
                 }
-            );
-
+            });
         } else {
             console.error('No se encontró el token o la referencia está vacía');
         }
