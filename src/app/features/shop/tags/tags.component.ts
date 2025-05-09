@@ -10,7 +10,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { FilterInputComponent } from '@common/components/filter-input.component';
 import { Tag } from './models/tags.model';
 import { AuthService } from '@core/services/auth.service';
-import { Observable, of } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 import { TagsCreationComponentComponent } from './components/tags-creating/TagsCreationComponent.component';
 import { TagsViewingComponentComponent } from './components/tags-viewing/TagsViewingComponent.component';
 import { TagUpdatedComponent } from './components/tags-updated/TagUpdated/TagUpdated.component';
@@ -26,6 +26,9 @@ interface TagSearch {
 @Component({
   standalone: true,
   selector: 'app-tags',
+  templateUrl: './tags.component.html',
+  styleUrls: ['./tags.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     CommonModule,
     FormsModule,
@@ -36,17 +39,13 @@ interface TagSearch {
     MatPaginatorModule,
     MatTooltipModule,
     FilterInputComponent
-  ],
-  templateUrl: './tags.component.html',
-  styleUrls: ['./tags.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  ]
 })
 export class TagsComponent implements OnInit {
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
-  
-  title = "Tag Management";
-  tags$: Observable<Tag[]>;
-  displayedColumns: string[] = ['name', 'group', 'description', 'actions'];
+  displayedColumns: string[] = ['name', 'group', 'description', 'isPopular', 'isOnSale', 'isNew', 'actions'];
+  private tagsSubject = new BehaviorSubject<Tag[]>([]);
+  tags$ = this.tagsSubject.asObservable();
+  currentFilter: 'all' | 'popular' | 'sale' | 'new' = 'all';
   
   tagSearch: TagSearch = {
     name: '',
@@ -54,32 +53,51 @@ export class TagsComponent implements OnInit {
     description: ''
   };
 
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+
   constructor(
-    private readonly dialog: MatDialog,
-    private readonly tagsService: TagsService,
-    private readonly authService: AuthService
-  ) {
-    this.tags$ = of([]);
-  }
+    private dialog: MatDialog,
+    private tagsService: TagsService,
+    public auth: AuthService
+  ) {}
 
   ngOnInit(): void {
     this.search();
   }
 
   search(): void {
-    this.tags$ = this.tagsService.search();
+    switch (this.currentFilter) {
+      case 'popular':
+        this.tagsService.getPopularTags().subscribe(tags => this.tagsSubject.next(tags));
+        break;
+      case 'sale':
+        this.tagsService.getSaleTags().subscribe(tags => this.tagsSubject.next(tags));
+        break;
+      case 'new':
+        this.tagsService.getNewTags().subscribe(tags => this.tagsSubject.next(tags));
+        break;
+      default:
+        this.tagsService.search(this.tagSearch)
+          .subscribe(tags => this.tagsSubject.next(tags));
+    }
+  }
+
+  setFilter(filter: 'all' | 'popular' | 'sale' | 'new'): void {
+    this.currentFilter = filter;
+    this.search();
   }
 
   create(): void {
     const dialogRef = this.dialog.open(TagsCreationComponentComponent);
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.search();
+        this.tagsService.create(result)
+          .subscribe(() => this.search());
       }
     });
   }
 
-  read(tag: Tag): void {
+  view(tag: Tag): void {
     this.dialog.open(TagsViewingComponentComponent, {
       data: tag
     });
@@ -87,33 +105,20 @@ export class TagsComponent implements OnInit {
 
   update(tag: Tag): void {
     const dialogRef = this.dialog.open(TagUpdatedComponent, {
-      width: '500px',
-      data:{ tag }
+      data: tag
     });
-    
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.search();
+        this.tagsService.update(tag.id!, result)
+          .subscribe(() => this.search());
       }
     });
   }
 
   delete(tag: Tag): void {
-    if (!tag || !tag.id) {
-      console.error('Cannot delete tag without ID:', tag);
-      return;
-    }
-
-    if (confirm(`¿Estás seguro de que quieres eliminar el tag "${tag.name}"?`)) {
-      this.tagsService.delete(tag.id).subscribe({
-        next: () => {
-          this.search(); // Recargar la lista después de eliminar
-        },
-        error: (error) => {
-          console.error('Error deleting tag:', error);
-          // Aquí podrías mostrar un mensaje de error al usuario
-        }
-      });
+    if (confirm('Are you sure you want to delete this tag?')) {
+      this.tagsService.delete(tag.id!)
+        .subscribe(() => this.search());
     }
   }
 }

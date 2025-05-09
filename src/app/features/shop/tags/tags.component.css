@@ -2,12 +2,21 @@
     margin-bottom: 20px;
 }
 
+.filter-buttons {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.filter-buttons button {
+    flex: 1;
+}
+
 .filters-container {
     display: flex;
-    gap: 16px;
-    flex-wrap: wrap;
+    gap: 1rem;
     align-items: center;
-    padding: 16px 0;
+    flex-wrap: wrap;
 }
 
 .table-card {
@@ -17,11 +26,12 @@
 .table-container {
     position: relative;
     min-height: 200px;
+    margin-top: 1rem;
     overflow: auto;
 }
 
 .table-header {
-    padding: 16px;
+    padding: 1rem;
     display: flex;
     justify-content: flex-end;
     background-color: #fff;
@@ -53,8 +63,8 @@ table {
 }
 
 .mat-column-actions {
-    width: 150px;
-    text-align: right;
+    width: 120px;
+    text-align: center;
 }
 
 mat-card-title {

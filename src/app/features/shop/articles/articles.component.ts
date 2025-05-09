@@ -38,10 +38,6 @@ export class ArticlesComponent {
         this.articleSearch = {};
     }
 
-    unfinished(): void {
-        this.articles = this.articleService.searchUnfinished();
-    }
-
     create(): void {
         this.dialog.open(ArticleCreationUpdatingDialogComponent);
     }

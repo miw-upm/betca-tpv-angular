@@ -1,13 +1,17 @@
-import {Tax} from './Tax';
+import { Tag } from '../../tags/models/tags.model';
+import { Tax } from './Tax';
 
 export interface Article {
-    barcode: string;
+    id?: string;
+    barcode?: string;
     description: string;
     retailPrice: number;
-    providerCompany: string;
-    reference?: string;
     stock?: number;
-    tax?: Tax;
+    providerCompany?: string; 
+    tax: Tax; 
+    provider?: string;
     discontinued?: boolean;
     registrationDate?: Date;
+    tagIds?: string[];  
+    tags?: Tag[];       
 }

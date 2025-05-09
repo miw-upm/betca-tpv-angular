@@ -11,6 +11,9 @@ import { Tag } from '../models/tags.model';
 })
 export class TagsService {
     static readonly SEARCH = '/search';
+    static readonly POPULAR = '/popular';
+    static readonly SALE = '/sale';
+    static readonly NEW = '/new';
 
     constructor(private readonly httpService: HttpService) {
     }
@@ -29,31 +32,36 @@ export class TagsService {
         if (!id) {
             return throwError(() => new Error('ID is required for update'));
         }
-        if (!tag) {
-            return throwError(() => new Error('Tag object is required for update'));
-        }
         return this.httpService
-            .put(`${EndPoints.TAGS}/${id}`, tag)
-            .pipe(
-                map((response: any) => {
-                    if (!response) {
-                        throw new Error('Tag not found');
-                    }
-                    return response as Tag;
-                })
-            ) as Observable<Tag>;
+            .put(EndPoints.TAGS + '/' + id, tag);
     }
 
     delete(id: string): Observable<void> {
-        if (!id) {
-            return throwError(() => new Error('ID is required for delete'));
-        }
         return this.httpService
-            .delete(`${EndPoints.TAGS}/${id}`) as Observable<void>;
+            .delete(EndPoints.TAGS + '/' + id);
     }
 
-    search(): Observable<Tag[]> {
+    search(query?: Partial<Tag>): Observable<Tag[]> {
+        const queryParams = query ? '?' + Object.entries(query)
+            .filter(([_, value]) => value !== undefined && value !== '')
+            .map(([key, value]) => `${key}=${value}`)
+            .join('&') : '';
         return this.httpService
-            .get(EndPoints.TAGS) as Observable<Tag[]>;
+            .get(EndPoints.TAGS + TagsService.SEARCH + queryParams);
+    }
+
+    getPopularTags(): Observable<Tag[]> {
+        return this.httpService
+            .get(EndPoints.TAGS + TagsService.POPULAR);
+    }
+
+    getSaleTags(): Observable<Tag[]> {
+        return this.httpService
+            .get(EndPoints.TAGS + TagsService.SALE);
+    }
+
+    getNewTags(): Observable<Tag[]> {
+        return this.httpService
+            .get(EndPoints.TAGS + TagsService.NEW);
     }
 }
