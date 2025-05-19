@@ -26,6 +26,7 @@ import { StockAuditViewComponent } from './features/shop/stock-audit/components/
 import { StockAuditComponent } from './features/shop/stock-audit/stock-audit.component';
 import { VouchersComponent } from './features/shop/vouchers/vouchers.component';
 import { CustomerDiscountComponent } from "./features/shop/customer-discount/customer-discount.component";
+import { TagsComponent } from './features/shop/tags/tags.component';
 import {TicketPDFComponent} from "./features/shop/cashier-opened/tickets/ticket-pdf/ticket-pdf.component";
 
 export const routes: Routes = [
@@ -73,6 +74,7 @@ export const routes: Routes = [
             { path: 'complaints', component: ComplaintsShopComponent },
             { path: 'stock-alarm', component: StockAlarmComponent },
             { path: 'customer-discount', component: CustomerDiscountComponent },
+            { path: 'tags', component: TagsComponent },
             {
                 path: 'stock-audit',
                 children: [

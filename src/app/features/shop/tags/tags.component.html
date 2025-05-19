@@ -1,7 +1,8 @@
 <app-crud (create)="create()"
           (read)="read($event)"
           (update)="update($event)"
-          [deleteAction]="false"
+          (delete)="delete($event)"
+          [deleteAction]="true"
           [data]="tags"
           [title]="title">
 </app-crud>

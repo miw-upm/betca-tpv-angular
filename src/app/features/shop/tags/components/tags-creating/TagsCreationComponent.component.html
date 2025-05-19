@@ -1,2 +1,37 @@
-<p>Tags
-     create works!</p>
+<h2 mat-dialog-title>Create New Tag</h2>
+<mat-dialog-content>
+  <form #form="ngForm">
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Name</mat-label>
+      <input matInput [(ngModel)]="tag.name" name="name" required>
+      <mat-hint>Enter the tag name</mat-hint>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Group</mat-label>
+      <input matInput [(ngModel)]="tag.group" name="group" required>
+      <mat-hint>Enter the tag group</mat-hint>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Description</mat-label>
+      <textarea matInput [(ngModel)]="tag.description" name="description" rows="3"></textarea>
+      <mat-hint>Enter a description for the tag</mat-hint>
+    </mat-form-field>
+
+      <mat-form-field class="full-width" appearance="outline">
+          <mat-label>Related Article</mat-label>
+          <mat-select [(ngModel)]="productIds" name="productIds">
+              <mat-option *ngFor="let art of availableArticle" [value]="art.barcode">
+                  {{ art.description }}
+              </mat-option>
+          </mat-select>
+      </mat-form-field>
+
+  </form>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button mat-raised-button color="primary" (click)="create()" [disabled]="form.invalid">Create</button>
+</mat-dialog-actions>

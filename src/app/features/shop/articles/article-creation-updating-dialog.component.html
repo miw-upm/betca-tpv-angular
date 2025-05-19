@@ -29,6 +29,15 @@
             </mat-option>
         </mat-select>
     </mat-form-field>
+    <mat-form-field class="full-width">
+        <mat-label>Tag</mat-label>
+        <mat-select [(ngModel)]="article.tag">
+            <mat-option [value]="undefined">None</mat-option>
+            <mat-option *ngFor="let tag of tags" [value]="tag">
+                {{ tag.name }} ({{ tag.group }})
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
     <mat-slide-toggle [(ngModel)]="article.discontinued">Discontinued</mat-slide-toggle>
     <mat-form-field *ngIf="article.registrationDate" class="full-width">
         <mat-label>Registration Date</mat-label>

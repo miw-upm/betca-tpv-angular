@@ -4,4 +4,5 @@ export class ArticleSearch {
     reference?: string;
     stock?: number;
     discontinued?: boolean;
+    tagId?: string;
 }

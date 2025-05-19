@@ -10,7 +10,14 @@
                 <mat-cell *matCellDef="let row">
                     <div *ngIf="isArray(row[def]);then is_array else not_array"></div>
                     <ng-template #is_array> {{ row[def].length }}</ng-template>
-                    <ng-template #not_array> {{ row[def] }}</ng-template>
+                    <ng-template #not_array>
+                        <div *ngIf="isObject(row[def]) && row[def] !== null; then is_object else not_object"></div>
+                        <ng-template #is_object>
+                            <span *ngIf="row[def].name !== undefined">{{ row[def].name }}</span>
+                            <span *ngIf="row[def].name === undefined">{{ getObjectString(row[def]) }}</span>
+                        </ng-template>
+                        <ng-template #not_object>{{ row[def] }}</ng-template>
+                    </ng-template>
                 </mat-cell>
             </ng-container>
             <ng-container matColumnDef="actions">

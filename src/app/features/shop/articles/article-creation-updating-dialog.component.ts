@@ -1,4 +1,4 @@
-import {Component, Inject} from '@angular/core';
+import {Component, EventEmitter, Inject, OnInit, Output} from '@angular/core';
 import {NgForOf, NgIf} from '@angular/common';
 import {FormsModule} from '@angular/forms';
 import {
@@ -9,6 +9,7 @@ import {
     MatDialogContent,
     MatDialogTitle
 } from '@angular/material/dialog';
+import {MatSnackBar} from '@angular/material/snack-bar';
 import {MatFormField, MatHint, MatLabel} from '@angular/material/form-field';
 import {MatOption, MatSelect} from '@angular/material/select';
 import {MatSlideToggle} from '@angular/material/slide-toggle';
@@ -20,6 +21,8 @@ import {ArticleService} from './article.service';
 import {SearchByCompanyComponent} from '../shared/components/search-by-company.component';
 import {Article} from '../../shared/models/article.model';
 import {Tax} from '../shared/models/Tax';
+import {TagsService} from '../tags/services/tags.service';
+import {Tag} from '../tags/models/tags.model';
 
 @Component({
     standalone: true,
@@ -29,20 +32,34 @@ import {Tax} from '../shared/models/Tax';
     templateUrl: 'article-creation-updating-dialog.component.html',
     styleUrls: ['article-creation-updating-dialog.component.css']
 })
-export class ArticleCreationUpdatingDialogComponent {
+export class ArticleCreationUpdatingDialogComponent implements OnInit {
     taxValues = Object.keys(Tax).filter(key => isNaN(Number(key)));
     article: Article;
     title: string;
     oldBarcode: string;
     companies: Observable<string[]> = of([]);
+    tags: Tag[] = [];
+    @Output() articleCreated: EventEmitter<Article> = new EventEmitter<Article>();
 
-    constructor(@Inject(MAT_DIALOG_DATA) data: Article, private readonly articleService: ArticleService, private readonly dialog: MatDialog) {
+    constructor(
+        @Inject(MAT_DIALOG_DATA) data: Article, 
+        private readonly articleService: ArticleService, 
+        private readonly tagsService: TagsService,
+        private readonly dialog: MatDialog,
+        private readonly snackBar: MatSnackBar
+    ) {
         this.title = data ? 'Update Article' : 'Create Article';
         this.article = data || {
             barcode: undefined, description: undefined, retailPrice: undefined, providerCompany: undefined,
-            discontinued: false, tax: Tax.GENERAL, stock: 10
+            discontinued: false, tax: Tax.GENERAL, stock: 10, tag: undefined
         };
         this.oldBarcode = data ? data.barcode : undefined;
+    }
+
+    ngOnInit(): void {
+        this.tagsService.searchAll().subscribe(tags => {
+            this.tags = tags;
+        });
     }
 
     isCreate(): boolean {
@@ -52,7 +69,14 @@ export class ArticleCreationUpdatingDialogComponent {
     create(): void {
         this.articleService
             .create(this.article)
-            .subscribe(() => this.dialog.closeAll());
+            .subscribe(article => {
+                this.snackBar.open("Article created successfully", "Close", {
+                    duration: 3000,
+                    panelClass: ['snackbar-success']
+                });
+                this.articleCreated.emit(article);
+                this.dialog.closeAll();
+            });
     }
 
     update(): void {

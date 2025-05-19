@@ -9,6 +9,16 @@
         <app-filter-input [(value)]="articleSearch.reference" title="Reference"></app-filter-input>
         <app-filter-input [(value)]="articleSearch.stock" title="Stock Less than" type="number"></app-filter-input>
         <mat-slide-toggle [(ngModel)]="articleSearch.discontinued">Discontinued</mat-slide-toggle>
+
+        <mat-form-field appearance="fill">
+            <mat-label>Tag</mat-label>
+            <mat-select [(ngModel)]="articleSearch.tagId">
+                <mat-option [value]="">All Tags</mat-option>
+                <mat-option *ngFor="let tag of tags" [value]="tag.id">
+                    {{tag.name}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
         <button (click)="search()" mat-stroked-button>
             <mat-icon>search</mat-icon>
             Find

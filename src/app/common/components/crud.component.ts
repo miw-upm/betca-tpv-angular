@@ -94,4 +94,21 @@ export class CrudComponent {
         return Array.isArray(obj)
     }
 
+    isObject(obj: any) {
+        return obj !== null && typeof obj === 'object' && !Array.isArray(obj);
+    }
+
+    getObjectString(obj: any): string {
+        if (!obj) return '';
+
+        // Try to find a meaningful property to display
+        if (obj.id) return obj.id;
+        if (obj.description) return obj.description;
+
+        // If no meaningful property is found, return a list of key-value pairs
+        return Object.entries(obj)
+            .filter(([_, value]) => value !== null && value !== undefined && typeof value !== 'object')
+            .map(([key, value]) => `${key}: ${value}`)
+            .join(', ');
+    }
 }
