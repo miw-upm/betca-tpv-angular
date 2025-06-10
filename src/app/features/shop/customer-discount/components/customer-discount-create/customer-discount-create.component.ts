@@ -26,10 +26,7 @@ export class CustomerDiscountCreateComponent {
   });
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: CustomerDiscount, private customerDiscountService: CustomerDiscountService, public dialog: MatDialog) { }
-  
-  get userMobile() {
-    return this.discountForm.get('userMobile')!;
-  }
+
 
   create(): void {
     if (this.discountForm.valid) {

@@ -1,8 +1,9 @@
 <app-crud
-        [data]="formattedCustomerDiscounts"
+        [data]="customerDiscounts"
         (create)="create()"
         (read)="read($event)"
         (update)="update($event)"
         [deleteAction]="false"
+        [readAction]="false"
         [title]="'Customer Discounts'">
 </app-crud>
