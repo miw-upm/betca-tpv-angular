@@ -7,3 +7,11 @@ export interface CustomerDiscount {
     discount: number;
     minimumPurchase: number;
 }
+
+export interface FormattedCustomerDiscount {
+  mobile: number;
+  note: string;
+  registrationDate: Date;
+  discount: number;
+  minimumPurchase: number;
+}
