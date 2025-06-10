@@ -4,6 +4,8 @@ import { CrudComponent } from "@common/components/crud.component";
 import { Observable, of } from "rxjs";
 import { map } from "rxjs/operators";
 import { CommonModule } from '@angular/common';
+import { MatDialog } from '@angular/material/dialog';
+import { CustomerDiscountCreateComponent } from './components/customer-discount-create/customer-discount-create.component';
 import { CustomerDiscountService } from './customer-discount-service/customer-discount-service';
 @Component({
     selector: 'app-customer-discount',
@@ -17,32 +19,34 @@ import { CustomerDiscountService } from './customer-discount-service/customer-di
 })
 export class CustomerDiscountComponent {
     formattedcustomerDiscounts: Observable<FormattedCustomerDiscount[]>;
-    customerDiscounts:Observable<CustomerDiscount[]> = of([{
-        user: {mobile:666, token: '1'},
+    customerDiscounts: Observable<CustomerDiscount[]> = of([{
+        user: { mobile: 666, token: '1' },
         note: 'VIP customer',
         registrationDate: new Date(),
         discount: 10,
         minimumPurchase: 50
     }]);
+    selectedDiscount: CustomerDiscount = {
+        user: { mobile: 666, token: '1' },
+        note: 'VIP customer',
+        registrationDate: new Date(),
+        discount: 10,
+        minimumPurchase: 50
+    };
+
     formattedCustomerDiscounts = this.customerDiscounts.pipe(map(items => (items ? items.map(item => ({
-                    mobile: item.user.mobile,
-                    note: item.note,
-                    registrationDate: item.registrationDate,
-                    discount: item.discount,
-                    minimumPurchase: item.minimumPurchase
-                })) : [])));
+        mobile: item.user.mobile,
+        note: item.note,
+        registrationDate: item.registrationDate,
+        discount: item.discount,
+        minimumPurchase: item.minimumPurchase
+    })) : [])));
     title = "Customer Discounts";
-    constructor(private customerDiscountService: CustomerDiscountService) {
+    constructor(private dialog: MatDialog, private customerDiscountService: CustomerDiscountService) {
     }
 
     create() {
-        this.customerDiscountService
-            .create(this.customerDiscounts[0])
-            .subscribe((res) => {
-                console.log(res);
-            }), (err: any) => {
-                console.error('🚨 Ha ocurrido un error:', err);
-            };
+      this.dialog.open(CustomerDiscountCreateComponent);
     }
 
     read($event: any) {
