@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CustomerDiscount, FormattedCustomerDiscount } from "./models/customer-discount.model"
+import { CustomerDiscount, CustomerDiscountDto } from "./models/customer-discount.model"
 import { CrudComponent } from "@common/components/crud.component";
 import { Observable, of } from "rxjs";
 import { map } from "rxjs/operators";
@@ -18,31 +18,19 @@ import { CustomerDiscountService } from './customer-discount-service/customer-di
     standalone: true
 })
 export class CustomerDiscountComponent {
-    formattedcustomerDiscounts: Observable<FormattedCustomerDiscount[]>;
-    customerDiscounts: Observable<CustomerDiscount[]> = of([{
-        user: { mobile: 666, token: '1' },
-        note: 'VIP customer',
-        registrationDate: new Date(),
-        discount: 10,
-        minimumPurchase: 50
-    }]);
-    selectedDiscount: CustomerDiscount = {
-        user: { mobile: 666, token: '1' },
-        note: 'VIP customer',
-        registrationDate: new Date(),
-        discount: 10,
-        minimumPurchase: 50
-    };
-
-    formattedCustomerDiscounts = this.customerDiscounts.pipe(map(items => (items ? items.map(item => ({
-        mobile: item.user.mobile,
-        note: item.note,
-        registrationDate: item.registrationDate,
-        discount: item.discount,
-        minimumPurchase: item.minimumPurchase
-    })) : [])));
+    customerDiscounts: Observable<CustomerDiscountDto[]>;
     title = "Customer Discounts";
+
+
     constructor(private dialog: MatDialog, private customerDiscountService: CustomerDiscountService) {
+    }
+
+    ngOnInit() {
+        this.findAll();
+    }
+
+    findAll(): void {
+        this.customerDiscounts = this.customerDiscountService.findAll() ?? of([]);
     }
 
     create() {

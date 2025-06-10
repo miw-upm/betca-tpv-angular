@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { CustomerDiscount } from "../models/customer-discount.model";
+import { CustomerDiscount, CustomerDiscountDto } from "../models/customer-discount.model";
 import { Observable, of } from "rxjs";
 import { EndPoints } from "@core/end-points";
 import { HttpService } from "@core/services/http.service";
@@ -35,7 +35,7 @@ export class CustomerDiscountService {
         return this.httpService.post(EndPoints.CUSTOMER_DISCOUNT, customerDiscount);
     }
 
-    getAllCustomerDiscounts(): Observable<CustomerDiscount[]> {
-        return of(this.mockCustomerDiscount);
+    findAll(): Observable<CustomerDiscountDto[]> {
+        return this.httpService.get(EndPoints.CUSTOMER_DISCOUNT);
     }
 }
