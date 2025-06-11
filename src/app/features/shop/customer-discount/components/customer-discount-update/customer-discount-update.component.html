@@ -1,0 +1,25 @@
+<mat-dialog-content>
+<form [formGroup]="discountForm">
+    <h1>Update descuento</h1>
+    <div>
+        <label for="userMobile">movil del usuario: {{ customerDiscountDto.userMobile }}</label>
+    </div>
+    <div>
+        <label for="note">Notas:</label>
+        <input type="text" id="note" maxlength="50" formControlName="note" placeholder="Introducir nota" />
+    </div>
+    <div>
+        <label for="discount">% de descuento:</label>
+        <input type="number" id="discount" formControlName="discount" placeholder="Introducir descuento"  />
+    </div>
+    <div>
+        <label for="minimumPurchase">Precio minimo:</label>
+        <input type="number" id="minimumPurchase" formControlName="minimumPurchase"
+            placeholder="Introducir precio minimo" />
+    </div>
+    <button class="create" (click)="update()" [disabled]="discountForm.invalid">Update</button>
+</form>
+</mat-dialog-content>
+<mat-dialog-actions>
+    <button mat-button mat-dialog-close>Close</button>
+</mat-dialog-actions>
