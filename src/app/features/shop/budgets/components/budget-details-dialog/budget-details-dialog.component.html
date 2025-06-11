@@ -1,6 +1,7 @@
 <h2 mat-dialog-title>Details</h2>
 <mat-dialog-content>
   <div class="container">
+    <p><strong>ID: </strong> {{ budget.id }}</p>
     <p><strong>Reference: </strong> {{ budget.reference }}</p>
     <p><strong>Creation Date:</strong> {{ budget.creationDate | date }}</p>
     <p><strong>Total Amount:</strong> {{ budget.total | currency : "EUR" }}</p>

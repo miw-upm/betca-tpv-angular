@@ -9,8 +9,8 @@
             <mat-label><strong>Provider Company:</strong> {{ order.providerCompany }}</mat-label><br>
             <mat-label><strong>Opening Date:</strong> {{ order.openingDate }}</mat-label><br><br>
         </div>
-        <div *ngIf="order.orderLines.length > 0">
-            <div *ngFor="let orderLine of order.orderLines">
+        <div *ngIf="order.orderLinesList.length > 0">
+            <div *ngFor="let orderLine of order.orderLinesList">
                 <mat-form-field class="full-width">
                     <mat-label>Final amount [{{ orderLine.articleBarcode }}]</mat-label>
                     <input [(ngModel)]="orderLine.finalAmount" matInput type="number" min="0" step="1"/>

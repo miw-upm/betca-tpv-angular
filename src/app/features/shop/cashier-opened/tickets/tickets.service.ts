@@ -1,27 +1,46 @@
 import { Injectable } from '@angular/core';
-import { Observable, EMPTY } from "rxjs";
-import { HttpClient } from "@angular/common/http";
-import { EndPoints } from "@core/end-points";
-import { concatMap } from "rxjs/operators";
-import {Tickets} from "./models/tickets.model";
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
+import { EndPoints } from '@core/end-points';
+import {Ticket} from "./models/tickets.model";
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({ providedIn: 'root' })
 export class TicketsService {
-  constructor(private http: HttpClient) {}
 
-  getTickets(): Observable<Tickets[]> {
-    return this.http.get<Tickets[]>(EndPoints.TICKETS);
-  }
+  constructor(private readonly http: HttpClient) {}
 
-  printGiftReceipts(reference: string): Observable<void> {
-    return this.http.post<Tickets>(EndPoints.TICKETS, { reference }).pipe(
-        concatMap(ticket => this.printGiftTicket(ticket.reference))
+  getTicket(reference: string, token: string): Observable<Blob> {
+    const url = `${EndPoints.TICKETS}/${reference}/reference`;
+    console.log("Llamando a la API:", url);
+
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${token}`,
+      'Accept': 'application/pdf'
+    });
+
+    return this.http.get(url, { headers, responseType: 'blob' }).pipe(
+        catchError(error => {
+          console.error('Error en la petición del PDF', error);
+          if (error.status === 401) {
+            console.error("error.status " + error.status + "Acceso no autorizado. Verifica el token.");
+          }
+          return throwError(() => new Error(error));
+        })
     );
   }
 
-  printGiftTicket(ticketId: string): Observable<void> {
-    return EMPTY; // TODO: Implement actual print logic
-  }
+    filterTicketsByReference(searchReference: string): Observable<Ticket> {
+        const url = `${EndPoints.TICKETS}/${searchReference}/reference/data`;
+
+        return this.http.get<Ticket>(url).pipe(
+            catchError(error => {
+                if (error.status === 401) {
+                    console.error("error.status " + error.status + "Acceso no autorizado. Verifica el token.");
+                }
+                console.error('Error al filtrar los tickets:', error);
+                return throwError(() => new Error(error));
+            })
+        );
+    }
 }

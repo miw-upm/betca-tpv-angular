@@ -1,17 +1,17 @@
 import {Injectable} from '@angular/core';
-import {Observable, of} from 'rxjs';
-import {map} from 'rxjs/operators';
+import {Observable} from 'rxjs';
 
 import {HttpService} from '@core/services/http.service';
 import {EndPoints} from '@core/end-points';
 import {Article} from '../../../shared/models/article.model';
 import {SharedArticleService} from "../../../shared/services/shared.article.service";
+import {map} from "rxjs/operators";
 
 @Injectable({providedIn: 'root'})
 export class SharedShopArticleService {
     private static readonly BARCODE = '/barcode';
 
-    constructor(private readonly httpService: HttpService, private readonly sharedArticleService: SharedArticleService) {
+    constructor(private readonly httpService: HttpService,private readonly sharedArticleService:SharedArticleService) {
     }
 
     read(barcode: string): Observable<Article> {
@@ -30,15 +30,15 @@ export class SharedShopArticleService {
     }
 
     searchBarcode(barcode: string): Observable<number[]> {
-        return this.sharedArticleService.searchBarcode(barcode);
+        return this.httpService
+            .param('barcode', barcode)
+            .get(EndPoints.ARTICLES + SharedShopArticleService.BARCODE)
+            .pipe(
+                map(response => response.barcodes)
+            );
     }
 
     getArticlesByCompany(company: string): Observable<any[]> {
-        // TO DO
-        return of([
-            { barcode: 'Article 1' },
-            { barcode: 'Article 2' },
-            { barcode: 'Article 3' }
-        ]);
+        return this.sharedArticleService.searchByProviderCompanies(company);
     }
 }

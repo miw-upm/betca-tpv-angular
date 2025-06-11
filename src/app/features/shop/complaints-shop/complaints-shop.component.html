@@ -6,5 +6,5 @@
         </button>
     </mat-card-content>
 </mat-card>
-<app-crud (read)="read($event)" [createAction]="false" (update)="update($event)"
-           [data]="complaints" [title]="title" [updateAction]="true"></app-crud>
+<app-crud (read)="read($event)" [createAction]="false" (update)="update($event)" (delete)="delete($event)"
+           [data]="complaints" [title]="title" [updateAction]="true" [deleteAction]="isAdmin()"></app-crud>

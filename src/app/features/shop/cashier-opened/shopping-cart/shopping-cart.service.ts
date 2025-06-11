@@ -14,6 +14,8 @@ import { CustomerPointsConstants } from './customer-points/customer-points.model
 import {Offer} from "../../shared/models/offer.model";
 import {Tickets} from "../tickets/models/tickets.model";
 import {AuthService} from "@core/services/auth.service";
+import { HttpClient} from '@angular/common/http';
+import { CustomerDiscountDto } from '../../customer-discount/models/customer-discount.model';
 
 @Injectable({providedIn: 'root'})
 export class ShoppingCartService {
@@ -21,7 +23,8 @@ export class ShoppingCartService {
     static readonly VARIOUS_BARCODE = '1';
     static readonly VARIOUS_LENGTH = 5;
 
-    constructor(private readonly dialog: MatDialog, private readonly articleShopService: SharedShopArticleService, private readonly httpService: HttpService, private readonly authService: AuthService) {
+    constructor(private readonly dialog: MatDialog, private readonly articleShopService: SharedShopArticleService, private readonly httpService: HttpService,
+                private readonly http: HttpClient, private readonly authService: AuthService) {
     }
 
     read(newBarcode: string): Observable<Shopping> {
@@ -63,7 +66,7 @@ export class ShoppingCartService {
                     let receipts = this.printTicket(ticket.id);
                     receipts = iif(() => voucher > 0, merge(receipts, this.createVoucherAndPrint(voucher)), receipts);
                     receipts = iif(() => requestedInvoice, merge(receipts, this.createInvoiceAndPrint(ticket.id)), receipts);
-                    receipts = iif(() => requestedGiftTicket, merge(receipts, this.createGiftTicketAndPrint(ticket.id)), receipts);
+                    receipts = iif(() => requestedGiftTicket, merge(receipts, this.createGiftTicketAndPrint(ticket.id, ticketCreation.messageGift)), receipts);
                     receipts = iif(() => requestDataProtectionAct, merge(receipts, this.createDataProtectionActAndPrint(ticket)), receipts);
                     return receipts;
                 })// ,switchMap(() => EMPTY)
@@ -85,8 +88,20 @@ export class ShoppingCartService {
                 return this.httpService.pdf().get(EndPoints.INVOICES + '/' + invoiceReceipt.identity + ShoppingCartService.RECEIPT);}))
     }
 
-    createGiftTicketAndPrint(ticketId: string): Observable<void> {
-        return EMPTY; // TODO change EMPTY
+    createGiftTicketAndPrint(ticketId: number, message: string): Observable<void> {
+        localStorage.setItem('tokenGuardar', this.authService.getToken());
+        return this.httpService
+            .post(EndPoints.GIFTTICKETS, { id: ticketId, message: message })
+            .pipe(
+                concatMap(giftTicket => {
+                    let receipts = new Observable<void>();
+                    receipts = merge(
+                        receipts,
+                        this.httpService.pdf().get(EndPoints.GIFTTICKETS + '/' + giftTicket.reference + '/' + 'receipt')
+                    );
+                    return receipts;
+                })
+            );
     }
 
     createDataProtectionActAndPrint(ticket): Observable<void> {
@@ -99,5 +114,9 @@ export class ShoppingCartService {
             .successful("Offer applied.")
             .error("Offer not found.")
             .get(EndPoints.OFFERS + '/' + reference);
+    }
+
+    readDiscount(mobile: number):Observable<CustomerDiscountDto>{
+        return this.httpService.get(`${EndPoints.CUSTOMER_DISCOUNT}/${mobile}`);
     }
 }

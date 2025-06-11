@@ -1,9 +1,14 @@
+<h3 mat-dialog-title>Update Budget {{ (budget$ | async)?.id }}</h3>
 <mat-dialog-content>
-  <mat-form-field>
-    <input matInput placeholder="Reference" type="text" />
-  </mat-form-field>
+  <app-crud
+    (delete)="onDelete($event)"
+    [data]="shoppingList$"
+    [createAction]="false"
+    [readAction]="false"
+    [updateAction]="false"
+    [deleteAction]="true"
+  ></app-crud>
 </mat-dialog-content>
 <mat-dialog-actions>
-  <button mat-button mat-dialog-close>Cancel</button>
-  <button (click)="onUpdate()" mat-button>Submit</button>
+  <button mat-button mat-dialog-close (click)="onClose()">Cancel</button>
 </mat-dialog-actions>

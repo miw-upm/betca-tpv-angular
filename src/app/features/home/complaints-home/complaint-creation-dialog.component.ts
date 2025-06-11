@@ -7,34 +7,39 @@ import {MatButton} from '@angular/material/button';
 
 import {AuthService} from '@core/services/auth.service';
 
-import {Complaint} from '../../shared/models/complaint.model';
 import {ComplaintHomeService} from "./complaint-home.service";
-import {SearchByBarcodeComponent} from "../../shared/components/search-by-barcode.component";
+import {SearchByBarcodeComponent} from "../../shop/shared/components/search-by-barcode.component";
+import {ComplaintCreation} from "../../shared/models/complaintCreation.model";
+import {MatOption, MatSelect} from "@angular/material/select";
+import {SearchBarcodesByUserloggedComponent} from "./search-barcodes-by-userlogged.component";
 
 @Component({
     standalone: true,
     imports: [MatDialogContent, MatFormField, MatLabel, FormsModule, MatDialogActions, MatDialogTitle, MatInput,
-        MatDialogClose, MatButton, SearchByBarcodeComponent],
+        MatDialogClose, MatButton, SearchByBarcodeComponent, MatSelect, MatOption, SearchBarcodesByUserloggedComponent],
     templateUrl: 'complaint-creation-dialog.component.html',
     styleUrls: ['complaint-home-dialog.component.css']
 })
 
 export class ComplaintCreationDialogComponent {
-    complaint: Complaint;
+    complaintCreation: ComplaintCreation;
 
     constructor(private readonly complaintHomeService: ComplaintHomeService, private readonly dialog: MatDialog, private readonly authService: AuthService) {
-        this.complaint = {barcode: undefined, description: undefined};
+        this.complaintCreation = {barcode: "", description: "",userMobile:authService.getMobile()};
     }
 
     create(): void {
         this.dialog.closeAll();
-        /*this.complaintHomeService
-            .create(this.complaint)
-            .subscribe(() => this.dialog.closeAll());*/
+        this.complaintHomeService
+            .create(this.complaintCreation)
+            .subscribe(() => this.dialog.closeAll());
     }
 
+    addBarcode(barcode:string){
+        this.complaintCreation.barcode = barcode;
+    }
     invalid(): boolean {
-        return this.check(this.complaint.barcode) || this.check(this.complaint.description);
+        return this.check(this.complaintCreation.barcode) || this.check(this.complaintCreation.description);
     }
 
     check(attr: string): boolean {

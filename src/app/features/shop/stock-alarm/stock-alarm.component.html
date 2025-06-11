@@ -1,1 +1,19 @@
-<app-stock-alarm-list></app-stock-alarm-list>
+<div class="container">
+    <button (click)="searchWarnings()" mat-stroked-button>
+        <mat-icon>search</mat-icon>
+        Find warnings
+    </button>
+    <button (click)="searchCriticals()" mat-stroked-button>
+    <mat-icon>search</mat-icon>
+    Find criticals
+</button>
+</div>
+
+<app-crud
+        (create)="create()"
+        (read)="read($event)"
+        (update)="update($event)"
+        [data]="formattedStockAlarms"
+        [deleteAction]="false"
+        [title]="title"
+></app-crud>

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {
   MatDialog,
   MatDialogActions,
@@ -7,16 +7,15 @@ import {
   MatDialogRef,
   MatDialogTitle,
 } from "@angular/material/dialog";
-import {MatFormField} from "@angular/material/form-field";
-import {FormsModule} from "@angular/forms";
-import {MatInput} from "@angular/material/input";
+import {MatFormField, MatLabel} from "@angular/material/form-field";
+import {FormControl, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
+import {MatError, MatInput} from "@angular/material/input";
 import {MatIcon} from "@angular/material/icon";
-import {MatLabel} from "@angular/material/form-field";
-import {Observable} from "rxjs";
-import {CashierState} from "../cashier-closure/cashier-state.model";
 import {MatButton} from "@angular/material/button";
-import {map} from "rxjs/operators";
-import {CashierClosureService} from "../cashier-closure/cashier-closure.service";
+import {MatOption, MatSelect} from "@angular/material/select";
+import {MovementTypes} from "./MovementTypes";
+import {NgIf} from "@angular/common";
+import {CashMovementService} from "./cash-movement.service";
 
 @Component({
   selector: 'app-cash-movement-dialog',
@@ -30,7 +29,12 @@ import {CashierClosureService} from "../cashier-closure/cashier-closure.service"
     MatDialogClose,
     MatButton,
     MatDialogTitle,
-    MatLabel
+    MatLabel,
+    ReactiveFormsModule,
+    MatSelect,
+    MatOption,
+    MatError,
+    NgIf
   ],
   templateUrl: './cash-movement-dialog.component.html',
   standalone: true,
@@ -38,27 +42,30 @@ import {CashierClosureService} from "../cashier-closure/cashier-closure.service"
 })
 export class CashMovementDialogComponent {
 
-  protected amount: number;
-  cashierState: Observable<CashierState>;
+
+  readonly type = new FormControl('', [Validators.required]);
+  readonly amount = new FormControl('', [Validators.required, Validators.min(0.01)]);
+  readonly comment = new FormControl('', [Validators.required, Validators.minLength(1)]);
 
   constructor(private readonly dialog: MatDialog, private readonly dialogRef: MatDialogRef<CashMovementDialogComponent>,
-              private readonly cashierService: CashierClosureService) {
-    this.cashierState = this.cashierService.readState();
+              private readonly cashMovementService: CashMovementService) {
   }
 
   close(): void {
-    this.cashierService.readState()
-        .pipe(
-            map(cashierState => {
-              cashierState.totalCash += this.amount;
-              this.cashierService.updateState(cashierState)
-            })
-        ).subscribe(
-            () => this.dialogRef.close()
-        );
+    this.cashMovementService.addMovement({
+      type: MovementTypes[this.type.getRawValue()],
+      amount: Number.parseFloat(this.amount.getRawValue()),
+      comment: this.comment.getRawValue()
+    }).subscribe(
+        () => {
+          this.dialogRef.close();
+        }
+    );
   }
 
-  invalid(): boolean {
-    return !this.amount || this.amount === 0;
+  protected trimComment() {
+    this.comment.setValue(this.comment.getRawValue().trimStart())
   }
+
+  protected readonly MovementTypes = MovementTypes;
 }

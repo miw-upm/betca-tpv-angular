@@ -5,11 +5,11 @@
         <input [(ngModel)]="order.description" matInput required type="text"/>
     </mat-form-field> 
     <app-search-by-company [(company)]="order.providerCompany" (companyChange)="onCompanyChange()" class="full-width"></app-search-by-company>
-    <div *ngIf="order.orderLines.length > 0">
-        <div *ngFor="let orderLine of order.orderLines">
+    <div *ngIf="order.orderLinesList.length > 0">
+        <div *ngFor="let orderLine of order.orderLinesList">
             <mat-form-field class="full-width">
                 <mat-label>{{ orderLine.articleBarcode }}</mat-label>
-                <input [(ngModel)]="orderLine.requiredAmount" matInput type="number" min="0" step="1"/>
+                <input [(ngModel)]="orderLine.requiredAmount" (ngModelChange)="orderLine.finalAmount = orderLine.requiredAmount" matInput type="number" min="0" step="1"/>
             </mat-form-field>
         </div>
     </div>

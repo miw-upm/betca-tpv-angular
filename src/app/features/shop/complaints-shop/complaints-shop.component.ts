@@ -3,14 +3,17 @@ import {MatDialog} from '@angular/material/dialog';
 import {MatCard, MatCardContent} from '@angular/material/card';
 import {MatIcon} from '@angular/material/icon';
 import {of} from 'rxjs';
-
-import {ComplaintService} from '../../shared/services/complaint.service';
 import {ReadDetailDialogComponent} from '../../../common/dialogs/read-detail.dialog.component';
 import {CrudComponent} from '../../../common/components/crud.component';
 import {Complaint} from '../../shared/models/complaint.model';
 import {MatIconButton} from "@angular/material/button";
 import {ComplaintShopService} from "./complaint-shop.service";
-import {ComplaintUpdateShopDialogComponent} from "./complaint-update-shop-dialog.component";
+import {ComplaintUpdateAdminShopDialogComponent} from "./complaint-update-admin-shop-dialog.component";
+import {AuthService} from "@core/services/auth.service";
+import {ComplaintUpdateAdminModel} from "./complaintUpdateAdmin.model";
+import {ComplaintState} from "../../shared/models/complaintState.model";
+import {ComplaintUpdateManagementModel} from "./complaintUpdateManagement.model";
+import {ComplaintUpdateManagementShopDialogComponent} from "./complaint-update-management-shop-dialog.component";
 
 
 @Component({
@@ -22,7 +25,7 @@ export class ComplaintsShopComponent {
     title = 'Complaints management';
     complaints = of([]);
 
-    constructor(private readonly dialog: MatDialog, private readonly complaintShopService: ComplaintShopService) {
+    constructor(private readonly dialog: MatDialog, private readonly complaintShopService: ComplaintShopService,private readonly authService:AuthService) {
         this.searchAll();
     }
 
@@ -34,15 +37,65 @@ export class ComplaintsShopComponent {
         this.dialog.open(ReadDetailDialogComponent, {
             data: {
                 title: 'Complaint Details',
-                object: this.complaintShopService.read(complaint.id)
+                object: this.complaintShopService.read(complaint.trackingCode)
             }
         });
     }
 
-    update(complaint: Complaint){
+    update(complaint:Complaint){
+        if(this.isAdmin()){
+            this.updateAdmin(complaint);
+            return;
+        }
+        this.updateManagement(complaint);
+        return;
+    }
+    updateManagement(complaint: Complaint){
+        const complaintUpdate: ComplaintUpdateManagementModel = {
+            reply: complaint.reply,
+            state: (complaint.state.toString() == "OPEN" ? ComplaintState.OPEN:ComplaintState.CLOSED)
+        };
+
         this.dialog
-            .open(ComplaintUpdateShopDialogComponent)
+            .open(ComplaintUpdateManagementShopDialogComponent,{
+                data: {
+                    tittle: 'Complaint Update',
+                    trackingCode: complaint.trackingCode,
+                    complaint: complaintUpdate
+                }
+            })
             .afterClosed()
+            .subscribe(() => this.searchAll());
+    }
+
+    updateAdmin(complaint: Complaint){
+        const complaintUpdate: ComplaintUpdateAdminModel = {
+            userMobile: complaint.userMobile,
+            barcode: complaint.barcode,
+            description: complaint.description,
+            reply: complaint.reply,
+            state: (complaint.state.toString() == "OPEN" ? ComplaintState.OPEN:ComplaintState.CLOSED)
+        };
+
+        this.dialog
+            .open(ComplaintUpdateAdminShopDialogComponent,{
+                data: {
+                    tittle: 'Complaint Update',
+                    trackingCode: complaint.trackingCode,
+                    complaint: complaintUpdate
+                }
+            })
+            .afterClosed()
+            .subscribe(() => this.searchAll());
+    }
+
+    isAdmin():boolean{
+        return this.authService.isAdmin();
+    }
+
+    delete(complaint:Complaint){
+        this.complaintShopService
+            .delete(complaint.trackingCode)
             .subscribe(() => this.searchAll());
     }
 }

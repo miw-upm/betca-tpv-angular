@@ -21,18 +21,16 @@ import { MatIcon } from "@angular/material/icon";
 import { MatTooltip } from "@angular/material/tooltip";
 import { MatCheckbox } from "@angular/material/checkbox";
 import { Observable, of } from "rxjs";
-
 import { ShoppingCartService } from "./shopping-cart.service";
 import { NumberDialogComponent } from "@common/dialogs/number-dialog.component";
 import { InputData } from "@common/components/input-data.component";
 import { CheckOutDialogComponent } from "./check-out-dialog.component";
-import { SearchByBarcodeComponent } from "../../../shared/components/search-by-barcode.component";
+import { SearchByBarcodeComponent } from "../../shared/components/search-by-barcode.component";
 import { Shopping } from "./shopping.model";
 import { ShoppingState } from "./shopping-state.model";
 import { BudgetService } from "../../budgets/services/budget.service";
 import { Budget } from "../../budgets/models/budget";
 import { BudgetsSelectorDialogComponent } from "../../budgets/components/budgets-selector-dialog/budgets-selector-dialog.component";
-
 @Component({
   standalone: true,
   imports: [
@@ -252,14 +250,29 @@ export class ShoppingCartComponent implements OnInit {
       .create({
         shoppingList: this.shoppingCart,
       })
-      .subscribe((createdBudget: Budget) => {
-        console.log("CREATED BUDGET", createdBudget);
-      });
+      .subscribe();
   }
 
-  addDiscount(mobile): void {
-    this.discountControl.reset();
-    // TODO add discount
+  addDiscount(mobile: string): void {
+    this.shoppingCartService.readDiscount(+mobile).subscribe(
+      (customerDiscountDto) => {
+        const discount = customerDiscountDto.discount;
+        const minimumPurchase = customerDiscountDto.minimumPurchase;
+        if (this.totalShoppingCart >= minimumPurchase){
+          this.shoppingCart.forEach(shopping => {
+            if(shopping.discount < discount){
+              shopping.discount = discount;
+              shopping.updateTotal();
+            }
+          });
+        } else {
+          alert(`Debe gastar al menos ${minimumPurchase} € para aplicar el descuento`);
+          return ;
+        }
+        this.synchronizeShoppingCart();
+      }
+    )
+  
   }
 
   addOffer(offer): void {

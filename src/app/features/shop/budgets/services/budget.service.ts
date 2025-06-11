@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { IBudgetService } from "./interfaces/budget.interface";
-import { Observable, of } from "rxjs";
+import { map, Observable, of, startWith } from "rxjs";
 import { Budget, BudgetSearch, CreateBudget } from "../models/budget";
 import { HttpService } from "@core/services/http.service";
 import { Shopping } from "../../cashier-opened/shopping-cart/shopping.model";
@@ -16,40 +16,52 @@ export class BudgetService implements IBudgetService {
     return this.httpService
       .successful("Budget created successfully.")
       .error("Budget creation failed. Please check the values and try again.")
-      .post(EndPoints.BUDGETS, budget);
+      .post(EndPoints.BUDGETS, budget)
+      .pipe(map(this.mapBudget));
   }
 
-  read(reference: string): Observable<Budget> {
-    return of({
-      reference: "0001",
-      creationDate: new Date(),
-      shoppingList: [
-        new Shopping("0001", "Description 1", 1),
-        new Shopping("0001", "Description 1", 1),
-        new Shopping("0001", "Description 1", 1),
-      ],
-    });
+  read(id: string): Observable<Budget> {
+    return this.httpService
+      .get(`${EndPoints.BUDGETS}/${id}`)
+      .pipe(map(this.mapBudget));
   }
 
-  update(reference: string, budget: Budget): Observable<Budget> {
-    return of({
-      reference: "0001",
-      creationDate: new Date(),
-      shoppingList: [
-        new Shopping("0001", "Description 1", 1),
-        new Shopping("0001", "Description 1", 1),
-        new Shopping("0001", "Description 1", 1),
-      ],
-    });
+  update(id: string, budget: Budget): Observable<Budget> {
+    return this.httpService
+      .successful("Budget updated successfully.")
+      .error("Budget update failed. Please check the values and try again.")
+      .put(`${EndPoints.BUDGETS}/${id}`, budget);
   }
 
-  delete(reference: string): Observable<void> {
-    return of(void 0);
+  delete(id: string): Observable<void> {
+    return this.httpService
+      .successful("Budget deleted successfully.")
+      .error("Budget deletion failed. Please try again.")
+      .delete(`${EndPoints.BUDGETS}/${id}`);
   }
 
   search(budgetSearch: BudgetSearch): Observable<Budget[]> {
     return this.httpService
       .paramsFrom(budgetSearch)
-      .get(EndPoints.BUDGETS_SEARCH);
+      .get(EndPoints.BUDGETS_SEARCH)
+      .pipe(
+        startWith([]),
+        map((budgets: Budget[]) => budgets.map(this.mapBudget))
+      );
+  }
+
+  private mapBudget(budget: Budget): Budget {
+    return {
+      ...budget,
+      shoppingList: budget.shoppingList.map(
+        (shopping) =>
+          new Shopping(
+            shopping.barcode,
+            shopping.description,
+            shopping.retailPrice,
+            shopping.amount
+          )
+      ),
+    };
   }
 }

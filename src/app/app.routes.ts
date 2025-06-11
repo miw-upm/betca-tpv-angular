@@ -25,6 +25,8 @@ import { StockAlarmComponent } from "./features/shop/stock-alarm/stock-alarm.com
 import { StockAuditViewComponent } from './features/shop/stock-audit/components/stock-audit-view/stock-audit-view.component';
 import { StockAuditComponent } from './features/shop/stock-audit/stock-audit.component';
 import { VouchersComponent } from './features/shop/vouchers/vouchers.component';
+import { CustomerDiscountComponent } from "./features/shop/customer-discount/customer-discount.component";
+import {TicketPDFComponent} from "./features/shop/cashier-opened/tickets/ticket-pdf/ticket-pdf.component";
 
 export const routes: Routes = [
     { path: '', pathMatch: 'full', redirectTo: 'home/adviser' },
@@ -70,6 +72,7 @@ export const routes: Routes = [
             { path: 'slack-publish', component: SlackPublishComponent },
             { path: 'complaints', component: ComplaintsShopComponent },
             { path: 'stock-alarm', component: StockAlarmComponent },
+            { path: 'customer-discount', component: CustomerDiscountComponent },
             {
                 path: 'stock-audit',
                 children: [
@@ -78,5 +81,6 @@ export const routes: Routes = [
                 ]
             }
         ]
-    }
+    },
+    { path: 'getTicket', component: TicketPDFComponent },
 ];

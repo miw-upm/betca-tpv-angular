@@ -5,5 +5,12 @@ export interface StockAlarm {
     description: string;
     warning: number;
     critical: number;
-    stockAlarmLines: StockAlarmLine[];
+    stockAlarmLines?: StockAlarmLine[];
+}
+
+export interface LineInterface {
+    barcode: string;
+    stock: number;
+    warning: number;
+    critical: number;
 }

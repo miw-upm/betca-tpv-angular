@@ -1,0 +1,24 @@
+<h4 mat-dialog-title>{{ title }}</h4>
+<mat-dialog-content>
+    <mat-form-field>
+        <mat-label>Barcode:</mat-label>
+        <input [(ngModel)]="stockAlarmLineInterface.barcode" [readonly]="!isCreate()" matInput placeholder="Name" type="text">
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Warning</mat-label>
+        <input [(ngModel)]="stockAlarmLineInterface.warning" matInput placeholder="Warning" type="number">
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Critical</mat-label>
+        <input [(ngModel)]="stockAlarmLineInterface.critical" matInput placeholder="Critical" type="number">
+    </mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions>
+    <button mat-button mat-dialog-close>Close</button>
+    <button mat-raised-button (click)="create()" *ngIf="isCreate()" [disabled]="invalid()" color="primary">
+        Create
+    </button>
+    <button mat-raised-button (click)="update()" *ngIf="!isCreate()" [disabled]="invalid()" color="primary">
+        Update
+    </button>
+</mat-dialog-actions>

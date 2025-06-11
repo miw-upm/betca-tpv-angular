@@ -7,5 +7,5 @@ export interface Order {
     providerCompany: string;
     openingDate: Date;
     closingDate: Date;
-    orderLines: OrderLine[];
+    orderLinesList: OrderLine[];
 }

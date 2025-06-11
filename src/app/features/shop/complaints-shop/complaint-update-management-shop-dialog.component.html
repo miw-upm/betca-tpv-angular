@@ -3,16 +3,19 @@
     <div class="row">
         <mat-form-field class="full-width" >
             <mat-label>Reply</mat-label>
-            <input [(ngModel)]="complaint.reply" matInput required type="text"/>
+            <input [(ngModel)]="complaint.reply" matInput  type="text"/>
         </mat-form-field>
     </div>
 
     <div class="row">
         <mat-form-field class="full-width">
             <mat-label>State</mat-label>
-            <mat-select [(ngModel)]="complaint.state" required>
-                <mat-option *ngFor="let state of states" [value]="state">
-                    {{ state }}
+            <mat-select [(ngModel)]="complaint.state" >
+                <mat-option [value]="complaintStates.CLOSED">
+                    CLOSED
+                </mat-option>
+                <mat-option [value]="complaintStates.OPEN">
+                    OPEN
                 </mat-option>
             </mat-select>
         </mat-form-field>
@@ -23,6 +26,6 @@
 </mat-dialog-content>
 <mat-dialog-actions>
     <button mat-dialog-close mat-raised-button>Close</button>
-    <button (click)="update()" [disabled]=invalid() color="primary" mat-raised-button>Update
+    <button (click)="update()" color="primary" mat-raised-button>Update
     </button>
 </mat-dialog-actions>

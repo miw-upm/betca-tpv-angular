@@ -8,8 +8,8 @@ export const BUDGET_SERVICE = new InjectionToken<IBudgetService>(
 
 export interface IBudgetService {
   create(budget: CreateBudget): Observable<Budget>;
-  read(reference: string): Observable<Budget>;
-  update(reference: string, budget: Budget): Observable<Budget>;
-  delete(reference: string): Observable<void>;
+  read(id: string): Observable<Budget>;
+  update(id: string, budget: Budget): Observable<Budget>;
+  delete(id: string): Observable<void>;
   search(budgetSearch: BudgetSearch): Observable<Budget[]>;
 }

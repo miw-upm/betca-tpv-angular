@@ -1,85 +1,54 @@
 import {Injectable} from '@angular/core';
-import {Observable, of} from 'rxjs';
+import {Observable} from 'rxjs';
 import {OrderSearch} from "./order-search.model";
 import {HttpService} from '@core/services/http.service';
 import {Order} from '../shared/models/order.model';
 
+import {EndPoints} from "@core/end-points";
+import {SharedDateFormatterService} from "../shared/services/shared.date-formatter.service";
 @Injectable({providedIn: 'root'})
 export class OrderService {
     static readonly SEARCH = '/search';
 
-    constructor(private readonly httpService: HttpService) {
+    constructor(private readonly httpService: HttpService, private readonly SharedDateFormatterService: SharedDateFormatterService) {
     }
 
     create(order: Order): Observable<Order> {
-        return of({ ...order});
-    }
-
-    delete(order: Order): Observable<Order> {
-        return of({ ...order});
+        const orderFormatted = {
+            ...order,
+            openingDate: this.SharedDateFormatterService.formatDate(order.openingDate),
+        };
+        return this.httpService
+            .post(EndPoints.ORDERS, orderFormatted);
     }
 
     read(reference: string): Observable<Order> {
-        return of({
-            reference,
-            description: 'Mock Description',
-            providerCompany: 'pro1',
-            openingDate: new Date(),
-            closingDate: undefined,
-            orderLines: [{
-                articleBarcode: 'mock-barcode',
-                requiredAmount: 4,
-                finalAmount: 4
-            },
-            {
-                articleBarcode: 'mock-2',
-                requiredAmount: 3,
-                finalAmount: 3
-            }]
-        });
+        return this.httpService
+            .error("Order not found.")
+            .get(EndPoints.ORDERS + '/' + reference);
     }
 
     update(oldReference: string, order: Order): Observable<Order> {
-        return of({ ...order, reference: oldReference });
+        const orderFormatted = {
+            ...order,
+            openingDate: this.SharedDateFormatterService.formatDate(order.openingDate),
+        };
+
+        return this.httpService
+            .successful("Order closed successfully.")
+            .error('Order update failed. Please check the values and try again.')
+            .put(EndPoints.ORDERS + '/' + oldReference, orderFormatted);
     }
 
     search(orderSearch: OrderSearch): Observable<Order[]> {
-        return of([
-            {
-                reference: 'mock-ref-1',
-                description: 'Mock ggg',
-                providerCompany: 'pro1',
-                openingDate: new Date(),
-                closingDate: new Date(),
-                orderLines: [{
-                    articleBarcode: 'mock-barcode',
-                    requiredAmount: 4,
-                    finalAmount: 2
-                },
-                {
-                    articleBarcode: 'mock-2',
-                    requiredAmount: 3,
-                    finalAmount: 1
-                }]
-            },
-            {
-                reference: 'mock-ref-2',
-                description: 'Mock Description',
-                providerCompany: 'pro2',
-                openingDate: new Date(),
-                closingDate: undefined,
-                orderLines: [{
-                    articleBarcode: 'mock-barcode',
-                    requiredAmount: 4,
-                    finalAmount: 2
-                },
-                {
-                    articleBarcode: 'mock-2',
-                    requiredAmount: 3,
-                    finalAmount: 1
-                }]
-            }
-        ]);
+        return this.httpService
+        .paramsFrom(orderSearch)
+        .get(EndPoints.ORDERS + OrderService.SEARCH);
+    }
+
+    delete(reference: string): Observable<void> {
+        return this.httpService
+        .delete(EndPoints.ORDERS + '/' + reference);
     }
 }
 
