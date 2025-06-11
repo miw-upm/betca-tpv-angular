@@ -15,6 +15,8 @@ import {Offer} from "../../shared/models/offer.model";
 import {Tickets} from "../tickets/models/tickets.model";
 import {AuthService} from "@core/services/auth.service";
 import { HttpClient} from '@angular/common/http';
+import { InvoiceService } from '../../invoices/services/invoice.service';
+import { Invoice } from '../../invoices/models/invoice.model';
 
 @Injectable({providedIn: 'root'})
 export class ShoppingCartService {
@@ -23,7 +25,7 @@ export class ShoppingCartService {
     static readonly VARIOUS_LENGTH = 5;
 
     constructor(private readonly dialog: MatDialog, private readonly articleShopService: SharedShopArticleService, private readonly httpService: HttpService,
-                private readonly http: HttpClient, private readonly authService: AuthService) {
+                private readonly http: HttpClient, private readonly authService: AuthService, private readonly invoiceService: InvoiceService) {
     }
 
     read(newBarcode: string): Observable<Shopping> {
@@ -57,14 +59,31 @@ export class ShoppingCartService {
             );
     }
 
-    createTicketAndPrintReceipts(ticketCreation: TicketCreation, voucher: number, requestedInvoice: boolean, requestedGiftTicket: boolean, requestDataProtectionAct: boolean, useCustomerPoints: boolean): Observable<void> {
+    createTicketAndPrintReceipts(ticketCreation: TicketCreation, voucher: number, requestedInvoice: boolean, requestedGiftTicket: boolean, requestDataProtectionAct: boolean, useCustomerPoints: boolean, createInvoice?: boolean): Observable<void> {
         return this.httpService
             .post(EndPoints.TICKETS, ticketCreation)
             .pipe(
                 concatMap(ticket => {
                     let receipts = this.printTicket(ticket.id);
+                    console.log("Ticket ID: ", ticket.id);
+                    console.log("Ticket Creation: ", ticket);
+                    if (createInvoice){
+                       const invoice = {
+                            identity: undefined,
+                            creationDate: new Date(),
+                            baseTax: 0,
+                            taxValue: 0,
+                            user: this.authService.getUser(),
+                            ticket: undefined
+                            }
+                        invoice.ticket = {
+                            card: "", cash: "", class: "", creationDate: undefined, id: ticket.id, note: "",
+                            reference: "", shoppingList: undefined, userMobile: "", voucher: ""
+                        };
+                        invoice.user.mobile =  ticket.user.mobile;
+                         receipts = iif(() => requestedInvoice, merge(receipts, this.createInvoiceAndPrint(invoice)), receipts);
+                    }
                     receipts = iif(() => voucher > 0, merge(receipts, this.createVoucherAndPrint(voucher)), receipts);
-                    receipts = iif(() => requestedInvoice, merge(receipts, this.createInvoiceAndPrint(ticket.id)), receipts);
                     receipts = iif(() => requestedGiftTicket, merge(receipts, this.createGiftTicketAndPrint(ticket.id, ticketCreation.messageGift)), receipts);
                     receipts = iif(() => requestDataProtectionAct, merge(receipts, this.createDataProtectionActAndPrint(ticket)), receipts);
                     return receipts;
@@ -80,9 +99,9 @@ export class ShoppingCartService {
         return EMPTY; // TODO change EMPTY
     }
 
-    createInvoiceAndPrint(ticket: Tickets): Observable<void> {
+    createInvoiceAndPrint(invoice: Invoice): Observable<void> {
         return this.httpService
-            .post(EndPoints.INVOICES, {ticket: ticket, user: this.authService.getUser()})
+            .post(EndPoints.INVOICES, {ticket: invoice.ticket.id, mobile: invoice.user.mobile})
             .pipe(concatMap(invoiceReceipt => {
                 return this.httpService.pdf().get(EndPoints.INVOICES + '/' + invoiceReceipt.identity + ShoppingCartService.RECEIPT);}))
     }

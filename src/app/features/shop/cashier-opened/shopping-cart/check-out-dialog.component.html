@@ -48,7 +48,7 @@
             <customer-points-profile></customer-points-profile>
         </div>
     </mat-checkbox>
-    <mat-checkbox [(ngModel)]="requestedInvoice" [disabled]="invalidInvoice()">
+    <mat-checkbox [(ngModel)]="requestedInvoice">
         <span> Create Invoice</span>
     </mat-checkbox>
     <mat-checkbox [(ngModel)]="requestedGiftTicket" (change)="onGiftTicketChange()" [disabled]="false">

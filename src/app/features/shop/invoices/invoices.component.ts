@@ -71,7 +71,8 @@ export class  InvoicesComponent implements OnInit {
     }
 
     update(invoice: Invoice): void {
-        const dialogRef = this.dialog.open(InvoiceUpdatingComponent, {data: invoice.identity});
+        console.log('Updating invoice: ', invoice);
+        const dialogRef = this.dialog.open(InvoiceUpdatingComponent, {data: {identity: invoice.identity, mobile:invoice["userMobile"] ?? invoice.user.mobile  } });
         dialogRef.componentInstance.invoiceEventEmitter.subscribe(() => this.loadInvoice());
     }
 
