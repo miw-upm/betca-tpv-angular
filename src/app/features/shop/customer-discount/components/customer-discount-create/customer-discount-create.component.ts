@@ -1,14 +1,14 @@
 import { Component } from "@angular/core";
 import { CustomerDiscount } from "../../models/customer-discount.model";
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CustomerDiscountService } from "../../customer-discount-service/customer-discount-service";
-import { Inject } from "@angular/core";
-import { MAT_DIALOG_DATA } from "@angular/material/dialog";
-import { MatDialog } from "@angular/material/dialog";
-import { MatDialogClose } from "@angular/material/dialog";
-import { MatDialogContent } from "@angular/material/dialog";
-import { MatDialogActions } from "@angular/material/dialog";
-import { Validators } from "@angular/forms";
+import {
+  MatDialog,
+  MatDialogClose,
+  MatDialogContent,
+  MatDialogActions
+} from "@angular/material/dialog";
+
 @Component({
   selector: 'app-customer-discount-create',
   imports: [MatDialogContent, MatDialogClose, MatDialogActions, ReactiveFormsModule],
@@ -25,7 +25,7 @@ export class CustomerDiscountCreateComponent {
     minimumPurchase: new FormControl('', Validators.required),
   });
 
-  constructor(private customerDiscountService: CustomerDiscountService, public dialog: MatDialog) { }
+  constructor(private readonly customerDiscountService: CustomerDiscountService, public dialog: MatDialog) { }
 
 
   create(): void {
