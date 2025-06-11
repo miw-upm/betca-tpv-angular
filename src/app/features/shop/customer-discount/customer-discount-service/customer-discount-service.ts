@@ -42,4 +42,8 @@ export class CustomerDiscountService {
     update(mobile: number, customerDiscount: CustomerDiscount): Observable<CustomerDiscount> {
         return this.httpService.put(`${EndPoints.CUSTOMER_DISCOUNT}/${mobile}`, customerDiscount)
     }
+
+    delete(mobile: number): Observable<any> {
+        return this.httpService.delete(`${EndPoints.CUSTOMER_DISCOUNT}/${mobile}`);
+    }
 }

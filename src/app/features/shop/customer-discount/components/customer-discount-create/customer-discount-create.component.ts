@@ -25,7 +25,7 @@ export class CustomerDiscountCreateComponent {
     minimumPurchase: new FormControl('', Validators.required),
   });
 
-  constructor(@Inject(MAT_DIALOG_DATA) public data: CustomerDiscount, private customerDiscountService: CustomerDiscountService, public dialog: MatDialog) { }
+  constructor(private customerDiscountService: CustomerDiscountService, public dialog: MatDialog) { }
 
 
   create(): void {
