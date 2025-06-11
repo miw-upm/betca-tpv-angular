@@ -10,7 +10,7 @@ export interface CustomerDiscount {
 export interface CustomerDiscountDto {
   userMobile: number;
   note: string;
-  registrationDate: Date;
+  registrationDate: string;
   discount: number;
   minimumPurchase: number;
 }

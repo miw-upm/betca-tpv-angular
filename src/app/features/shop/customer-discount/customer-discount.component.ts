@@ -7,6 +7,7 @@ import { CommonModule } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { CustomerDiscountCreateComponent } from './components/customer-discount-create/customer-discount-create.component';
 import { CustomerDiscountService } from './customer-discount-service/customer-discount-service';
+import { CustomerDiscountUpdateComponent } from './components/customer-discount-update/customer-discount-update.component';
 @Component({
     selector: 'app-customer-discount',
     imports: [
@@ -34,14 +35,16 @@ export class CustomerDiscountComponent {
     }
 
     create() {
-      this.dialog.open(CustomerDiscountCreateComponent);
+      const dialogLog = this.dialog.open(CustomerDiscountCreateComponent);
+      dialogLog.afterClosed().subscribe(() => this.findAll());
     }
 
     read($event: any) {
         throw new Error("Method not implemented.");
     }
 
-    update($event: any) {
-        throw new Error("Method not implemented.");
+    update(customerDiscountDto: CustomerDiscountDto) {
+        const dialogLog = this.dialog.open(CustomerDiscountUpdateComponent, {data: customerDiscountDto});
+        dialogLog.afterClosed().subscribe(() => this.findAll());
     }
 }

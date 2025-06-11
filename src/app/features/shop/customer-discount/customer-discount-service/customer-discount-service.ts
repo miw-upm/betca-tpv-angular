@@ -38,4 +38,8 @@ export class CustomerDiscountService {
     findAll(): Observable<CustomerDiscountDto[]> {
         return this.httpService.get(EndPoints.CUSTOMER_DISCOUNT);
     }
+
+    update(mobile: number, customerDiscount: CustomerDiscount): Observable<CustomerDiscount> {
+        return this.httpService.put(`${EndPoints.CUSTOMER_DISCOUNT}/${mobile}`, customerDiscount)
+    }
 }
