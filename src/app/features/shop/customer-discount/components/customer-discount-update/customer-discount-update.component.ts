@@ -19,7 +19,7 @@ import { Validators } from "@angular/forms";
   standalone: true
 })
 export class CustomerDiscountUpdateComponent {
-  customerDiscountDto: CustomerDiscountDto; 
+  userMobile: number;
   discountForm = new FormGroup({
     note: new FormControl('', Validators.required),
     discount: new FormControl('', Validators.required),
@@ -27,16 +27,14 @@ export class CustomerDiscountUpdateComponent {
   });
 
   constructor(@Inject(MAT_DIALOG_DATA) data: CustomerDiscountDto, private customerDiscountService: CustomerDiscountService, public dialog: MatDialog) { 
-     this.customerDiscountDto = data || {
-            userMobile: undefined, note: undefined, registrationDate: undefined, discount: undefined, minimumPurchase: undefined
-        };
+     this.userMobile = data.userMobile;
   }
 
 
   update(): void {
     if (this.discountForm.valid) {
       const formValue = this.discountForm.value;
-      const userMobile = this.customerDiscountDto.userMobile;
+      const userMobile = this.userMobile;
       const customerDiscount: CustomerDiscount = {
         user: {
           mobile: userMobile,
