@@ -15,6 +15,7 @@ import {Offer} from "../../shared/models/offer.model";
 import {Tickets} from "../tickets/models/tickets.model";
 import {AuthService} from "@core/services/auth.service";
 import { HttpClient} from '@angular/common/http';
+import { CustomerDiscountDto } from '../../customer-discount/models/customer-discount.model';
 
 @Injectable({providedIn: 'root'})
 export class ShoppingCartService {
@@ -113,5 +114,9 @@ export class ShoppingCartService {
             .successful("Offer applied.")
             .error("Offer not found.")
             .get(EndPoints.OFFERS + '/' + reference);
+    }
+
+    readDiscount(mobile: number):Observable<CustomerDiscountDto>{
+        return this.httpService.get(`${EndPoints.CUSTOMER_DISCOUNT}/${mobile}`);
     }
 }
