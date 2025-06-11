@@ -23,7 +23,7 @@ export class CustomerDiscountComponent {
     title = "Customer Discounts";
 
 
-    constructor(private dialog: MatDialog, private customerDiscountService: CustomerDiscountService) {
+    constructor(private readonly dialog: MatDialog, private readonly customerDiscountService: CustomerDiscountService) {
     }
 
     ngOnInit() {

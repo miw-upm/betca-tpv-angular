@@ -7,7 +7,7 @@ import { HttpService } from "@core/services/http.service";
 @Injectable({ providedIn: "root" })
 export class CustomerDiscountService {
 
-    constructor(private httpService: HttpService) {
+    constructor(private readonly httpService: HttpService) {
     }
 
 

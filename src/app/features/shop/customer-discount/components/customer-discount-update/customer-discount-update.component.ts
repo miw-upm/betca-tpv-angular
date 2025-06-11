@@ -1,16 +1,16 @@
-import { Component } from "@angular/core";
+import { Component, Inject } from "@angular/core";
 import { CustomerDiscount } from "../../models/customer-discount.model";
-import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CustomerDiscountService } from "../../customer-discount-service/customer-discount-service";
-import { Inject } from "@angular/core";
-import { MAT_DIALOG_DATA, MatDialogModule } from "@angular/material/dialog";
-import { MatDialog } from "@angular/material/dialog";
-import { MatDialogClose } from "@angular/material/dialog";
-import { MatDialogContent } from "@angular/material/dialog";
-import { MatDialogActions } from "@angular/material/dialog";
+import {
+  MAT_DIALOG_DATA,
+  MatDialogModule,
+  MatDialog,
+  MatDialogClose,
+  MatDialogContent,
+  MatDialogActions
+} from "@angular/material/dialog";
 import { CustomerDiscountDto } from "../../models/customer-discount.model";
-import { Validators } from "@angular/forms";
-
 @Component({
   selector: 'app-customer-discount-update',
   imports: [MatDialogModule, MatDialogContent, MatDialogClose, MatDialogActions, ReactiveFormsModule],
@@ -26,8 +26,8 @@ export class CustomerDiscountUpdateComponent {
     minimumPurchase: new FormControl('', Validators.required),
   });
 
-  constructor(@Inject(MAT_DIALOG_DATA) data: CustomerDiscountDto, private customerDiscountService: CustomerDiscountService, public dialog: MatDialog) { 
-     this.userMobile = data.userMobile;
+  constructor(@Inject(MAT_DIALOG_DATA) data: CustomerDiscountDto, private readonly customerDiscountService: CustomerDiscountService, public dialog: MatDialog) {
+    this.userMobile = data.userMobile;
   }
 
 
