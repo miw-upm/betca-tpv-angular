@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
-import { CustomerDiscount, CustomerDiscountDto } from "./models/customer-discount.model"
+import { CustomerDiscountDto } from "./models/customer-discount.model"
 import { CrudComponent } from "@common/components/crud.component";
 import { Observable, of } from "rxjs";
-import { map } from "rxjs/operators";
 import { CommonModule } from '@angular/common';
 import { MatDialog } from '@angular/material/dialog';
 import { CustomerDiscountCreateComponent } from './components/customer-discount-create/customer-discount-create.component';
