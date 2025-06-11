@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { StockAuditListComponent } from "./components/stock-audit-list/stock-audit-list.component";
 import { MatCardModule } from '@angular/material/card';
+import { StockAuditListComponent } from "./components/stock-audit-list/stock-audit-list.component";
 
 @Component({
   selector: 'app-stock-audit',

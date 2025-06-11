@@ -1,32 +1,70 @@
 .container {
-    display: flex;
-    justify-content: center;
-    height: 100%;
-    background-color: #f5f5f5;
-    padding: 20px;
-    box-sizing: border-box;
+  max-width: 900px;
+  margin: 2rem auto;
+}
+
+mat-card {
+  margin-bottom: 2rem;
+  padding: 1rem;
+}
+
+mat-card-title {
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+}
+
+mat-card-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+table {
+  width: 100%;
+  margin-top: 1rem;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  text-align: center;
+  padding: 0.5em;
+}
+
+th {
+  background-color: #e0e0e0;
+  font-weight: bold;
+}
+
+input[type="number"] {
+  width: 70px;
+  text-align: right;
+  padding: 0.3em;
+  border: 1px solid #bdbdbd;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+button[mat-raised-button] {
+  margin-top: 1.5rem;
+  align-self: flex-end;
+}
+
+@media (max-width: 700px) {
+  .container {
+    max-width: 100%;
+    padding: 1rem;
   }
-  
-  .audit-card {
-    max-width: 900px;
-    width: 100%;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    border-radius: 16px;
-    padding: 24px;
+
+  table {
+    font-size: 0.95rem;
   }
-  
-  mat-card-header {
-    margin-bottom: 16px;
+
+  input[type="number"] {
+    width: 50px;
   }
-    .audit-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      width: 100%;
-    }
-  
-    .audit-actions {
-      display: flex;
-      gap: 10px;
-      /* Espaciado entre los botones */
-    }
+}

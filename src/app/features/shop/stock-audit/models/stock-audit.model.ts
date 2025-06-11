@@ -1,21 +1,31 @@
+import { Article as BaseArticle } from '../../../shared/models/article.model';
+
+/**
+ * Representa una pérdida de artículo detectada en una auditoría.
+ */
 export interface ArticleLoss {
   barcode: string;
   amount: number;
 }
 
-export interface Article {
-  barcode: string;
-  description: string;
-  stock: number;
+/**
+ * Extiende el modelo base de artículo con la cantidad real contada durante la auditoría.
+ */
+export interface AuditedArticle extends BaseArticle {
+  stock: number;      // Stock teórico al momento de la auditoría
+  real?: number;      // Cantidad real contada (puede ser null si no está auditado)
 }
 
+/**
+ * Estructura principal de una auditoría de stock.
+ */
 export interface StockAudit {
   id: string;
-  creationDate: Date;
-  updateDate: Date;
-  closeDate: Date;
-  articlesWithoutAudit: Article[];
+  creationDate: string | Date;
+  updateDate: string | Date;
+  closeDate: string | Date | null;
+  articlesWithoutAudit: BaseArticle[];
   lossValue: number;
   losses: ArticleLoss[];
-  articlesAudited: Article[];
+  articlesAudited: AuditedArticle[];
 }

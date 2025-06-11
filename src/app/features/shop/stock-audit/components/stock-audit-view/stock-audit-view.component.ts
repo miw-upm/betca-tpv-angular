@@ -1,68 +1,77 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
-import { MatListModule } from '@angular/material/list';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableModule } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
 import { StockAudit } from '../../models/stock-audit.model';
 import { StockAuditService } from '../../services/stock-audit.service';
-import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-stock-audit-view',
+  standalone: true,
   imports: [
-    MatListModule,
-    MatCardModule,
-    MatTableModule,
     CommonModule,
-    MatButtonModule
+    FormsModule,
+    MatCardModule,
+    MatButtonModule,
+    MatTableModule
   ],
   templateUrl: './stock-audit-view.component.html',
   styleUrl: './stock-audit-view.component.css'
 })
 export class StockAuditViewComponent {
-
-  displayedArticleColumns: string[] = ['name', 'quantity'];
-  displayedLossColumns: string[] = ['articleName', 'lostQuantity'];
   stockAudit: StockAudit;
+  pendingArticles = [];
+  auditedArticles = [];
+
+  get isClosed(): boolean {
+    return !!this.stockAudit?.closeDate;
+  }
+
   constructor(
     private _route: ActivatedRoute,
     private _service: StockAuditService,
     private readonly snackBar: MatSnackBar
-
   ) { }
 
   ngOnInit(): void {
-    let id = this._route.snapshot.paramMap.get('id');
+    const id = this._route.snapshot.paramMap.get('id');
     this.read(id);
   }
 
   read(id: string) {
-    this._service.read(id)
-      .subscribe(data => {
-        this.stockAudit = data;
-      })
+    this._service.read(id).subscribe(data => {
+      this.stockAudit = data;
+      // Aquí el cambio importante:
+      this.pendingArticles = data.articlesWithoutAudit; // ver artículos pendientes
+      this.auditedArticles = data.articlesAudited || []; // ver artículos auditados
+    });
   }
 
-  close() {
-    this._service.close(this.stockAudit.id)
+  auditar() {
+    const auditedNow = this.pendingArticles.filter(a => a.real != null && a.real !== '');
+    if (auditedNow.length === 0) return;
+    this._service.updateAuditRealValues(this.stockAudit.id, auditedNow)
       .subscribe(() => {
-        this.snackBar.open("Stock audit close", "Success", {
-          duration: 5000
-        });
+        this.snackBar.open("Artículos auditados actualizados", "Success", { duration: 5000 });
         this.read(this.stockAudit.id);
       });
   }
 
-  update() {
-    this._service.update(this.stockAudit.id)
+  closeAudit() {
+    this._service.closeAudit(this.stockAudit.id)
       .subscribe(() => {
-        this.snackBar.open("Stock audit update", "Success", {
-          duration: 5000
-        });
+        this.snackBar.open("Auditoría cerrada", "Success", { duration: 5000 });
         this.read(this.stockAudit.id);
       });
   }
 
+  get totalLoss() {
+    return this.auditedArticles
+      .map(a => Math.max(0, a.stock - a.real))
+      .reduce((a, b) => a + b, 0);
+  }
 }
