@@ -1,4 +1,4 @@
-<h2 mat-dialog-title>Create New Tag</h2>
+<h2 mat-dialog-title>Update Tag</h2>
 <mat-dialog-content>
   <form #form="ngForm">
     <mat-form-field appearance="outline" class="full-width">
@@ -19,20 +19,18 @@
       <mat-hint>Enter a description for the tag</mat-hint>
     </mat-form-field>
 
-      <mat-form-field class="full-width" appearance="outline">
-          <mat-label>Related Article</mat-label>
-          <mat-select [(ngModel)]="productIds" name="productIds">
-              <mat-option *ngFor="let art of availableArticle" [value]="art.barcode">
-                  {{ art.description }}
-              </mat-option>
-          </mat-select>
-      </mat-form-field>
-
+    <mat-form-field class="full-width" appearance="outline">
+      <mat-label>Related Article</mat-label>
+      <mat-select [(ngModel)]="productIds" name="productIds">
+        <mat-option *ngFor="let art of availableArticle" [value]="art.barcode">
+          {{ art.description }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
   </form>
 </mat-dialog-content>
 
 <mat-dialog-actions align="end">
   <button mat-button mat-dialog-close>Cancel</button>
-  <button mat-raised-button color="primary" (click)="create()" [disabled]="form.invalid">Create</button>
+  <button mat-raised-button color="primary" (click)="update()" [disabled]="form.invalid">Update</button>
 </mat-dialog-actions>
-

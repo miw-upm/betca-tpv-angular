@@ -14,10 +14,27 @@
         <mat-hint>9 digits</mat-hint>
     </mat-form-field>
     <mat-form-field class="full-width">
+        <mat-label>Reference</mat-label>
+        <input [(ngModel)]="article.reference" matInput type="email">
+    </mat-form-field>
+    <mat-form-field class="full-width">
+        <mat-label>Stock</mat-label>
+        <input [(ngModel)]="article.stock" matInput type="number"/>
+    </mat-form-field>
+    <mat-form-field class="full-width">
         <mat-label>Tax</mat-label>
         <mat-select [(ngModel)]="article.tax">
             <mat-option *ngFor="let tax of taxValues" [value]="tax">
                 {{ tax }}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+    <mat-form-field class="full-width">
+        <mat-label>Tag</mat-label>
+        <mat-select [(ngModel)]="article.tag">
+            <mat-option [value]="undefined">None</mat-option>
+            <mat-option *ngFor="let tag of tags" [value]="tag">
+                {{ tag.name }} ({{ tag.group }})
             </mat-option>
         </mat-select>
     </mat-form-field>
@@ -32,5 +49,6 @@
     <button mat-dialog-close mat-raised-button>Close</button>
     <button (click)="create()" *ngIf="isCreate()" [disabled]=invalid() color="primary" mat-raised-button>Create
     </button>
-  
+    <button (click)="update()" *ngIf="!isCreate()" [disabled]=invalid() color="primary" mat-raised-button>Update
+    </button>
 </mat-dialog-actions>

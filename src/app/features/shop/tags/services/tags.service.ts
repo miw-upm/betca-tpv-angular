@@ -1,26 +1,36 @@
 import { Injectable } from '@angular/core';
-import { Observable, throwError } from 'rxjs';
-import { map } from 'rxjs/operators';
-
+import { Observable, Subject } from 'rxjs';
+import { Tag } from '../models/tags.model';
 import { HttpService } from '@core/services/http.service';
 import { EndPoints } from '@core/end-points';
-import { Tag } from '../models/tags.model';
+import {tap} from "rxjs/operators";
 
 @Injectable({
-    providedIn: 'root'
+  providedIn: 'root'
 })
 export class TagsService {
     static readonly SEARCH = '/search';
-    static readonly POPULAR = '/popular';
-    static readonly SALE = '/sale';
-    static readonly NEW = '/new';
+    static readonly SEARCH_BY_GROUP = '/search-by-group';
+
+    private tagsUpdated = new Subject<void>();
+
+    // Observable that components can subscribe to be notified of tag updates
+    public tagsUpdated$ = this.tagsUpdated.asObservable();
 
     constructor(private readonly httpService: HttpService) {
     }
 
     create(tag: Tag): Observable<Tag> {
         return this.httpService
-            .post(EndPoints.TAGS, tag);
+            .post(EndPoints.TAGS, tag)
+            .pipe(
+                tap(() => this.tagsUpdated.next()) // ✅ se ejecuta solo al suscribirse desde el componente
+            );
+    }
+
+    searchAll(): Observable<Tag[]> {
+        return this.httpService
+            .get(EndPoints.TAGS);
     }
 
     read(id: string): Observable<Tag> {
@@ -29,39 +39,31 @@ export class TagsService {
     }
 
     update(id: string, tag: Tag): Observable<Tag> {
-        if (!id) {
-            return throwError(() => new Error('ID is required for update'));
-        }
         return this.httpService
-            .put(EndPoints.TAGS + '/' + id, tag);
+            .successful()
+            .put(EndPoints.TAGS + '/' + id, tag)
+            .pipe(
+                tap(() => this.tagsUpdated.next()) // ✅ se ejecuta solo al suscribirse desde el componente
+            );
     }
 
     delete(id: string): Observable<void> {
         return this.httpService
-            .delete(EndPoints.TAGS + '/' + id);
+            .delete(EndPoints.TAGS + '/' + id)
+            .pipe(
+                tap(() => this.tagsUpdated.next()) // ✅ se ejecuta solo al suscribirse desde el componente
+            );
     }
 
-    search(query?: Partial<Tag>): Observable<Tag[]> {
-        const queryParams = query ? '?' + Object.entries(query)
-            .filter(([_, value]) => value !== undefined && value !== '')
-            .map(([key, value]) => `${key}=${value}`)
-            .join('&') : '';
+    findByName(name: string): Observable<Tag[]> {
         return this.httpService
-            .get(EndPoints.TAGS + TagsService.SEARCH + queryParams);
+            .param('name', name)
+            .get(EndPoints.TAGS + TagsService.SEARCH);
     }
 
-    getPopularTags(): Observable<Tag[]> {
+    findByGroup(group: string): Observable<Tag[]> {
         return this.httpService
-            .get(EndPoints.TAGS + TagsService.POPULAR);
-    }
-
-    getSaleTags(): Observable<Tag[]> {
-        return this.httpService
-            .get(EndPoints.TAGS + TagsService.SALE);
-    }
-
-    getNewTags(): Observable<Tag[]> {
-        return this.httpService
-            .get(EndPoints.TAGS + TagsService.NEW);
+            .param('group', group)
+            .get(EndPoints.TAGS + TagsService.SEARCH_BY_GROUP);
     }
 }

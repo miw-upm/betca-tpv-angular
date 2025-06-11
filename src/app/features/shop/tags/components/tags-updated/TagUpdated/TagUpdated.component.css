@@ -1,25 +1,21 @@
 :host {
   display: block;
-  padding: 20px;
 }
 
-mat-card {
-  max-width: 500px;
-  margin: 0 auto;
-}
-
-mat-form-field {
+.full-width {
   width: 100%;
   margin-bottom: 16px;
 }
 
-.button-container {
-  display: flex;
-  justify-content: flex-end;
-  gap: 8px;
-  margin-top: 16px;
+mat-dialog-content {
+  min-width: 350px;
+  padding-top: 10px;
+}
+
+mat-dialog-actions {
+  padding: 16px 0;
 }
 
 textarea {
-  min-height: 100px;
+  resize: none;
 }

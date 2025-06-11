@@ -1,74 +1,82 @@
 import { CommonModule } from "@angular/common";
-import { Component, Inject, ChangeDetectionStrategy } from "@angular/core";
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from "@angular/forms";
+import { ChangeDetectionStrategy, Component, Inject, OnInit } from "@angular/core";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { MatButtonModule } from "@angular/material/button";
 import { MatCardModule } from "@angular/material/card";
-import { MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
+import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from "@angular/material/dialog";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatIconModule } from "@angular/material/icon";
 import { MatInputModule } from "@angular/material/input";
-import { TagsService } from "../../../services/tags.service";
+import { MatSelectModule } from "@angular/material/select";
+import { MatSnackBar } from "@angular/material/snack-bar";
+import { ArticleService } from "app/features/shop/articles/article.service";
+import { Article } from "../../../../../shared/models/article.model";
 import { Tag } from "../../../models/tags.model";
+import { TagsService } from "../../../services/tags.service";
 
 @Component({
   standalone: true,
-  selector: 'app-tag-updated',
+  selector: 'app-tags-updating-component',
   imports: [
     CommonModule,
-    ReactiveFormsModule,
+    FormsModule,
     MatIconModule,
     MatCardModule,
     MatButtonModule,
     MatDialogModule,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
+    MatSelectModule,
+    ReactiveFormsModule,
+    FormsModule
   ],
-  templateUrl: './TagasUpdatedComponent.html',
-  styleUrls: ['./TagUpdated.component.css'],
+  providers: [TagsService],
+  templateUrl: './TagsUpdatedComponent.component.html',
+styleUrls: ['./TagUpdatedComponent.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TagUpdatedComponent {
-  tagForm: FormGroup;
+export class TagsUpdatingComponentComponent implements OnInit {
+  tag: Tag;
+  availableArticle: Article[] = [];
+  productIds: string = '';
 
   constructor(
-    private formBuilder: FormBuilder,
     private tagsService: TagsService,
-    private dialogRef: MatDialogRef<TagUpdatedComponent>,
-    @Inject(MAT_DIALOG_DATA) private data: { tag: Tag }
+    private articleService: ArticleService,
+    private dialogRef: MatDialogRef<TagsUpdatingComponentComponent>,
+    private snackBar: MatSnackBar,
+    @Inject(MAT_DIALOG_DATA) public data: Tag
   ) {
-    this.tagForm = this.formBuilder.group({
-      name: [data.tag.name, Validators.required],
-      group: [data.tag.group, Validators.required],
-      description: [data.tag.description, Validators.required]
+    this.tag = { ...data }; // Create a copy of the tag data
+  }
+
+  ngOnInit(): void {
+    this.articleService.search({} as any).subscribe({
+      next: (articles) => {
+        this.availableArticle = articles;
+      },
+      error: (err) => console.error('Error fetching articles', err)
     });
   }
 
-  onSubmit(): void {
-    if (this.tagForm.valid && this.data.tag.id) {
-      const updatedTag: Tag = {
-        id: this.data.tag.id,
-        ...this.tagForm.value
-      };
-
-      this.tagsService.update(updatedTag.id, updatedTag).subscribe({
-        next: (tag) => {
-          this.dialogRef.close(tag);
-        },
-        error: (error) => {
-          console.error('Error updating tag:', error);
-          if (error.message === 'Tag not found') {
-            // Manejar el caso de tag no encontrado (404)
-            console.error('Tag not found with ID:', updatedTag.id);
-          } else {
-            // Otros errores
-            console.error('Error updating tag:', error);
-          }
-        }
-      });
-    }
-  }
-
-  onCancel(): void {
-    this.dialogRef.close();
+  update(): void {
+    this.tagsService.update(this.tag.id, this.tag).subscribe({
+      next: (updatedTag) => {
+        this.snackBar.open("Tag updated successfully", "Close", {
+          duration: 3000,
+          panelClass: ['snackbar-success']
+        });
+        // The tagsService.update method already emits an event via tagsUpdated.next()
+        // which will trigger the table to update in real-time
+        this.dialogRef.close(updatedTag);
+      },
+      error: (error) => {
+        console.error('Error updating tag:', error);
+        this.snackBar.open("Error updating tag", "Close", {
+          duration: 3000,
+          panelClass: ['snackbar-error']
+        });
+      }
+    });
   }
 }
