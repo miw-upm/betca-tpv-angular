@@ -34,18 +34,37 @@ import {FormsModule} from "@angular/forms";
 export class InvoiceUpdatingComponent {
     title: string;
     identity : number;
-    mobile : string;
+     mobile : string;
+    firstName: string;
+    familyName: string;
+    email: string;
+    address: string;
+    dni: string;
+
     @Output() invoiceEventEmitter: EventEmitter<Invoice> = new EventEmitter<Invoice>();
 
-    constructor(@Inject(MAT_DIALOG_DATA) data: number, private invoiceService: InvoiceService, private dialog: MatDialog) {
+    constructor(@Inject(MAT_DIALOG_DATA) data: {identity:number,  mobile: string}, private invoiceService: InvoiceService, private dialog: MatDialog) {
         this.title = 'Update Invoice';
-        this.identity = data;
-        this.mobile = "";
+        this.identity = data.identity;
+        this.mobile = data.mobile;
+        this.firstName = "";	
+        this.familyName = "";
+        this.email = "";
+        this.address = "";
+        this.dni = "";
+
     }
 
     update(): void {
         this.invoiceService
-            .updateUser(this.identity, this.mobile)
+            .updateUser(this.identity, {
+                mobile: this.mobile,
+                firstName: this.firstName,
+                familyName: this.familyName,
+                email: this.email,
+                address: this.address,
+                dni: this.dni
+            })
             .subscribe((invoice) => {
                 this.invoiceEventEmitter.emit(invoice);
                 this.dialog.closeAll();

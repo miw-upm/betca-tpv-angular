@@ -1,12 +1,35 @@
 <h4 mat-dialog-title>{{ title }}</h4>
 <mat-dialog-content>
     <mat-form-field class="full-width">
-        <mat-label>User mobile</mat-label>
-        <input [(ngModel)]="mobile" matInput required type="text"/>
+        <mat-label>Mobile</mat-label>
+        <input [(ngModel)]="mobile" matInput [disabled]="mobile" required type="text"/>
     </mat-form-field>
+
+    <mat-form-field class="full-width">
+        <mat-label>First Name</mat-label>
+        <input [(ngModel)]="firstName" matInput required type="text"/>
+    </mat-form-field>
+    <mat-form-field class="full-width">
+        <mat-label>Family Name</mat-label>
+        <input [(ngModel)]="familyName" matInput required type="text"/> 
+
+    </mat-form-field>
+    <mat-form-field class="full-width">
+        <mat-label>Email</mat-label>
+        <input [(ngModel)]="email" matInput required type="email"/>
+    </mat-form-field>
+    <mat-form-field class="full-width">
+        <mat-label>DNI</mat-label>
+        <input [(ngModel)]="dni" matInput required type="text"/>
+    </mat-form-field>
+    <mat-form-field class="full-width">
+        <mat-label>Address</mat-label>
+        <input [(ngModel)]="address" matInput required type="text"/>
+    </mat-form-field>
+
 </mat-dialog-content>
 
 <mat-dialog-actions>
     <button mat-dialog-close mat-raised-button>Close</button>
-    <button (click)="update()" [disabled]="!mobile" color="primary" mat-raised-button>Update</button>
+    <button (click)="update()" [disabled]="!firstName || !familyName || !email || !dni || !address || !mobile" color="primary" mat-raised-button>Update</button>
 </mat-dialog-actions>

@@ -53,6 +53,30 @@ export class CustomerPointsService {
             );
     }
 
+    searchUserMobileActive(mobile: String): Observable<boolean> {
+        return this.httpService
+            .get(`${EndPoints.USERS}/${mobile}`)
+            
+            .pipe(
+                map((response: any) => {
+                
+                    return response["active"] == true;
+                }),
+                catchError(err => {
+                    const errorStatus = err.status || err.code;
+                    if (errorStatus === 404) {
+                        return new Observable<boolean>(observer => {
+                            observer.next(false);
+                            observer.complete();
+                        });
+                    } else {
+                        return throwError(err);
+                    }
+                })
+            );
+    }
+
+
     searchCustomerPointsForCurrentUser(): Observable<CustomerPoints> {
         const mobile = this.auth.getUser().mobile;
         return this.httpService

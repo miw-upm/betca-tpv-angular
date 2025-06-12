@@ -3,6 +3,7 @@ import {Invoice} from "../models/invoice.model";
 import {Observable} from "rxjs";
 import {HttpService} from "@core/services/http.service";
 import {EndPoints} from "@core/end-points";
+import { AuthService } from "@core/services/auth.service";
 
 @Injectable({providedIn: 'root'})
 export class InvoiceService {
@@ -10,27 +11,13 @@ export class InvoiceService {
     private static MOBILE_SEARCH : string = "/mobile-search";
     private static RECEIPT = '/receipt';
 
-    constructor(private httpService: HttpService) {
+    constructor(private httpService: HttpService, private readonly authService: AuthService) {
     }
 
     create(invoice: Invoice): Observable<Invoice> {
-        const invoiceData = {ticket:
-                {
-                    id: invoice.ticket.id,
-                    reference: invoice.ticket.reference,
-                    shoppingList: invoice.ticket.shoppingList,
-                    cash: invoice.ticket.cash,
-                    card: invoice.ticket.card,
-                    voucher: invoice.ticket.voucher,
-                    note: invoice.ticket.note,
-                    class: invoice.ticket.class,
-                    user: {
-                        mobile: invoice.user.mobile,
-                    }
-                },
-            user:{
-                mobile: invoice.user.mobile
-            }
+        const invoiceData = {
+            ticket: invoice.ticket.id,
+            mobile: invoice.user.mobile ?? this.authService.getUser().mobile
         }
         return this.httpService
             .post(EndPoints.INVOICES, invoiceData);
@@ -53,8 +40,8 @@ export class InvoiceService {
             .get(EndPoints.INVOICES + "/" + identity);
     }
 
-    updateUser(identity: number, mobile : string): Observable<Invoice> {
-        return this.httpService.patch(EndPoints.INVOICES + "/" + identity, {mobile});
+    updateUser(identity: number, user : {}): Observable<Invoice> {
+        return this.httpService.patch(EndPoints.INVOICES + "/" + identity, user);
     }
 
     searchAll(): Observable<Invoice[]> {

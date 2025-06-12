@@ -322,7 +322,8 @@ export class CheckOutDialogComponent {
                             this.requestedInvoice,
                             this.requestedGiftTicket,
                             this.requestedDataProtectionAct,
-                            this.useCustomerPoints
+                            this.useCustomerPoints,
+                            this.requestedInvoice
                         )
                     )
                 )
@@ -343,14 +344,10 @@ export class CheckOutDialogComponent {
                 this.requestedInvoice,
                 this.requestedGiftTicket,
                 this.requestedDataProtectionAct,
-                this.useCustomerPoints
+                this.useCustomerPoints,
+                  this.requestedInvoice
             ).subscribe(() => this.dialogRef.close(true));
         }
-    }
-
-    invalidInvoice(): boolean {
-        // TODO pendiente de calcular. Hace falta tener al usuario totalmente completado
-        return true;
     }
 
     onGiftTicketChange(): void {
