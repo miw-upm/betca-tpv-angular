@@ -1,122 +1,71 @@
-<div class="container">
-  <mat-card class="audit-card">
-    <div class="audit-header">
-      <mat-card-title>Stock Audit Details</mat-card-title>
-      <div class="audit-actions">
-        @if (stockAudit.closeDate == null) {
-        <button mat-flat-button (click)="close()">Close Audit</button>
-        <button mat-flat-button (click)="update()">Update Audit</button>
-        }
-      </div>
+<mat-card>
+  <mat-card-title>Auditoría de Stock</mat-card-title>
+  <mat-card-content>
+    <table mat-table [dataSource]="pendingArticles" class="mat-elevation-z8">
+      <ng-container matColumnDef="barcode">
+        <th mat-header-cell *matHeaderCellDef>Código</th>
+        <td mat-cell *matCellDef="let article">{{ article.barcode }}</td>
+      </ng-container>
+      <ng-container matColumnDef="stock">
+        <th mat-header-cell *matHeaderCellDef>Stock</th>
+        <td mat-cell *matCellDef="let article">{{ article.stock }}</td>
+      </ng-container>
+      <ng-container matColumnDef="real">
+        <th mat-header-cell *matHeaderCellDef>Real</th>
+        <td mat-cell *matCellDef="let article">
+          <input
+            type="number"
+            min="0"
+            [(ngModel)]="article.real"
+            placeholder="Ingrese real"
+            [disabled]="isClosed"
+          />
+        </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="['barcode', 'stock', 'real']"></tr>
+      <tr mat-row *matRowDef="let row; columns: ['barcode', 'stock', 'real']"></tr>
+    </table>
+    <button mat-raised-button color="primary" (click)="auditar()" [disabled]="isClosed">
+      Auditar/Update
+    </button>
+    <button mat-raised-button color="warn" (click)="closeAudit()" 
+            *ngIf="auditedArticles.length > 0 && !isClosed"
+            style="margin-left: 1em;">
+      Cerrar Auditoría
+    </button>
+    <span *ngIf="isClosed" style="margin-left: 2em; color: green;">
+      Auditoría cerrada el {{ stockAudit.closeDate | date:'short' }}
+    </span>
+  </mat-card-content>
+</mat-card>
+
+<mat-card style="margin-top: 2em" *ngIf="auditedArticles.length > 0">
+  <mat-card-title>Artículos Auditados</mat-card-title>
+  <mat-card-content>
+    <table mat-table [dataSource]="auditedArticles" class="mat-elevation-z8">
+      <ng-container matColumnDef="barcode">
+        <th mat-header-cell *matHeaderCellDef>Código</th>
+        <td mat-cell *matCellDef="let article">{{ article.barcode }}</td>
+      </ng-container>
+      <ng-container matColumnDef="stock">
+        <th mat-header-cell *matHeaderCellDef>Stock Inicial</th>
+        <td mat-cell *matCellDef="let article">{{ article.stock }}</td>
+      </ng-container>
+      <ng-container matColumnDef="real">
+        <th mat-header-cell *matHeaderCellDef>Real</th>
+        <td mat-cell *matCellDef="let article">{{ article.real }}</td>
+      </ng-container>
+      <ng-container matColumnDef="loss">
+        <th mat-header-cell *matHeaderCellDef>Pérdida</th>
+        <td mat-cell *matCellDef="let article">
+          {{ article.stock - article.real }}
+        </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="['barcode', 'stock', 'real', 'loss']"></tr>
+      <tr mat-row *matRowDef="let row; columns: ['barcode', 'stock', 'real', 'loss']"></tr>
+    </table>
+    <div style="margin-top: 1em">
+      <strong>Pérdida total: {{ totalLoss }}</strong>
     </div>
-
-    <mat-card-content>
-      <p><strong>ID:</strong> {{ stockAudit.id }}</p>
-      <p>
-        <strong>Creation Date:</strong>
-        {{ stockAudit.creationDate }}
-      </p>
-      <p>
-        <strong>Update Date:</strong>
-        {{ stockAudit.updateDate }}
-      </p>
-      <p>
-        <strong>Close Date:</strong>
-        {{ stockAudit.closeDate }}
-      </p>
-      <p>
-        <strong>Loss Value:</strong>
-        {{ stockAudit.lossValue | currency : "EUR" }}
-      </p>
-      @if (stockAudit.closeDate != null) {
-      <h3>Articles Without Audit</h3>
-      <table
-        mat-table
-        [dataSource]="stockAudit.articlesWithoutAudit"
-        class="mat-elevation-z8"
-      >
-        <ng-container matColumnDef="name">
-          <th mat-header-cell *matHeaderCellDef>Barcode</th>
-          <td mat-cell *matCellDef="let article">{{ article.barcode }}</td>
-        </ng-container>
-
-        <ng-container matColumnDef="description">
-          <th mat-header-cell *matHeaderCellDef>Description</th>
-          <td mat-cell *matCellDef="let article">{{ article.description }}</td>
-        </ng-container>
-
-        <ng-container matColumnDef="quantity">
-          <th mat-header-cell *matHeaderCellDef>Stock</th>
-          <td mat-cell *matCellDef="let article">{{ article.stock }}</td>
-        </ng-container>
-
-        <tr
-          mat-header-row
-          *matHeaderRowDef="['name', 'description', 'quantity']"
-        ></tr>
-        <tr
-          mat-row
-          *matRowDef="let row; columns: ['name', 'description', 'quantity']"
-        ></tr>
-      </table>
-
-      <h3>Losses Article</h3>
-      <table
-        mat-table
-        [dataSource]="stockAudit.losses"
-        class="mat-elevation-z8"
-      >
-        <ng-container matColumnDef="articleName">
-          <th mat-header-cell *matHeaderCellDef>Barcode</th>
-          <td mat-cell *matCellDef="let loss">{{ loss.barcode }}</td>
-        </ng-container>
-
-        <ng-container matColumnDef="lostQuantity">
-          <th mat-header-cell *matHeaderCellDef>Amount</th>
-          <td mat-cell *matCellDef="let loss">{{ loss.amount }}</td>
-        </ng-container>
-
-        <tr
-          mat-header-row
-          *matHeaderRowDef="['articleName', 'lostQuantity']"
-        ></tr>
-        <tr
-          mat-row
-          *matRowDef="let row; columns: ['articleName', 'lostQuantity']"
-        ></tr>
-      </table>
-      } @else {
-      <h3>Articles to audit</h3>
-      <table
-        mat-table
-        [dataSource]="stockAudit.articlesAudited"
-        class="mat-elevation-z8"
-      >
-        <ng-container matColumnDef="name">
-          <th mat-header-cell *matHeaderCellDef>Barcode</th>
-          <td mat-cell *matCellDef="let article">{{ article.barcode }}</td>
-        </ng-container>
-
-        <ng-container matColumnDef="description">
-          <th mat-header-cell *matHeaderCellDef>Description</th>
-          <td mat-cell *matCellDef="let article">{{ article.description }}</td>
-        </ng-container>
-
-        <ng-container matColumnDef="quantity">
-          <th mat-header-cell *matHeaderCellDef>Stock</th>
-          <td mat-cell *matCellDef="let article">{{ article.stock }}</td>
-        </ng-container>
-
-        <tr
-          mat-header-row
-          *matHeaderRowDef="['name', 'description', 'quantity']"
-        ></tr>
-        <tr
-          mat-row
-          *matRowDef="let row; columns: ['name', 'description', 'quantity']"
-        ></tr>
-      </table>
-      }
-    </mat-card-content>
-  </mat-card>
-</div>
+  </mat-card-content>
+</mat-card>

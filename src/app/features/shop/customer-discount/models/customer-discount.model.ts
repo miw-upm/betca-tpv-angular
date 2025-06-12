@@ -7,3 +7,10 @@ export interface CustomerDiscount {
     discount: number;
     minimumPurchase: number;
 }
+export interface CustomerDiscountDto {
+  userMobile: number;
+  note: string;
+  registrationDate: string;
+  discount: number;
+  minimumPurchase: number;
+}
